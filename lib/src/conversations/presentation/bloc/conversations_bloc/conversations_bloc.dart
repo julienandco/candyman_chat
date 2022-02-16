@@ -1,3 +1,43 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
+import 'package:neon_chat/src/conversations/domain/entities/conversation_item/conversation_item.dart';
+
+part 'conversations_state.dart';
+part 'conversations_event.dart';
+part 'conversations_bloc.freezed.dart';
+
+class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
+  // final ConversationRepository conversationRepository;
+  // final ChatRepository chatRepository;
+  // final UserProfileRepository userProfileRepository;
+
+  StreamSubscription? _conversatonsStream;
+  late final List<StreamSubscription> _chatsItemsStream = [];
+
+  void init() {
+    if (_conversatonsStream == null) add(_FetchConversation());
+  }
+
+  void dispose() {
+    add(_Dispose());
+  }
+
+  void hideConversation(String conversationId) => add(
+        _HideConversation(conversationId),
+      );
+  ConversationsBloc() : super(const _Initial()) {
+    on<ConversationsEvent>(
+      (event, emit) {
+        event.when();
+      },
+    );
+  }
+}
+
+//TODO: old
 // import 'dart:async';
 
 // import 'package:bloc/bloc.dart';
