@@ -38,7 +38,8 @@ class ConversationsSearchBloc
               }
             }
 
-            add(ConversationsSearchEvent.onResult(results.toList()));
+            emit(state.copyWith(
+                isSearchActive: true, conversations: results.toList()));
           },
           onResult: (results) => emit(
             state.copyWith(
@@ -50,4 +51,7 @@ class ConversationsSearchBloc
       },
     );
   }
+
+  @visibleForTesting
+  List<ConversationItem> get conversations => _conversations;
 }
