@@ -1,5 +1,5 @@
 name: neon_chat
-description: A new Flutter package project.
+description: Der NEON-Chat.
 version: 0.0.1
 homepage:
 
@@ -11,10 +11,31 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Code generation
+  freezed_annotation: ^1.1.0
+  json_annotation: ^4.4.0
+
+  # Firebase
+  firebase_auth: ^3.3.7
+  cloud_firestore: ^3.1.8
+
+  # Dependency Injection
+  injectable: ^1.5.3
+  get_it: ^7.2.0
+
+  # State
+  flutter_bloc: ^8.0.1
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.7
+  injectable_generator: ^1.5.3
+  json_serializable: ^6.1.4
+  freezed: ^1.1.1
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
