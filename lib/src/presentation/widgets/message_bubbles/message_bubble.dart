@@ -8,6 +8,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import 'package:neon_chat/src/presentation/presentation.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 
 class MessageBubble extends StatefulWidget {

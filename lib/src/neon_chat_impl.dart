@@ -1,25 +1,59 @@
 part of neon_chat;
 
+class NEONChatNotInitializedError extends Error {}
+
 class NEONChat {
   NEONChat._();
+
+  static ChatBloc? _chatBloc;
+  static ChatSearchBloc? _chatSearchBloc;
+  static ConversationsBloc? _conversationsBloc;
+  static ConversationsSearchBloc? _conversationsSearchBloc;
 
   /// Initializes a new [FirebaseApp] instance by [name] and [options] and returns
   /// the created app. This method should be called before any usage of FlutterFire plugins.
   ///
   /// The default app instance cannot be initialized here and should be created
   /// using the platform Firebase integration.
-  static Future<NEONChatApp> initializeApp({
+  static void initializeApp({
     String? name,
     required NEONChatSetupOptions options,
     // FirebaseOptions? options,
   }) async {
     //TODO: was brauchen wir dafür?
-
-    return NEONChatApp._(options);
   }
 
-  //TODO: iwie so wie bei firebase: wir geben bei initialize eine ChatApp zurück, auf die
-  // dann außerhalb des packages mit NEONChat.instance zugegriffen werden kann
+  static ChatBloc get chatBloc {
+    if (_chatBloc != null) {
+      return _chatBloc!;
+    } else {
+      throw NEONChatNotInitializedError();
+    }
+  }
+
+  static ChatSearchBloc get chatSearchBloc {
+    if (_chatSearchBloc != null) {
+      return _chatSearchBloc!;
+    } else {
+      throw NEONChatNotInitializedError();
+    }
+  }
+
+  static ConversationsBloc get conversationsBloc {
+    if (_conversationsBloc != null) {
+      return _conversationsBloc!;
+    } else {
+      throw NEONChatNotInitializedError();
+    }
+  }
+
+  static ConversationsSearchBloc get conversationsSearchBloc {
+    if (_conversationsSearchBloc != null) {
+      return _conversationsSearchBloc!;
+    } else {
+      throw NEONChatNotInitializedError();
+    }
+  }
 }
 
 
