@@ -8,14 +8,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
-import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
-import 'package:neon_chat/src/core/domain/entities/firebase_user/firebase_user.dart';
-import 'package:neon_chat/src/conversation/domain/repository/chat_repository.dart';
-import 'package:neon_chat/src/conversation/domain/repository/chat_upload_repository.dart';
-import 'package:neon_chat/src/conversations/domain/repository/conversation_repository.dart';
-import 'package:neon_chat/src/core/domain/repositories/firebase_user_profile_repository.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 part 'chat_state.dart';
 part 'chat_event.dart';

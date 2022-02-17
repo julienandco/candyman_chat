@@ -6,16 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 //TODO: need/can inject?
 import 'package:injectable/injectable.dart';
-
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/repository/chat_repository.dart';
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
-import 'package:neon_chat/src/conversation/domain/entities/chat_upload_file/chat_upload_file.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 const _conversationsCollectionName = 'conversations';
 const _messageCollectionName = 'messages';
 
-@LazySingleton(as: ChatRepository)
+// @LazySingleton(as: ChatRepository)
 class ChatRepositoryImpl implements ChatRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth auth;

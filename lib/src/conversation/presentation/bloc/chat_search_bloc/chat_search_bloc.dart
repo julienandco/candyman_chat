@@ -6,11 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:woozy_search/woozy_search.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
-// import 'package:papeo_app/core/style/color_constants.dart';
-// import 'package:papeo_app/features/chat/data/models/chat_message_model.dart';
-// import 'package:papeo_app/features/chat/domain/entities/chat_message_entity.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 part 'chat_search_state.dart';
 part 'chat_search_event.dart';

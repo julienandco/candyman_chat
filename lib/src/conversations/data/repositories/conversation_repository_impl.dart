@@ -4,11 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-//TODO: import
-import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
-import 'package:neon_chat/src/conversations/domain/repository/conversation_repository.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
 
-@LazySingleton(as: ConversationRepository)
+// @LazySingleton(as: ConversationRepository)
 class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth auth;

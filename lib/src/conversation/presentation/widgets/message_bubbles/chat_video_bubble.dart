@@ -3,9 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-//TODO: imports
-
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class ChatVideoBubble extends StatefulWidget {

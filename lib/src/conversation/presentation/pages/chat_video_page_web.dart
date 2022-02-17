@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:another_xlider/another_xlider.dart';
 import 'package:video_player/video_player.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatVideoPageWeb extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';

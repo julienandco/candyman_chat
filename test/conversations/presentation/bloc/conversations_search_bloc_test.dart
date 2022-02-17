@@ -1,12 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:test/test.dart';
 
-//TODO: import
-import 'package:neon_chat/src/conversations/presentation/bloc/conversations_search_bloc/conversations_search_bloc.dart';
-import 'package:neon_chat/src/core/domain/entities/firebase_user/firebase_user.dart';
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
-import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
-import 'package:neon_chat/src/conversations/domain/entities/conversation_item/conversation_item.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
+
+import 'package:neon_chat/src/core/core.dart';
 
 class MockConversationsSearchBloc
     extends MockBloc<ConversationsSearchEvent, ConversationsSearchState>

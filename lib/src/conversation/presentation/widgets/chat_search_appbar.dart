@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/core/presentation/widgets/sub_header.dart';
-import 'package:neon_chat/src/conversation/presentation/bloc/chat_search_bloc/chat_search_bloc.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 class ChatSearchAppBar extends StatefulWidget {
   final Widget? leading;

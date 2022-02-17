@@ -8,10 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
-
-import 'buttons/buttons.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatAudioPlayer extends StatefulWidget {
   final ChatMessage message;

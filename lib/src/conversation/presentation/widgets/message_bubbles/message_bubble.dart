@@ -8,15 +8,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
-import 'package:neon_chat/src/conversation/presentation/bloc/chat_bloc/chat_bloc.dart';
-import 'package:neon_chat/src/conversation/presentation/widgets/chat_bottom_bar.dart';
-
-import '../chat_audio_player.dart';
-import 'chat_file_bubble.dart';
-import 'chat_image_bubble.dart';
-import 'chat_video_bubble.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 class MessageBubble extends StatefulWidget {
   final double maxWidthPercentage;

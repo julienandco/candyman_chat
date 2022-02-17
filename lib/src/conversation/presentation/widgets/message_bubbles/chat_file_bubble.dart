@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-//TODO: imports
-
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatFileBubble extends StatefulWidget {
   const ChatFileBubble({

@@ -1,11 +1,7 @@
 //TODO
 
 import 'package:injectable/injectable.dart';
-
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/repository/file_upload_repository.dart';
-import 'package:neon_chat/src/conversation/domain/repository/chat_upload_repository.dart';
-import 'package:neon_chat/src/conversation/domain/entities/chat_upload_file/chat_upload_file.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 // @LazySingleton(as: ChatUploadManagerRepository)
 class ChatUploadManagerRepositoryImpl implements ChatUploadManagerRepository {

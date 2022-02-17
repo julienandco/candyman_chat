@@ -9,11 +9,8 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/presentation/bloc/chat_bloc/chat_bloc.dart';
-import 'package:neon_chat/src/core/presentation/widgets/base_circle_button.dart';
-
-import 'buttons/buttons.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 const kMaxWidth = 800.0;
 

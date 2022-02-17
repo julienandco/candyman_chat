@@ -5,10 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/repository/file_upload_repository.dart';
-import 'package:neon_chat/src/core/domain/entities/request_responses.dart';
-import 'package:neon_chat/src/conversation/domain/entities/chat_upload_file/chat_upload_file.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 class FileUploadRepositoryImpl implements FileUploadRepository {
   //TODO

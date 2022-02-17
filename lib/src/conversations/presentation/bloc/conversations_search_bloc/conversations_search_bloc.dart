@@ -2,8 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-//TODO: import
-import 'package:neon_chat/src/conversations/domain/entities/conversation_item/conversation_item.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
 
 part 'conversations_search_event.dart';
 part 'conversations_search_state.dart';

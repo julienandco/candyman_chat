@@ -1,6 +1,4 @@
-//TODO: imports
-import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
-import 'package:neon_chat/src/conversation/domain/entities/chat_upload_file/chat_upload_file.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 abstract class ChatRepository {
   Stream<List<ChatMessage>> getMessages(String conversationId);

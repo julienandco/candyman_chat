@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:neon_chat/src/core/data/models/my_latlng_converter.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/core/domain/entities/upload/upload.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 part 'chat_message.freezed.dart';
 part 'chat_message.g.dart';
