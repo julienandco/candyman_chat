@@ -41,6 +41,9 @@ dependencies:
   # State
   flutter_bloc: ^8.0.1
 
+  # Functional Programming
+  dartz: ^0.10.1
+
   # Widgets
   file_picker: ^4.4.0
   stop_watch_timer: ^1.3.1

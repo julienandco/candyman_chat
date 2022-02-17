@@ -1,10 +1,9 @@
 library neon_chat;
 
+import 'package:neon_chat/src/neon_chat_setup_options.dart';
+
+part 'src/neon_chat_impl.dart';
+part 'src/neon_chat_app.dart';
+
 //TODO
 const isWebOrMacOS = false;
-
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
