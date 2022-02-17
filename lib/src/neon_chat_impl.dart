@@ -20,14 +20,11 @@ class NEONChat {
 
   static bool _isInit = false;
 
-  static void initializeApp({
-    String? name,
+  static void initializeChat({
     required NEONChatSetupOptions options,
   }) {
     if (!_isInit) {
       _isInit = true;
-      //TODO: alle DInge, die im package von den SetupOptions abhängen, müssen iwie auf die abhängigkeit hier verweisen
-      //TODO: was brauchen wir dafür?
 
       _chatRepo = ChatRepositoryImpl(options.firestore, options.firebaseAuth);
       final fileUploadRepoImpl = FileUploadRepositoryImpl(
@@ -48,14 +45,6 @@ class NEONChat {
 
       _conversationsBloc =
           ConversationsBloc(_conversationRepo!, _userProfileRepo!, _chatRepo!);
-
-      // _conversationsSearchBloc = ConversationsSearchBloc();
-
-      // _chatSearchBloc = ChatSearchBloc();
-
-      //TODO:
-      // _chatBloc = ChatBloc(conversationId: conversationId, userProfileId: userProfileId, firebaseAuth: firebaseAuth, chatRepository: chatRepository, conversationRepository: conversationRepository, chatUploadManagerRepository: chatUploadManagerRepository, userProfileRepository: userProfileRepository)
-
     } else {
       throw NEONChatAlreadyInitializedError();
     }
