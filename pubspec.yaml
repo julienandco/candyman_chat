@@ -21,8 +21,13 @@ dependencies:
   equatable: ^2.0.3
   google_maps_flutter: ^2.1.1
   wechat_assets_picker: ^6.3.1
+  wechat_camera_picker: ^2.6.5
   woozy_search: ^2.0.3
   scroll_to_index: ^2.1.1
+  record: ^3.0.2
+  animator: ^3.1.0
+  flutter_animator: ^3.2.1
+  just_audio: ^0.9.20
 
   # Firebase
   firebase_auth: ^3.3.7
@@ -38,6 +43,15 @@ dependencies:
 
   # Widgets
   file_picker: ^4.4.0
+  stop_watch_timer: ^1.3.1
+  focused_menu: ^1.0.5
+  auto_size_text_pk: ^3.0.0
+  visibility_detector: ^0.2.2
+  linkwell: ^2.0.6
+  video_thumbnail: ^0.4.3
+  better_player: ^0.0.81
+  another_xlider: ^1.0.1+2
+  chewie: ^1.2.2
   #TODO: eliminate this and let this be a dependency from outside?
   fluttertoast: ^8.0.8
 
@@ -50,6 +64,10 @@ dev_dependencies:
   freezed: ^1.1.0
   bloc_test: ^9.0.2
   test: ^1.20.1
+
+dependency_overrides:
+  #TODO: breaking anything?
+  provider: 6.0.0
 
 
 # For information on the generic Dart part of this file, see the

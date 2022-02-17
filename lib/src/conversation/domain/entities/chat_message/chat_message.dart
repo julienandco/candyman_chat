@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:neon_chat/src/core/data/models/my_latlng_converter.dart';
 
 //TODO: imports
@@ -43,6 +44,10 @@ class ChatMessage with _$ChatMessage {
       _$ChatMessageFromJson(json);
 
   bool get isDeleted => type == ChatMessageType.deleted;
+
+  //TODO: get correct locale, not hardcoded de
+  String get timestampFormated =>
+      DateFormat.Hm('de').format(timestamp ?? DateTime.now());
 
   bool get isMe => FirebaseAuth.instance.currentUser!.uid == senderId;
 

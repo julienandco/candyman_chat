@@ -1,5 +1,8 @@
 library neon_chat;
 
+//TODO
+const isWebOrMacOS = false;
+
 /// A Calculator.
 class Calculator {
   /// Returns [value] plus 1.
