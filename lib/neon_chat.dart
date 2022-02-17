@@ -1,5 +1,7 @@
 library neon_chat;
 
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
@@ -11,6 +13,7 @@ export 'src/conversations/conversations.dart'
     show Conversation, ConversationItem;
 export 'src/core/core.dart' show FirebaseUser;
 export 'src/presentation/presentation.dart';
+export 'src/neon_chat_setup_options.dart';
 
 part 'src/neon_chat_impl.dart';
 

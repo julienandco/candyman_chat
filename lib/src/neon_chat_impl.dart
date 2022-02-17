@@ -23,6 +23,7 @@ class NEONChat {
   static void initializeChat({
     required NEONChatSetupOptions options,
   }) {
+    log('executing init');
     if (!_isInit) {
       _isInit = true;
 
@@ -56,6 +57,8 @@ class NEONChat {
     required String userProfileId,
   }) {
     if (_isInit) {
+      log('executing chatBloc');
+
       //TODO: meherere instanzen kein problem, in papeo auch so gemacht, nur auth udn repos etc müssen singletons sein
       return ChatBloc(
         conversationId: conversationId,
