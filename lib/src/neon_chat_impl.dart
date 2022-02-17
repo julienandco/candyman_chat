@@ -50,6 +50,7 @@ class NEONChat {
     }
   }
 
+  //TODO: im template projekt ohne init einfach NEONChat.getChatBloc() gibt mir sofort einen chatbloc -> kaka
   static ChatBloc getChatBloc({
     required String conversationId,
     required String userProfileId,
