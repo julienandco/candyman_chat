@@ -1,41 +1,178 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rxdart/rxdart.dart';
+
+//TODO: imports
 import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/domain/entities/conversation_item/conversation_item.dart';
+import 'package:neon_chat/src/conversations/domain/repository/conversation_repository.dart';
+import 'package:neon_chat/src/core/domain/entities/firebase_user/firebase_user.dart';
+import 'package:neon_chat/src/core/domain/repositories/firebase_user_profile_repository.dart';
+import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
+import 'package:neon_chat/src/conversation/domain/repository/chat_repository.dart';
 
 part 'conversations_state.dart';
 part 'conversations_event.dart';
 part 'conversations_bloc.freezed.dart';
 
+//TODO: inject bloc?
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
-  // final ConversationRepository conversationRepository;
-  // final ChatRepository chatRepository;
-  // final UserProfileRepository userProfileRepository;
+  final ConversationRepository conversationRepository;
+  final ChatRepository chatRepository;
+  final FirebaseUserProfileRepository userProfileRepository;
 
-  StreamSubscription? _conversatonsStream;
+  StreamSubscription? _conversationsStream;
   late final List<StreamSubscription> _chatsItemsStream = [];
 
-  void init() {
-    if (_conversatonsStream == null) add(_FetchConversation());
-  }
-
-  void dispose() {
-    add(_Dispose());
-  }
-
-  void hideConversation(String conversationId) => add(
-        _HideConversation(conversationId),
-      );
-  ConversationsBloc() : super(const _Initial()) {
-    on<ConversationsEvent>(
-      (event, emit) {
-        event.when();
+  ConversationsBloc(
+    this.conversationRepository,
+    this.userProfileRepository,
+    this.chatRepository,
+  ) : super(const _Initial()) {
+    _conversationsStream = conversationRepository.getAllConversations().listen(
+      (event) {
+        if (event.isNotEmpty) {
+          add(
+            _FetchChatItems(event),
+          );
+        } else {
+          add(const _OnData([]));
+        }
       },
+      onError: (err) => add(
+        const _OnError(),
+      ),
     );
+    on<ConversationsEvent>((event, emit) {
+      event.when(
+        fetchConversations: () {
+          //TODO: unnecessary event?
+          // _conversationsStream =
+          //     conversationRepository.getAllConversations().listen(
+          //   (event) {
+          //     if (event.isNotEmpty) {
+          //       add(
+          //         _FetchChatItems(event),
+          //       );
+          //     } else {
+          //       add(_OnData([]));
+          //     }
+          //   },
+          //   onError: (err) => add(
+          //     _OnError(),
+          //   ),
+          // );
+        },
+        fetchChatItems: (conversations) {
+          _chatsItemsStream.map((e) => e.cancel());
+
+          for (var conversation in conversations) {
+            if (conversation.timestamp != null) {
+              final chatPersonId = conversation.conversationMembers.firstWhere(
+                  (element) =>
+                      element != FirebaseAuth.instance.currentUser!.uid);
+              //TODO: inject that in package?
+
+              // (element) =>
+              //     element != getIt<FirebaseAuth>().currentUser!.uid);
+
+              final chatStream = CombineLatestStream.combine3(
+                chatRepository.getLastMessages(conversation.id),
+                userProfileRepository.getUserProfile(chatPersonId),
+                conversationRepository.getUnreadMessagesCount(conversation.id),
+                (
+                  ChatMessage lastMessage,
+                  FirebaseUser userProfile,
+                  int unreadCount,
+                ) =>
+                    ConversationItem(
+                  lastMessage: lastMessage,
+                  conversationPartner: userProfile,
+                  conversation: conversation,
+                  unreadMessagesCount: unreadCount,
+                ),
+              ).listen(
+                (event) => add(
+                  _OnChatItemsData(event),
+                ),
+                onError: (err) {
+                  log('fetchChatItems $err', name: '$runtimeType');
+                },
+              );
+              _chatsItemsStream.add(chatStream);
+            }
+          }
+        },
+        onChatItemsData: (conversationItem) {
+          emit(const ConversationsState.loadInProgress());
+
+          emit(
+            state.maybeMap(
+              loadSuccess: (state) {
+                final conversations = state.conversations;
+                conversations.removeWhere((element) =>
+                    element.conversation.id ==
+                    conversationItem.conversation.id);
+                conversations.add(conversationItem);
+                conversations.sort(
+                  (b, a) {
+                    return (a.lastMessage.timestamp ?? DateTime.now())
+                        .compareTo((b.lastMessage.timestamp ?? DateTime.now()));
+                  },
+                );
+                return ConversationsState.loadSuccess(conversations);
+              },
+              orElse: () => ConversationsState.loadSuccess([conversationItem]),
+            ),
+          );
+        },
+        onData: (conversations) =>
+            emit(ConversationsState.loadSuccess(conversations)),
+        onError: () => emit(
+          const ConversationsState.loadFailure(),
+        ),
+        dispose: () {
+          _conversationsStream?.cancel();
+          _chatsItemsStream.map((e) => e.cancel());
+          _conversationsStream = null;
+          emit(
+            const ConversationsState.initial(),
+          );
+        },
+        hideConversation: (conversationId) {
+          emit(
+            state.maybeMap(
+              loadSuccess: (state) {
+                var conversations = List.of(state.conversations);
+                conversations.removeWhere(
+                  (element) => element.conversation.id == conversationId,
+                );
+                return ConversationsState.loadSuccess(conversations);
+              },
+              orElse: () => state,
+            ),
+          );
+          conversationRepository.hideConversations(conversationId);
+        },
+      );
+    });
+
+    @override
+    Future<void> close() {
+      _conversationsStream?.cancel();
+      _chatsItemsStream.map((e) => e.cancel());
+      return super.close();
+    }
   }
 }
+
+
+
+
 
 //TODO: old
 // import 'dart:async';

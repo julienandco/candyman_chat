@@ -1,12 +1,12 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
-import 'package:neon_chat/src/conversations/domain/entities/conversation_item/conversation_item.dart';
+import 'package:test/test.dart';
 
 //TODO: import
 import 'package:neon_chat/src/conversations/presentation/bloc/conversations_search_bloc/conversations_search_bloc.dart';
 import 'package:neon_chat/src/core/domain/entities/firebase_user/firebase_user.dart';
-import 'package:test/expect.dart';
-import 'package:test/scaffolding.dart';
+import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
+import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
+import 'package:neon_chat/src/conversations/domain/entities/conversation_item/conversation_item.dart';
 
 class MockConversationsSearchBloc
     extends MockBloc<ConversationsSearchEvent, ConversationsSearchState>
@@ -19,17 +19,24 @@ void main() {
     final mockConversation =
         Conversation(id: 'convo-id', conversationMembers: ['1', '2']);
 
-    final mockName = 'testo';
+    const mockName = 'testo';
 
     final mockPartner = FirebaseUser(
       id: '2',
       name: mockName,
     );
 
+    final mockLastMessage = ChatMessage(
+      senderId: '1',
+      receiverId: '2',
+      type: ChatMessageType.text,
+    );
+
     final mockConversations = [
       ConversationItem(
         conversation: mockConversation,
         conversationPartner: mockPartner,
+        lastMessage: mockLastMessage,
         unreadMessagesCount: 2,
       ),
     ];
@@ -46,7 +53,7 @@ void main() {
           const ConversationsSearchState.state(conversations: []));
     });
 
-    test('_conversations is initially empty', () {
+    test('conversations is initially empty', () {
       expect(searchBloc.conversations, []);
     });
 

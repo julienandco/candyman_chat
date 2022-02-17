@@ -15,16 +15,31 @@ dependencies:
   freezed_annotation: ^1.1.0
   json_annotation: ^4.4.0
 
+  # Features
+  rxdart: ^0.27.3
+  intl: ^0.17.0
+  equatable: ^2.0.3
+  google_maps_flutter: ^2.1.1
+  wechat_assets_picker: ^6.3.1
+  woozy_search: ^2.0.3
+  scroll_to_index: ^2.1.1
+
   # Firebase
   firebase_auth: ^3.3.7
   cloud_firestore: ^3.1.8
 
+  #TODO: need this in package?
   # Dependency Injection
   injectable: ^1.5.3
   get_it: ^7.2.0
 
   # State
   flutter_bloc: ^8.0.1
+
+  # Widgets
+  file_picker: ^4.4.0
+  #TODO: eliminate this and let this be a dependency from outside?
+  fluttertoast: ^8.0.8
 
 
 dev_dependencies:

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 //TODO import
 import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
 import 'package:neon_chat/src/core/domain/entities/firebase_user/firebase_user.dart';
+import 'package:neon_chat/src/conversation/domain/entities/chat_message/chat_message.dart';
 
 part 'conversation_item.freezed.dart';
 
@@ -10,8 +11,7 @@ part 'conversation_item.freezed.dart';
 class ConversationItem with _$ConversationItem {
   factory ConversationItem({
     required Conversation conversation,
-    //TODO
-    // required ChatMessage lastMessage,
+    required ChatMessage lastMessage,
     required FirebaseUser conversationPartner,
     required int unreadMessagesCount,
   }) = _ConversationItem;
