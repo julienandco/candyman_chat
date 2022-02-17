@@ -2,43 +2,96 @@ part of neon_chat;
 
 class NEONChatNotInitializedError extends Error {}
 
+class NEONChatAlreadyInitializedError extends Error {}
+
 class NEONChat {
   NEONChat._();
 
-  static ChatBloc? _chatBloc;
-  static ChatSearchBloc? _chatSearchBloc;
+  // static ChatBloc? _chatBloc;
+  // static ChatSearchBloc? _chatSearchBloc;
   static ConversationsBloc? _conversationsBloc;
-  static ConversationsSearchBloc? _conversationsSearchBloc;
+  // static ConversationsSearchBloc? _conversationsSearchBloc;
 
-  /// Initializes a new [FirebaseApp] instance by [name] and [options] and returns
-  /// the created app. This method should be called before any usage of FlutterFire plugins.
-  ///
-  /// The default app instance cannot be initialized here and should be created
-  /// using the platform Firebase integration.
+  static FirebaseAuth? _firebaseAuth;
+  static ChatRepositoryImpl? _chatRepo;
+  static ConversationRepositoryImpl? _conversationRepo;
+  static ChatUploadManagerRepositoryImpl? _chatUploadRepo;
+  static FirebaseUserProfileRepositoryImpl? _userProfileRepo;
+
+  static bool _isInit = false;
+
   static void initializeApp({
     String? name,
     required NEONChatSetupOptions options,
-    // FirebaseOptions? options,
-  }) async {
-    //TODO: was brauchen wir dafür?
+  }) {
+    if (!_isInit) {
+      _isInit = true;
+      //TODO: alle DInge, die im package von den SetupOptions abhängen, müssen iwie auf die abhängigkeit hier verweisen
+      //TODO: was brauchen wir dafür?
+
+      _chatRepo = ChatRepositoryImpl(options.firestore, options.firebaseAuth);
+      final fileUploadRepoImpl = FileUploadRepositoryImpl(
+        options.deleteEndpoint,
+        options.patchEndpoint,
+        options.postEndpoint,
+        options.getEndpoint,
+        options.uploadFileToPresignedURL,
+      );
+
+      _chatUploadRepo = ChatUploadManagerRepositoryImpl(
+          fileUploadRepository: fileUploadRepoImpl);
+
+      _conversationRepo =
+          ConversationRepositoryImpl(options.firestore, options.firebaseAuth);
+
+      _userProfileRepo = FirebaseUserProfileRepositoryImpl();
+
+      _conversationsBloc =
+          ConversationsBloc(_conversationRepo!, _userProfileRepo!, _chatRepo!);
+
+      // _conversationsSearchBloc = ConversationsSearchBloc();
+
+      // _chatSearchBloc = ChatSearchBloc();
+
+      //TODO:
+      // _chatBloc = ChatBloc(conversationId: conversationId, userProfileId: userProfileId, firebaseAuth: firebaseAuth, chatRepository: chatRepository, conversationRepository: conversationRepository, chatUploadManagerRepository: chatUploadManagerRepository, userProfileRepository: userProfileRepository)
+
+    } else {
+      throw NEONChatAlreadyInitializedError();
+    }
   }
 
-  static ChatBloc get chatBloc {
-    if (_chatBloc != null) {
-      return _chatBloc!;
+  static ChatBloc getChatBloc({
+    required String conversationId,
+    required String userProfileId,
+  }) {
+    if (_isInit) {
+      //TODO: meherere instanzen kein problem, in papeo auch so gemacht, nur auth udn repos etc müssen singletons sein
+      return ChatBloc(
+        conversationId: conversationId,
+        userProfileId: userProfileId,
+        firebaseAuth: _firebaseAuth!,
+        chatRepository: _chatRepo!,
+        conversationRepository: _conversationRepo!,
+        chatUploadManagerRepository: _chatUploadRepo!,
+        userProfileRepository: _userProfileRepo!,
+      );
     } else {
       throw NEONChatNotInitializedError();
     }
   }
 
+//TODO: nötig? in papeo wird für jeden chat neuer instanziiert (ohne getit)
   static ChatSearchBloc get chatSearchBloc {
-    if (_chatSearchBloc != null) {
-      return _chatSearchBloc!;
-    } else {
-      throw NEONChatNotInitializedError();
-    }
+    // if (_chatSearchBloc != null) {
+    //   return _chatSearchBloc!;
+    // } else {
+    //   throw NEONChatNotInitializedError();
+    // }
+    return ChatSearchBloc();
   }
 
+  //in papeo kein singleton, aber auf app niveau in provider geklemmt also iwie doch singleton
   static ConversationsBloc get conversationsBloc {
     if (_conversationsBloc != null) {
       return _conversationsBloc!;
@@ -47,47 +100,13 @@ class NEONChat {
     }
   }
 
+  //TODO: nötig? wird auch für jeden aufruf des convoLoaders neu instanziiert
   static ConversationsSearchBloc get conversationsSearchBloc {
-    if (_conversationsSearchBloc != null) {
-      return _conversationsSearchBloc!;
-    } else {
-      throw NEONChatNotInitializedError();
-    }
+    // if (_conversationsSearchBloc != null) {
+    //   return _conversationsSearchBloc!;
+    // } else {
+    //   throw NEONChatNotInitializedError();
+    // }
+    return ConversationsSearchBloc();
   }
 }
-
-
-
- 
-
-
-
-
-
-  /// Returns a [FirebaseApp] instance.
-  ///
-  /// If no name is provided, the default app instance is returned.
-  /// Throws if the app does not exist.
-  // static FirebaseApp app([String name = defaultFirebaseAppName]) {
-  //   FirebaseAppPlatform app = _delegate.app(name);
-
-  //   return FirebaseApp._(app);
-  // }
-
-  // TODO(rrousselGit): remove ==/hashCode
-  // @override
-  // // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  // bool operator ==(Object other) {
-  //   if (identical(this, other)) return true;
-  //   if (other is! Firebase) return false;
-  //   return other.hashCode == hashCode;
-  // }
-
-  // @override
-  // // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  // int get hashCode => toString().hashCode;
-
-  // @override
-  // String toString() => '$Firebase';
-
-
