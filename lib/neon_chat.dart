@@ -8,10 +8,10 @@ import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/data/repositories/firebase_user_profile_repository_impl.dart';
 import 'package:neon_chat/src/neon_chat_setup_options.dart';
 
-export 'src/conversation/conversation.dart' show ChatMessage;
-export 'src/conversations/conversations.dart'
-    show Conversation, ConversationItem;
-export 'src/core/core.dart' show FirebaseUser;
+export 'src/conversation/conversation.dart'; // show ChatMessage;
+export 'src/conversations/conversations.dart';
+//show Conversation, ConversationItem;
+export 'src/core/core.dart'; // show FirebaseUser;
 export 'src/presentation/presentation.dart';
 export 'src/neon_chat_setup_options.dart';
 

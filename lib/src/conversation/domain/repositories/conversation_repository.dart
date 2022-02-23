@@ -1,6 +1,6 @@
 import 'package:neon_chat/src/conversation/conversation.dart';
 
-abstract class ChatRepository {
+abstract class ConversationRepository {
   Stream<List<ChatMessage>> getMessages(String conversationId);
   Stream<ChatMessage> getLastMessages(String conversationId);
 

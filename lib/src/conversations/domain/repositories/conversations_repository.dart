@@ -1,6 +1,6 @@
 import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
 
-abstract class ConversationRepository {
+abstract class ConversationsRepository {
   Stream<List<Conversation>> getAllConversations();
   Stream<Conversation> getConversation(String conversationId);
 

@@ -1,1 +1,1 @@
-export 'conversation_repository.dart';
+export 'conversations_repository.dart';

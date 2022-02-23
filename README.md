@@ -3,6 +3,9 @@
 
 Unser absolut performanter, universell einsetzbarer Chat. WhatsApp ist lit, aber wir sind litter! (🏴󠁧󠁢󠁥󠁮󠁧󠁿-pun intended)
 
+Firebase Setup unbedingt mit FlutterFire CLI machen!
+Google-Services.json/plist muss man manuell einfügen! (für iOS über xcode, wenn man das einfach ins filesystem kopiert, wird es nicht verlinkt).
+<!-- 
 ## Stand 17.02.21:
 - habe Hadis Code aus Papeo kopiert und ihn syntax-fehler-frei im package zum laufen gebracht
 - package kann in flutter projekte importiert werden
@@ -32,7 +35,7 @@ return BlocProvider<ChatSearchBloc, ChatSearchState>(
 
 etc. Auf die Chat-bezogenen Blocs wird also nicht via ```getIt```, sondern statisch zugegriffen. Außerdem exportiert das package zahlreiche Widgets, wie z.B. die ```ChatBottomBar``` (die ganzen ätzenden Features davon wie z.B. FilePicker, AudioRecorder sind leider noch nicht getestet, aber 1-zu-1 von papeo übernommen und da liefen sie 🤪 - also feel free das auszutesten!).
 
-Sollte das zu schwammig oder etwas unklar sein, mich (Julien) einfach auf Slack/WhatsApp anhauen!
+Sollte das zu schwammig oder etwas unklar sein, mich (Julien) einfach auf Slack/WhatsApp anhauen! -->
 
 <!-- ## Features
 

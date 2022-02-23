@@ -12,11 +12,11 @@ const _conversationsCollectionName = 'conversations';
 const _messageCollectionName = 'messages';
 
 // @LazySingleton(as: ChatRepository)
-class ChatRepositoryImpl implements ChatRepository {
+class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth auth;
   final CollectionReference _conversations;
-  ChatRepositoryImpl(this.firestore, this.auth)
+  ConversationRepositoryImpl(this.firestore, this.auth)
       : _conversations = firestore.collection(_conversationsCollectionName);
 
   @override

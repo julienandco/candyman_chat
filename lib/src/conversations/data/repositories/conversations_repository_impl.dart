@@ -7,12 +7,12 @@ import 'package:injectable/injectable.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 
 // @LazySingleton(as: ConversationRepository)
-class ConversationRepositoryImpl implements ConversationRepository {
+class ConversationsRepositoryImpl implements ConversationsRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth auth;
   final CollectionReference _collection;
 
-  ConversationRepositoryImpl(
+  ConversationsRepositoryImpl(
     this.firestore,
     this.auth,
   ) : _collection = firestore.collection('conversations');
@@ -21,10 +21,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
   @override
   Future<Conversation> createConversations(String chatPersonId) async {
-    final query = await _collection
-        .where('members', arrayContainsAny: [_userId])
-        .where('partyId', isNull: true)
-        .get();
+    final query =
+        await _collection.where('members', arrayContainsAny: [_userId]).get();
     final conversations = query.docs
         .map((e) => Conversation.fromJson(e.data() as Map<String, dynamic>))
         .toList();

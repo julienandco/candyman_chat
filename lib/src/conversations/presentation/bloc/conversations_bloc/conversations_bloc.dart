@@ -16,19 +16,19 @@ part 'conversations_bloc.freezed.dart';
 
 //TODO: inject bloc?
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
+  final ConversationsRepository conversationsRepository;
   final ConversationRepository conversationRepository;
-  final ChatRepository chatRepository;
   final FirebaseUserProfileRepository userProfileRepository;
 
   StreamSubscription? _conversationsStream;
   late final List<StreamSubscription> _chatsItemsStream = [];
 
-  ConversationsBloc(
-    this.conversationRepository,
-    this.userProfileRepository,
-    this.chatRepository,
-  ) : super(const _Initial()) {
-    _conversationsStream = conversationRepository.getAllConversations().listen(
+  ConversationsBloc({
+    required this.conversationsRepository,
+    required this.userProfileRepository,
+    required this.conversationRepository,
+  }) : super(const _Initial()) {
+    _conversationsStream = conversationsRepository.getAllConversations().listen(
       (event) {
         if (event.isNotEmpty) {
           add(
@@ -76,9 +76,9 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
               //     element != getIt<FirebaseAuth>().currentUser!.uid);
 
               final chatStream = CombineLatestStream.combine3(
-                chatRepository.getLastMessages(conversation.id),
+                conversationRepository.getLastMessages(conversation.id),
                 userProfileRepository.getUserProfile(chatPersonId),
-                conversationRepository.getUnreadMessagesCount(conversation.id),
+                conversationsRepository.getUnreadMessagesCount(conversation.id),
                 (
                   ChatMessage lastMessage,
                   FirebaseUser userProfile,
@@ -151,7 +151,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
               orElse: () => state,
             ),
           );
-          conversationRepository.hideConversations(conversationId);
+          conversationsRepository.hideConversations(conversationId);
         },
       );
     });
