@@ -10,30 +10,33 @@ class FirebaseKeys {
 
   final String _conversationsCollectionKey;
 
-  final String conversationMembersKey;
-  final String conversationHiddenFromKey;
+  //Nur anfassen, wenn sich in [Conversation] etwas ändert!!! Wegen JSONSerializable!!!
+  final String conversationMembersKey = 'conversationMembers';
+  final String conversationHiddenFromKey = 'hiddenFrom';
+  final String conversationTimestampKey = 'timestamp';
+  final String conversationDoneUploadKey = 'doneUpload';
 
   final String messagesInConversationKey;
-  final String messageSenderIdKey;
-  final String messageSeenKey;
-  final String messageDoneUploadKey;
+
+  //Nur anfassen, wenn sich in [ChatMessage] etwas ändert!!! Wegen JSONSerializable!!!
+  final String messageSenderIdKey = 'senderId';
+  final String messageSeenKey = 'seen';
+  final String messageDoneUploadKey = 'doneUpload';
+  final String messageTypeKey = 'type';
+  final String messageHiddenFromKey = 'hiddenFrom';
 
   final String _usersCollectionKey;
-  final String usersIdKey;
+
+  //Nur anfassen, wenn sich in [FirebaseUser] etwas ändert!!! Wegen JSONSerializable!!!
+  final String usersIdKey = 'id';
 
   const FirebaseKeys({
     this.environment = FirebaseEnvironment.staging,
     this.stagingCollectionName = 'staging',
     this.productionCollectionName = 'production',
     String conversationsCollectionKey = 'conversations',
-    this.conversationMembersKey = 'conversationMembers',
-    this.conversationHiddenFromKey = 'hiddenFrom',
     this.messagesInConversationKey = 'messages',
-    this.messageSenderIdKey = 'senderId',
-    this.messageSeenKey = 'seen',
-    this.messageDoneUploadKey = 'doneUpload',
     String usersCollectionKey = 'users',
-    this.usersIdKey = 'id',
   })  : _conversationsCollectionKey = conversationsCollectionKey,
         _usersCollectionKey = usersCollectionKey;
 

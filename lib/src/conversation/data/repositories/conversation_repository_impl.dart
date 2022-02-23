@@ -27,7 +27,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     return _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
-        .orderBy('timestamp', descending: true)
+        .orderBy(firebaseKeys.conversationTimestampKey, descending: true)
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
@@ -81,8 +81,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
     return _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
-        .where('doneUpload', isEqualTo: true)
-        .orderBy('timestamp', descending: true)
+        .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
+        .orderBy(firebaseKeys.conversationTimestampKey, descending: true)
         .limit(1)
         .snapshots()
         .transform(
@@ -147,7 +147,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
           .doc(message.id)
           .update(
         {
-          'seen': true,
+          firebaseKeys.messageSeenKey: true,
         },
       );
     }
@@ -160,7 +160,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .collection(firebaseKeys.messagesInConversationKey)
         .doc(message.id)
         .update(
-      {'type': 'deleted'},
+      {firebaseKeys.messageTypeKey: ChatMessageType.deleted.firebaseKey},
     );
   }
 
@@ -174,7 +174,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .doc(message.id)
         .update(
       {
-        'hiddenFrom': FieldValue.arrayUnion(
+        firebaseKeys.messageHiddenFromKey: FieldValue.arrayUnion(
           [userId],
         ),
       },
