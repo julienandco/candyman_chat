@@ -6,19 +6,18 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:neon_chat/neon_chat.dart';
 // import 'package:timeago/timeago.dart' as timeago;
 
-import 'message_list.dart';
-
-class ConversationPage extends StatefulWidget {
-  const ConversationPage({
+class DefaultConversationPage extends StatefulWidget {
+  const DefaultConversationPage({
     Key? key,
     required this.showCloseButton,
   }) : super(key: key);
   final bool showCloseButton;
   @override
-  _ConversationPageState createState() => _ConversationPageState();
+  _DefaultConversationPageState createState() =>
+      _DefaultConversationPageState();
 }
 
-class _ConversationPageState extends State<ConversationPage> {
+class _DefaultConversationPageState extends State<DefaultConversationPage> {
   bool _isInit = true;
   //TODO: push notifications services
   // @override

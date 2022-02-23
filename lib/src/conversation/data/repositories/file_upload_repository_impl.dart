@@ -9,35 +9,16 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class FileUploadRepositoryImpl implements FileUploadRepository {
-  //TODO
-  // final RemoteApiDataSource remoteApiDataSource;
-  final Future<Either<Failure, String>> Function(String fileId) deleteEndpoint;
-  final Future<Either<Failure, String>> Function(String fileId) getEndpoint;
-  final Future<Either<Failure, String>> Function(
-      String fileId, Map<String, dynamic> body) patchEndpoint;
-  final Future<Either<Failure, String>> Function(
-      String fileId, Map<String, dynamic> body) postEndpoint;
-
-  final Future<Either<Failure, Success>> Function(
-    String url, {
-    String? filePath,
-    PlatformFile? platformFile,
-    void Function(int, int)? onReceiveProgress,
-  }) uploadFileToPresignedURL;
+  final RemoteDataSource remoteDataSource;
 
   FileUploadRepositoryImpl({
-    required this.deleteEndpoint,
-    required this.patchEndpoint,
-    required this.postEndpoint,
-    required this.getEndpoint,
-    required this.uploadFileToPresignedURL,
+    required this.remoteDataSource,
   });
-  // FileUploadRepositoryImpl(this.remoteApiDataSource);
 
   @override
   Future<Either<Failure, Success>> deleteFileWithId(String fileId) async {
     try {
-      final response = await deleteEndpoint(fileId);
+      final response = await remoteDataSource.deleteEndpoint(fileId);
       // final response = await remoteApiDataSource
       //     .deleteApiEndpoint('$kRemoteUploadsUrl/$fileId');
       return response.fold((l) => left(l), (r) => right(const Success()));
@@ -52,7 +33,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
     try {
       final newPresignedUrl = await getNewPresignedUrl();
       if (newPresignedUrl?.value1 != null) {
-        final result = await uploadFileToPresignedURL(
+        final result = await remoteDataSource.uploadFileToPresignedURL(
           newPresignedUrl!.value1!,
           filePath: photoFile?.path,
           platformFile: platformFile,
@@ -63,7 +44,8 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
         //   platformFile: platformFile,
         // );
         if (result.isRight() && newPresignedUrl.value2 != null) {
-          final response = await patchEndpoint('/profilepicture', {
+          final response =
+              await remoteDataSource.patchEndpoint('/profilepicture', {
             'upload': newPresignedUrl.value2,
           });
           // final response = await remoteApiDataSource
@@ -89,7 +71,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
     try {
       final newPresignedUrl = await getNewPresignedUrl();
       if (newPresignedUrl?.value1 != null) {
-        final result = await uploadFileToPresignedURL(
+        final result = await remoteDataSource.uploadFileToPresignedURL(
           newPresignedUrl!.value1!,
           filePath: file.filePath,
           platformFile: file.platformFile,
@@ -100,7 +82,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
         //   platformFile: file.platformFile,
         // );
         if (result.isRight() && newPresignedUrl.value2 != null) {
-          final response = await postEndpoint('/messages', {
+          final response = await remoteDataSource.postEndpoint('/messages', {
             'upload': newPresignedUrl.value2,
             'conversation': conversationId,
             'message': messageId,
@@ -124,7 +106,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
   @override
   Future<Tuple2<String?, String?>?> getNewPresignedUrl() async {
     try {
-      final response = await getEndpoint('/getPresignedUrl/');
+      final response = await remoteDataSource.getEndpoint('/getPresignedUrl/');
       // final response = await remoteApiDataSource
       //     .getApiEndpoint('$kRemoteUploadsUrl/getPresignedUrl/');
       log("========PRESIGNED URL=========", name: '$runtimeType');

@@ -14,6 +14,10 @@ programmatisch im code anmelden (s. example/lib/main.dart).
 
 um die magie passieren zu sehen, ist es hilfreich, die firebase firstore collectoins mit chat nachrichten zu füllen (entweder per hand, oder programmatisch mit ConversationsRepository.createConversation).
 
+Beim Aufsetzen bitte die naming conventions in lib/core/firebase_keys.dart beachten!
+TODO: datenstruktur aufsetzen, die custom strings abspeichert, damit man beliebige firebase
+implementierung mit diesem package nutzen kann!
+
 anschließend musst du indizes für die erstellten collections machen (für den anfang messages, was eine subcollection einer conversation ist (die in der collection conversations zu finden ist)).
 
 damit die app nicht beim versuch, ein foto zu machen crasht, musst du ein paar keys ins Info.plist buttern: 
@@ -27,11 +31,18 @@ damit die app nicht beim versuch, ein foto zu machen crasht, musst du ein paar k
 <string>Gallerie bite.</string>
 <key>NSCameraUsageDescription</key>
 <string>Kamera bite.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Mikro bite.</string>
 ```
 
 für das auffüllen ein skript schreiben? conversations,messages und users populaten
 
 noch logik für staging/production einführen. es soll in die collections staging/conversations bzw. production/conversations geschrieben werden, damit man später staging löschen/bearbeiten kann.
+
+##Features: 
+Gesamte Logik, die man benötigt, um eine super-custom Chat UI zu bauen.
+
+Keine wahnsinnige UI, sondern standard? Dann nutze DefaultConversationLoader, DefaultConversationPage, DefaultConversationsLoader und DefaultConversationsPage und style sie dem Fall entsprechend!
 <!-- 
 ## Stand 17.02.21:
 - habe Hadis Code aus Papeo kopiert und ihn syntax-fehler-frei im package zum laufen gebracht

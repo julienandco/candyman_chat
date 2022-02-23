@@ -4,24 +4,32 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neon_chat/neon_chat.dart';
 
-import 'conversation_page.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
+import 'package:neon_chat/src/core/core.dart';
+import '../../conversations/conversations.dart';
 
-class ConversationLoader extends StatelessWidget {
+class DefaultConversationLoader extends StatelessWidget {
   final String conversationId;
   final String userProfileId;
   final bool showCloseButton;
-  const ConversationLoader({
+  final FirebaseFirestore firestore;
+  final FirebaseAuth firebaseAuth;
+  final RemoteDataSource remoteDataSource;
+  const DefaultConversationLoader({
     Key? key,
     required this.userProfileId,
     required this.conversationId,
+    required this.firestore,
+    required this.firebaseAuth,
+    required this.remoteDataSource,
     this.showCloseButton = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final firestore = FirebaseFirestore.instance;
-    final firebaseAuth = FirebaseAuth.instance;
+    //TODO
+    // final firestore = FirebaseFirestore.instance;
+    // final firebaseAuth = FirebaseAuth.instance;
     return MultiBlocProvider(
       providers: [
         BlocProvider<ChatSearchBloc>(
@@ -44,23 +52,24 @@ class ConversationLoader extends StatelessWidget {
             chatUploadManagerRepository: ChatUploadManagerRepositoryImpl(
               //TODO
               fileUploadRepository: FileUploadRepositoryImpl(
-                deleteEndpoint: (_) async => right('e'),
-                patchEndpoint: (_, __) async => right('e'),
-                postEndpoint: (_, __) async => right('e'),
-                getEndpoint: (_) async => right('e'),
-                uploadFileToPresignedURL: (
-                  String url, {
-                  String? filePath,
-                  PlatformFile? platformFile,
-                  void Function(int, int)? onReceiveProgress,
-                }) async =>
-                    right(const Success()),
+                remoteDataSource: remoteDataSource,
+                // deleteEndpoint: (_) async => right('e'),
+                // patchEndpoint: (_, __) async => right('e'),
+                // postEndpoint: (_, __) async => right('e'),
+                // getEndpoint: (_) async => right('e'),
+                // uploadFileToPresignedURL: (
+                //   String url, {
+                //   String? filePath,
+                //   PlatformFile? platformFile,
+                //   void Function(int, int)? onReceiveProgress,
+                // }) async =>
+                //     right(const Success()),
               ),
             ),
           ),
         ),
       ],
-      child: ConversationPage(showCloseButton: showCloseButton),
+      child: DefaultConversationPage(showCloseButton: showCloseButton),
     );
   }
 }

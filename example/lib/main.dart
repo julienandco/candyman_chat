@@ -1,15 +1,12 @@
-import 'package:example/chat/conversations/conversations_loader.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:neon_chat/neon_chat.dart';
 
 import 'firebase_options.dart';
-
-/// Die zwei Test-User, die in der FirebaseAuth hinterlegt sind.
-const firebaseUsers = [
-  'w4KxTRn95eSYoiAvSiqaYGQ7auk1',
-  'tAqmmpKhZecyewN53YmdOseiw2u2'
-];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,12 +27,57 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firestore = FirebaseFirestore.instance;
+    final firebaseAuth = FirebaseAuth.instance;
+    final remoteDataSource = _MyDataSource();
     return MaterialApp(
       title: 'NEON Chat Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ConversationsLoader(),
+      home: DefaultConversationsLoader(
+        firestore: firestore,
+        firebaseAuth: firebaseAuth,
+        remoteDataSource: remoteDataSource,
+      ),
     );
+  }
+}
+
+class _MyDataSource implements RemoteDataSource {
+  @override
+  Future<Either<Failure, String>> deleteEndpoint(String fileId) async {
+    // TODO: implement deleteEndpoint
+
+    return right('TODO');
+  }
+
+  @override
+  Future<Either<Failure, String>> getEndpoint(String fileId) async {
+    // TODO: implement getEndpoint
+    return right('TODO');
+  }
+
+  @override
+  Future<Either<Failure, String>> patchEndpoint(
+      String fileId, Map<String, dynamic> body) async {
+    // TODO: implement patchEndpoint
+    return right('TODO');
+  }
+
+  @override
+  Future<Either<Failure, String>> postEndpoint(
+      String fileId, Map<String, dynamic> body) async {
+    // TODO: implement postEndpoint
+    return right('TODO');
+  }
+
+  @override
+  Future<Either<Failure, Success>> uploadFileToPresignedURL(String url,
+      {String? filePath,
+      PlatformFile? platformFile,
+      void Function(int p1, int p2)? onReceiveProgress}) async {
+    // TODO: implement uploadFileToPresignedURL
+    return right(const Success());
   }
 }

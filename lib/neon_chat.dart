@@ -1,21 +1,15 @@
 library neon_chat;
 
-import 'dart:developer';
+import 'package:flutter/foundation.dart'
+    show TargetPlatform, defaultTargetPlatform, kIsWeb;
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/conversations/conversations.dart';
-import 'package:neon_chat/src/core/data/repositories/firebase_user_profile_repository_impl.dart';
-import 'package:neon_chat/src/neon_chat_setup_options.dart';
+//TODO: passende show statements einbauen
 
 export 'src/conversation/conversation.dart'; // show ChatMessage;
 export 'src/conversations/conversations.dart';
 //show Conversation, ConversationItem;
 export 'src/core/core.dart'; // show FirebaseUser;
 export 'src/presentation/presentation.dart';
-export 'src/neon_chat_setup_options.dart';
 
-// part 'src/neon_chat_impl.dart';
-
-//TODO
-const isWebOrMacOS = false;
+bool get isWebOrMacOS =>
+    kIsWeb || defaultTargetPlatform == TargetPlatform.macOS;

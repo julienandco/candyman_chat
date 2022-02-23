@@ -2,17 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neon_chat/neon_chat.dart';
 
-import 'conversations_page.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
+import 'package:neon_chat/src/core/core.dart';
 
-class ConversationsLoader extends StatelessWidget {
-  const ConversationsLoader({Key? key}) : super(key: key);
+class DefaultConversationsLoader extends StatelessWidget {
+  final FirebaseFirestore firestore;
+  final FirebaseAuth firebaseAuth;
+  final RemoteDataSource remoteDataSource;
+  const DefaultConversationsLoader({
+    Key? key,
+    required this.firestore,
+    required this.firebaseAuth,
+    required this.remoteDataSource,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final firestore = FirebaseFirestore.instance;
-    final firebaseAuth = FirebaseAuth.instance;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -66,7 +73,11 @@ class ConversationsLoader extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: const ConversationsPage(),
+                  child: DefaultConversationsPage(
+                    firebaseAuth: firebaseAuth,
+                    remoteDataSource: remoteDataSource,
+                    firestore: firestore,
+                  ),
                 ),
                 if (isWidthOverLimit(context))
                   BlocBuilder<CurrentConversationCubit,
@@ -75,13 +86,16 @@ class ConversationsLoader extends StatelessWidget {
                       if (state.conversationId != null) {
                         return Flexible(
                           child:
-                              Text(state.userProfileId ?? 'no user id found'),
-                          // ChatLoader(
-                          //   key: Key(state.conversationId!),
-                          //   userProfileId: state.userProfileId!,
-                          //   conversationId: state.conversationId!,
-                          //   showCloseButton: false,
-                          // ),
+                              // Text(state.userProfileId ?? 'no user id found'),
+                              DefaultConversationLoader(
+                            key: Key(state.conversationId!),
+                            firebaseAuth: firebaseAuth,
+                            firestore: firestore,
+                            remoteDataSource: remoteDataSource,
+                            userProfileId: state.userProfileId!,
+                            conversationId: state.conversationId!,
+                            showCloseButton: false,
+                          ),
                         );
                       } else {
                         return const Expanded(

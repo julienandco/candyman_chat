@@ -6,14 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animator/flutter_animator.dart';
+import 'package:neon_chat/neon_chat.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
-
-import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/core/core.dart';
-import 'package:neon_chat/src/presentation/presentation.dart';
 
 class ChatBottomBar extends StatefulWidget {
   final Color chatBarColor;
@@ -67,9 +63,6 @@ class ChatBottomBar extends StatefulWidget {
     this.sendIconSize = 46,
   }) : super(key: key);
 
-  bool get isWebOrMacOS =>
-      kIsWeb || defaultTargetPlatform == TargetPlatform.macOS;
-
   @override
   _ChatBottomBarState createState() => _ChatBottomBarState();
 }
@@ -97,7 +90,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   @override
   void initState() {
     _textController.addListener(_onTextChanged);
-    _showSentButton = widget.isWebOrMacOS;
+    _showSentButton = isWebOrMacOS;
     _recordTimer = StopWatchTimer(
       mode: StopWatchMode.countUp,
       onChangeRawSecond: _onTimerChange,
@@ -129,7 +122,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
     final value = _textController.text;
     setState(() {
       _showAttachOptions = false;
-      if (!widget.isWebOrMacOS) _showSentButton = value.isNotEmpty;
+      if (isWebOrMacOS) _showSentButton = value.isNotEmpty;
     });
   }
 
@@ -385,11 +378,11 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                     IconButton(
                                       icon: widget.attachmentIcon ??
                                           Icon(CupertinoIcons.paperclip),
-                                      onPressed: widget.isWebOrMacOS
+                                      onPressed: isWebOrMacOS
                                           ? _toggleShowAttachOptions
                                           : _pickFile,
                                     ),
-                                    if (!widget.isWebOrMacOS)
+                                    if (!isWebOrMacOS)
                                       IconButton(
                                         icon: widget.cameraIcon ??
                                             Icon(CupertinoIcons.camera),

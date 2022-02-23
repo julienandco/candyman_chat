@@ -1,17 +1,27 @@
-import 'package:example/chat/conversation/conversation_loader.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
-class ConversationsPage extends StatefulWidget {
-  const ConversationsPage({Key? key}) : super(key: key);
+class DefaultConversationsPage extends StatefulWidget {
+  final FirebaseFirestore firestore;
+  final FirebaseAuth firebaseAuth;
+  final RemoteDataSource remoteDataSource;
+  const DefaultConversationsPage({
+    Key? key,
+    required this.firestore,
+    required this.firebaseAuth,
+    required this.remoteDataSource,
+  }) : super(key: key);
 
   @override
-  State<ConversationsPage> createState() => _ConversationsPageState();
+  State<DefaultConversationsPage> createState() =>
+      _DefaultConversationsPageState();
 }
 
-class _ConversationsPageState extends State<ConversationsPage>
+class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     with AutomaticKeepAliveClientMixin {
   final _scrollController = ScrollController();
 
@@ -52,7 +62,11 @@ class _ConversationsPageState extends State<ConversationsPage>
                                 Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                    builder: (context) => ConversationLoader(
+                                    builder: (context) =>
+                                        DefaultConversationLoader(
+                                      firebaseAuth: widget.firebaseAuth,
+                                      firestore: widget.firestore,
+                                      remoteDataSource: widget.remoteDataSource,
                                       userProfileId:
                                           conversation.conversationPartner.id,
                                       conversationId:
@@ -62,7 +76,6 @@ class _ConversationsPageState extends State<ConversationsPage>
                                 );
                               },
                             ),
-                            // Text(conversation.conversationPartner.name),
                           )
                           .toList();
                     },
