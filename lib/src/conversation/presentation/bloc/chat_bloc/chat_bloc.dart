@@ -23,7 +23,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final FirebaseAuth firebaseAuth;
   final ConversationRepository conversationRepository;
   final ConversationsRepository conversationsRepository;
-  final ChatUploadManagerRepository chatUploadManagerRepository;
+  final UploadManagerRepository chatUploadManagerRepository;
   final FirebaseUserProfileRepository userProfileRepository;
   late final StreamSubscription _chatStream;
 

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:neon_chat/src/conversation/data/models/models.dart';
 
 import 'package:neon_chat/src/core/core.dart';
@@ -63,55 +62,3 @@ class ChatMessage with _$ChatMessage {
 //TODO: injection in package?
   // bool get isMe => getIt<FirebaseAuth>().currentUser!.uid == senderId;
 }
-
-// class ChatMessageEntity extends Equatable {
-//   final String id;
-//   final String? text;
-//   final LatLng? location;
-//   final bool seen;
-//   final String senderId;
-//   final String receiverId;
-//   final DateTime? timestamp;
-//   final UploadEntity? upload;
-//   final ChatMessageType type;
-//   final bool doneUpload;
-//   final String? filePath;
-//   final Duration? audioDuration;
-//   final List<String> hiddenFrom;
-
-//   ChatMessageEntity({
-//     this.id = '',
-//     this.text,
-//     required this.location,
-//     required this.seen,
-//     required this.senderId,
-//     required this.receiverId,
-//     this.doneUpload = false,
-//     this.timestamp,
-//     this.upload,
-//     this.filePath,
-//     required this.type,
-//     this.audioDuration,
-//     this.hiddenFrom = const [],
-//   });
-
-//   @override
-//   List<Object?> get props {
-//     return [
-//       id,
-//       text,
-//       location,
-//       seen,
-//       senderId,
-//       receiverId,
-//       timestamp,
-//       upload,
-//       type,
-//       doneUpload,
-//       filePath,
-//       audioDuration,
-//       hiddenFrom,
-//     ];
-//   }
-
-

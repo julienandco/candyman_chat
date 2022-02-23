@@ -95,37 +95,6 @@ class _MessageBubbleState extends State<MessageBubble> {
         },
       );
     }
-    // showDialog(
-    //   context: context,
-    //   builder: (_) => BaseDialog(
-    //     title: 'dialogDeleteChatMessageQuestion'.tr(),
-    //     body: Padding(
-    //       padding: kPadMedium,
-    //       child: Column(
-    //         children: [
-    //           ActionButton(
-    //             buttonType: 2,
-    //             title: 'dialogDeleteChatMessageForMe'.tr(),
-    //             onPressed: () {
-    //               context.read<ChatBloc>().hideMessage(widget.message);
-    //               Navigator.pop(context);
-    //             },
-    //           ),
-    //           Padding(padding: kPadVertSmall),
-    //           if (canDeleteMessage)
-    //             ActionButton(
-    //               buttonType: 2,
-    //               onPressed: () {
-    //                 context.read<ChatBloc>().deleteMessage(widget.message);
-    //                 Navigator.pop(context);
-    //               },
-    //               title: 'dialogDeleteChatMessageForEveryone'.tr(),
-    //             ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 
   AlignmentGeometry get _alignment =>
@@ -145,10 +114,6 @@ class _MessageBubbleState extends State<MessageBubble> {
   void copyToClipboard() async {
     await Clipboard.setData(ClipboardData(text: widget.message.text));
     widget.onCopyToClipboard?.call();
-    // Fluttertoast.showToast(
-    //   msg: 'copiedToClipboard'.tr(),
-    //   backgroundColor: kColorPrimary,
-    // );
   }
 
   @override

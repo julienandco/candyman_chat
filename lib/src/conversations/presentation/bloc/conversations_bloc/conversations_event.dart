@@ -2,8 +2,6 @@ part of 'conversations_bloc.dart';
 
 @freezed
 class ConversationsEvent with _$ConversationsEvent {
-  const factory ConversationsEvent.fetchConversations() = _FetchConversation;
-
   const factory ConversationsEvent.fetchChatItems(
     List<Conversation> conversations,
   ) = _FetchChatItems;

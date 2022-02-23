@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
-import 'package:file_picker/file_picker.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/core/core.dart';
-import '../../conversations/conversations.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
 
 class DefaultConversationLoader extends StatelessWidget {
   final String conversationId;
@@ -53,7 +52,7 @@ class DefaultConversationLoader extends StatelessWidget {
               firebaseKeys: firebaseKeys,
             ),
             firebaseAuth: firebaseAuth,
-            chatUploadManagerRepository: ChatUploadManagerRepositoryImpl(
+            chatUploadManagerRepository: UploadManagerRepositoryImpl(
               fileUploadRepository: FileUploadRepositoryImpl(
                 remoteDataSource: remoteDataSource,
               ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//TODO: imports
-import 'package:neon_chat/src/conversation/presentation/bloc/chat_search_bloc/chat_search_bloc.dart';
+import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatSearchUpDown extends StatelessWidget {
   final EdgeInsets padding;

@@ -84,8 +84,6 @@ class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
         await player.setAudioSource(
             AudioSource.uri(Uri.parse(widget.message.filePath!)));
       } else if (widget.message.doneUpload) {
-        // final url = await getIt<GetUploadRedirectUrlForUrlUC>()
-        //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
         final url = widget.getUploadURL(widget.message.upload!.fileId);
         await player.setUrl(url);
       }

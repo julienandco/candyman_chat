@@ -39,46 +39,43 @@ class _ChatFileBubbleState extends State<ChatFileBubble>
         _isLoading = true;
         setState(() {});
         final url = widget.getUploadURL(widget.message.upload!.fileId);
-        // final url = await getIt<GetUploadRedirectUrlForUrlUC>()
-        //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
+
         _didClick = false;
         _isLoading = false;
         setState(() {});
 
         launch(url);
       },
-      child: Container(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedSize(
-              duration: const Duration(milliseconds: 200),
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: widget.message.doneUpload
-                    ? (!_isLoading
-                        ? widget.downloadIcon ??
-                            const Icon(
-                              Icons.download,
-                              color: Colors.red,
-                            )
-                        : widget.progressIndicator ??
-                            const CircularProgressIndicator())
-                    : null,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AnimatedSize(
+            duration: const Duration(milliseconds: 200),
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: widget.message.doneUpload
+                  ? (!_isLoading
+                      ? widget.downloadIcon ??
+                          const Icon(
+                            Icons.download,
+                            color: Colors.red,
+                          )
+                      : widget.progressIndicator ??
+                          const CircularProgressIndicator())
+                  : null,
+            ),
+          ),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                widget.message.text ?? widget.fileTypeNotSupportedLabel,
+                style: widget.labelStyle,
               ),
             ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  widget.message.text ?? widget.fileTypeNotSupportedLabel,
-                  style: widget.labelStyle,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

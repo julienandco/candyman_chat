@@ -6,6 +6,8 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:neon_chat/neon_chat.dart';
 // import 'package:timeago/timeago.dart' as timeago;
 
+//TODO: style
+
 class DefaultConversationPage extends StatefulWidget {
   const DefaultConversationPage({
     Key? key,
@@ -61,7 +63,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
         value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
         child: KeyboardDismisser(
           child: Scaffold(
-            //TODO
+            //TODO style extrahieren
             // backgroundColor: kColorPrimaryLighter,
             appBar: _Appbar(showCloseButton: !widget.showCloseButton),
             body: Stack(
@@ -75,7 +77,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                   reverse: true,
                   controller:
                       context.read<ChatSearchBloc>().messageListController,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   slivers: [
                     SliverPadding(
                       padding: EdgeInsets.only(
@@ -119,23 +121,19 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                     child: BlocBuilder<ChatSearchBloc, ChatSearchState>(
                       builder: (context, state) {
                         if (state.isSearchActive) {
-                          return SizedBox.shrink();
+                          return const SizedBox.shrink();
                         } else {
                           return Padding(
                             padding: isWidthOverLimit(context)
-                                ? EdgeInsets.only(bottom: 100)
+                                ? const EdgeInsets.only(bottom: 100)
                                 : EdgeInsets.zero,
                             child: BlocBuilder<ChatBloc, ChatState>(
                               builder: (context, state) {
                                 return state.maybeMap(
                                   loadSuccess: (state) {
-                                    return
-                                        // state.userProfile.isBlocked
-                                        //     ? SizedBox()
-                                        //     :
-                                        ChatBottomBar();
+                                    return const ChatBottomBar();
                                   },
-                                  orElse: () => SizedBox.shrink(),
+                                  orElse: () => const SizedBox.shrink(),
                                 );
                               },
                             ),
@@ -145,9 +143,9 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                     ),
                   ),
                 ),
-                // The buttons will be visable when the search active and
-                // the resulte aren't empty
-                ChatSearchUpDown()
+                // The buttons will be visable when the search is active and
+                // the results aren't empty
+                const ChatSearchUpDown()
               ],
             ),
           ),
@@ -186,10 +184,10 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
           return SubHeader(
             //TODO
             leading: showCloseButton
-                ? Padding(padding: EdgeInsets.symmetric(horizontal: 20))
+                ? const Padding(padding: EdgeInsets.symmetric(horizontal: 20))
                 : null, //Padding(padding: kPadLeftMedium) : null,
             title: GestureDetector(
-              key: Key('Chat_Page_Header'),
+              key: const Key('Conversation_Page_Header'),
               behavior: HitTestBehavior.opaque,
               onTap: () {
                 state.maybeMap(
@@ -215,9 +213,9 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
                     //       ? null
                     //       : state.userProfile,
                     // ),
-                    orElse: () => SizedBox.shrink(),
+                    orElse: () => const SizedBox.shrink(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
@@ -243,15 +241,15 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
             action: IconButton(
               onPressed: () => context
                   .read<ChatSearchBloc>()
-                  .add(ChatSearchEvent.searchSwitch()),
-              icon: Icon(
+                  .add(const ChatSearchEvent.searchSwitch()),
+              icon: const Icon(
                 CupertinoIcons.search,
                 // color: kColorWhite,
               ),
             ),
           );
         } else {
-          return ChatSearchAppBar();
+          return const ChatSearchAppBar();
         }
       },
     );

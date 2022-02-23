@@ -1,3 +1,6 @@
+
+//TODO: fix this. currently does not work bc of better_player dependency resolving...
+
 // import 'dart:math' as math;
 
 // import 'package:better_player/better_player.dart';

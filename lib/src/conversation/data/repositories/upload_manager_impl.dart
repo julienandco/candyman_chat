@@ -1,12 +1,9 @@
-//TODO
-
 import 'package:neon_chat/src/conversation/conversation.dart';
 
-// @LazySingleton(as: ChatUploadManagerRepository)
-class ChatUploadManagerRepositoryImpl implements ChatUploadManagerRepository {
+class UploadManagerRepositoryImpl implements UploadManagerRepository {
   final FileUploadRepository fileUploadRepository;
 
-  ChatUploadManagerRepositoryImpl({
+  UploadManagerRepositoryImpl({
     required this.fileUploadRepository,
   });
 
@@ -18,10 +15,6 @@ class ChatUploadManagerRepositoryImpl implements ChatUploadManagerRepository {
     final fileIndex = _getFileIndexFromQueue(file.messageId);
 
     try {
-      // await remoteApiDataSource.uploadFiles(
-      //   '$kRemoteUploadsUrl?type=message&conversation=${file.conversationID}&message=${file.messageId}',
-      //   [file.filePath],
-      // );
       await fileUploadRepository.uploadFileToMessage(
         file: file,
         conversationId: file.conversationID,

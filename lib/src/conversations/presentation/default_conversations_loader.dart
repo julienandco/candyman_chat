@@ -7,6 +7,7 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
+//TODO: style
 class DefaultConversationsLoader extends StatelessWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;

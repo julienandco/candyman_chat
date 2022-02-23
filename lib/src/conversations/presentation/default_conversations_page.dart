@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
+//TODO: style
 class DefaultConversationsPage extends StatefulWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;

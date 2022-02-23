@@ -9,7 +9,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class ChatListItem extends StatefulWidget {
-  ChatListItem({
+  const ChatListItem({
     Key? key,
     required this.conversationItem,
     this.onOpenChat,
@@ -140,35 +140,27 @@ class _ChatListItemState extends State<ChatListItem> {
               setState(() {});
             },
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 150),
-              // padding: kPadMedium,
-              // decoration: BoxDecoration(
-              //   color: (context
-              //                   .watch<CurrentConversationCubit>()
-              //                   .state
-              //                   .conversationId ==
-              //               widget.conversationItem.converstaion.id ||
-              //           _onHover)
-              //       ? kColorPrimaryDarker
-              //       : kColorPrimary,
-              // ),
+              duration: const Duration(milliseconds: 150),
+              //TODO: style
+              padding: const EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                color: (context
+                                .watch<CurrentConversationCubit>()
+                                .state
+                                .conversationId ==
+                            widget.conversationItem.conversation.id ||
+                        _onHover)
+                    ? Colors.blueAccent
+                    : Colors.grey,
+              ),
               child: Row(
                 children: [
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: widget.onOpenUserProfile,
-                    // onTap: () =>
-                    // openUserProfile(
-                    //     context, widget.conversationItem.user.id,
-                    //     user: widget.conversationItem.user),
                     child: widget.userAvatar,
-                    // child: UserAvatar(
-                    //     user: widget
-                    //             .conversationItem.conversationPartner.isBlocked
-                    //         ? null
-                    //         : widget.conversationItem.conversationPartner),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
@@ -188,14 +180,6 @@ class _ChatListItemState extends State<ChatListItem> {
                   const SizedBox(
                     width: 15,
                   ),
-                  // _selected
-                  //     ? Container(
-                  //         child: Center(
-                  //           child: SvgPicture.asset(
-                  //               'assets/vectors/trashCanIcon.svg'),
-                  //         ),
-                  //       )
-                  //     :
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,

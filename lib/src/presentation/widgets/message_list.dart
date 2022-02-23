@@ -25,17 +25,13 @@ class MessageList extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
                   message: message,
+                  //TODO: fallback
                   otherUserName: otherUser?.name ?? 'TODO',
                 ),
-                // child: MessageBubble(
-                //   message: message,
-                //   otherUser: otherUser,
-                //   showAvatar: state.conversation.isPartyChat,
-                // ),
               ),
             ),
           ),
-          orElse: () => SliverToBoxAdapter(),
+          orElse: () => const SliverToBoxAdapter(),
         );
       },
     );
@@ -48,7 +44,7 @@ class _MessageListView extends StatefulWidget {
 
   final Widget Function(String)? dateBuilder;
   final bool inverted;
-  _MessageListView({
+  const _MessageListView({
     required this.messages,
     this.messageBuilder,
     this.dateBuilder,
@@ -111,7 +107,7 @@ class _MessageListViewState extends State<_MessageListView> {
                   ),
                 widget.messageBuilder != null
                     ? widget.messageBuilder!(widget.messages[i], i)
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
                 if (showDate &&
                     widget.inverted &&
                     widget.messages.length > 1 &&
@@ -130,7 +126,7 @@ class _MessageListViewState extends State<_MessageListView> {
 }
 
 class _DateBuilder extends StatelessWidget {
-  _DateBuilder({
+  const _DateBuilder({
     required this.date,
   });
 

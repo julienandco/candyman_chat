@@ -7,6 +7,7 @@ import 'package:video_player/video_player.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 
+//TODO: style and test
 class ChatVideoPageWeb extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';
 
@@ -44,8 +45,6 @@ class _ChatVideoPageState extends State<ChatVideoPageWeb> {
 
   void _initPlayer() async {
     if (widget.message.doneUpload) {
-      // final _url = await getIt<GetUploadRedirectUrlForUrlUC>()
-      //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
       final _url = widget.getUploadURL(widget.message.upload!.fileId);
 
       if (_url == null) return;
@@ -80,10 +79,7 @@ class _ChatVideoPageState extends State<ChatVideoPageWeb> {
 
   void _videoListener() async {
     if (videoPlayerController?.value.position ==
-        videoPlayerController?.value.duration) {
-      // await _videoPlayerController.seekTo(Duration.zero);
-      // await _videoPlayerController.pause();
-    }
+        videoPlayerController?.value.duration) {}
     setState(() {});
   }
 
@@ -137,7 +133,6 @@ class _ChatVideoPageState extends State<ChatVideoPageWeb> {
         if (chewieController != null && isReady)
           Container(
             color: widget.backgroundColor ?? Colors.black,
-            // height: 50,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Row(
               children: [
@@ -199,7 +194,7 @@ class _ChatVideoPageState extends State<ChatVideoPageWeb> {
                     onDragCompleted: (_, value, __) => _onSliderChanged(value),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
                   '-${_getRemainingDurationText()}',
                   style: widget.labelStyle,

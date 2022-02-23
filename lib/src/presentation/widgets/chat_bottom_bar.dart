@@ -155,6 +155,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   void _sendFileMessage(PlatformFile filePath) {
     context.read<ChatBloc>().add(ChatEvent.sendFileMessage(filePath));
   }
+
+  //TODO
   // void _openCameraView() async {
   //   setState(() {
   //     _showAttachOptions = false;
@@ -271,7 +273,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                           SizedBox(width: _maxWidth - 202),
                           BaseCircleButton(
                             child: widget.galleryIcon ??
-                                Icon(CupertinoIcons.photo_on_rectangle),
+                                const Icon(CupertinoIcons.photo_on_rectangle),
                             color: widget.galleryIconColor ?? Colors.white,
                             size: widget.galleryIconSize,
                             backgroundOpacity: 1,
@@ -281,7 +283,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                           ),
                           const SizedBox(width: 10),
                           //TODO
-                          widget.galleryIconLabel ?? Text('gallery'),
+                          widget.galleryIconLabel ?? const Text('gallery'),
                         ],
                       ),
                     ),
@@ -298,7 +300,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                           SizedBox(width: _maxWidth - 202),
                           BaseCircleButton(
                             child: widget.mediaPickerIcon ??
-                                Icon(CupertinoIcons.selection_pin_in_out),
+                                const Icon(CupertinoIcons.selection_pin_in_out),
                             color: widget.mediaPickerIconColor ?? Colors.white,
                             size: widget.mediaPickerIconSize,
                             backgroundOpacity: 1,
@@ -308,7 +310,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                           ),
                           const SizedBox(width: 10),
                           //TODO
-                          widget.mediaPickerIconLabel ?? Text('pick media'),
+                          widget.mediaPickerIconLabel ??
+                              const Text('pick media'),
                         ],
                       ),
                     ),
@@ -339,7 +342,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                                 Opacity(
                                           opacity: animatorState.value,
                                           child: widget.audioMessageIcon ??
-                                              Icon(CupertinoIcons.mic),
+                                              const Icon(CupertinoIcons.mic),
                                         ),
                                       ),
                                       Expanded(
@@ -377,7 +380,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                     ),
                                     IconButton(
                                       icon: widget.attachmentIcon ??
-                                          Icon(CupertinoIcons.paperclip),
+                                          const Icon(CupertinoIcons.paperclip),
                                       onPressed: isWebOrMacOS
                                           ? _toggleShowAttachOptions
                                           : _pickFile,
@@ -385,7 +388,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                     if (!isWebOrMacOS)
                                       IconButton(
                                         icon: widget.cameraIcon ??
-                                            Icon(CupertinoIcons.camera),
+                                            const Icon(CupertinoIcons.camera),
                                         onPressed: _takePhotoFromCamera,
                                       ),
                                   ],
@@ -398,8 +401,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       const SizedBox(width: 15),
                       _showSentButton
                           ? ChatCircleButton(
-                              child:
-                                  widget.sendIcon ?? Icon(CupertinoIcons.mail),
+                              child: widget.sendIcon ??
+                                  const Icon(CupertinoIcons.mail),
                               size: widget.sendIconSize,
                               onTap: () {
                                 if (_showSentButton) {

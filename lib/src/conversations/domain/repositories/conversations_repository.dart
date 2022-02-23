@@ -1,4 +1,4 @@
-import 'package:neon_chat/src/conversations/domain/entities/conversation/conversation.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
 
 abstract class ConversationsRepository {
   Stream<List<Conversation>> getAllConversations();
@@ -8,16 +8,3 @@ abstract class ConversationsRepository {
   Future<Conversation> createConversations(String chatPersonId);
   void hideConversations(String conversationId);
 }
-
-//TODO: old
-// import 'package:papeo_app/features/chats/data/models/conversation_model.dart';
-
-// abstract class ConversationRepository {
-
-//   Stream<List<ConversationModel>> getAllConversations();
-//   Stream<ConversationModel> getConversation(String conversationId);
-
-//   Stream<int> getUnreadMessagesCount(String conversationId);
-//   Future<ConversationModel> createConversations(String chatPersonId);
-//   void hideConversations(String conversationId);
-// }
