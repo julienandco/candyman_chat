@@ -14,16 +14,13 @@ neon-chat:
 
 ## Setup
 1. App in der Firebase Konsole registrieren und die GoogleService-Info.plist bzw. .json in die korrekten Verzeichnisse unter ```android``` und ```ios``` packen. Bei iOS das plist File über XCode einfügen! Wenn man über das Fileverzeichnis geht, rallt Flutter das nicht! 
-
 Außerdem beim Setup von ```AppDelegate.swift``` diese Zeile NICHT!!! einfügen:
 
 ```swift
 FirebaseApp.configure()
 ```
-
 Die Doku der Firebase Konsole ist noch nicht auf dem Flutter-Standard (Stand 23.02.2022).
-
-Das komplette Setup (iOS und Android App in Firebase anmelden geht übrigens sehr entspannt mithilfe der [FlutterFireCLI][flutterfire_cli_link])
+Das komplette Setup (iOS und Android App in Firebase anmelden), geht übrigens sehr entspannt mithilfe der [FlutterFireCLI][flutterfire_cli_link])
 
 2. Die App, in die der Chat integriert werden soll, MUSS von ```firebase_core, firebase_auth``` und ```cloud_firestore``` abhängen, um den Chat initialisieren zu können!
 
@@ -32,7 +29,6 @@ Das komplette Setup (iOS und Android App in Firebase anmelden geht übrigens seh
 4. In der neu aufgesetzen Firebase die Authentication und FirebaseFirestore aktivieren.
 
 5. Es macht mehr Fun, wenn schon Daten vorhanden sind, dafür die Authentication und den Firestore populaten (Coming soon: ein Mörderskript, das das automatisch macht)! Am einfachsten ist es, Nutzername/PW Anmeldung zu aktivieren und dich dann programmatisch wie in ```example/lib/main.dart``` einzuloggen, ohne jegliche UI (nur am Anfang natürlich!)
-
 Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Naming Conventions in ```lib/core/util/firebase_keys.dart``` beachten bzw. eigene etablieren und dem Chat als ```FirebaseKeys``` Datenstruktur übergeben. Dabei die Staging/Production Logik beachten!!! (Staging Chats in z.B. ```staging-conversations``` speichern)
 
 6. Suchindizies im Firestore aktivieren. Der erste Request wird vermutlich schiefgehen, dann gibt es eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst.
@@ -56,7 +52,7 @@ Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Namin
 
 ## Nutzung: 
 
-Keine wahnsinnige UI, sondern standard? Dann nutze ```DefaultConversationLoader, DefaultConversationPage, DefaultConversationsLoader``` und ```DefaultConversationsPage``` und style sie der App entsprechend! Diese Widgets funktionieren ziemlich out-of-the-box und ein Anwendungsbeispiel findest du in ```example/lib/main.dart```.
+Keine wahnsinnige UI, sondern Standard? Dann nutze ```DefaultConversationLoader, DefaultConversationPage, DefaultConversationsLoader``` und ```DefaultConversationsPage``` und style sie der App entsprechend! Diese Widgets funktionieren out-of-the-box und ein Anwendungsbeispiel findest du in ```example/lib/main.dart```.
 
 Dabei bietet es sich natürlich an, Dependency Injection mithilfe von ```getIt``` zu verwenden! So kann der Code aus ```example/lib/main.dart``` noch schlanker gemacht werden:
 
@@ -87,7 +83,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-Sollte der Chat völlig extravant aussehen und jedes ```ChatItem, MessageBubble``` und die ```MessageList``` den Ansprüchen nicht gerecht werden, kann nur auf die Logik des Packages zugegriffen werden. Durch die gesamten Blocs wird alles exportiert, was man für das Implementieren eines Chat-Features benötigt!
+Sollte der Chat völlig extravant aussehen und jedes ```ChatItem, MessageBubble``` und die ```MessageList``` den Ansprüchen nicht gerecht werden, kann auch nur auf die Logik des Packages zugegriffen werden. Durch die gesamten Blocs wird alles exportiert, was man für das Implementieren eines Chat-Features benötigt!
 
 Auch hier bietet es sich an, mit ```getIt``` zu arbeiten, um die Instanziierung der Blocs schöner zu gestalten:
 
