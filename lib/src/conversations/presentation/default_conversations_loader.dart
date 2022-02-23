@@ -11,11 +11,13 @@ class DefaultConversationsLoader extends StatelessWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
   final RemoteDataSource remoteDataSource;
+  final FirebaseKeys firebaseKeys;
   const DefaultConversationsLoader({
     Key? key,
     required this.firestore,
     required this.firebaseAuth,
     required this.remoteDataSource,
+    this.firebaseKeys = const FirebaseKeys(),
   }) : super(key: key);
 
   @override
@@ -31,14 +33,19 @@ class DefaultConversationsLoader extends StatelessWidget {
         BlocProvider<ConversationsBloc>(
           create: (context) => ConversationsBloc(
             conversationsRepository: ConversationsRepositoryImpl(
-              firestore,
-              firebaseAuth,
+              firestore: firestore,
+              firebaseAuth: firebaseAuth,
+              firebaseKeys: firebaseKeys,
             ),
             conversationRepository: ConversationRepositoryImpl(
-              firestore,
-              firebaseAuth,
+              firestore: firestore,
+              firebaseAuth: firebaseAuth,
+              firebaseKeys: firebaseKeys,
             ),
-            userProfileRepository: FirebaseUserProfileRepositoryImpl(firestore),
+            userProfileRepository: FirebaseUserProfileRepositoryImpl(
+              firestore: firestore,
+              firebaseKeys: firebaseKeys,
+            ),
           ),
         ),
       ],

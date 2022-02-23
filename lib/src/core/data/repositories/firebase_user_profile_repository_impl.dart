@@ -6,9 +6,12 @@ import 'package:neon_chat/src/core/core.dart';
 
 class FirebaseUserProfileRepositoryImpl
     implements FirebaseUserProfileRepository {
-  FirebaseUserProfileRepositoryImpl(this.firestore)
-      : _users = firestore.collection(usersCollectionKey);
+  FirebaseUserProfileRepositoryImpl({
+    required this.firestore,
+    this.firebaseKeys = const FirebaseKeys(),
+  }) : _users = firestore.collection(firebaseKeys.usersCollectionKey);
   final FirebaseFirestore firestore;
+  final FirebaseKeys firebaseKeys;
   final CollectionReference _users;
 
   @override
@@ -19,7 +22,7 @@ class FirebaseUserProfileRepositoryImpl
         handleData: (DocumentSnapshot<Map<String, dynamic>> snap,
             EventSink<FirebaseUser> sink) async {
           final data = snap.data()!;
-          data[usersIdKey] = snap.id;
+          data[firebaseKeys.usersIdKey] = snap.id;
           sink.add(
             FirebaseUser.fromJson(data),
           );

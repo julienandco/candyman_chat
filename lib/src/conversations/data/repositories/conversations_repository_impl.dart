@@ -7,20 +7,23 @@ import 'package:neon_chat/neon_chat.dart';
 // @LazySingleton(as: ConversationRepository)
 class ConversationsRepositoryImpl implements ConversationsRepository {
   final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
+  final FirebaseAuth firebaseAuth;
   final CollectionReference _collection;
+  final FirebaseKeys firebaseKeys;
 
-  ConversationsRepositoryImpl(
-    this.firestore,
-    this.auth,
-  ) : _collection = firestore.collection(conversationsCollectionKey);
+  ConversationsRepositoryImpl({
+    required this.firestore,
+    required this.firebaseAuth,
+    this.firebaseKeys = const FirebaseKeys(),
+  }) : _collection =
+            firestore.collection(firebaseKeys.conversationsCollectionKey);
 
-  String get _userId => auth.currentUser!.uid;
+  String get _userId => firebaseAuth.currentUser!.uid;
 
   @override
   Future<Conversation> createConversations(String chatPersonId) async {
-    final query = await _collection
-        .where(conversationMembersKey, arrayContainsAny: [_userId]).get();
+    final query = await _collection.where(firebaseKeys.conversationMembersKey,
+        arrayContainsAny: [_userId]).get();
     final conversations = query.docs
         .map((e) => Conversation.fromJson(e.data() as Map<String, dynamic>))
         .toList();
@@ -49,7 +52,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   @override
   Stream<List<Conversation>> getAllConversations() {
     return _collection
-        .where(conversationMembersKey, arrayContainsAny: [_userId])
+        .where(firebaseKeys.conversationMembersKey, arrayContainsAny: [_userId])
         .snapshots()
         .transform(
           StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
@@ -58,7 +61,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
               QuerySnapshot<Map<String, dynamic>> data,
               EventSink<List<Conversation>> sink,
             ) async {
-              final userId = auth.currentUser?.uid;
+              final userId = firebaseAuth.currentUser?.uid;
 
               final snaps = data.docs
                   .map(
@@ -79,10 +82,10 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   Stream<int> getUnreadMessagesCount(String conversationId) {
     return _collection
         .doc(conversationId)
-        .collection(messagesInConversationKey)
-        .where(messageSenderIdKey, isNotEqualTo: _userId)
-        .where(messageSeenKey, isEqualTo: false)
-        .where(messageDoneUploadKey, isEqualTo: true)
+        .collection(firebaseKeys.messagesInConversationKey)
+        .where(firebaseKeys.messageSenderIdKey, isNotEqualTo: _userId)
+        .where(firebaseKeys.messageSeenKey, isEqualTo: false)
+        .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
         .snapshots()
         .transform(
       StreamTransformer.fromHandlers(
@@ -110,11 +113,11 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   void _unhideConversations(String conversationId) async {
-    final userId = auth.currentUser?.uid;
+    final userId = firebaseAuth.currentUser?.uid;
 
     _collection.doc(conversationId).update(
       {
-        conversationHiddenFromKey: FieldValue.arrayRemove(
+        firebaseKeys.conversationHiddenFromKey: FieldValue.arrayRemove(
           [userId],
         ),
       },
@@ -123,11 +126,11 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
 
   @override
   void hideConversations(String conversationId) async {
-    final userId = auth.currentUser?.uid;
+    final userId = firebaseAuth.currentUser?.uid;
 
     _collection.doc(conversationId).update(
       {
-        conversationHiddenFromKey: FieldValue.arrayUnion(
+        firebaseKeys.conversationHiddenFromKey: FieldValue.arrayUnion(
           [userId],
         ),
       },

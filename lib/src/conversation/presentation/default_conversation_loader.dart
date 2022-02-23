@@ -16,6 +16,7 @@ class DefaultConversationLoader extends StatelessWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
   final RemoteDataSource remoteDataSource;
+  final FirebaseKeys firebaseKeys;
   const DefaultConversationLoader({
     Key? key,
     required this.userProfileId,
@@ -24,12 +25,10 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.firebaseAuth,
     required this.remoteDataSource,
     this.showCloseButton = true,
+    this.firebaseKeys = const FirebaseKeys(),
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    //TODO
-    // final firestore = FirebaseFirestore.instance;
-    // final firebaseAuth = FirebaseAuth.instance;
     return MultiBlocProvider(
       providers: [
         BlocProvider<ChatSearchBloc>(
@@ -40,30 +39,23 @@ class DefaultConversationLoader extends StatelessWidget {
             userProfileId: userProfileId,
             conversationId: conversationId,
             conversationRepository: ConversationRepositoryImpl(
-              firestore,
-              firebaseAuth,
+              firestore: firestore,
+              firebaseAuth: firebaseAuth,
+              firebaseKeys: firebaseKeys,
             ),
             conversationsRepository: ConversationsRepositoryImpl(
-              firestore,
-              firebaseAuth,
+              firestore: firestore,
+              firebaseAuth: firebaseAuth,
+              firebaseKeys: firebaseKeys,
             ),
-            userProfileRepository: FirebaseUserProfileRepositoryImpl(firestore),
+            userProfileRepository: FirebaseUserProfileRepositoryImpl(
+              firestore: firestore,
+              firebaseKeys: firebaseKeys,
+            ),
             firebaseAuth: firebaseAuth,
             chatUploadManagerRepository: ChatUploadManagerRepositoryImpl(
-              //TODO
               fileUploadRepository: FileUploadRepositoryImpl(
                 remoteDataSource: remoteDataSource,
-                // deleteEndpoint: (_) async => right('e'),
-                // patchEndpoint: (_, __) async => right('e'),
-                // postEndpoint: (_, __) async => right('e'),
-                // getEndpoint: (_) async => right('e'),
-                // uploadFileToPresignedURL: (
-                //   String url, {
-                //   String? filePath,
-                //   PlatformFile? platformFile,
-                //   void Function(int, int)? onReceiveProgress,
-                // }) async =>
-                //     right(const Success()),
               ),
             ),
           ),

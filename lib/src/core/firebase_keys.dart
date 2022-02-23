@@ -1,17 +1,68 @@
 import 'package:neon_chat/neon_chat.dart';
 
-const conversationsCollectionKey = 'conversations';
+enum FirebaseEnvironment { production, staging }
 
-const conversationMembersKey = 'conversationMembers';
-const conversationHiddenFromKey = 'hiddenFrom';
+class FirebaseKeys {
+  final FirebaseEnvironment environment;
 
-const messagesInConversationKey = 'messages';
-const messageSenderIdKey = 'senderId';
-const messageSeenKey = 'seen';
-const messageDoneUploadKey = 'doneUpload';
+  final String stagingCollectionName;
+  final String productionCollectionName;
 
-const usersCollectionKey = 'users';
-const usersIdKey = 'id';
+  final String _conversationsCollectionKey;
+
+  final String conversationMembersKey;
+  final String conversationHiddenFromKey;
+
+  final String messagesInConversationKey;
+  final String messageSenderIdKey;
+  final String messageSeenKey;
+  final String messageDoneUploadKey;
+
+  final String _usersCollectionKey;
+  final String usersIdKey;
+
+  const FirebaseKeys({
+    this.environment = FirebaseEnvironment.staging,
+    this.stagingCollectionName = 'staging',
+    this.productionCollectionName = 'production',
+    String conversationsCollectionKey = 'conversations',
+    this.conversationMembersKey = 'conversationMembers',
+    this.conversationHiddenFromKey = 'hiddenFrom',
+    this.messagesInConversationKey = 'messages',
+    this.messageSenderIdKey = 'senderId',
+    this.messageSeenKey = 'seen',
+    this.messageDoneUploadKey = 'doneUpload',
+    String usersCollectionKey = 'users',
+    this.usersIdKey = 'id',
+  })  : _conversationsCollectionKey = conversationsCollectionKey,
+        _usersCollectionKey = usersCollectionKey;
+
+  String get conversationsCollectionKey {
+    String prefix = '';
+    switch (environment) {
+      case FirebaseEnvironment.production:
+        prefix = productionCollectionName;
+        break;
+      case FirebaseEnvironment.staging:
+        prefix = stagingCollectionName;
+        break;
+    }
+    return '$prefix-$_conversationsCollectionKey';
+  }
+
+  String get usersCollectionKey {
+    String prefix = '';
+    switch (environment) {
+      case FirebaseEnvironment.production:
+        prefix = productionCollectionName;
+        break;
+      case FirebaseEnvironment.staging:
+        prefix = stagingCollectionName;
+        break;
+    }
+    return '$prefix-$_usersCollectionKey';
+  }
+}
 
 String getFirebaseKey(ChatMessageType type) {
   switch (type) {

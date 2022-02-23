@@ -12,16 +12,21 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 // @LazySingleton(as: ChatRepository)
 class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
+  final FirebaseAuth firebaseAuth;
   final CollectionReference _conversations;
-  ConversationRepositoryImpl(this.firestore, this.auth)
-      : _conversations = firestore.collection(conversationsCollectionKey);
+  final FirebaseKeys firebaseKeys;
+  ConversationRepositoryImpl({
+    required this.firestore,
+    required this.firebaseAuth,
+    this.firebaseKeys = const FirebaseKeys(),
+  }) : _conversations =
+            firestore.collection(firebaseKeys.conversationsCollectionKey);
 
   @override
   Stream<List<ChatMessage>> getMessages(String conversationId) {
     return _conversations
         .doc(conversationId)
-        .collection(messagesInConversationKey)
+        .collection(firebaseKeys.messagesInConversationKey)
         .orderBy('timestamp', descending: true)
         .snapshots()
         .transform(
@@ -37,7 +42,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
           var messages = List<ChatMessage>.from([]);
           for (var json in snaps) {
             final message = ChatMessage.fromJson(json);
-            final userId = auth.currentUser?.uid;
+            final userId = firebaseAuth.currentUser?.uid;
             if (!message.hiddenFrom.contains(userId)) messages.add(message);
           }
 
@@ -52,7 +57,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     try {
       final doc = _conversations
           .doc(conversationId)
-          .collection(messagesInConversationKey)
+          .collection(firebaseKeys.messagesInConversationKey)
           .doc();
       doc.set(
         message
@@ -71,11 +76,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
   @override
   Stream<ChatMessage> getLastMessages(String conversationId) {
-    final userId = auth.currentUser?.uid;
+    final userId = firebaseAuth.currentUser?.uid;
 
     return _conversations
         .doc(conversationId)
-        .collection(messagesInConversationKey)
+        .collection(firebaseKeys.messagesInConversationKey)
         .where('doneUpload', isEqualTo: true)
         .orderBy('timestamp', descending: true)
         .limit(1)
@@ -110,7 +115,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     try {
       final doc = _conversations
           .doc(conversationId)
-          .collection(messagesInConversationKey)
+          .collection(firebaseKeys.messagesInConversationKey)
           .doc();
       doc.set(
         message
@@ -138,7 +143,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     if (!message.isMe && message.doneUpload && !message.seen) {
       _conversations
           .doc(conversationId)
-          .collection(messagesInConversationKey)
+          .collection(firebaseKeys.messagesInConversationKey)
           .doc(message.id)
           .update(
         {
@@ -152,7 +157,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
   void deleteMessage(String conversationId, ChatMessage message) {
     _conversations
         .doc(conversationId)
-        .collection(messagesInConversationKey)
+        .collection(firebaseKeys.messagesInConversationKey)
         .doc(message.id)
         .update(
       {'type': 'deleted'},
@@ -161,11 +166,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
   @override
   void hideMessage(String conversationId, ChatMessage message) {
-    final userId = auth.currentUser?.uid;
+    final userId = firebaseAuth.currentUser?.uid;
 
     _conversations
         .doc(conversationId)
-        .collection(messagesInConversationKey)
+        .collection(firebaseKeys.messagesInConversationKey)
         .doc(message.id)
         .update(
       {
