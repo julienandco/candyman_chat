@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'chat_message.dart';
@@ -28,12 +29,12 @@ class _$ChatMessageTearOff {
       bool seen = false,
       required String senderId,
       required String receiverId,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
-      required ChatMessageType type,
+      @MyChatMessageTypeConverter() required ChatMessageType type,
       bool doneUpload = false,
       String? filePath,
-      Duration? audioDuration,
+      @MyAudioDurationConverter() Duration? audioDuration,
       List<String> hiddenFrom = const []}) {
     return _ChatMessage(
       id: id,
@@ -69,11 +70,14 @@ mixin _$ChatMessage {
   bool get seen => throw _privateConstructorUsedError;
   String get senderId => throw _privateConstructorUsedError;
   String get receiverId => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
   Upload? get upload => throw _privateConstructorUsedError;
+  @MyChatMessageTypeConverter()
   ChatMessageType get type => throw _privateConstructorUsedError;
   bool get doneUpload => throw _privateConstructorUsedError;
   String? get filePath => throw _privateConstructorUsedError;
+  @MyAudioDurationConverter()
   Duration? get audioDuration => throw _privateConstructorUsedError;
   List<String> get hiddenFrom => throw _privateConstructorUsedError;
 
@@ -95,12 +99,12 @@ abstract class $ChatMessageCopyWith<$Res> {
       bool seen,
       String senderId,
       String receiverId,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
-      ChatMessageType type,
+      @MyChatMessageTypeConverter() ChatMessageType type,
       bool doneUpload,
       String? filePath,
-      Duration? audioDuration,
+      @MyAudioDurationConverter() Duration? audioDuration,
       List<String> hiddenFrom});
 
   $UploadCopyWith<$Res>? get upload;
@@ -212,12 +216,12 @@ abstract class _$ChatMessageCopyWith<$Res>
       bool seen,
       String senderId,
       String receiverId,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
-      ChatMessageType type,
+      @MyChatMessageTypeConverter() ChatMessageType type,
       bool doneUpload,
       String? filePath,
-      Duration? audioDuration,
+      @MyAudioDurationConverter() Duration? audioDuration,
       List<String> hiddenFrom});
 
   @override
@@ -317,12 +321,12 @@ class _$_ChatMessage extends _ChatMessage {
       this.seen = false,
       required this.senderId,
       required this.receiverId,
-      this.timestamp,
+      @MyDateTimeConverter() this.timestamp,
       this.upload,
-      required this.type,
+      @MyChatMessageTypeConverter() required this.type,
       this.doneUpload = false,
       this.filePath,
-      this.audioDuration,
+      @MyAudioDurationConverter() this.audioDuration,
       this.hiddenFrom = const []})
       : super._();
 
@@ -345,10 +349,12 @@ class _$_ChatMessage extends _ChatMessage {
   @override
   final String receiverId;
   @override
+  @MyDateTimeConverter()
   final DateTime? timestamp;
   @override
   final Upload? upload;
   @override
+  @MyChatMessageTypeConverter()
   final ChatMessageType type;
   @JsonKey()
   @override
@@ -356,6 +362,7 @@ class _$_ChatMessage extends _ChatMessage {
   @override
   final String? filePath;
   @override
+  @MyAudioDurationConverter()
   final Duration? audioDuration;
   @JsonKey()
   @override
@@ -426,12 +433,12 @@ abstract class _ChatMessage extends ChatMessage {
       bool seen,
       required String senderId,
       required String receiverId,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
-      required ChatMessageType type,
+      @MyChatMessageTypeConverter() required ChatMessageType type,
       bool doneUpload,
       String? filePath,
-      Duration? audioDuration,
+      @MyAudioDurationConverter() Duration? audioDuration,
       List<String> hiddenFrom}) = _$_ChatMessage;
   _ChatMessage._() : super._();
 
@@ -452,16 +459,19 @@ abstract class _ChatMessage extends ChatMessage {
   @override
   String get receiverId;
   @override
+  @MyDateTimeConverter()
   DateTime? get timestamp;
   @override
   Upload? get upload;
   @override
+  @MyChatMessageTypeConverter()
   ChatMessageType get type;
   @override
   bool get doneUpload;
   @override
   String? get filePath;
   @override
+  @MyAudioDurationConverter()
   Duration? get audioDuration;
   @override
   List<String> get hiddenFrom;

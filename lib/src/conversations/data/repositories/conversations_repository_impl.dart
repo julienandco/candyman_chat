@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-
-import 'package:neon_chat/src/conversations/conversations.dart';
+import 'package:neon_chat/neon_chat.dart';
 
 // @LazySingleton(as: ConversationRepository)
 class ConversationsRepositoryImpl implements ConversationsRepository {
@@ -15,14 +14,14 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   ConversationsRepositoryImpl(
     this.firestore,
     this.auth,
-  ) : _collection = firestore.collection('conversations');
+  ) : _collection = firestore.collection(conversationsCollectionKey);
 
   String get _userId => auth.currentUser!.uid;
 
   @override
   Future<Conversation> createConversations(String chatPersonId) async {
-    final query =
-        await _collection.where('members', arrayContainsAny: [_userId]).get();
+    final query = await _collection
+        .where(conversationMembersKey, arrayContainsAny: [_userId]).get();
     final conversations = query.docs
         .map((e) => Conversation.fromJson(e.data() as Map<String, dynamic>))
         .toList();
@@ -51,7 +50,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   @override
   Stream<List<Conversation>> getAllConversations() {
     return _collection
-        .where('members', arrayContainsAny: [_userId])
+        .where(conversationMembersKey, arrayContainsAny: [_userId])
         .snapshots()
         .transform(
           StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
@@ -78,13 +77,13 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   @override
-  Stream<int> getUnreadMessagesCount(String converstaionId) {
+  Stream<int> getUnreadMessagesCount(String conversationId) {
     return _collection
-        .doc(converstaionId)
-        .collection('messages')
-        .where('senderId', isNotEqualTo: _userId)
-        .where('seen', isEqualTo: false)
-        .where('doneUpload', isEqualTo: true)
+        .doc(conversationId)
+        .collection(messagesInConversationKey)
+        .where(messageSenderIdKey, isNotEqualTo: _userId)
+        .where(messageSeenKey, isEqualTo: false)
+        .where(messageDoneUploadKey, isEqualTo: true)
         .snapshots()
         .transform(
       StreamTransformer.fromHandlers(
@@ -116,7 +115,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
 
     _collection.doc(conversationId).update(
       {
-        'hiddenFrom': FieldValue.arrayRemove(
+        conversationHiddenFromKey: FieldValue.arrayRemove(
           [userId],
         ),
       },
@@ -129,7 +128,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
 
     _collection.doc(conversationId).update(
       {
-        'hiddenFrom': FieldValue.arrayUnion(
+        conversationHiddenFromKey: FieldValue.arrayUnion(
           [userId],
         ),
       },

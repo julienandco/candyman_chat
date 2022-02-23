@@ -10,23 +10,20 @@ _$_ChatMessage _$$_ChatMessageFromJson(Map<String, dynamic> json) =>
     _$_ChatMessage(
       id: json['id'] as String? ?? '',
       text: json['text'] as String?,
-      location: const MyLatLngConverter()
-          .fromJson(json['location'] as Map<String, num>),
+      location:
+          const MyLatLngConverter().fromJson(json['location'] as GeoPoint?),
       seen: json['seen'] as bool? ?? false,
       senderId: json['senderId'] as String,
       receiverId: json['receiverId'] as String,
-      timestamp: json['timestamp'] == null
-          ? null
-          : DateTime.parse(json['timestamp'] as String),
+      timestamp: const MyDateTimeConverter().fromJson(json['timestamp']),
       upload: json['upload'] == null
           ? null
           : Upload.fromJson(json['upload'] as Map<String, dynamic>),
-      type: $enumDecode(_$ChatMessageTypeEnumMap, json['type']),
+      type: const MyChatMessageTypeConverter().fromJson(json['type'] as String),
       doneUpload: json['doneUpload'] as bool? ?? false,
       filePath: json['filePath'] as String?,
-      audioDuration: json['audioDuration'] == null
-          ? null
-          : Duration(microseconds: json['audioDuration'] as int),
+      audioDuration: const MyAudioDurationConverter()
+          .fromJson(json['audioDuration'] as int?),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -41,20 +38,12 @@ Map<String, dynamic> _$$_ChatMessageToJson(_$_ChatMessage instance) =>
       'seen': instance.seen,
       'senderId': instance.senderId,
       'receiverId': instance.receiverId,
-      'timestamp': instance.timestamp?.toIso8601String(),
+      'timestamp': const MyDateTimeConverter().toJson(instance.timestamp),
       'upload': instance.upload,
-      'type': _$ChatMessageTypeEnumMap[instance.type],
+      'type': const MyChatMessageTypeConverter().toJson(instance.type),
       'doneUpload': instance.doneUpload,
       'filePath': instance.filePath,
-      'audioDuration': instance.audioDuration?.inMicroseconds,
+      'audioDuration':
+          const MyAudioDurationConverter().toJson(instance.audioDuration),
       'hiddenFrom': instance.hiddenFrom,
     };
-
-const _$ChatMessageTypeEnumMap = {
-  ChatMessageType.text: 'text',
-  ChatMessageType.voice: 'voice',
-  ChatMessageType.image: 'image',
-  ChatMessageType.video: 'video',
-  ChatMessageType.file: 'file',
-  ChatMessageType.deleted: 'deleted',
-};

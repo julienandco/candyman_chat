@@ -14,9 +14,7 @@ _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
           .map((e) => e as String)
           .toList(),
       thumbnail: json['thumbnail'] as String?,
-      timestamp: json['timestamp'] == null
-          ? null
-          : DateTime.parse(json['timestamp'] as String),
+      timestamp: const MyDateTimeConverter().fromJson(json['timestamp']),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -29,6 +27,6 @@ Map<String, dynamic> _$$_ConversationToJson(_$_Conversation instance) =>
       'displayName': instance.displayName,
       'conversationMembers': instance.conversationMembers,
       'thumbnail': instance.thumbnail,
-      'timestamp': instance.timestamp?.toIso8601String(),
+      'timestamp': const MyDateTimeConverter().toJson(instance.timestamp),
       'hiddenFrom': instance.hiddenFrom,
     };

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:neon_chat/src/core/data/models/my_datetime_converter.dart';
 
 part 'conversation.freezed.dart';
 part 'conversation.g.dart';
@@ -8,12 +10,18 @@ part 'conversation.g.dart';
 class Conversation with _$Conversation {
   const Conversation._();
 
+  // static _dateTimeToJson(_) => FieldValue.serverTimestamp();
+  // static _dateTimeFromJson(Timestamp? timestamp) => timestamp?.toDate();
+
+  // @JsonKey(toJson: _dateTimeToJson, fromJson: _dateTimeFromJson)
+  // final DateTime? timestamp;
+
   factory Conversation({
     required String id,
     String? displayName,
     required List<String> conversationMembers,
     String? thumbnail,
-    DateTime? timestamp,
+    @MyDateTimeConverter() DateTime? timestamp,
     @Default([]) List<String> hiddenFrom,
   }) = _Conversation;
 

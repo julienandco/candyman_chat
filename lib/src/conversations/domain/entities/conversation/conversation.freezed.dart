@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'conversation.dart';
@@ -26,7 +27,7 @@ class _$ConversationTearOff {
       String? displayName,
       required List<String> conversationMembers,
       String? thumbnail,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       List<String> hiddenFrom = const []}) {
     return _Conversation(
       id: id,
@@ -52,6 +53,7 @@ mixin _$Conversation {
   String? get displayName => throw _privateConstructorUsedError;
   List<String> get conversationMembers => throw _privateConstructorUsedError;
   String? get thumbnail => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
   List<String> get hiddenFrom => throw _privateConstructorUsedError;
 
@@ -71,7 +73,7 @@ abstract class $ConversationCopyWith<$Res> {
       String? displayName,
       List<String> conversationMembers,
       String? thumbnail,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       List<String> hiddenFrom});
 }
 
@@ -133,7 +135,7 @@ abstract class _$ConversationCopyWith<$Res>
       String? displayName,
       List<String> conversationMembers,
       String? thumbnail,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       List<String> hiddenFrom});
 }
 
@@ -193,7 +195,7 @@ class _$_Conversation extends _Conversation {
       this.displayName,
       required this.conversationMembers,
       this.thumbnail,
-      this.timestamp,
+      @MyDateTimeConverter() this.timestamp,
       this.hiddenFrom = const []})
       : super._();
 
@@ -209,6 +211,7 @@ class _$_Conversation extends _Conversation {
   @override
   final String? thumbnail;
   @override
+  @MyDateTimeConverter()
   final DateTime? timestamp;
   @JsonKey()
   @override
@@ -262,7 +265,7 @@ abstract class _Conversation extends Conversation {
       String? displayName,
       required List<String> conversationMembers,
       String? thumbnail,
-      DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? timestamp,
       List<String> hiddenFrom}) = _$_Conversation;
   _Conversation._() : super._();
 
@@ -278,6 +281,7 @@ abstract class _Conversation extends Conversation {
   @override
   String? get thumbnail;
   @override
+  @MyDateTimeConverter()
   DateTime? get timestamp;
   @override
   List<String> get hiddenFrom;

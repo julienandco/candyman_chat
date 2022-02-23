@@ -1,36 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MyLatLngConverter implements JsonConverter<LatLng?, Map<String, num>> {
+class MyLatLngConverter implements JsonConverter<LatLng?, GeoPoint?> {
   const MyLatLngConverter();
 
-  static const latKey = 'latitude';
-  static const longKey = 'longitude';
-
   @override
-  fromJson(json) {
-    if (json.containsKey(latKey) && json.containsKey(longKey)) {
-      final lat = json[latKey] as double;
-      final long = json[longKey] as double;
-
-      return LatLng(lat, long);
+  LatLng? fromJson(GeoPoint? json) {
+    if (json == null) {
+      return null;
     } else {
-      throw ArgumentError();
+      return LatLng(json.latitude, json.longitude);
     }
   }
 
   @override
-  toJson(object) {
-    if (object != null) {
-      final lat = object.latitude;
-      final long = object.longitude;
-
-      return {
-        latKey: lat,
-        longKey: long,
-      };
-    } else {
-      return {};
-    }
+  GeoPoint? toJson(LatLng? object) {
+    return object != null ? GeoPoint(object.latitude, object.longitude) : null;
   }
 }

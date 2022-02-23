@@ -1,14 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:neon_chat/src/conversation/data/models/models.dart';
 
 import 'package:neon_chat/src/core/core.dart';
+import 'package:neon_chat/src/core/data/models/my_datetime_converter.dart';
 
 part 'chat_message.freezed.dart';
 part 'chat_message.g.dart';
 
 enum ChatMessageType { text, voice, image, video, file, deleted }
+
+extension ChatMessageTypeStrings on ChatMessageType {
+  String get firebaseKey => getFirebaseKey(this);
+}
 
 @freezed
 class ChatMessage with _$ChatMessage {
@@ -21,12 +28,12 @@ class ChatMessage with _$ChatMessage {
     @Default(false) bool seen,
     required String senderId,
     required String receiverId,
-    DateTime? timestamp,
+    @MyDateTimeConverter() DateTime? timestamp,
     Upload? upload,
-    required ChatMessageType type,
+    @MyChatMessageTypeConverter() required ChatMessageType type,
     @Default(false) bool doneUpload,
     String? filePath,
-    Duration? audioDuration,
+    @MyAudioDurationConverter() Duration? audioDuration,
     @Default([]) List<String> hiddenFrom,
   }) = _ChatMessage;
 

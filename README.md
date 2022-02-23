@@ -3,8 +3,22 @@
 
 Unser absolut performanter, universell einsetzbarer Chat. WhatsApp ist lit, aber wir sind litter! (🏴󠁧󠁢󠁥󠁮󠁧󠁿-pun intended)
 
-Firebase Setup unbedingt mit FlutterFire CLI machen!
+Firebase Setup unbedingt mit FlutterFire CLI machen! (ist wesentlich entspannter)
 Google-Services.json/plist muss man manuell einfügen! (für iOS über xcode, wenn man das einfach ins filesystem kopiert, wird es nicht verlinkt).
+
+Beim ersten run der app wird sie vermutlich abschmieren, da currentuser von firebase auth noch null ist.
+
+du musst firebse auth erst in der firebase konsole aktivieren (firebase firestore auch!).
+anonym ist witzlos, weil dann alles auf null gesetzt ist. aktiviere die email/pw anmeldung und setze einen test user über firebase konsole in die datenbank. dann kannst du dich 
+programmatisch im code anmelden (s. example/lib/main.dart).
+
+um die magie passieren zu sehen, ist es hilfreich, die firebase firstore collectoins mit chat nachrichten zu füllen (entweder per hand, oder programmatisch mit ConversationsRepository.createConversation).
+
+anschließend musst du indizes für die erstellten collections machen (für den anfang messages, was eine subcollection einer conversation ist (die in der collection conversations zu finden ist)).
+
+für das auffüllen ein skript schrieben? conversations,messages und users populaten
+
+noch logik für staging/production einführen. es soll in die collections staging/conversations bzw. production/conversations geschrieben werden, damit man später staging löschen/bearbeiten kann.
 <!-- 
 ## Stand 17.02.21:
 - habe Hadis Code aus Papeo kopiert und ihn syntax-fehler-frei im package zum laufen gebracht
