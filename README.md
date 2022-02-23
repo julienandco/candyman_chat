@@ -3,25 +3,43 @@
 
 Unser absolut performanter, universell einsetzbarer Chat. WhatsApp ist lit, aber wir sind litter! (🏴󠁧󠁢󠁥󠁮󠁧󠁿-pun intended)
 
-Firebase Setup unbedingt mit FlutterFire CLI machen! (ist wesentlich entspannter)
-Google-Services.json/plist muss man manuell einfügen! (für iOS über xcode, wenn man das einfach ins filesystem kopiert, wird es nicht verlinkt).
+## Installation
+In das ```pubspec.yaml``` des Projekts einfügen:
 
-Beim ersten run der app wird sie vermutlich abschmieren, da currentuser von firebase auth noch null ist.
-
-du musst firebse auth erst in der firebase konsole aktivieren (firebase firestore auch!).
-anonym ist witzlos, weil dann alles auf null gesetzt ist. aktiviere die email/pw anmeldung und setze einen test user über firebase konsole in die datenbank. dann kannst du dich 
-programmatisch im code anmelden (s. example/lib/main.dart).
-
-um die magie passieren zu sehen, ist es hilfreich, die firebase firstore collectoins mit chat nachrichten zu füllen (entweder per hand, oder programmatisch mit ConversationsRepository.createConversation).
-
-Beim Aufsetzen bitte die naming conventions in lib/core/firebase_keys.dart beachten!
-TODO: datenstruktur aufsetzen, die custom strings abspeichert, damit man beliebige firebase
-implementierung mit diesem package nutzen kann!
-
-anschließend musst du indizes für die erstellten collections machen (für den anfang messages, was eine subcollection einer conversation ist (die in der collection conversations zu finden ist)).
-
-damit die app nicht beim versuch, ein foto zu machen crasht, musst du ein paar keys ins Info.plist buttern: 
+```yaml
+neon-chat:
+    git: 
+        url: https://github.com/julien-neon/NEON_chat
 ```
+
+## Setup
+1. App in der Firebase Konsole registrieren und die GoogleService-Info.plist bzw. .json in die korrekten Verzeichnisse unter ```android``` und ```ios``` packen. Bei iOS das plist File über XCode einfügen! Wenn man über das Fileverzeichnis geht, rallt Flutter das nicht! 
+
+Außerdem beim Setup von ```AppDelegate.swift``` diese Zeile NICHT!!! einfügen:
+
+```swift
+FirebaseApp.configure()
+```
+
+Die Doku der Firebase Konsole ist noch nicht auf dem Flutter-Standard (Stand 23.02.2022).
+
+Das komplette Setup (iOS und Android App in Firebase anmelden geht übrigens sehr entspannt mithilfe der [FlutterFireCLI][flutterfire_cli_link])
+
+2. Die App, in die der Chat integriert werden soll, MUSS von ```firebase_core, firebase_auth``` und ```cloud_firestore``` abhängen, um den Chat initialisieren zu können!
+
+3. Die App MUSS die abstrakte Klasse ```RemoteDataSource``` implementieren und sie dem Chat zur Verfügung stellen, damit jegliche File-Uploads funktionieren (Bilder, Videos und Sprachnachrichten). Das wird alles nämlich nicht in Firebase gespeichert, sondern in einem anderen Backend.
+
+4. In der neu aufgesetzen Firebase die Authentication und FirebaseFirestore aktivieren.
+
+5. Es macht mehr Fun, wenn schon Daten vorhanden sind, dafür die Authentication und den Firestore populaten (Coming soon: ein Mörderskript, das das automatisch macht)! Am einfachsten ist es, Nutzername/PW Anmeldung zu aktivieren und dich dann programmatisch wie in ```example/lib/main.dart``` einzuloggen, ohne jegliche UI (nur am Anfang natürlich!)
+
+Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Naming Conventions in ```lib/core/util/firebase_keys.dart``` beachten bzw. eigene etablieren und dem Chat als ```FirebaseKeys``` Datenstruktur übergeben. Dabei die Staging/Production Logik beachten!!! (Staging Chats in z.B. ```staging-conversations``` speichern)
+
+6. Suchindizies im Firestore aktivieren. Der erste Request wird vermutlich schiefgehen, dann gibt es eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst.
+
+7. Damit die App beim Versuch, ein Foto zu machen oder auf deine Gallerie zuzugreifen, nicht crasht, musst du ein paar Keys ins Info.plist buttern: 
+
+```plist
 <key>NSAppTransportSecurity</key>
 <dict>
 	<key>NSAllowsArbitraryLoads</key>
@@ -35,66 +53,83 @@ damit die app nicht beim versuch, ein foto zu machen crasht, musst du ein paar k
 <string>Mikro bite.</string>
 ```
 
-für das auffüllen ein skript schreiben? conversations,messages und users populaten
 
-noch logik für staging/production einführen. es soll in die collections staging/conversations bzw. production/conversations geschrieben werden, damit man später staging löschen/bearbeiten kann.
+## Nutzung: 
 
-##Features: 
-Gesamte Logik, die man benötigt, um eine super-custom Chat UI zu bauen.
+Keine wahnsinnige UI, sondern standard? Dann nutze ```DefaultConversationLoader, DefaultConversationPage, DefaultConversationsLoader``` und ```DefaultConversationsPage``` und style sie der App entsprechend! Diese Widgets funktionieren ziemlich out-of-the-box und ein Anwendungsbeispiel findest du in ```example/lib/main.dart```.
 
-Keine wahnsinnige UI, sondern standard? Dann nutze DefaultConversationLoader, DefaultConversationPage, DefaultConversationsLoader und DefaultConversationsPage und style sie dem Fall entsprechend!
-<!-- 
-## Stand 17.02.21:
-- habe Hadis Code aus Papeo kopiert und ihn syntax-fehler-frei im package zum laufen gebracht
-- package kann in flutter projekte importiert werden
-- viele files sind komplett auskommentiert (oft im data/models ordner), da sie durch freezed
-redundant geworden sind. habe sie noch nicht gelöscht, da ich zu testungszwecken gerne
-hadis komplette codebase behalten möchte.
-- bei einigen files ist daher im unteren teil ein ```TODO: old```, als Verweis auf die alte Implementierung
-
-- das ziel war folgende verwendung: in der ```main.dart``` des flutter projekts muss zunächst
-
-```dart 
-NEONChat.initializeChat(...);
-```
-
-aufgerufen werden, mit allen für den Chat nötigen Abhängigkeiten (firebaseAuth, firebaseFirestore etc.). auf diese weise können wir singletons erzeugen (ohne getIt, da das leider nicht auf die packages sieht, sondern nur in der flutter app bleibt).
-
-Erst nachdem der ```init``` call stattgefunden hat, kann man auf die getter von ```NEONChat``` zugreifen. Verwendung habe ich mir folgendermaßen vorgestellt:
+Dabei bietet es sich natürlich an, Dependency Injection mithilfe von ```getIt``` zu verwenden! So kann der Code aus ```example/lib/main.dart``` noch schlanker gemacht werden:
 
 ```dart
-//Das hier ist in einem Chat-UI-bezogenen File, z.B. ChatPage:
-...
-return BlocProvider<ChatSearchBloc, ChatSearchState>(
-    create: (_) => NEONChat.chatSearchBloc,
-    ...
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // kann jetzt gelöscht werden :D
+
+    // final firestore = FirebaseFirestore.instance;
+    // final firebaseAuth = FirebaseAuth.instance;
+    // final remoteDataSource = _MyDataSource();
+
+    return MaterialApp(
+      title: 'NEON Chat Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: DefaultConversationsLoader(
+        firestore: getIt<FirebaseFirestore>(),
+        firebaseAuth: getIt<FirebaseAuth>(),
+        remoteDataSource: getIt<RemoteDataSource>(),
+      ),
+    );
+  }
+}
+```
+
+Sollte der Chat völlig extravant aussehen und jedes ```ChatItem, MessageBubble``` und die ```MessageList``` den Ansprüchen nicht gerecht werden, kann nur auf die Logik des Packages zugegriffen werden. Durch die gesamten Blocs wird alles exportiert, was man für das Implementieren eines Chat-Features benötigt!
+
+Auch hier bietet es sich an, mit ```getIt``` zu arbeiten, um die Instanziierung der Blocs schöner zu gestalten:
+
+```dart
+// Zunächst können wir ein eigenes Modul für den Chat deklarieren:
+// (Dazu nehmen wir an, dass FirebaseFirestore, FirebaseAuth und die (optionale) Implementierung von FirebaseKeys innerhalb eines Firebase-Injection-Moduls deklariert sind (s. Papeo-Repo als Referenz))
+@module
+abstract class NEONChatInjectableModule {
+  @lazySingleton
+  ConversationsRepository get conversationsRepository => ConversationsRepositoryImpl(
+        firestore: getIt<FirebaseFirestore>(),
+        firebaseAuth: getIt<FirebaseAuth>(),
+        firebaseKeys: getIt<FirebaseKeys>(),
+    );
+  @lazySingleton
+  ConversationRepository get conversationRepository => ConversationRepositoryImpl(
+        firestore: getIt<FirebaseFirestore>(),
+        firebaseAuth: getIt<FirebaseAuth>(),
+        firebaseKeys: getIt<FirebaseKeys>(),
+    );
+
+  @lazySingleton
+  FirebaseUserProfileRepository get userProfileRepository => FirebaseUserProfileRepositoryImpl(
+        firestore: getIt<FirebaseFirestore>(),
+        firebaseKeys: getIt<FirebaseKeys>(),
+    );
+}
+```
+
+und dann innerhalb der App:
+
+```dart
+
+... 
+ConversationsBloc(
+    conversationsRepository: getIt<ConversationsRepository>(),
+    conversationRepository: getIt<ConversationRepository>(),
+    userProfileRepository: getIt<FirebaseUserProfileRepository>(),
 );
+
+...
 ```
 
-etc. Auf die Chat-bezogenen Blocs wird also nicht via ```getIt```, sondern statisch zugegriffen. Außerdem exportiert das package zahlreiche Widgets, wie z.B. die ```ChatBottomBar``` (die ganzen ätzenden Features davon wie z.B. FilePicker, AudioRecorder sind leider noch nicht getestet, aber 1-zu-1 von papeo übernommen und da liefen sie 🤪 - also feel free das auszutesten!).
 
-Sollte das zu schwammig oder etwas unklar sein, mich (Julien) einfach auf Slack/WhatsApp anhauen! -->
-
-<!-- ## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more. -->
+[flutterfire_cli_link]: https://firebase.flutter.dev/docs/overview/
