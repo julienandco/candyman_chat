@@ -16,7 +16,20 @@ um die magie passieren zu sehen, ist es hilfreich, die firebase firstore collect
 
 anschließend musst du indizes für die erstellten collections machen (für den anfang messages, was eine subcollection einer conversation ist (die in der collection conversations zu finden ist)).
 
-für das auffüllen ein skript schrieben? conversations,messages und users populaten
+damit die app nicht beim versuch, ein foto zu machen crasht, musst du ein paar keys ins Info.plist buttern: 
+```
+<key>NSAppTransportSecurity</key>
+<dict>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+</dict>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Gallerie bite.</string>
+<key>NSCameraUsageDescription</key>
+<string>Kamera bite.</string>
+```
+
+für das auffüllen ein skript schreiben? conversations,messages und users populaten
 
 noch logik für staging/production einführen. es soll in die collections staging/conversations bzw. production/conversations geschrieben werden, damit man später staging löschen/bearbeiten kann.
 <!-- 

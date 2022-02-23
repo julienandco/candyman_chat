@@ -2,72 +2,73 @@ import 'dart:developer';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:animator/animator.dart' as animator;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/core/core.dart';
 import 'package:neon_chat/src/presentation/presentation.dart';
 
-const kMaxWidth = 800.0;
-
 class ChatBottomBar extends StatefulWidget {
   final Color chatBarColor;
   final BorderRadius borderRadius;
-  final bool isWebOrMacOS;
   final Color assetPickerColor;
   final Color cameraPickerColor;
   final BoxConstraints constraints;
   final EdgeInsets padding;
   final double? maxWidth;
-  final Widget galleryIcon;
-  final Color galleryIconColor;
+  final Widget? galleryIcon;
+  final Color? galleryIconColor;
   final double galleryIconSize;
-  final Widget galleryIconLabel;
-  final Widget mediaPickerIcon;
-  final Color mediaPickerIconColor;
+  final Widget? galleryIconLabel;
+  final Widget? mediaPickerIcon;
+  final Color? mediaPickerIconColor;
   final double mediaPickerIconSize;
-  final Widget mediaPickerIconLabel;
-  final Widget audioMessageIcon;
+  final Widget? mediaPickerIconLabel;
+  final Widget? audioMessageIcon;
   final TextStyle? audioRecordingLabelStyle;
   final TextStyle? textFieldStyle;
   final InputDecoration? textFieldDecoration;
-  final Widget attachmentIcon;
-  final Widget cameraIcon;
-  final Widget sendIcon;
+  final Widget? attachmentIcon;
+  final Widget? cameraIcon;
+  final Widget? sendIcon;
   final double sendIconSize;
 
   const ChatBottomBar({
     Key? key,
-    this.chatBarColor = Colors.black,
+    this.chatBarColor = Colors.black12,
     this.borderRadius = const BorderRadius.all(Radius.circular(15)),
-    required this.isWebOrMacOS,
     this.assetPickerColor = Colors.red,
     this.cameraPickerColor = Colors.red,
     this.constraints = const BoxConstraints(maxWidth: kMaxWidth),
     this.padding = const EdgeInsets.symmetric(horizontal: 15),
     this.maxWidth,
-    required this.galleryIcon,
-    required this.galleryIconColor,
+    this.galleryIcon,
+    this.galleryIconColor,
     this.galleryIconSize = 40,
-    required this.galleryIconLabel,
-    required this.mediaPickerIcon,
-    required this.mediaPickerIconColor,
+    this.galleryIconLabel,
+    this.mediaPickerIcon,
+    this.mediaPickerIconColor,
     this.mediaPickerIconSize = 40,
-    required this.mediaPickerIconLabel,
-    required this.audioMessageIcon,
+    this.mediaPickerIconLabel,
+    this.audioMessageIcon,
     this.audioRecordingLabelStyle,
     this.textFieldStyle,
     this.textFieldDecoration,
-    required this.attachmentIcon,
-    required this.cameraIcon,
-    required this.sendIcon,
+    this.attachmentIcon,
+    this.cameraIcon,
+    this.sendIcon,
     this.sendIconSize = 46,
   }) : super(key: key);
+
+  bool get isWebOrMacOS =>
+      kIsWeb || defaultTargetPlatform == TargetPlatform.macOS;
 
   @override
   _ChatBottomBarState createState() => _ChatBottomBarState();
@@ -97,18 +98,23 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   void initState() {
     _textController.addListener(_onTextChanged);
     _showSentButton = widget.isWebOrMacOS;
-    if (widget.maxWidth == null) {
-      _maxWidth = MediaQuery.of(context).size.width > kMaxWidth
-          ? kMaxWidth
-          : MediaQuery.of(context).size.width;
-    } else {
-      _maxWidth = widget.maxWidth!;
-    }
     _recordTimer = StopWatchTimer(
       mode: StopWatchMode.countUp,
       onChangeRawSecond: _onTimerChange,
     );
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (widget.maxWidth == null) {
+      _maxWidth = isWidthOverLimit(context)
+          ? kMaxWidth
+          : MediaQuery.of(context).size.width;
+    } else {
+      _maxWidth = widget.maxWidth!;
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -271,8 +277,9 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                         children: [
                           SizedBox(width: _maxWidth - 202),
                           BaseCircleButton(
-                            child: widget.galleryIcon,
-                            color: widget.galleryIconColor,
+                            child: widget.galleryIcon ??
+                                Icon(CupertinoIcons.photo_on_rectangle),
+                            color: widget.galleryIconColor ?? Colors.white,
                             size: widget.galleryIconSize,
                             backgroundOpacity: 1,
                             padding: const EdgeInsets.all(10),
@@ -280,7 +287,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                             onTap: _pickFile,
                           ),
                           const SizedBox(width: 10),
-                          widget.galleryIconLabel,
+                          //TODO
+                          widget.galleryIconLabel ?? Text('gallery'),
                         ],
                       ),
                     ),
@@ -296,8 +304,9 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                         children: [
                           SizedBox(width: _maxWidth - 202),
                           BaseCircleButton(
-                            child: widget.mediaPickerIcon,
-                            color: widget.mediaPickerIconColor,
+                            child: widget.mediaPickerIcon ??
+                                Icon(CupertinoIcons.selection_pin_in_out),
+                            color: widget.mediaPickerIconColor ?? Colors.white,
                             size: widget.mediaPickerIconSize,
                             backgroundOpacity: 1,
                             padding: const EdgeInsets.all(10),
@@ -305,7 +314,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                             withShadow: true,
                           ),
                           const SizedBox(width: 10),
-                          widget.mediaPickerIconLabel,
+                          //TODO
+                          widget.mediaPickerIconLabel ?? Text('pick media'),
                         ],
                       ),
                     ),
@@ -335,7 +345,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                             (context, animatorState, child) =>
                                                 Opacity(
                                           opacity: animatorState.value,
-                                          child: widget.audioMessageIcon,
+                                          child: widget.audioMessageIcon ??
+                                              Icon(CupertinoIcons.mic),
                                         ),
                                       ),
                                       Expanded(
@@ -372,14 +383,16 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                       ),
                                     ),
                                     IconButton(
-                                      icon: widget.attachmentIcon,
+                                      icon: widget.attachmentIcon ??
+                                          Icon(CupertinoIcons.paperclip),
                                       onPressed: widget.isWebOrMacOS
                                           ? _toggleShowAttachOptions
                                           : _pickFile,
                                     ),
                                     if (!widget.isWebOrMacOS)
                                       IconButton(
-                                        icon: widget.cameraIcon,
+                                        icon: widget.cameraIcon ??
+                                            Icon(CupertinoIcons.camera),
                                         onPressed: _takePhotoFromCamera,
                                       ),
                                   ],
@@ -392,7 +405,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       const SizedBox(width: 15),
                       _showSentButton
                           ? ChatCircleButton(
-                              child: widget.sendIcon,
+                              child:
+                                  widget.sendIcon ?? Icon(CupertinoIcons.mail),
                               size: widget.sendIconSize,
                               onTap: () {
                                 if (_showSentButton) {

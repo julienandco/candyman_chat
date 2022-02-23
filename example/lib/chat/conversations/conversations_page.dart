@@ -1,3 +1,5 @@
+import 'package:example/chat/conversation/conversation_loader.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
@@ -39,8 +41,28 @@ class _ConversationsPageState extends State<ConversationsPage>
                               ? conversationsSearchState.conversations
                               : chatConversations)
                           .map(
-                            (conversation) =>
-                                Text(conversation.conversationPartner.name),
+                            (conversation) => ChatListItem(
+                              conversationItem: conversation,
+                              userAvatar: Container(
+                                height: 30,
+                                width: 30,
+                                color: Colors.green,
+                              ),
+                              onOpenChat: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => ConversationLoader(
+                                      userProfileId:
+                                          conversation.conversationPartner.id,
+                                      conversationId:
+                                          conversation.conversation.id,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            // Text(conversation.conversationPartner.name),
                           )
                           .toList();
                     },

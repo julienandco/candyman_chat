@@ -33,6 +33,10 @@ dependencies:
   firebase_auth: ^3.3.7
   cloud_firestore: ^3.1.8
   cupertino_icons: ^1.0.2
+  keyboard_dismisser: ^2.0.0
+  dartz: ^0.10.1
+  file_picker: ^4.4.0
+
   neon_chat:
     path: ../
 

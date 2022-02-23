@@ -25,13 +25,13 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
     void Function(int, int)? onReceiveProgress,
   }) uploadFileToPresignedURL;
 
-  FileUploadRepositoryImpl(
-    this.deleteEndpoint,
-    this.patchEndpoint,
-    this.postEndpoint,
-    this.getEndpoint,
-    this.uploadFileToPresignedURL,
-  );
+  FileUploadRepositoryImpl({
+    required this.deleteEndpoint,
+    required this.patchEndpoint,
+    required this.postEndpoint,
+    required this.getEndpoint,
+    required this.uploadFileToPresignedURL,
+  });
   // FileUploadRepositoryImpl(this.remoteApiDataSource);
 
   @override

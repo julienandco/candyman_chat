@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  badges:
+    dependency: transitive
+    description:
+      name: badges
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   bloc:
     dependency: transitive
     description:
@@ -156,7 +163,7 @@ packages:
     source: hosted
     version: "1.0.4"
   dartz:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dartz
       url: "https://pub.dartlang.org"
@@ -205,7 +212,7 @@ packages:
     source: hosted
     version: "6.1.2"
   file_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: file_picker
       url: "https://pub.dartlang.org"
@@ -415,6 +422,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.4"
+  keyboard_dismisser:
+    dependency: "direct main"
+    description:
+      name: keyboard_dismisser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   linkwell:
     dependency: transitive
     description:

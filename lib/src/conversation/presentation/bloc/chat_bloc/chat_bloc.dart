@@ -17,18 +17,28 @@ part 'chat_event.dart';
 part 'chat_bloc.freezed.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
+  final String conversationId;
+  final String userProfileId;
+
+  final FirebaseAuth firebaseAuth;
+  final ConversationRepository conversationRepository;
+  final ConversationsRepository conversationsRepository;
+  final ChatUploadManagerRepository chatUploadManagerRepository;
+  final FirebaseUserProfileRepository userProfileRepository;
+  late final StreamSubscription _chatStream;
+
   ChatBloc({
     required this.conversationId,
     required this.userProfileId,
     required this.firebaseAuth,
-    required this.chatRepository,
     required this.conversationRepository,
+    required this.conversationsRepository,
     required this.chatUploadManagerRepository,
     required this.userProfileRepository,
   }) : super(const _Initial()) {
     _chatStream = CombineLatestStream.combine3(
-      conversationRepository.getConversation(conversationId),
-      chatRepository.getMessages(conversationId),
+      conversationsRepository.getConversation(conversationId),
+      conversationRepository.getMessages(conversationId),
       userProfileRepository.getUserProfile(userProfileId),
       (
         Conversation conversation,
@@ -77,7 +87,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             loadSuccess: (state) {
               if (message.trim().isNotEmpty) {
                 //TODO: UC
-                chatRepository.sendMessage(
+                conversationRepository.sendMessage(
                   state.conversation.id,
                   ChatMessage(
                     senderId: firebaseAuth.currentUser!.uid,
@@ -97,7 +107,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                 final filePath = Uri.parse(messageString).path;
 
                 //TODO: UC
-                final message = chatRepository.sendFileMessage(
+                final message = conversationRepository.sendFileMessage(
                   state.conversation.id,
                   ChatMessage(
                     senderId: firebaseAuth.currentUser!.uid,
@@ -116,7 +126,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           state.maybeMap(
             loadSuccess: (state) {
               //TODO: UC
-              final message = chatRepository.sendFileMessage(
+              final message = conversationRepository.sendFileMessage(
                 state.conversation.id,
                 ChatMessage(
                   senderId: firebaseAuth.currentUser!.uid,
@@ -135,7 +145,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           await state.maybeMap(
             loadSuccess: (state) async {
               //TODO: UC
-              final message = chatRepository.sendFileMessage(
+              final message = conversationRepository.sendFileMessage(
                 state.conversation.id,
                 ChatMessage(
                   senderId: firebaseAuth.currentUser!.uid,
@@ -169,7 +179,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                 }
 
                 //TODO: UC
-                final message = chatRepository.sendFileMessage(
+                final message = conversationRepository.sendFileMessage(
                   state.conversation.id,
                   ChatMessage(
                     senderId: firebaseAuth.currentUser!.uid,
@@ -207,7 +217,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               }
 
               //TODO: UC
-              final message = chatRepository.sendFileMessage(
+              final message = conversationRepository.sendFileMessage(
                 state.conversation.id,
                 ChatMessage(
                   senderId: firebaseAuth.currentUser!.uid,
@@ -230,7 +240,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           state.maybeMap(
             loadSuccess: (state) {
               //TODO: UC
-              chatRepository.markAsSeen(
+              conversationRepository.markAsSeen(
                 state.conversation.id,
                 message,
               );
@@ -240,24 +250,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         },
         deleteMessage: (message) {
           //TODO: UC
-          chatRepository.deleteMessage(conversationId, message);
+          conversationRepository.deleteMessage(conversationId, message);
         },
         hideMessage: (message) {
           //TODO: UC
-          chatRepository.hideMessage(conversationId, message);
+          conversationRepository.hideMessage(conversationId, message);
         },
       );
     });
   }
-  final String conversationId;
-  final String userProfileId;
-
-  final FirebaseAuth firebaseAuth;
-  final ConversationRepository chatRepository;
-  final ConversationsRepository conversationRepository;
-  final ChatUploadManagerRepository chatUploadManagerRepository;
-  final FirebaseUserProfileRepository userProfileRepository;
-  late final StreamSubscription _chatStream;
 
   // void init() => add(_Init());
   // void sendTextMessage(String message) => add(_SendTextMessage(message));

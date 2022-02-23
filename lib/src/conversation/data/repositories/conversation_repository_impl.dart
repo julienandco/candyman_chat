@@ -6,10 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 //TODO: need/can inject?
 import 'package:injectable/injectable.dart';
+import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
-
-const _conversationsCollectionName = 'conversations';
-const _messageCollectionName = 'messages';
 
 // @LazySingleton(as: ChatRepository)
 class ConversationRepositoryImpl implements ConversationRepository {
@@ -17,13 +15,13 @@ class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseAuth auth;
   final CollectionReference _conversations;
   ConversationRepositoryImpl(this.firestore, this.auth)
-      : _conversations = firestore.collection(_conversationsCollectionName);
+      : _conversations = firestore.collection(conversationsCollectionKey);
 
   @override
   Stream<List<ChatMessage>> getMessages(String conversationId) {
     return _conversations
         .doc(conversationId)
-        .collection(_messageCollectionName)
+        .collection(messagesInConversationKey)
         .orderBy('timestamp', descending: true)
         .snapshots()
         .transform(
@@ -54,7 +52,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     try {
       final doc = _conversations
           .doc(conversationId)
-          .collection(_messageCollectionName)
+          .collection(messagesInConversationKey)
           .doc();
       doc.set(
         message
@@ -77,7 +75,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
     return _conversations
         .doc(conversationId)
-        .collection(_messageCollectionName)
+        .collection(messagesInConversationKey)
         .where('doneUpload', isEqualTo: true)
         .orderBy('timestamp', descending: true)
         .limit(1)
@@ -112,7 +110,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     try {
       final doc = _conversations
           .doc(conversationId)
-          .collection(_messageCollectionName)
+          .collection(messagesInConversationKey)
           .doc();
       doc.set(
         message
@@ -140,7 +138,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     if (!message.isMe && message.doneUpload && !message.seen) {
       _conversations
           .doc(conversationId)
-          .collection(_messageCollectionName)
+          .collection(messagesInConversationKey)
           .doc(message.id)
           .update(
         {
@@ -154,7 +152,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
   void deleteMessage(String conversationId, ChatMessage message) {
     _conversations
         .doc(conversationId)
-        .collection(_messageCollectionName)
+        .collection(messagesInConversationKey)
         .doc(message.id)
         .update(
       {'type': 'deleted'},
@@ -167,7 +165,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
     _conversations
         .doc(conversationId)
-        .collection(_messageCollectionName)
+        .collection(messagesInConversationKey)
         .doc(message.id)
         .update(
       {

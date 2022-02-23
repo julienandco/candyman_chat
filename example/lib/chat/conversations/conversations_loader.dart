@@ -46,7 +46,7 @@ class ConversationsLoader extends StatelessWidget {
                         ConversationsSearchEvent.setEntries(conversations));
                     final currentConversationCubit =
                         context.read<CurrentConversationCubit>();
-                    if (MediaQuery.of(context).size.width > 800.0 &&
+                    if (isWidthOverLimit(context) &&
                         currentConversationCubit.state.conversationId == null &&
                         conversations.isNotEmpty) {
                       final firstChat = conversations.first;
@@ -64,39 +64,11 @@ class ConversationsLoader extends StatelessWidget {
             body: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: [
-                      Column(
-                        children: const [
-                          // Container(
-                          //   // decoration: BoxDecoration(
-                          //   //   color: kColorPrimary,
-                          //   //   boxShadow: kShadowMedium,
-                          //   //   borderRadius: BorderRadius.only(
-                          //   //     bottomLeft: kRadiusMedium,
-                          //   //     bottomRight: kRadiusMedium,
-                          //   //   ),
-                          //   // ),
-                          //   child: SafeArea(
-                          //     bottom: false,
-                          //     child: Container(
-                          //         padding: kPadHorLarge,
-                          //         child: _Tabbar(
-                          //           tabController: _tabController,
-                          //         )),
-                          //   ),
-                          // ),
-                          Expanded(
-                            child: ConversationsPage(),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  child: const ConversationsPage(),
                 ),
-                if (MediaQuery.of(context).size.width > 800.0)
+                if (isWidthOverLimit(context))
                   BlocBuilder<CurrentConversationCubit,
                       CurrentConversationState>(
                     builder: (context, state) {

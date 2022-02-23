@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:linkwell/linkwell.dart';
+import 'package:neon_chat/src/core/core.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:neon_chat/src/presentation/presentation.dart';
@@ -21,18 +22,18 @@ class MessageBubble extends StatefulWidget {
   final TextStyle? messageTimestampStyle;
   final Color focusedMenuItemBackgroundColor;
   final Widget? copyIcon;
-  final Widget deleteIcon;
-  final String copyLabel;
-  final String deleteLabel;
+  final Widget? deleteIcon;
+  final String? copyLabel;
+  final String? deleteLabel;
   final TextStyle? actionLabelStyle;
   final Color ownMessageColor;
   final Color otherUserMessageColor;
   final BoxDecoration? decoration;
   final Widget? seenIcon;
   final Widget? receivedIcon;
-  final String messageIsUploadingLabel;
-  final String messageBubbleDeletedLabel;
-  final String messageTypeNotSupportedLabel;
+  final String? messageIsUploadingLabel;
+  final String? messageBubbleDeletedLabel;
+  final String? messageTypeNotSupportedLabel;
 
   final void Function()? onCopyToClipboard;
   final void Function(
@@ -51,18 +52,18 @@ class MessageBubble extends StatefulWidget {
     this.messageTimestampStyle,
     this.focusedMenuItemBackgroundColor = Colors.black87,
     this.copyIcon,
-    required this.deleteIcon,
-    required this.copyLabel,
-    required this.deleteLabel,
+    this.deleteIcon,
+    this.copyLabel,
+    this.deleteLabel,
     this.actionLabelStyle,
     this.ownMessageColor = Colors.greenAccent,
     this.otherUserMessageColor = Colors.blueGrey,
     this.decoration,
     this.seenIcon,
     this.receivedIcon,
-    required this.messageIsUploadingLabel,
-    required this.messageBubbleDeletedLabel,
-    required this.messageTypeNotSupportedLabel,
+    this.messageIsUploadingLabel,
+    this.messageBubbleDeletedLabel,
+    this.messageTypeNotSupportedLabel,
   });
 
   @override
@@ -133,7 +134,7 @@ class _MessageBubbleState extends State<MessageBubble> {
   MainAxisAlignment get _mainAxisAlignment =>
       widget.message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start;
   BoxConstraints? get _constraints {
-    return MediaQuery.of(context).size.width > kMaxWidth
+    return isWidthOverLimit(context)
         ? const BoxConstraints(maxWidth: 250)
         : BoxConstraints(
             maxWidth:
@@ -216,12 +217,18 @@ class _MessageBubbleState extends State<MessageBubble> {
                                   Icons.copy,
                                   color: Colors.white30,
                                 )
-                            : widget.deleteIcon,
+                            : widget.deleteIcon ??
+                                const Icon(
+                                  Icons.delete,
+                                  color: Colors.white30,
+                                ),
                       ),
                       Flexible(
                         fit: FlexFit.loose,
                         child: AutoSizeText(
-                          i == 1 ? widget.copyLabel : widget.deleteLabel,
+                          i == 1
+                              ? (widget.copyLabel ?? 'copy')
+                              : (widget.deleteLabel ?? 'delete'),
                           style: widget.actionLabelStyle,
                         ),
                       ),
@@ -275,10 +282,12 @@ class _MessageBubbleState extends State<MessageBubble> {
                         message: widget.message,
                         footer: footer,
                         messageBubbleDeletedLabel:
-                            widget.messageBubbleDeletedLabel,
+                            widget.messageBubbleDeletedLabel ?? 'deleted',
                         messageTypeNotSupportedLabel:
-                            widget.messageTypeNotSupportedLabel,
-                        messageIsUploadingLabel: widget.messageIsUploadingLabel,
+                            widget.messageTypeNotSupportedLabel ??
+                                'not supported',
+                        messageIsUploadingLabel:
+                            widget.messageIsUploadingLabel ?? 'uploading...',
                       ),
                     ),
                   ),

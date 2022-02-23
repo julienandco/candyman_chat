@@ -15,7 +15,7 @@ class SubHeader extends StatelessWidget {
     this.action,
     this.leading,
     this.decoration = const BoxDecoration(
-      color: Colors.black,
+      color: Colors.blue,
       boxShadow: [
         BoxShadow(
           color: Colors.black26,

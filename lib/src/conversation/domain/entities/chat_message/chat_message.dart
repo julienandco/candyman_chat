@@ -15,6 +15,9 @@ enum ChatMessageType { text, voice, image, video, file, deleted }
 
 extension ChatMessageTypeStrings on ChatMessageType {
   String get firebaseKey => getFirebaseKey(this);
+
+  //TODO
+  String get displayString => getFirebaseKey(this);
 }
 
 @freezed
@@ -52,7 +55,8 @@ class ChatMessage with _$ChatMessage {
 
   //TODO: get correct locale, not hardcoded de
   String get timestampFormated =>
-      DateFormat.Hm('de').format(timestamp ?? DateTime.now());
+      //DateFormat.Hm('de').format(timestamp ?? DateTime.now());
+      timestamp?.toIso8601String() ?? DateTime.now().toIso8601String();
 
   bool get isMe => FirebaseAuth.instance.currentUser!.uid == senderId;
 
