@@ -15,7 +15,7 @@ export 'src/core/core.dart' show FirebaseUser;
 export 'src/presentation/presentation.dart';
 export 'src/neon_chat_setup_options.dart';
 
-part 'src/neon_chat_impl.dart';
+// part 'src/neon_chat_impl.dart';
 
 //TODO
 const isWebOrMacOS = false;
