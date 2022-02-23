@@ -50,7 +50,7 @@ Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Namin
 ```
 
 
-## Nutzung: 
+## Nutzung
 
 Keine wahnsinnige UI, sondern Standard? Dann nutze ```DefaultConversationLoader, DefaultConversationPage, DefaultConversationsLoader``` und ```DefaultConversationsPage``` und style sie der App entsprechend! Diese Widgets funktionieren out-of-the-box und ein Anwendungsbeispiel findest du in ```example/lib/main.dart```.
 
