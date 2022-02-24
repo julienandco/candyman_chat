@@ -121,7 +121,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
             )
             .toJson(),
       );
-      log('sent message', name: '$runtimeType');
+      log('sent file message', name: '$runtimeType');
       return ChatUploadFile(
         messageId: doc.id,
         conversationID: conversationId,

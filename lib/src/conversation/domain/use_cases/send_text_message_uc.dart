@@ -9,6 +9,6 @@ class SendTextMessageUC {
     required String conversationId,
     required ChatMessage message,
   }) {
-    conversationRepository.sendFileMessage(conversationId, message);
+    conversationRepository.sendMessage(conversationId, message);
   }
 }

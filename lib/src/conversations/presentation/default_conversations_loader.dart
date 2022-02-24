@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 //TODO: style
+
+//TODO: repos von oben reingeben lassen? damit getIt so effizient wie mögl genutzt wird.
+//und wenn man den defaultloader nicht nutzt kann man auch den bloc injecten
+
 class DefaultConversationsLoader extends StatelessWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
