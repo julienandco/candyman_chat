@@ -8,9 +8,6 @@ import 'package:neon_chat/src/core/core.dart';
 
 //TODO: style
 
-//TODO: repos von oben reingeben lassen? damit getIt so effizient wie mögl genutzt wird.
-//und wenn man den defaultloader nicht nutzt kann man auch den bloc injecten
-
 class DefaultConversationsLoader extends StatelessWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
@@ -26,6 +23,21 @@ class DefaultConversationsLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: get those out of context somehow?
+    final conversationRepository = ConversationRepositoryImpl(
+      firestore: firestore,
+      firebaseAuth: firebaseAuth,
+      firebaseKeys: firebaseKeys,
+    );
+    final conversationsRepository = ConversationsRepositoryImpl(
+      firestore: firestore,
+      firebaseAuth: firebaseAuth,
+      firebaseKeys: firebaseKeys,
+    );
+    final firebaseUserProfileRepository = FirebaseUserProfileRepositoryImpl(
+      firestore: firestore,
+      firebaseKeys: firebaseKeys,
+    );
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -36,20 +48,14 @@ class DefaultConversationsLoader extends StatelessWidget {
         ),
         BlocProvider<ConversationsBloc>(
           create: (context) => ConversationsBloc(
-            conversationsRepository: ConversationsRepositoryImpl(
-              firestore: firestore,
-              firebaseAuth: firebaseAuth,
-              firebaseKeys: firebaseKeys,
-            ),
-            conversationRepository: ConversationRepositoryImpl(
-              firestore: firestore,
-              firebaseAuth: firebaseAuth,
-              firebaseKeys: firebaseKeys,
-            ),
-            userProfileRepository: FirebaseUserProfileRepositoryImpl(
-              firestore: firestore,
-              firebaseKeys: firebaseKeys,
-            ),
+            hideConversationUC: HideConversationUC(conversationsRepository),
+            initializeConversationItemStreamUC:
+                InitializeConversationItemStreamUC(
+                    conversationRepository: conversationRepository,
+                    conversationsRepository: conversationsRepository,
+                    userProfileRepository: firebaseUserProfileRepository),
+            initializeConversationsStreamUC:
+                InitializeConversationsStreamUC(conversationsRepository),
           ),
         ),
       ],
@@ -96,9 +102,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                     builder: (context, state) {
                       if (state.conversationId != null) {
                         return Flexible(
-                          child:
-                              // Text(state.userProfileId ?? 'no user id found'),
-                              DefaultConversationLoader(
+                          child: DefaultConversationLoader(
                             key: Key(state.conversationId!),
                             firebaseAuth: firebaseAuth,
                             firestore: firestore,

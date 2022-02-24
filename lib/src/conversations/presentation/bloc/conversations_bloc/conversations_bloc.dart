@@ -4,31 +4,28 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:rxdart/rxdart.dart';
 
-import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
-import 'package:neon_chat/src/core/core.dart';
 
 part 'conversations_state.dart';
 part 'conversations_event.dart';
 part 'conversations_bloc.freezed.dart';
 
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
-  final ConversationsRepository conversationsRepository;
-  final ConversationRepository conversationRepository;
-  final FirebaseUserProfileRepository userProfileRepository;
-
   StreamSubscription? _conversationsStream;
-  late final List<StreamSubscription> _chatsItemsStream = [];
+  late final List<StreamSubscription> _conversationItemStreams = [];
+
+  final InitializeConversationsStreamUC initializeConversationsStreamUC;
+  final InitializeConversationItemStreamUC initializeConversationItemStreamUC;
+  final HideConversationUC hideConversationUC;
 
   ConversationsBloc({
-    required this.conversationsRepository,
-    required this.userProfileRepository,
-    required this.conversationRepository,
+    required this.initializeConversationsStreamUC,
+    required this.initializeConversationItemStreamUC,
+    required this.hideConversationUC,
   }) : super(const _Initial()) {
-    _conversationsStream = conversationsRepository.getAllConversations().listen(
-      (event) {
+    _conversationsStream = initializeConversationsStreamUC(
+      onData: (event) {
         if (event.isNotEmpty) {
           add(
             _FetchChatItems(event),
@@ -41,45 +38,30 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
         const _OnError(),
       ),
     );
+
     on<ConversationsEvent>((event, emit) {
       event.when(
         fetchChatItems: (conversations) {
-          _chatsItemsStream.map((e) => e.cancel());
+          _conversationItemStreams.map((e) => e.cancel());
 
           for (var conversation in conversations) {
             if (conversation.timestamp != null) {
               final chatPersonId = conversation.conversationMembers.firstWhere(
                   (element) =>
                       element != FirebaseAuth.instance.currentUser!.uid);
-              //TODO: inject that in package?
 
-              // (element) =>
-              //     element != getIt<FirebaseAuth>().currentUser!.uid);
-
-              final chatStream = CombineLatestStream.combine3(
-                conversationRepository.getLastMessages(conversation.id),
-                userProfileRepository.getUserProfile(chatPersonId),
-                conversationsRepository.getUnreadMessagesCount(conversation.id),
-                (
-                  ChatMessage lastMessage,
-                  FirebaseUser userProfile,
-                  int unreadCount,
-                ) =>
-                    ConversationItem(
-                  lastMessage: lastMessage,
-                  conversationPartner: userProfile,
-                  conversation: conversation,
-                  unreadMessagesCount: unreadCount,
-                ),
-              ).listen(
-                (event) => add(
+              final chatStream = initializeConversationItemStreamUC(
+                conversation: conversation,
+                otherUserId: chatPersonId,
+                onData: (event) => add(
                   _OnChatItemsData(event),
                 ),
                 onError: (err) {
                   log('fetchChatItems $err', name: '$runtimeType');
                 },
               );
-              _chatsItemsStream.add(chatStream);
+
+              _conversationItemStreams.add(chatStream);
             }
           }
         },
@@ -113,7 +95,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
         ),
         dispose: () {
           _conversationsStream?.cancel();
-          _chatsItemsStream.map((e) => e.cancel());
+          _conversationItemStreams.map((e) => e.cancel());
           _conversationsStream = null;
           emit(
             const ConversationsState.initial(),
@@ -132,7 +114,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
               orElse: () => state,
             ),
           );
-          conversationsRepository.hideConversations(conversationId);
+          hideConversationUC(conversationId);
         },
       );
     });
@@ -140,7 +122,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     @override
     Future<void> close() {
       _conversationsStream?.cancel();
-      _chatsItemsStream.map((e) => e.cancel());
+      _conversationItemStreams.map((e) => e.cancel());
       return super.close();
     }
   }
