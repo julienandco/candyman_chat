@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 
+@LazySingleton(as: UploadManagerRepository)
 class UploadManagerRepositoryImpl implements UploadManagerRepository {
   final FileUploadRepository fileUploadRepository;
 
