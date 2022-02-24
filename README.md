@@ -57,7 +57,7 @@ Keine wahnsinnige UI, sondern Standard? Dann nutze ```DefaultConversationLoader,
 Sollte der Chat völlig extravant aussehen und jedes ```ChatItem, MessageBubble``` und die ```MessageList``` den Ansprüchen nicht gerecht werden, kann auch nur auf die Logik des Packages zugegriffen werden. Durch die gesamten Blocs wird alles exportiert, was man für das Implementieren eines Chat-Features benötigt!
 
 Dabei bietet es sich natürlich an, Dependency Injection mithilfe von ```getIt``` zu verwenden! 
-So kann der Code aus innerhalb der App wesentlich schlanker gemacht werden!
+So kann der Code innerhalb der App wesentlich schlanker gemacht werden!
 
 ACHTUNG: Damit der nächste Absatz für dich funktioniert, muss deine App diese Abhängigkeiten in ihrer ```pubspec.yaml``` haben:
 
@@ -76,7 +76,7 @@ Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den 
 
 Was? Dir steht das Brick nicht zur Verfügung, weil du diese App nicht mit der [NEON CLI][neon_cli_link] aufgesetzt hast? BigMac, bann den weg!
 
-Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du auch diese zwei Files im ```lib```-Ordner deines Projekts erstellen:
+Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du auch diese zwei Files im ```lib```-Ordner deines Projekts händisch (🤢) erstellen:
 
 ```neon_chat_injectable_module.dart```
 ```dart
