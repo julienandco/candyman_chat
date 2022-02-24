@@ -28,6 +28,28 @@ class DefaultConversationLoader extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    //TODO: get those out of context somehow?
+    final conversationRepository = ConversationRepositoryImpl(
+      firestore: firestore,
+      firebaseAuth: firebaseAuth,
+      firebaseKeys: firebaseKeys,
+    );
+    final conversationsRepository = ConversationsRepositoryImpl(
+      firestore: firestore,
+      firebaseAuth: firebaseAuth,
+      firebaseKeys: firebaseKeys,
+    );
+    final firebaseUserProfileRepository = FirebaseUserProfileRepositoryImpl(
+      firestore: firestore,
+      firebaseKeys: firebaseKeys,
+    );
+    final fileUploadRepository = FileUploadRepositoryImpl(
+      remoteDataSource: remoteDataSource,
+    );
+    final uploadManagerRepository = UploadManagerRepositoryImpl(
+      fileUploadRepository: fileUploadRepository,
+    );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<ChatSearchBloc>(
@@ -35,29 +57,25 @@ class DefaultConversationLoader extends StatelessWidget {
         ),
         BlocProvider<ChatBloc>(
           create: (context) => ChatBloc(
-            userProfileId: userProfileId,
-            conversationId: conversationId,
-            conversationRepository: ConversationRepositoryImpl(
-              firestore: firestore,
-              firebaseAuth: firebaseAuth,
-              firebaseKeys: firebaseKeys,
-            ),
-            conversationsRepository: ConversationsRepositoryImpl(
-              firestore: firestore,
-              firebaseAuth: firebaseAuth,
-              firebaseKeys: firebaseKeys,
-            ),
-            userProfileRepository: FirebaseUserProfileRepositoryImpl(
-              firestore: firestore,
-              firebaseKeys: firebaseKeys,
-            ),
             firebaseAuth: firebaseAuth,
-            chatUploadManagerRepository: UploadManagerRepositoryImpl(
-              fileUploadRepository: FileUploadRepositoryImpl(
-                remoteDataSource: remoteDataSource,
-              ),
+            hideMessageUC: HideMessageUC(conversationRepository),
+            deleteMessageUC: DeleteMessageUC(conversationRepository),
+            markAsSeenUC: MarkMessageAsSeenUC(conversationRepository),
+            sendPlatformFileMessageUC: SendPlatformFileMessageUC(
+                conversationRepository: conversationRepository,
+                uploadManagerRepository: uploadManagerRepository),
+            sendFileMessageUC: SendFileMessageUC(
+                conversationRepository: conversationRepository,
+                uploadManagerRepository: uploadManagerRepository),
+            sendTextMessageUC: SendTextMessageUC(conversationRepository),
+            initStreamUC: InitializeConversationStreamUC(
+                conversationRepository: conversationRepository,
+                conversationsRepository: conversationsRepository,
+                firebaseUserProfileRepository: firebaseUserProfileRepository),
+          )..add(
+              ChatEvent.init(
+                  conversationId: conversationId, otherUserId: userProfileId),
             ),
-          ),
         ),
       ],
       child: DefaultConversationPage(showCloseButton: showCloseButton),

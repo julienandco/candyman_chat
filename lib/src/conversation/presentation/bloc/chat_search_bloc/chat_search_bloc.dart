@@ -57,8 +57,9 @@ class ChatSearchBloc extends Bloc<ChatSearchEvent, ChatSearchState> {
           if (result.isNotEmpty) {
             _jumpToResult();
           } else {
+            //TODO: get rid of fluttertoast dependency and add function showOnNoResults
             Fluttertoast.showToast(
-              //TODO: how to get strings? internat in package?
+              //TODO: how to get strings? internal in package?
               msg: 'noResults', //.tr(),
               //TODO: how to get styling? probably from outside
               backgroundColor: Colors.red,
