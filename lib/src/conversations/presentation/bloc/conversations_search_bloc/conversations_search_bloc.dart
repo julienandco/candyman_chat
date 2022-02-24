@@ -12,35 +12,26 @@ part 'conversations_search_bloc.freezed.dart';
 class ConversationsSearchBloc
     extends Bloc<ConversationsSearchEvent, ConversationsSearchState> {
   final textController = TextEditingController();
-
-  @visibleForTesting
-  List<ConversationItem> conversations = [];
+  final SearchConversationsUC searchUC = SearchConversationsUC();
 
   ConversationsSearchBloc()
       : super(const ConversationsSearchState.state(conversations: [])) {
     on<ConversationsSearchEvent>(
       (event, emit) {
         event.when(
-          setEntries: (conversations) {
-            conversations = conversations;
+          initialize: (conversations) {
+            searchUC.initialize(conversations);
           },
-          searchSwitch: (isActive) => emit(
+          toggleSearch: (isActive) => emit(
             state.copyWith(
               isSearchActive: isActive,
-              conversations: isActive ? conversations : [],
+              conversations: isActive ? searchUC.conversations : [],
             ),
           ),
           query: (searchString) {
-            final results = <ConversationItem>{};
-            for (int i = 0; i < conversations.length; i++) {
-              String data = conversations[i].conversationPartner.name;
-              if (data.toLowerCase().contains(searchString.toLowerCase())) {
-                results.add(conversations[i]);
-              }
-            }
+            final results = searchUC.search(searchString);
 
-            emit(state.copyWith(
-                isSearchActive: true, conversations: results.toList()));
+            emit(state.copyWith(isSearchActive: true, conversations: results));
           },
           onResult: (results) => emit(
             state.copyWith(

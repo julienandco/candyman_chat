@@ -61,7 +61,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                 state.maybeWhen(
                   loadSuccess: (conversations) {
                     context.read<ConversationsSearchBloc>().add(
-                        ConversationsSearchEvent.setEntries(conversations));
+                        ConversationsSearchEvent.initialize(conversations));
                     final currentConversationCubit =
                         context.read<CurrentConversationCubit>();
                     if (isWidthOverLimit(context) &&
