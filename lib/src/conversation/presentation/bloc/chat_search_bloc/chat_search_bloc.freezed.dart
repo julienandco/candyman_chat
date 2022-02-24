@@ -298,25 +298,19 @@ abstract class _State extends ChatSearchState {
 class _$ChatSearchEventTearOff {
   const _$ChatSearchEventTearOff();
 
-  _SetEntries setEntries(List<ChatMessage> messages) {
-    return _SetEntries(
+  _Initialize initialize(List<ChatMessage> messages) {
+    return _Initialize(
       messages,
     );
   }
 
-  _SearchSwitch searchSwitch() {
-    return const _SearchSwitch();
+  _ToggleSearch toggleSearch() {
+    return const _ToggleSearch();
   }
 
   _Query query(String term) {
     return _Query(
       term,
-    );
-  }
-
-  _OnResult onResult(List<int> messageIndices) {
-    return _OnResult(
-      messageIndices,
     );
   }
 
@@ -336,30 +330,27 @@ const $ChatSearchEvent = _$ChatSearchEventTearOff();
 mixin _$ChatSearchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ChatMessage> messages) setEntries,
-    required TResult Function() searchSwitch,
+    required TResult Function(List<ChatMessage> messages) initialize,
+    required TResult Function() toggleSearch,
     required TResult Function(String term) query,
-    required TResult Function(List<int> messageIndices) onResult,
     required TResult Function() onGoResultUp,
     required TResult Function() onGoResultDown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
     required TResult orElse(),
@@ -367,30 +358,27 @@ mixin _$ChatSearchEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
-    required TResult Function(_OnResult value) onResult,
     required TResult Function(_OnGoResultUp value) onGoResultUp,
     required TResult Function(_OnGoResultDown value) onGoResultDown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
     required TResult orElse(),
@@ -416,29 +404,29 @@ class _$ChatSearchEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SetEntriesCopyWith<$Res> {
-  factory _$SetEntriesCopyWith(
-          _SetEntries value, $Res Function(_SetEntries) then) =
-      __$SetEntriesCopyWithImpl<$Res>;
+abstract class _$InitializeCopyWith<$Res> {
+  factory _$InitializeCopyWith(
+          _Initialize value, $Res Function(_Initialize) then) =
+      __$InitializeCopyWithImpl<$Res>;
   $Res call({List<ChatMessage> messages});
 }
 
 /// @nodoc
-class __$SetEntriesCopyWithImpl<$Res>
+class __$InitializeCopyWithImpl<$Res>
     extends _$ChatSearchEventCopyWithImpl<$Res>
-    implements _$SetEntriesCopyWith<$Res> {
-  __$SetEntriesCopyWithImpl(
-      _SetEntries _value, $Res Function(_SetEntries) _then)
-      : super(_value, (v) => _then(v as _SetEntries));
+    implements _$InitializeCopyWith<$Res> {
+  __$InitializeCopyWithImpl(
+      _Initialize _value, $Res Function(_Initialize) _then)
+      : super(_value, (v) => _then(v as _Initialize));
 
   @override
-  _SetEntries get _value => super._value as _SetEntries;
+  _Initialize get _value => super._value as _Initialize;
 
   @override
   $Res call({
     Object? messages = freezed,
   }) {
-    return _then(_SetEntries(
+    return _then(_Initialize(
       messages == freezed
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -449,22 +437,22 @@ class __$SetEntriesCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SetEntries implements _SetEntries {
-  const _$_SetEntries(this.messages);
+class _$_Initialize implements _Initialize {
+  const _$_Initialize(this.messages);
 
   @override
   final List<ChatMessage> messages;
 
   @override
   String toString() {
-    return 'ChatSearchEvent.setEntries(messages: $messages)';
+    return 'ChatSearchEvent.initialize(messages: $messages)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SetEntries &&
+            other is _Initialize &&
             const DeepCollectionEquality().equals(other.messages, messages));
   }
 
@@ -474,48 +462,45 @@ class _$_SetEntries implements _SetEntries {
 
   @JsonKey(ignore: true)
   @override
-  _$SetEntriesCopyWith<_SetEntries> get copyWith =>
-      __$SetEntriesCopyWithImpl<_SetEntries>(this, _$identity);
+  _$InitializeCopyWith<_Initialize> get copyWith =>
+      __$InitializeCopyWithImpl<_Initialize>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ChatMessage> messages) setEntries,
-    required TResult Function() searchSwitch,
+    required TResult Function(List<ChatMessage> messages) initialize,
+    required TResult Function() toggleSearch,
     required TResult Function(String term) query,
-    required TResult Function(List<int> messageIndices) onResult,
     required TResult Function() onGoResultUp,
     required TResult Function() onGoResultDown,
   }) {
-    return setEntries(messages);
+    return initialize(messages);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
   }) {
-    return setEntries?.call(messages);
+    return initialize?.call(messages);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
     required TResult orElse(),
   }) {
-    if (setEntries != null) {
-      return setEntries(messages);
+    if (initialize != null) {
+      return initialize(messages);
     }
     return orElse();
   }
@@ -523,89 +508,86 @@ class _$_SetEntries implements _SetEntries {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
-    required TResult Function(_OnResult value) onResult,
     required TResult Function(_OnGoResultUp value) onGoResultUp,
     required TResult Function(_OnGoResultDown value) onGoResultDown,
   }) {
-    return setEntries(this);
+    return initialize(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
   }) {
-    return setEntries?.call(this);
+    return initialize?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
     required TResult orElse(),
   }) {
-    if (setEntries != null) {
-      return setEntries(this);
+    if (initialize != null) {
+      return initialize(this);
     }
     return orElse();
   }
 }
 
-abstract class _SetEntries implements ChatSearchEvent {
-  const factory _SetEntries(List<ChatMessage> messages) = _$_SetEntries;
+abstract class _Initialize implements ChatSearchEvent {
+  const factory _Initialize(List<ChatMessage> messages) = _$_Initialize;
 
   List<ChatMessage> get messages;
   @JsonKey(ignore: true)
-  _$SetEntriesCopyWith<_SetEntries> get copyWith =>
+  _$InitializeCopyWith<_Initialize> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$SearchSwitchCopyWith<$Res> {
-  factory _$SearchSwitchCopyWith(
-          _SearchSwitch value, $Res Function(_SearchSwitch) then) =
-      __$SearchSwitchCopyWithImpl<$Res>;
+abstract class _$ToggleSearchCopyWith<$Res> {
+  factory _$ToggleSearchCopyWith(
+          _ToggleSearch value, $Res Function(_ToggleSearch) then) =
+      __$ToggleSearchCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SearchSwitchCopyWithImpl<$Res>
+class __$ToggleSearchCopyWithImpl<$Res>
     extends _$ChatSearchEventCopyWithImpl<$Res>
-    implements _$SearchSwitchCopyWith<$Res> {
-  __$SearchSwitchCopyWithImpl(
-      _SearchSwitch _value, $Res Function(_SearchSwitch) _then)
-      : super(_value, (v) => _then(v as _SearchSwitch));
+    implements _$ToggleSearchCopyWith<$Res> {
+  __$ToggleSearchCopyWithImpl(
+      _ToggleSearch _value, $Res Function(_ToggleSearch) _then)
+      : super(_value, (v) => _then(v as _ToggleSearch));
 
   @override
-  _SearchSwitch get _value => super._value as _SearchSwitch;
+  _ToggleSearch get _value => super._value as _ToggleSearch;
 }
 
 /// @nodoc
 
-class _$_SearchSwitch implements _SearchSwitch {
-  const _$_SearchSwitch();
+class _$_ToggleSearch implements _ToggleSearch {
+  const _$_ToggleSearch();
 
   @override
   String toString() {
-    return 'ChatSearchEvent.searchSwitch()';
+    return 'ChatSearchEvent.toggleSearch()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _SearchSwitch);
+        (other.runtimeType == runtimeType && other is _ToggleSearch);
   }
 
   @override
@@ -614,42 +596,39 @@ class _$_SearchSwitch implements _SearchSwitch {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ChatMessage> messages) setEntries,
-    required TResult Function() searchSwitch,
+    required TResult Function(List<ChatMessage> messages) initialize,
+    required TResult Function() toggleSearch,
     required TResult Function(String term) query,
-    required TResult Function(List<int> messageIndices) onResult,
     required TResult Function() onGoResultUp,
     required TResult Function() onGoResultDown,
   }) {
-    return searchSwitch();
+    return toggleSearch();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
   }) {
-    return searchSwitch?.call();
+    return toggleSearch?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
     required TResult orElse(),
   }) {
-    if (searchSwitch != null) {
-      return searchSwitch();
+    if (toggleSearch != null) {
+      return toggleSearch();
     }
     return orElse();
   }
@@ -657,49 +636,46 @@ class _$_SearchSwitch implements _SearchSwitch {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
-    required TResult Function(_OnResult value) onResult,
     required TResult Function(_OnGoResultUp value) onGoResultUp,
     required TResult Function(_OnGoResultDown value) onGoResultDown,
   }) {
-    return searchSwitch(this);
+    return toggleSearch(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
   }) {
-    return searchSwitch?.call(this);
+    return toggleSearch?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
     required TResult orElse(),
   }) {
-    if (searchSwitch != null) {
-      return searchSwitch(this);
+    if (toggleSearch != null) {
+      return toggleSearch(this);
     }
     return orElse();
   }
 }
 
-abstract class _SearchSwitch implements ChatSearchEvent {
-  const factory _SearchSwitch() = _$_SearchSwitch;
+abstract class _ToggleSearch implements ChatSearchEvent {
+  const factory _ToggleSearch() = _$_ToggleSearch;
 }
 
 /// @nodoc
@@ -764,10 +740,9 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ChatMessage> messages) setEntries,
-    required TResult Function() searchSwitch,
+    required TResult Function(List<ChatMessage> messages) initialize,
+    required TResult Function() toggleSearch,
     required TResult Function(String term) query,
-    required TResult Function(List<int> messageIndices) onResult,
     required TResult Function() onGoResultUp,
     required TResult Function() onGoResultDown,
   }) {
@@ -777,10 +752,9 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
   }) {
@@ -790,10 +764,9 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
     required TResult orElse(),
@@ -807,10 +780,9 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
-    required TResult Function(_OnResult value) onResult,
     required TResult Function(_OnGoResultUp value) onGoResultUp,
     required TResult Function(_OnGoResultDown value) onGoResultDown,
   }) {
@@ -820,10 +792,9 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
   }) {
@@ -833,10 +804,9 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
     required TResult orElse(),
@@ -854,162 +824,6 @@ abstract class _Query implements ChatSearchEvent {
   String get term;
   @JsonKey(ignore: true)
   _$QueryCopyWith<_Query> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$OnResultCopyWith<$Res> {
-  factory _$OnResultCopyWith(_OnResult value, $Res Function(_OnResult) then) =
-      __$OnResultCopyWithImpl<$Res>;
-  $Res call({List<int> messageIndices});
-}
-
-/// @nodoc
-class __$OnResultCopyWithImpl<$Res> extends _$ChatSearchEventCopyWithImpl<$Res>
-    implements _$OnResultCopyWith<$Res> {
-  __$OnResultCopyWithImpl(_OnResult _value, $Res Function(_OnResult) _then)
-      : super(_value, (v) => _then(v as _OnResult));
-
-  @override
-  _OnResult get _value => super._value as _OnResult;
-
-  @override
-  $Res call({
-    Object? messageIndices = freezed,
-  }) {
-    return _then(_OnResult(
-      messageIndices == freezed
-          ? _value.messageIndices
-          : messageIndices // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_OnResult implements _OnResult {
-  const _$_OnResult(this.messageIndices);
-
-  @override
-  final List<int> messageIndices;
-
-  @override
-  String toString() {
-    return 'ChatSearchEvent.onResult(messageIndices: $messageIndices)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _OnResult &&
-            const DeepCollectionEquality()
-                .equals(other.messageIndices, messageIndices));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(messageIndices));
-
-  @JsonKey(ignore: true)
-  @override
-  _$OnResultCopyWith<_OnResult> get copyWith =>
-      __$OnResultCopyWithImpl<_OnResult>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<ChatMessage> messages) setEntries,
-    required TResult Function() searchSwitch,
-    required TResult Function(String term) query,
-    required TResult Function(List<int> messageIndices) onResult,
-    required TResult Function() onGoResultUp,
-    required TResult Function() onGoResultDown,
-  }) {
-    return onResult(messageIndices);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
-    TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
-    TResult Function()? onGoResultUp,
-    TResult Function()? onGoResultDown,
-  }) {
-    return onResult?.call(messageIndices);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
-    TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
-    TResult Function()? onGoResultUp,
-    TResult Function()? onGoResultDown,
-    required TResult orElse(),
-  }) {
-    if (onResult != null) {
-      return onResult(messageIndices);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
-    required TResult Function(_Query value) query,
-    required TResult Function(_OnResult value) onResult,
-    required TResult Function(_OnGoResultUp value) onGoResultUp,
-    required TResult Function(_OnGoResultDown value) onGoResultDown,
-  }) {
-    return onResult(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
-    TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
-    TResult Function(_OnGoResultUp value)? onGoResultUp,
-    TResult Function(_OnGoResultDown value)? onGoResultDown,
-  }) {
-    return onResult?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
-    TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
-    TResult Function(_OnGoResultUp value)? onGoResultUp,
-    TResult Function(_OnGoResultDown value)? onGoResultDown,
-    required TResult orElse(),
-  }) {
-    if (onResult != null) {
-      return onResult(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _OnResult implements ChatSearchEvent {
-  const factory _OnResult(List<int> messageIndices) = _$_OnResult;
-
-  List<int> get messageIndices;
-  @JsonKey(ignore: true)
-  _$OnResultCopyWith<_OnResult> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1053,10 +867,9 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ChatMessage> messages) setEntries,
-    required TResult Function() searchSwitch,
+    required TResult Function(List<ChatMessage> messages) initialize,
+    required TResult Function() toggleSearch,
     required TResult Function(String term) query,
-    required TResult Function(List<int> messageIndices) onResult,
     required TResult Function() onGoResultUp,
     required TResult Function() onGoResultDown,
   }) {
@@ -1066,10 +879,9 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
   }) {
@@ -1079,10 +891,9 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
     required TResult orElse(),
@@ -1096,10 +907,9 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
-    required TResult Function(_OnResult value) onResult,
     required TResult Function(_OnGoResultUp value) onGoResultUp,
     required TResult Function(_OnGoResultDown value) onGoResultDown,
   }) {
@@ -1109,10 +919,9 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
   }) {
@@ -1122,10 +931,9 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
     required TResult orElse(),
@@ -1182,10 +990,9 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ChatMessage> messages) setEntries,
-    required TResult Function() searchSwitch,
+    required TResult Function(List<ChatMessage> messages) initialize,
+    required TResult Function() toggleSearch,
     required TResult Function(String term) query,
-    required TResult Function(List<int> messageIndices) onResult,
     required TResult Function() onGoResultUp,
     required TResult Function() onGoResultDown,
   }) {
@@ -1195,10 +1002,9 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
   }) {
@@ -1208,10 +1014,9 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ChatMessage> messages)? setEntries,
-    TResult Function()? searchSwitch,
+    TResult Function(List<ChatMessage> messages)? initialize,
+    TResult Function()? toggleSearch,
     TResult Function(String term)? query,
-    TResult Function(List<int> messageIndices)? onResult,
     TResult Function()? onGoResultUp,
     TResult Function()? onGoResultDown,
     required TResult orElse(),
@@ -1225,10 +1030,9 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
-    required TResult Function(_OnResult value) onResult,
     required TResult Function(_OnGoResultUp value) onGoResultUp,
     required TResult Function(_OnGoResultDown value) onGoResultDown,
   }) {
@@ -1238,10 +1042,9 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
   }) {
@@ -1251,10 +1054,9 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
-    TResult Function(_OnResult value)? onResult,
     TResult Function(_OnGoResultUp value)? onGoResultUp,
     TResult Function(_OnGoResultDown value)? onGoResultDown,
     required TResult orElse(),

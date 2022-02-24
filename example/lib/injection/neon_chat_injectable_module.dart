@@ -1,1 +1,3 @@
-abstract class NEONChatInjectableModule {}
+abstract class NEONChatInjectableModule {
+  //TODO
+}

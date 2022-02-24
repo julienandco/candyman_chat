@@ -33,7 +33,7 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
           IconButton(
             onPressed: () => context
                 .read<ChatSearchBloc>()
-                .add(const ChatSearchEvent.searchSwitch()),
+                .add(const ChatSearchEvent.toggleSearch()),
             icon: const Icon(
               Icons.close,
             ),
