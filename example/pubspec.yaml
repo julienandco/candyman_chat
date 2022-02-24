@@ -37,7 +37,8 @@ dependencies:
   file_picker: ^4.4.0
   injectable: ^1.5.3
   get_it: ^7.2.0
-
+  flutter_bloc: ^8.0.1
+  
   neon_chat:
     path: ../
 

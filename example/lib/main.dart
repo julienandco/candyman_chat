@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:example/my_custom_conversations_loader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,15 +29,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NEON Chat Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DefaultConversationsLoader(
-        firestore: getIt<FirebaseFirestore>(),
-        firebaseAuth: getIt<FirebaseAuth>(),
-        remoteDataSource: getIt<RemoteDataSource>(),
-      ),
-    );
+        title: 'NEON Chat Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyCustomConversationsLoader()
+
+        // DefaultConversationsLoader(
+        //   firestore: getIt<FirebaseFirestore>(),
+        //   firebaseAuth: getIt<FirebaseAuth>(),
+        //   remoteDataSource: getIt<RemoteDataSource>(),
+        // ),
+        );
   }
 }

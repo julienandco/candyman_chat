@@ -385,7 +385,7 @@ packages:
     source: hosted
     version: "3.2.1"
   flutter_bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
