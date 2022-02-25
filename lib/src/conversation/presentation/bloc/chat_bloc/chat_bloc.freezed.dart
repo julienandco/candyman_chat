@@ -721,8 +721,11 @@ abstract class _LoadFailure extends ChatState {
 class _$ChatEventTearOff {
   const _$ChatEventTearOff();
 
-  _Init init() {
-    return const _Init();
+  _Init init({required String conversationId, required String otherUserId}) {
+    return _Init(
+      conversationId: conversationId,
+      otherUserId: otherUserId,
+    );
   }
 
   _OnData onData(List<ChatMessage> messages, FirebaseUser userProfile,
@@ -797,7 +800,7 @@ const $ChatEvent = _$ChatEventTearOff();
 mixin _$ChatEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -815,7 +818,7 @@ mixin _$ChatEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -832,7 +835,7 @@ mixin _$ChatEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -915,6 +918,7 @@ class _$ChatEventCopyWithImpl<$Res> implements $ChatEventCopyWith<$Res> {
 abstract class _$InitCopyWith<$Res> {
   factory _$InitCopyWith(_Init value, $Res Function(_Init) then) =
       __$InitCopyWithImpl<$Res>;
+  $Res call({String conversationId, String otherUserId});
 }
 
 /// @nodoc
@@ -925,37 +929,75 @@ class __$InitCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
 
   @override
   _Init get _value => super._value as _Init;
+
+  @override
+  $Res call({
+    Object? conversationId = freezed,
+    Object? otherUserId = freezed,
+  }) {
+    return _then(_Init(
+      conversationId: conversationId == freezed
+          ? _value.conversationId
+          : conversationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      otherUserId: otherUserId == freezed
+          ? _value.otherUserId
+          : otherUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Init with DiagnosticableTreeMixin implements _Init {
-  const _$_Init();
+  const _$_Init({required this.conversationId, required this.otherUserId});
+
+  @override
+  final String conversationId;
+  @override
+  final String otherUserId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.init()';
+    return 'ChatEvent.init(conversationId: $conversationId, otherUserId: $otherUserId)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ChatEvent.init'));
+    properties
+      ..add(DiagnosticsProperty('type', 'ChatEvent.init'))
+      ..add(DiagnosticsProperty('conversationId', conversationId))
+      ..add(DiagnosticsProperty('otherUserId', otherUserId));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Init);
+        (other.runtimeType == runtimeType &&
+            other is _Init &&
+            const DeepCollectionEquality()
+                .equals(other.conversationId, conversationId) &&
+            const DeepCollectionEquality()
+                .equals(other.otherUserId, otherUserId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(conversationId),
+      const DeepCollectionEquality().hash(otherUserId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$InitCopyWith<_Init> get copyWith =>
+      __$InitCopyWithImpl<_Init>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -970,13 +1012,13 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
     required TResult Function(ChatMessage message) deleteMessage,
     required TResult Function(ChatMessage message) hideMessage,
   }) {
-    return init();
+    return init(conversationId, otherUserId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -990,13 +1032,13 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
     TResult Function(ChatMessage message)? deleteMessage,
     TResult Function(ChatMessage message)? hideMessage,
   }) {
-    return init?.call();
+    return init?.call(conversationId, otherUserId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1012,7 +1054,7 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
     required TResult orElse(),
   }) {
     if (init != null) {
-      return init();
+      return init(conversationId, otherUserId);
     }
     return orElse();
   }
@@ -1077,7 +1119,13 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
 }
 
 abstract class _Init implements ChatEvent {
-  const factory _Init() = _$_Init;
+  const factory _Init(
+      {required String conversationId, required String otherUserId}) = _$_Init;
+
+  String get conversationId;
+  String get otherUserId;
+  @JsonKey(ignore: true)
+  _$InitCopyWith<_Init> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1193,7 +1241,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -1214,7 +1262,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1234,7 +1282,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1399,7 +1447,7 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -1420,7 +1468,7 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1440,7 +1488,7 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1604,7 +1652,7 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -1625,7 +1673,7 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1645,7 +1693,7 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1820,7 +1868,7 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -1841,7 +1889,7 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -1861,7 +1909,7 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2027,7 +2075,7 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -2048,7 +2096,7 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2068,7 +2116,7 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2232,7 +2280,7 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -2253,7 +2301,7 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2273,7 +2321,7 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2437,7 +2485,7 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -2458,7 +2506,7 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2478,7 +2526,7 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2648,7 +2696,7 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -2669,7 +2717,7 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2689,7 +2737,7 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2859,7 +2907,7 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -2880,7 +2928,7 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -2900,7 +2948,7 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -3070,7 +3118,7 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
+    required TResult Function(String conversationId, String otherUserId) init,
     required TResult Function(List<ChatMessage> messages,
             FirebaseUser userProfile, Conversation conversation)
         onData,
@@ -3091,7 +3139,7 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,
@@ -3111,7 +3159,7 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
+    TResult Function(String conversationId, String otherUserId)? init,
     TResult Function(List<ChatMessage> messages, FirebaseUser userProfile,
             Conversation conversation)?
         onData,

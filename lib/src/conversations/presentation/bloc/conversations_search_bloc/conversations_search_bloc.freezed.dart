@@ -18,14 +18,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ConversationsSearchEventTearOff {
   const _$ConversationsSearchEventTearOff();
 
-  _SetEntries setEntries(List<ConversationItem> conversations) {
-    return _SetEntries(
+  _Initialize initialize(List<ConversationItem> conversations) {
+    return _Initialize(
       conversations,
     );
   }
 
-  _SearchSwitch searchSwitch(bool isActive) {
-    return _SearchSwitch(
+  _ToggleSearch toggleSearch(bool isActive) {
+    return _ToggleSearch(
       isActive,
     );
   }
@@ -50,24 +50,24 @@ const $ConversationsSearchEvent = _$ConversationsSearchEventTearOff();
 mixin _$ConversationsSearchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationItem> conversations) setEntries,
-    required TResult Function(bool isActive) searchSwitch,
+    required TResult Function(List<ConversationItem> conversations) initialize,
+    required TResult Function(bool isActive) toggleSearch,
     required TResult Function(String searchString) query,
     required TResult Function(List<ConversationItem> conversations) onResult,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
     required TResult orElse(),
@@ -75,24 +75,24 @@ mixin _$ConversationsSearchEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
     required TResult Function(_OnResult value) onResult,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
     required TResult orElse(),
@@ -118,29 +118,29 @@ class _$ConversationsSearchEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SetEntriesCopyWith<$Res> {
-  factory _$SetEntriesCopyWith(
-          _SetEntries value, $Res Function(_SetEntries) then) =
-      __$SetEntriesCopyWithImpl<$Res>;
+abstract class _$InitializeCopyWith<$Res> {
+  factory _$InitializeCopyWith(
+          _Initialize value, $Res Function(_Initialize) then) =
+      __$InitializeCopyWithImpl<$Res>;
   $Res call({List<ConversationItem> conversations});
 }
 
 /// @nodoc
-class __$SetEntriesCopyWithImpl<$Res>
+class __$InitializeCopyWithImpl<$Res>
     extends _$ConversationsSearchEventCopyWithImpl<$Res>
-    implements _$SetEntriesCopyWith<$Res> {
-  __$SetEntriesCopyWithImpl(
-      _SetEntries _value, $Res Function(_SetEntries) _then)
-      : super(_value, (v) => _then(v as _SetEntries));
+    implements _$InitializeCopyWith<$Res> {
+  __$InitializeCopyWithImpl(
+      _Initialize _value, $Res Function(_Initialize) _then)
+      : super(_value, (v) => _then(v as _Initialize));
 
   @override
-  _SetEntries get _value => super._value as _SetEntries;
+  _Initialize get _value => super._value as _Initialize;
 
   @override
   $Res call({
     Object? conversations = freezed,
   }) {
-    return _then(_SetEntries(
+    return _then(_Initialize(
       conversations == freezed
           ? _value.conversations
           : conversations // ignore: cast_nullable_to_non_nullable
@@ -151,22 +151,22 @@ class __$SetEntriesCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SetEntries implements _SetEntries {
-  const _$_SetEntries(this.conversations);
+class _$_Initialize implements _Initialize {
+  const _$_Initialize(this.conversations);
 
   @override
   final List<ConversationItem> conversations;
 
   @override
   String toString() {
-    return 'ConversationsSearchEvent.setEntries(conversations: $conversations)';
+    return 'ConversationsSearchEvent.initialize(conversations: $conversations)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SetEntries &&
+            other is _Initialize &&
             const DeepCollectionEquality()
                 .equals(other.conversations, conversations));
   }
@@ -177,42 +177,42 @@ class _$_SetEntries implements _SetEntries {
 
   @JsonKey(ignore: true)
   @override
-  _$SetEntriesCopyWith<_SetEntries> get copyWith =>
-      __$SetEntriesCopyWithImpl<_SetEntries>(this, _$identity);
+  _$InitializeCopyWith<_Initialize> get copyWith =>
+      __$InitializeCopyWithImpl<_Initialize>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationItem> conversations) setEntries,
-    required TResult Function(bool isActive) searchSwitch,
+    required TResult Function(List<ConversationItem> conversations) initialize,
+    required TResult Function(bool isActive) toggleSearch,
     required TResult Function(String searchString) query,
     required TResult Function(List<ConversationItem> conversations) onResult,
   }) {
-    return setEntries(conversations);
+    return initialize(conversations);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
   }) {
-    return setEntries?.call(conversations);
+    return initialize?.call(conversations);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
     required TResult orElse(),
   }) {
-    if (setEntries != null) {
-      return setEntries(conversations);
+    if (initialize != null) {
+      return initialize(conversations);
     }
     return orElse();
   }
@@ -220,75 +220,75 @@ class _$_SetEntries implements _SetEntries {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
     required TResult Function(_OnResult value) onResult,
   }) {
-    return setEntries(this);
+    return initialize(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
   }) {
-    return setEntries?.call(this);
+    return initialize?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
     required TResult orElse(),
   }) {
-    if (setEntries != null) {
-      return setEntries(this);
+    if (initialize != null) {
+      return initialize(this);
     }
     return orElse();
   }
 }
 
-abstract class _SetEntries implements ConversationsSearchEvent {
-  const factory _SetEntries(List<ConversationItem> conversations) =
-      _$_SetEntries;
+abstract class _Initialize implements ConversationsSearchEvent {
+  const factory _Initialize(List<ConversationItem> conversations) =
+      _$_Initialize;
 
   List<ConversationItem> get conversations;
   @JsonKey(ignore: true)
-  _$SetEntriesCopyWith<_SetEntries> get copyWith =>
+  _$InitializeCopyWith<_Initialize> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$SearchSwitchCopyWith<$Res> {
-  factory _$SearchSwitchCopyWith(
-          _SearchSwitch value, $Res Function(_SearchSwitch) then) =
-      __$SearchSwitchCopyWithImpl<$Res>;
+abstract class _$ToggleSearchCopyWith<$Res> {
+  factory _$ToggleSearchCopyWith(
+          _ToggleSearch value, $Res Function(_ToggleSearch) then) =
+      __$ToggleSearchCopyWithImpl<$Res>;
   $Res call({bool isActive});
 }
 
 /// @nodoc
-class __$SearchSwitchCopyWithImpl<$Res>
+class __$ToggleSearchCopyWithImpl<$Res>
     extends _$ConversationsSearchEventCopyWithImpl<$Res>
-    implements _$SearchSwitchCopyWith<$Res> {
-  __$SearchSwitchCopyWithImpl(
-      _SearchSwitch _value, $Res Function(_SearchSwitch) _then)
-      : super(_value, (v) => _then(v as _SearchSwitch));
+    implements _$ToggleSearchCopyWith<$Res> {
+  __$ToggleSearchCopyWithImpl(
+      _ToggleSearch _value, $Res Function(_ToggleSearch) _then)
+      : super(_value, (v) => _then(v as _ToggleSearch));
 
   @override
-  _SearchSwitch get _value => super._value as _SearchSwitch;
+  _ToggleSearch get _value => super._value as _ToggleSearch;
 
   @override
   $Res call({
     Object? isActive = freezed,
   }) {
-    return _then(_SearchSwitch(
+    return _then(_ToggleSearch(
       isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -299,22 +299,22 @@ class __$SearchSwitchCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SearchSwitch implements _SearchSwitch {
-  const _$_SearchSwitch(this.isActive);
+class _$_ToggleSearch implements _ToggleSearch {
+  const _$_ToggleSearch(this.isActive);
 
   @override
   final bool isActive;
 
   @override
   String toString() {
-    return 'ConversationsSearchEvent.searchSwitch(isActive: $isActive)';
+    return 'ConversationsSearchEvent.toggleSearch(isActive: $isActive)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SearchSwitch &&
+            other is _ToggleSearch &&
             const DeepCollectionEquality().equals(other.isActive, isActive));
   }
 
@@ -324,42 +324,42 @@ class _$_SearchSwitch implements _SearchSwitch {
 
   @JsonKey(ignore: true)
   @override
-  _$SearchSwitchCopyWith<_SearchSwitch> get copyWith =>
-      __$SearchSwitchCopyWithImpl<_SearchSwitch>(this, _$identity);
+  _$ToggleSearchCopyWith<_ToggleSearch> get copyWith =>
+      __$ToggleSearchCopyWithImpl<_ToggleSearch>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationItem> conversations) setEntries,
-    required TResult Function(bool isActive) searchSwitch,
+    required TResult Function(List<ConversationItem> conversations) initialize,
+    required TResult Function(bool isActive) toggleSearch,
     required TResult Function(String searchString) query,
     required TResult Function(List<ConversationItem> conversations) onResult,
   }) {
-    return searchSwitch(isActive);
+    return toggleSearch(isActive);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
   }) {
-    return searchSwitch?.call(isActive);
+    return toggleSearch?.call(isActive);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
     required TResult orElse(),
   }) {
-    if (searchSwitch != null) {
-      return searchSwitch(isActive);
+    if (toggleSearch != null) {
+      return toggleSearch(isActive);
     }
     return orElse();
   }
@@ -367,47 +367,47 @@ class _$_SearchSwitch implements _SearchSwitch {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
     required TResult Function(_OnResult value) onResult,
   }) {
-    return searchSwitch(this);
+    return toggleSearch(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
   }) {
-    return searchSwitch?.call(this);
+    return toggleSearch?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
     required TResult orElse(),
   }) {
-    if (searchSwitch != null) {
-      return searchSwitch(this);
+    if (toggleSearch != null) {
+      return toggleSearch(this);
     }
     return orElse();
   }
 }
 
-abstract class _SearchSwitch implements ConversationsSearchEvent {
-  const factory _SearchSwitch(bool isActive) = _$_SearchSwitch;
+abstract class _ToggleSearch implements ConversationsSearchEvent {
+  const factory _ToggleSearch(bool isActive) = _$_ToggleSearch;
 
   bool get isActive;
   @JsonKey(ignore: true)
-  _$SearchSwitchCopyWith<_SearchSwitch> get copyWith =>
+  _$ToggleSearchCopyWith<_ToggleSearch> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -475,8 +475,8 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationItem> conversations) setEntries,
-    required TResult Function(bool isActive) searchSwitch,
+    required TResult Function(List<ConversationItem> conversations) initialize,
+    required TResult Function(bool isActive) toggleSearch,
     required TResult Function(String searchString) query,
     required TResult Function(List<ConversationItem> conversations) onResult,
   }) {
@@ -486,8 +486,8 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
   }) {
@@ -497,8 +497,8 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
     required TResult orElse(),
@@ -512,8 +512,8 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
     required TResult Function(_OnResult value) onResult,
   }) {
@@ -523,8 +523,8 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
   }) {
@@ -534,8 +534,8 @@ class _$_Query implements _Query {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
     required TResult orElse(),
@@ -619,8 +619,8 @@ class _$_OnResult implements _OnResult {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationItem> conversations) setEntries,
-    required TResult Function(bool isActive) searchSwitch,
+    required TResult Function(List<ConversationItem> conversations) initialize,
+    required TResult Function(bool isActive) toggleSearch,
     required TResult Function(String searchString) query,
     required TResult Function(List<ConversationItem> conversations) onResult,
   }) {
@@ -630,8 +630,8 @@ class _$_OnResult implements _OnResult {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
   }) {
@@ -641,8 +641,8 @@ class _$_OnResult implements _OnResult {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationItem> conversations)? setEntries,
-    TResult Function(bool isActive)? searchSwitch,
+    TResult Function(List<ConversationItem> conversations)? initialize,
+    TResult Function(bool isActive)? toggleSearch,
     TResult Function(String searchString)? query,
     TResult Function(List<ConversationItem> conversations)? onResult,
     required TResult orElse(),
@@ -656,8 +656,8 @@ class _$_OnResult implements _OnResult {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SetEntries value) setEntries,
-    required TResult Function(_SearchSwitch value) searchSwitch,
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_ToggleSearch value) toggleSearch,
     required TResult Function(_Query value) query,
     required TResult Function(_OnResult value) onResult,
   }) {
@@ -667,8 +667,8 @@ class _$_OnResult implements _OnResult {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
   }) {
@@ -678,8 +678,8 @@ class _$_OnResult implements _OnResult {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SetEntries value)? setEntries,
-    TResult Function(_SearchSwitch value)? searchSwitch,
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_ToggleSearch value)? toggleSearch,
     TResult Function(_Query value)? query,
     TResult Function(_OnResult value)? onResult,
     required TResult orElse(),

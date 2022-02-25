@@ -62,7 +62,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
           loadSuccess: (state) {
             if (state.messages.isNotEmpty) {
               context.read<ChatSearchBloc>().add(
-                    ChatSearchEvent.setEntries(state.messages),
+                    ChatSearchEvent.initialize(state.messages),
                   );
             }
           },
@@ -233,7 +233,7 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
             action: IconButton(
               onPressed: () => context
                   .read<ChatSearchBloc>()
-                  .add(const ChatSearchEvent.searchSwitch()),
+                  .add(const ChatSearchEvent.toggleSearch()),
               icon: const Icon(
                 CupertinoIcons.search,
                 color: Colors.white,

@@ -3,11 +3,13 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:injectable/injectable.dart';
 import 'dart:io';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/core/core.dart';
 
+@LazySingleton(as: FileUploadRepository)
 class FileUploadRepositoryImpl implements FileUploadRepository {
   final RemoteDataSource remoteDataSource;
 

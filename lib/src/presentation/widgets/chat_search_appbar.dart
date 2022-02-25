@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/core/core.dart';
+import 'package:neon_chat/src/presentation/presentation.dart';
 
 class ChatSearchAppBar extends StatefulWidget {
   /// leading Icon befor text input
@@ -55,7 +55,7 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
           IconButton(
             onPressed: () => context
                 .read<ChatSearchBloc>()
-                .add(const ChatSearchEvent.searchSwitch()),
+                .add(const ChatSearchEvent.toggleSearch()),
             icon: const Icon(
               Icons.close,
             ),

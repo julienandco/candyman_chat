@@ -2,7 +2,10 @@ part of 'chat_bloc.dart';
 
 @freezed
 class ChatEvent with _$ChatEvent {
-  const factory ChatEvent.init() = _Init;
+  const factory ChatEvent.init({
+    required String conversationId,
+    required String otherUserId,
+  }) = _Init;
   const factory ChatEvent.onData(
     List<ChatMessage> messages,
     FirebaseUser userProfile,

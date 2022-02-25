@@ -3,9 +3,11 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 
 import 'package:neon_chat/neon_chat.dart';
 
+@LazySingleton(as: ConversationRepository)
 class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
@@ -121,7 +123,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
             )
             .toJson(),
       );
-      log('sent message', name: '$runtimeType');
+      log('sent file message', name: '$runtimeType');
       return ChatUploadFile(
         messageId: doc.id,
         conversationID: conversationId,
