@@ -1,5 +1,5 @@
 name: neon_chat
-description: A new Flutter package project.
+description: Der NEON-Chat.
 version: 0.0.1
 homepage:
 
@@ -11,10 +11,66 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Code generation
+  freezed_annotation: ^1.1.0
+  json_annotation: ^4.4.0
+
+  # Features
+  rxdart: ^0.27.3
+  intl: ^0.17.0
+  equatable: ^2.0.3
+  google_maps_flutter: ^2.1.1
+  wechat_assets_picker: ^6.3.1
+  wechat_camera_picker: ^2.6.5
+  woozy_search: ^2.0.3
+  scroll_to_index: ^2.1.1
+  record: ^3.0.2
+  animator: ^3.1.0
+  flutter_animator: ^3.2.1
+  just_audio: ^0.9.20
+
+  # Firebase
+  firebase_auth: ^3.3.7
+  cloud_firestore: ^3.1.8
+
+  # State
+  flutter_bloc: ^8.0.1
+
+  # Functional Programming
+  dartz: ^0.10.1
+
+  # Widgets
+  badges: ^2.0.2
+  file_picker: ^4.4.0
+  stop_watch_timer: ^1.3.1
+  focused_menu: ^1.0.5
+  auto_size_text_pk: ^3.0.0
+  visibility_detector: ^0.2.2
+  linkwell: ^2.0.6
+  video_thumbnail: ^0.4.3
+  # better_player: ^0.0.81
+  another_xlider: ^1.0.1+2
+  chewie: ^1.3.0  
+  keyboard_dismisser: ^2.0.0
+
+  injectable: ^1.5.3
+  get_it: ^7.2.0
+
+
+
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.7
+  json_serializable: ^6.1.4
+  freezed: ^1.1.0
+  bloc_test: ^9.0.2
+  test: ^1.20.1
+
+# dependency_overrides:
+#   better_player:
+#     git: 
+#       url: https://github.com/julien-neon/betterplayer
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
