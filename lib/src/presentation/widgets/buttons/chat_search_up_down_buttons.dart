@@ -6,14 +6,14 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 class ChatSearchUpDown extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets betweenButtonsPadding;
-  final Widget? goUpIcon;
-  final Widget? goDownIcon;
+  final Widget goUpIcon;
+  final Widget goDownIcon;
   const ChatSearchUpDown({
     Key? key,
     this.padding = const EdgeInsets.all(15),
     this.betweenButtonsPadding = const EdgeInsets.symmetric(vertical: 15),
-    this.goUpIcon,
-    this.goDownIcon,
+    this.goUpIcon = const Icon(Icons.arrow_circle_up_outlined, color: Colors.white),
+    this.goDownIcon = const Icon(Icons.arrow_circle_down_outlined, color: Colors.white),
   }) : super(key: key);
 
   @override
@@ -32,11 +32,7 @@ class ChatSearchUpDown extends StatelessWidget {
                     (state.canGoResultUp)
                         ? IconButton(
                             iconSize: 35,
-                            icon: goUpIcon ??
-                                const Icon(
-                                  Icons.arrow_circle_up_outlined,
-                                  color: Colors.white,
-                                ),
+                            icon: goUpIcon,
                             onPressed: () => context
                                 .read<ChatSearchBloc>()
                                 .add(const ChatSearchEvent.onGoResultUp()),
@@ -48,11 +44,7 @@ class ChatSearchUpDown extends StatelessWidget {
                     (state.canGoResultDown)
                         ? IconButton(
                             iconSize: 35,
-                            icon: goDownIcon ??
-                                const Icon(
-                                  Icons.arrow_circle_down_outlined,
-                                  color: Colors.white,
-                                ),
+                            icon: goDownIcon,
                             onPressed: () => context
                                 .read<ChatSearchBloc>()
                                 .add(const ChatSearchEvent.onGoResultDown()),

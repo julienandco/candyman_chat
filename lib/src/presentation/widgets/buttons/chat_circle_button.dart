@@ -14,7 +14,7 @@ class ChatCircleButton extends StatelessWidget {
     this.color = Colors.red,
     this.onTap,
     this.padding = const EdgeInsets.all(10),
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -34,6 +34,7 @@ class MessageBubble extends StatefulWidget {
   final String? messageIsUploadingLabel;
   final String? messageBubbleDeletedLabel;
   final String? messageTypeNotSupportedLabel;
+  final double bubbleradius;
 
   final void Function()? onCopyToClipboard;
   final void Function(
@@ -41,6 +42,7 @@ class MessageBubble extends StatefulWidget {
       onShowDeletionDialog;
 
   const MessageBubble({
+    Key? key,
     this.maxWidthPercentage = 2 / 3,
     required this.message,
     this.otherUserAvatar,
@@ -49,22 +51,23 @@ class MessageBubble extends StatefulWidget {
     this.showAvatar = false,
     this.onCopyToClipboard,
     this.onShowDeletionDialog,
-    this.messageTimestampStyle,
+    this.messageTimestampStyle = const TextStyle(color: Colors.white54),
     this.focusedMenuItemBackgroundColor = Colors.black87,
     this.copyIcon,
     this.deleteIcon,
     this.copyLabel,
     this.deleteLabel,
-    this.actionLabelStyle,
-    this.ownMessageColor = Colors.greenAccent,
-    this.otherUserMessageColor = Colors.blueGrey,
+    this.actionLabelStyle = const TextStyle(color: Colors.white),
+    this.ownMessageColor = Colors.deepPurple,
+    this.otherUserMessageColor = Colors.grey,
     this.decoration,
     this.seenIcon,
     this.receivedIcon,
     this.messageIsUploadingLabel,
     this.messageBubbleDeletedLabel,
     this.messageTypeNotSupportedLabel,
-  });
+    this.bubbleradius = 16.0,
+  }) : super(key: key);
 
   @override
   _MessageBubbleState createState() => _MessageBubbleState();
@@ -226,22 +229,22 @@ class _MessageBubbleState extends State<MessageBubble> {
                               ? widget.ownMessageColor
                               : widget.otherUserMessageColor,
                           borderRadius: BorderRadius.only(
-                            bottomRight: const Radius.circular(25),
-                            bottomLeft:
-                                Radius.circular(widget.message.isMe ? 25 : 0),
-                            topLeft: const Radius.circular(25),
-                            topRight:
-                                Radius.circular(widget.message.isMe ? 0 : 25),
+                            bottomRight: Radius.circular(widget.bubbleradius),
+                            bottomLeft: Radius.circular(
+                                widget.message.isMe ? widget.bubbleradius : 0),
+                            topLeft: Radius.circular(widget.bubbleradius),
+                            topRight: Radius.circular(
+                                widget.message.isMe ? 0 : widget.bubbleradius),
                           ),
                         ),
                     child: ClipRRect(
-                      borderRadius: //TODO
-                          BorderRadius.only(
-                        bottomRight: const Radius.circular(25),
-                        bottomLeft:
-                            Radius.circular(widget.message.isMe ? 25 : 0),
-                        topLeft: const Radius.circular(25),
-                        topRight: Radius.circular(widget.message.isMe ? 0 : 25),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(widget.bubbleradius),
+                        bottomLeft: Radius.circular(
+                            widget.message.isMe ? widget.bubbleradius : 0),
+                        topLeft: Radius.circular(widget.bubbleradius),
+                        topRight: Radius.circular(
+                            widget.message.isMe ? 0 : widget.bubbleradius),
                       ),
                       child: _MessageContent(
                         message: widget.message,
@@ -285,15 +288,17 @@ class _MessageContent extends StatelessWidget {
   final TextStyle? messageBubbleDeletedStyle;
   final String messageTypeNotSupportedLabel;
   final TextStyle? messageTypeNotSupportedStyle;
+  final TextStyle? messageTextStyle;
   const _MessageContent({
     Key? key,
     required this.message,
     required this.footer,
     required this.messageIsUploadingLabel,
     required this.messageBubbleDeletedLabel,
-    this.messageBubbleDeletedStyle,
+    this.messageBubbleDeletedStyle = const TextStyle(color: Colors.white),
     required this.messageTypeNotSupportedLabel,
-    this.messageTypeNotSupportedStyle,
+    this.messageTypeNotSupportedStyle = const TextStyle(color: Colors.white),
+    this.messageTextStyle = const TextStyle(color: Colors.white),
   }) : super(key: key);
   final ChatMessage message;
   final List<Widget> footer;
@@ -412,7 +417,7 @@ class _MessageContent extends StatelessWidget {
             children: [
               LinkWell(
                 message.text ?? messageTypeNotSupportedLabel,
-                style: messageTypeNotSupportedStyle,
+                style: messageTextStyle,
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -431,7 +436,7 @@ class _CheckMark extends StatelessWidget {
     Key? key,
     required this.message,
     this.seenIcon = const Icon(
-      Icons.volunteer_activism_sharp, //TODO
+      Icons.done_all, //TODO
       size: 10,
     ),
     this.receivedIcon = const Icon(

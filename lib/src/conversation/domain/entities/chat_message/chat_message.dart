@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:neon_chat/src/conversation/data/models/models.dart';
 
 import 'package:neon_chat/src/core/core.dart';
@@ -55,7 +56,9 @@ class ChatMessage with _$ChatMessage {
   //TODO: get correct locale, not hardcoded de
   String get timestampFormated =>
       //DateFormat.Hm('de').format(timestamp ?? DateTime.now());
-      timestamp?.toIso8601String() ?? DateTime.now().toIso8601String();
+
+      DateFormat('HH:mm').format(timestamp!);
+  // timestamp?.toIso8601String() ?? DateTime.now().toIso8601String();
 
   bool get isMe => FirebaseAuth.instance.currentUser!.uid == senderId;
 

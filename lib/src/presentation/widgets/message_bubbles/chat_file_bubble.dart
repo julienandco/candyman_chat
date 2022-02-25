@@ -10,7 +10,7 @@ class ChatFileBubble extends StatefulWidget {
     required this.getUploadURL,
     this.downloadIcon,
     this.progressIndicator,
-    //TODO
+    // TODO: implement default value
     this.fileTypeNotSupportedLabel = 'Not supported',
     this.labelStyle,
   }) : super(key: key);

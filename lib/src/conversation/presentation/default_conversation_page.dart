@@ -9,11 +9,21 @@ import 'package:neon_chat/neon_chat.dart';
 //TODO: style
 
 class DefaultConversationPage extends StatefulWidget {
+  final bool showCloseButton;
+  final EdgeInsetsGeometry messageListPadding;
+  final EdgeInsetsGeometry serachPadding;
+  final List<Color> ignorPointer;
+  final Color backgroundColor;
+
   const DefaultConversationPage({
     Key? key,
     required this.showCloseButton,
+    this.messageListPadding = const EdgeInsets.only(top: 20, bottom: 100, left: 20, right: 20),
+    this.serachPadding = const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+    this.ignorPointer = const [Colors.black38, Colors.transparent],
+    this.backgroundColor = Colors.white,
   }) : super(key: key);
-  final bool showCloseButton;
+
   @override
   _DefaultConversationPageState createState() =>
       _DefaultConversationPageState();
@@ -63,16 +73,10 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
         value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
         child: KeyboardDismisser(
           child: Scaffold(
-            //TODO style extrahieren
-            // backgroundColor: kColorPrimaryLighter,
+            backgroundColor: widget.backgroundColor,
             appBar: _Appbar(showCloseButton: !widget.showCloseButton),
             body: Stack(
               children: [
-                // Positioned.fill(
-                //     child: SvgPicture.asset(
-                //   'assets/vectors/chatBG.svg',
-                //   fit: BoxFit.cover,
-                // )),
                 CustomScrollView(
                   reverse: true,
                   controller:
@@ -80,12 +84,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                   physics: const BouncingScrollPhysics(),
                   slivers: [
                     SliverPadding(
-                      padding: EdgeInsets.only(
-                        top: 20,
-                        right: 20,
-                        left: 20,
-                        bottom: isWidthOverLimit(context) ? 200 : 100,
-                      ),
+                      padding: widget.messageListPadding,
                       sliver: MessageList(
                         otherUser: context.watch<ChatBloc>().state.maybeMap(
                               orElse: () => null,
@@ -102,15 +101,8 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                         gradient: LinearGradient(
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
-                            colors: [
-                          //TODO
-                          Colors.black.withOpacity(0.4),
-                          Colors.transparent
-                        ],
-                            stops: const [
-                          0,
-                          0.15
-                        ])),
+                            colors: widget.ignorPointer,
+                            stops: const [0, 0.15])),
                   ),
                 ),
                 Positioned(
@@ -226,12 +218,12 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
                           loadSuccess: (state) => state.userProfile.name,
                           orElse: () => '',
                         ),
-                        // style: kTextH1,
+                        style: const TextStyle(color: Colors.white),
                       ),
                       if (lastActiveAt != null)
                         Text(
                           lastActiveAt,
-                          // style: kTextLabelDisabled,
+                          style: const TextStyle(color: Colors.white),
                         )
                     ],
                   ),
@@ -244,12 +236,20 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
                   .add(const ChatSearchEvent.searchSwitch()),
               icon: const Icon(
                 CupertinoIcons.search,
-                // color: kColorWhite,
+                color: Colors.white,
               ),
             ),
           );
         } else {
-          return const ChatSearchAppBar();
+          return const ChatSearchAppBar(
+              iconColor: Colors.white,
+              searchTextInput: TextStyle(color: Colors.white),
+              searchTextCurserColor: Colors.white,
+              textFieldDecoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Search',
+                hintStyle: TextStyle(color: Colors.white54),
+              ));
         }
       },
     );

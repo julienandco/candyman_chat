@@ -5,12 +5,34 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class ChatSearchAppBar extends StatefulWidget {
+  /// leading Icon befor text input
+  /// default [Icons.close]
   final Widget? leading;
+
+  /// search text field input decoration
+  /// default
   final InputDecoration? textFieldDecoration;
+
+  /// icon Color
+  /// default [Colors.white]
+  final Color? iconColor;
+
+  /// input text color
+  /// default [Colors.white]
+  final Color? searchTextCurserColor;
+
+  /// searcht text text style
+  /// default
+  final TextStyle? searchTextInput;
+
   const ChatSearchAppBar({
     Key? key,
     this.leading,
-    this.textFieldDecoration,
+    this.textFieldDecoration =
+        const InputDecoration(hintText: '...', border: InputBorder.none),
+    this.iconColor = Colors.white,
+    this.searchTextCurserColor = Colors.white,
+    this.searchTextInput = const TextStyle(color: Colors.white),
   }) : super(key: key);
 
   @override
@@ -37,17 +59,13 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
             icon: const Icon(
               Icons.close,
             ),
-            color: Colors.white,
+            color: widget.iconColor,
           ),
       title: Expanded(
         child: TextField(
-          decoration: widget.textFieldDecoration ??
-              const InputDecoration(
-                hintText: 'Search',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent, width: 1),
-                ),
-              ),
+          style: widget.searchTextInput,
+          cursorColor: widget.searchTextCurserColor,
+          decoration: widget.textFieldDecoration,
           focusNode: _foucsNode,
           onSubmitted: (value) {
             _foucsNode.unfocus();

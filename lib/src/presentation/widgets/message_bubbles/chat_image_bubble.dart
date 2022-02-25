@@ -5,17 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatImageBubble extends StatelessWidget {
+  // TODO: mplemet style
   final ChatMessage message;
   final double height;
   final Widget Function(String url, Widget placeholder)
       getRedirectedCachedNetworkImage;
   final void Function()? onTap;
   const ChatImageBubble({
+    Key? key,
     required this.message,
     this.height = 200,
     this.onTap,
     required this.getRedirectedCachedNetworkImage,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

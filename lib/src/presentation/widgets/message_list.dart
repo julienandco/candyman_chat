@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:neon_chat/neon_chat.dart';
 
@@ -25,7 +26,7 @@ class MessageList extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
                   message: message,
-                  //TODO: fallback
+                  // TODO: fallback
                   otherUserName: otherUser?.name ?? 'TODO',
                 ),
               ),
@@ -135,10 +136,10 @@ class _DateBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO
-    final text = date.toIso8601String();
-    // final text = DateFormat(
-    //         'd. MMM${date.year != DateTime.now().year ? ' yyyy' : ''}', 'de')
-    //     .format(date);
+    // final text = date.toIso8601String();
+    final text =
+        DateFormat('d. MMM${date.year != DateTime.now().year ? ' yyyy' : ''}')
+            .format(date);
     return Center(
       child:
           // Padding(

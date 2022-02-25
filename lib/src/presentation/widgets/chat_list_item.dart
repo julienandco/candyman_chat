@@ -16,10 +16,12 @@ class ChatListItem extends StatefulWidget {
     this.onOpenUserProfile,
     required this.userAvatar,
   }) : super(key: key);
+
   final ConversationItem conversationItem;
   final Function()? onOpenChat;
   final Function()? onOpenUserProfile;
   final Widget userAvatar;
+
   @override
   _ChatListItemState createState() => _ChatListItemState();
 }
@@ -61,8 +63,8 @@ class _ChatListItemState extends State<ChatListItem> {
           case ChatMessageType.deleted:
             break;
           default:
-            return Text(
-                //TODO
+            return const Text(
+                // TODO
                 'unknown');
         }
         return Text(text + type.displayString);
@@ -81,13 +83,13 @@ class _ChatListItemState extends State<ChatListItem> {
         menuItemExtent: 45,
         menuOffset: 10.0,
         blurSize: 0.0,
-        blurBackgroundColor: Colors.black, //TODO
+        blurBackgroundColor: Colors.black, // TODO
         menuWidth: MediaQuery.of(context).size.width * 0.6,
         menuBoxDecoration:
             BoxDecoration(borderRadius: BorderRadius.circular(50)),
         menuItems: [
           FocusedMenuItem(
-              //TODO
+              // TODO
               // backgroundColor: kColorPrimary,
               title: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5 - 50,

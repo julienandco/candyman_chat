@@ -8,19 +8,20 @@ import 'package:neon_chat/neon_chat.dart';
 class ChatVideoBubble extends StatefulWidget {
   final ChatMessage message;
   final void Function()? onTap;
-  final String Function(String) getUploadURL;
+  final Function(String) getUploadURL;
   final BoxDecoration? outerDecoration;
   final BoxDecoration? innerDecoration;
   final Widget? playIcon;
 
   const ChatVideoBubble({
+    Key? key,
     required this.message,
     required this.getUploadURL,
     this.onTap,
     this.outerDecoration,
     this.innerDecoration,
     this.playIcon,
-  });
+  }) : super(key: key);
 
   @override
   _ChatVideoBubbleState createState() => _ChatVideoBubbleState();
@@ -31,9 +32,6 @@ class _ChatVideoBubbleState extends State<ChatVideoBubble> {
   void _initializeThumbnail() async {
     if (widget.message.doneUpload && !isWebOrMacOS) {
       final url = widget.getUploadURL(widget.message.upload!.fileId);
-      // final url = await getIt<GetUploadRedirectUrlForUrlUC>()
-      //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
-
       if (url != null) {
         final thumbnailBytes = await VideoThumbnail.thumbnailData(
           video: url,
@@ -57,6 +55,7 @@ class _ChatVideoBubbleState extends State<ChatVideoBubble> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement style
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(

@@ -122,13 +122,12 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
     final value = _textController.text;
     setState(() {
       _showAttachOptions = false;
-      if (isWebOrMacOS) _showSentButton = value.isNotEmpty;
+      _showSentButton = value.isNotEmpty;
     });
   }
 
   void _sendTextMessage(String content) {
     _textController.clear();
-
     context.read<ChatBloc>().add(ChatEvent.sendTextMessage(content));
   }
 
@@ -222,7 +221,6 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
 
       if (file != null) {
         final content = await file.file;
-
         if (file.type == AssetType.image) {
           _sendImageMessage(content!.path);
         } else if (file.type == AssetType.video) {
@@ -282,7 +280,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                             onTap: _pickFile,
                           ),
                           const SizedBox(width: 10),
-                          //TODO
+                          // TODO default text
                           widget.galleryIconLabel ?? const Text('gallery'),
                         ],
                       ),
@@ -309,9 +307,9 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                             withShadow: true,
                           ),
                           const SizedBox(width: 10),
-                          //TODO
+                          // TODO default text
                           widget.mediaPickerIconLabel ??
-                              const Text('pick media'),
+                              const Text('select media'),
                         ],
                       ),
                     ),
@@ -364,18 +362,23 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: TextField(
-                                        maxLines: 5,
-                                        minLines: 1,
-                                        textInputAction: TextInputAction.send,
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        controller: _textController,
-                                        style: widget.textFieldStyle,
-                                        onSubmitted: (value) {
-                                          _sendTextMessage(value);
-                                        },
-                                        decoration: widget.textFieldDecoration,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 12, top: 12, bottom: 12),
+                                        child: TextField(
+                                          maxLines: 5,
+                                          minLines: 1,
+                                          textInputAction: TextInputAction.send,
+                                          textCapitalization:
+                                              TextCapitalization.sentences,
+                                          controller: _textController,
+                                          style: widget.textFieldStyle,
+                                          onSubmitted: (value) {
+                                            _sendTextMessage(value);
+                                          },
+                                          decoration:
+                                              widget.textFieldDecoration,
+                                        ),
                                       ),
                                     ),
                                     IconButton(
@@ -393,7 +396,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                       ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -401,8 +404,12 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       const SizedBox(width: 15),
                       _showSentButton
                           ? ChatCircleButton(
+                              color: const Color.fromARGB(255, 24, 99, 26),
                               child: widget.sendIcon ??
-                                  const Icon(CupertinoIcons.mail),
+                                  const Icon(
+                                    Icons.send_rounded,
+                                    color: Colors.white,
+                                  ),
                               size: widget.sendIconSize,
                               onTap: () {
                                 if (_showSentButton) {

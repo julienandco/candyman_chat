@@ -101,8 +101,11 @@ class ChatSearchBloc extends Bloc<ChatSearchEvent, ChatSearchState> {
       );
     });
   }
+
   final woozy = Woozy();
+
   final messageListController = AutoScrollController();
+
   List<ChatMessage> _messages = [];
   // void setEntries(List<ChatMessage> messages) => add(
   //       _SetEntries(messages),
