@@ -46,29 +46,32 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
       value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: widget.defaultConverstionsStyle.appBarCenterTitle,
           title: widget.defaultConverstionsStyle.appBarTitle,
           backgroundColor: widget.defaultConverstionsStyle.appBarColor,
         ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () =>
-                widget.defaultConverstionsStyle.fabAction ??
+        floatingActionButton: widget.defaultConverstionsStyle.showFab
+            ? FloatingActionButton(
+                onPressed: () =>
+                    widget.defaultConverstionsStyle.fabAction ??
 
-                // Placeholder dialog
-                showDialog(
-                  context: context,
-                  builder: (context) => Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      color: widget.defaultConverstionsStyle.fabColor,
-                      child: const Text(
-                        'START NEW CHAT',
-                        style: TextStyle(color: Colors.white),
+                    // Placeholder dialog
+                    showDialog(
+                      context: context,
+                      builder: (context) => Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          color: widget.defaultConverstionsStyle.fabColor,
+                          child: const Text(
+                            'START NEW CHAT',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-            backgroundColor: widget.defaultConverstionsStyle.fabColor,
-            child: widget.defaultConverstionsStyle.fabIcon),
+                backgroundColor: widget.defaultConverstionsStyle.fabColor,
+                child: widget.defaultConverstionsStyle.fabIcon)
+            : null,
         body: SafeArea(
           child: BlocBuilder<ConversationsSearchBloc, ConversationsSearchState>(
             builder: (context, conversationsSearchState) {
@@ -96,10 +99,9 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                           : chatConversations)
                                       .map(
                                         (conversation) => ChatListItem(
-                                          defaultCahtListItem:
-                                              DefaultChatListItem(
-                                                  listTileColor:
-                                                      Colors.grey[200]!),
+                                          defaultCahtListItem: widget
+                                              .defaultConverstionsStyle
+                                              .defaultChatListItem,
                                           conversationItem: conversation,
                                           userAvatar: const CircleAvatar(
                                             backgroundColor:
@@ -142,8 +144,11 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 ],
                               ),
                             ),
-                        orElse: () =>
-                            widget.defaultConverstionsStyle.loadingWidget),
+                        loadInProgress: (l) =>
+                            widget.defaultConverstionsStyle.loadingWidget,
+                        orElse: () => const Center(
+                              child: Text('No Conversations found!'),
+                            )),
               );
             },
           ),

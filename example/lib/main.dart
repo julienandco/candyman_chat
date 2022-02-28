@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:example/my_custom_conversations_loader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ void main() async {
 
   await FirebaseAuth.instance.signInWithEmailAndPassword(
     password: 'neon-chat-test!',
-    email: 'julien@neon.dev',
+    email: 'sebastian@neon.dev',
   );
 
   runApp(const MyApp());
@@ -35,18 +34,29 @@ class MyApp extends StatelessWidget {
       ),
       home: // const MyCustomConversationsLoader()
 
-          //Uncomment the next lines to see the default look of the app
+          // Uncomment the next lines to see the default look of the app
 
           DefaultConversationsLoader(
         firestore: getIt<FirebaseFirestore>(),
         firebaseAuth: getIt<FirebaseAuth>(),
         remoteDataSource: getIt<RemoteDataSource>(),
+        defaultConverstionsStyle: DefaultConverstionsStyle(
+          appBarTitle: const Text('NEON DEFAULT CHAT'),
+          defaultChatListItem:
+              DefaultChatListItem(listTileColor: Colors.grey[200]!),
+        ),
         defaultSearchAppBarStyle: const DefaultSearchAppBarStyle(
             textFieldDecoration: InputDecoration(
                 hintText: '...',
                 hintStyle: TextStyle(color: Colors.white38),
                 border: InputBorder.none),
-            serachBarDecoration: BoxDecoration(color: Colors.black)),
+            serachBarDecoration:
+                BoxDecoration(color: Color.fromARGB(255, 25, 5, 55))),
+        defaultBottomBarStyle: const DefaultBottomBarStyle(
+            textFieldDecoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Message...',
+                hintStyle: TextStyle(color: Colors.black38))),
       ),
     );
   }

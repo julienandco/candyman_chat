@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 
 class MessageContentWidget extends StatelessWidget {
   final String messageIsUploadingLabel;
@@ -46,7 +47,7 @@ class MessageContentWidget extends StatelessWidget {
               ChatAudioPlayer(
                 defaultAudioPlayerStyle: defaultAudioPlayerStyle,
                 message: message,
-                //TODO
+                // TODO: get url from remote data source
                 getUploadURL: (e) => e,
               ),
               Row(
@@ -67,7 +68,7 @@ class MessageContentWidget extends StatelessWidget {
                   : ChatImageBubble(
                       onTap: () => _openMediaViewer(context, message),
                       message: message,
-                      //TODO:
+                      // TODO: get url from remote data source
                       getRedirectedCachedNetworkImage: (u, p) => Container(),
                     ),
               Padding(
@@ -92,12 +93,11 @@ class MessageContentWidget extends StatelessWidget {
               if (!message.doneUpload && kIsWeb) Text(messageIsUploadingLabel),
               if (message.doneUpload)
                 ChatVideoBubble(
-                  defaultVideoPlayerStyle: defaultVideoPlayerStyle,
-                  onTap: () => _openMediaViewer(context, message),
-                  message: message,
-                  //TODO:
-                  getUploadURL: (e) => e,
-                ),
+                    defaultVideoPlayerStyle: defaultVideoPlayerStyle,
+                    onTap: () => _openMediaViewer(context, message),
+                    message: message,
+                    // TODO: get url from remote data source
+                    getUploadURL: (e) => e),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 5,
@@ -121,7 +121,7 @@ class MessageContentWidget extends StatelessWidget {
               ChatFileBubble(
                 defaultFileBubbleStyle: defaultFileBubbleStyle,
                 message: message,
-                //TODO:
+                //TODO: get url from remote data source
                 getUploadURL: (e) => e,
               ),
               Row(
@@ -166,11 +166,15 @@ void _openMediaViewer(
   BuildContext context,
   ChatMessage message,
 ) {
-  //TODO
+  // TODO: get url from remote data source
   // Navigator.of(context).push(
-  //   ChatMediaViewerPage.route(
+  //   ChatVideoPage.route(
   //     context,
   //     currentMediaMessage: message,
   //   ),
+
+  // Navigator.push(
+  //   context,
+  //   MaterialPageRoute(builder: (context) => ChatVideoPage(message: message)),
   // );
 }

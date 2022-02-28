@@ -126,4 +126,19 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
       return null;
     }
   }
+
+  @override
+  Future<String?> getUploadUrl(String id) async {
+    // TODO: implement getUploadUrl
+    try {
+      final response = await remoteDataSource.getUploadUrl(id);
+
+      return response.fold(
+        (l) => null,
+        (r) => r,
+      );
+    } catch (obj) {
+      return null;
+    }
+  }
 }

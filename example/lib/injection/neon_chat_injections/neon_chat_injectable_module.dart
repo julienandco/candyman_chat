@@ -8,7 +8,7 @@ import 'package:neon_chat/neon_chat.dart';
 abstract class NEONChatInjectableModule {
   //TODO: fill the firebase keys with custom ones if needed.
 
-  //TODO: adjust firebaseKEys environment to the environment used by getIt
+  //TODO: adjust firebaseKeys environment to the environment used by getIt
   @lazySingleton
   FirebaseKeys get firebaseKeys => const FirebaseKeys();
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "482691317256",
+    "project_id": "neon-chat-test",
+    "storage_bucket": "neon-chat-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482691317256:android:3ed050e82fff8759215bbd",
+        "android_client_info": {
+          "package_name": "com.neon.chatExample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482691317256-93ttf45d4puderdbmj6p88umvc899t8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjMI3GNbhJWC2DJvNFauBCEVS_ZkehzUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482691317256-93ttf45d4puderdbmj6p88umvc899t8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

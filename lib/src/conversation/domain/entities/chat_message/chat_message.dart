@@ -14,7 +14,7 @@ enum ChatMessageType { text, voice, image, video, file, deleted }
 extension ChatMessageTypeStrings on ChatMessageType {
   String get firebaseKey => getFirebaseKey(this);
 
-  //TODO
+  // TODO:
   String get displayString => getFirebaseKey(this);
 }
 

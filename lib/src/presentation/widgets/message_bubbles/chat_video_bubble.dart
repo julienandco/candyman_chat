@@ -8,7 +8,7 @@ import 'package:neon_chat/neon_chat.dart';
 class ChatVideoBubble extends StatefulWidget {
   final ChatMessage message;
   final void Function()? onTap;
-  final Function(String) getUploadURL;
+  final String? Function(String) getUploadURL;
 
   final DefaultVideoPlayerStyle defaultVideoPlayerStyle;
 

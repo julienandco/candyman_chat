@@ -3,6 +3,8 @@ description: Der NEON-Chat.
 version: 0.0.1
 homepage:
 
+publish_to: none
+
 environment:
   sdk: ">=2.15.1 <3.0.0"
   flutter: ">=1.17.0"
@@ -48,11 +50,13 @@ dependencies:
   visibility_detector: ^0.2.2
   linkwell: ^2.0.6
   video_thumbnail: ^0.4.3
-  # better_player: ^0.0.81
+  # better_player: 0.0.81
+  better_player:
+    git: 
+      url: https://github.com/julien-neon/betterplayer
   another_xlider: ^1.0.1+2
-  chewie: ^1.3.0  
+  chewie: ^1.3.0
   keyboard_dismisser: ^2.0.0
-
   injectable: ^1.5.3
   get_it: ^7.2.0
 
@@ -66,10 +70,10 @@ dev_dependencies:
   bloc_test: ^9.0.2
   test: ^1.20.1
 
-# dependency_overrides:
-#   better_player:
-#     git: 
-#       url: https://github.com/julien-neon/betterplayer
+dependency_overrides:
+  better_player:
+    git: 
+      url: https://github.com/julien-neon/betterplayer
 
 
 # For information on the generic Dart part of this file, see the

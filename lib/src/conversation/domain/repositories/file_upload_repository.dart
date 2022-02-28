@@ -17,4 +17,5 @@ abstract class FileUploadRepository {
     required String messageId,
   });
   Future<Tuple2<String?, String?>?> getNewPresignedUrl();
+  Future<String?> getUploadUrl(String id);
 }
