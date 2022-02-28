@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:neon_chat/src/core/util/util.dart';
 
 // Conversations Style
-
 class DefaultConverstionsStyle {
   final Text appBarTitle;
   final Color appBarColor;
@@ -60,14 +59,13 @@ class DefaultChatListItem {
 }
 
 // Conversation Style
-
-class DefaultConversationSyle {
+class DefaultConversationStyle {
   final Color backgroundColor;
   final List<Color> ignorPointersColors;
   final EdgeInsetsGeometry messageListPadding;
   final EdgeInsetsGeometry serachPadding;
 
-  const DefaultConversationSyle({
+  const DefaultConversationStyle({
     this.backgroundColor = Colors.white,
     this.ignorPointersColors = const [Colors.black26, Colors.transparent],
     this.messageListPadding =
@@ -148,7 +146,8 @@ class DefaultSearchAppBarStyle {
     this.iconColor = Colors.white,
     this.searchTextCurserColor = Colors.white,
     this.searchTextInput = const TextStyle(color: Colors.white),
-    this.serachBarDecoration = const BoxDecoration(color:  Color.fromARGB(255, 25, 5, 55)),
+    this.serachBarDecoration =
+        const BoxDecoration(color: Color.fromARGB(255, 25, 5, 55)),
   });
 }
 

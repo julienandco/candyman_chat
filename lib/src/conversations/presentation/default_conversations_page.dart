@@ -6,14 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
-// TODO: style
 // TODO: Implement start/create new - singel/groupe chat
 class DefaultConversationsPage extends StatefulWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
   final RemoteDataSource remoteDataSource;
   final DefaultConverstionsStyle defaultConverstionsStyle;
-  final DefaultConversationSyle defaultConversationSyle;
+  final DefaultConversationStyle defaultConversationStyle;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
@@ -24,7 +23,7 @@ class DefaultConversationsPage extends StatefulWidget {
       required this.firebaseAuth,
       required this.remoteDataSource,
       required this.defaultConverstionsStyle,
-      required this.defaultConversationSyle,
+      required this.defaultConversationStyle,
       required this.defaultChatBubbleStyle,
       required this.defaultSearchAppBarStyle,
       required this.defaultBottomBarStyle})
@@ -52,11 +51,14 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
         ),
         floatingActionButton: FloatingActionButton(
             onPressed: () =>
-                // widget.defaultConverstionsStyle.fabAction,
+                widget.defaultConverstionsStyle.fabAction ??
+
+                // Placeholder dialog
                 showDialog(
                   context: context,
                   builder: (context) => Center(
                     child: Container(
+                      padding: const EdgeInsets.all(16),
                       color: widget.defaultConverstionsStyle.fabColor,
                       child: const Text(
                         'START NEW CHAT',
@@ -85,7 +87,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                     return [
                                       widget.defaultConverstionsStyle
                                           .emtpyConversation
-                                      // const Center(child: Text('no conversations'))
                                     ];
                                   }
                                   return (conversationsSearchState
@@ -115,8 +116,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                                       .defaultSearchAppBarStyle,
                                                   defaultChatBubbleStyle: widget
                                                       .defaultChatBubbleStyle,
-                                                  defaultConversationSyle: widget
-                                                      .defaultConversationSyle,
+                                                  defaultConversationStyle: widget
+                                                      .defaultConversationStyle,
                                                   defaultBottomBarStyle: widget
                                                       .defaultBottomBarStyle,
                                                   firebaseAuth:

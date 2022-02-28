@@ -16,7 +16,7 @@ class DefaultConversationLoader extends StatelessWidget {
   final FirebaseAuth firebaseAuth;
   final RemoteDataSource remoteDataSource;
   final FirebaseKeys firebaseKeys;
-  final DefaultConversationSyle defaultConversationSyle;
+  final DefaultConversationStyle defaultConversationStyle;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
@@ -28,7 +28,7 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.firestore,
     required this.firebaseAuth,
     required this.remoteDataSource,
-    required this.defaultConversationSyle,
+    required this.defaultConversationStyle,
     required this.defaultChatBubbleStyle,
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
@@ -90,7 +90,7 @@ class DefaultConversationLoader extends StatelessWidget {
       ],
       child: DefaultConversationPage(
         defaultChatBubbleStyle: defaultChatBubbleStyle,
-        defaultConversationSyle: defaultConversationSyle,
+        defaultConversationStyle: defaultConversationStyle,
         defaultSearchAppBarStyle: defaultSearchAppBarStyle,
         defaultBottomBarStyle: defaultBottomBarStyle,
         showCloseButton: showCloseButton,

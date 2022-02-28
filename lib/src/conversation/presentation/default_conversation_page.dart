@@ -9,7 +9,7 @@ import 'widgets/conversation_appbar_widget.dart';
 
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
-  final DefaultConversationSyle defaultConversationSyle;
+  final DefaultConversationStyle defaultConversationStyle;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
@@ -17,7 +17,7 @@ class DefaultConversationPage extends StatefulWidget {
   const DefaultConversationPage({
     Key? key,
     required this.showCloseButton,
-    required this.defaultConversationSyle,
+    required this.defaultConversationStyle,
     required this.defaultChatBubbleStyle,
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
@@ -73,7 +73,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
         value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
         child: KeyboardDismisser(
           child: Scaffold(
-            backgroundColor: widget.defaultConversationSyle.backgroundColor,
+            backgroundColor: widget.defaultConversationStyle.backgroundColor,
             appBar: ConversationAppbar(
               defaultSearchAppBarStyle: widget.defaultSearchAppBarStyle,
               showCloseButton: !widget.showCloseButton,
@@ -90,7 +90,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                   slivers: [
                     SliverPadding(
                       padding:
-                          widget.defaultConversationSyle.messageListPadding,
+                          widget.defaultConversationStyle.messageListPadding,
                       sliver: MessageList(
                         defaultChatBubbleStyle: widget.defaultChatBubbleStyle,
                         otherUser: context.watch<ChatBloc>().state.maybeMap(
@@ -108,7 +108,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: widget
-                                .defaultConversationSyle.ignorPointersColors,
+                                .defaultConversationStyle.ignorPointersColors,
                             stops: const [0, 0.15])),
                   ),
                 ),

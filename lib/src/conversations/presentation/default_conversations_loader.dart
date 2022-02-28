@@ -12,7 +12,7 @@ class DefaultConversationsLoader extends StatelessWidget {
   final RemoteDataSource remoteDataSource;
   final FirebaseKeys firebaseKeys;
   final DefaultConverstionsStyle defaultConverstionsStyle;
-  final DefaultConversationSyle defaultConversationSyle;
+  final DefaultConversationStyle defaultConversationStyle;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
@@ -23,7 +23,7 @@ class DefaultConversationsLoader extends StatelessWidget {
     required this.firebaseAuth,
     required this.remoteDataSource,
     this.defaultConverstionsStyle = const DefaultConverstionsStyle(),
-    this.defaultConversationSyle = const DefaultConversationSyle(),
+    this.defaultConversationStyle = const DefaultConversationStyle(),
     this.defaultChatBubbleStyle = const DefaultChatBubbleStyle(),
     this.defaultSearchAppBarStyle = const DefaultSearchAppBarStyle(),
     this.defaultBottomBarStyle = const DefaultBottomBarStyle(),
@@ -105,7 +105,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                     remoteDataSource: remoteDataSource,
                     firestore: firestore,
                     defaultConverstionsStyle: defaultConverstionsStyle,
-                    defaultConversationSyle: defaultConversationSyle,
+                    defaultConversationStyle: defaultConversationStyle,
                     defaultChatBubbleStyle: defaultChatBubbleStyle,
                     defaultSearchAppBarStyle: defaultSearchAppBarStyle,
                     defaultBottomBarStyle: defaultBottomBarStyle,
@@ -120,7 +120,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                           child: DefaultConversationLoader(
                             key: Key(state.conversationId!),
                             defaultChatBubbleStyle: defaultChatBubbleStyle,
-                            defaultConversationSyle: defaultConversationSyle,
+                            defaultConversationStyle: defaultConversationStyle,
                             defaultSearchAppBarStyle: defaultSearchAppBarStyle,
                             defaultBottomBarStyle: defaultBottomBarStyle,
                             firebaseAuth: firebaseAuth,
