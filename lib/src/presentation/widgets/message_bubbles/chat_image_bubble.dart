@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatImageBubble extends StatelessWidget {
-  // TODO: mplemet style
   final ChatMessage message;
   final double height;
   final Widget Function(String url, Widget placeholder)

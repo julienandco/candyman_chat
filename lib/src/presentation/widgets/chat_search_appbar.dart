@@ -1,38 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/presentation/presentation.dart';
+import 'package:neon_chat/neon_chat.dart';
 
 class ChatSearchAppBar extends StatefulWidget {
-  /// leading Icon befor text input
-  /// default [Icons.close]
-  final Widget? leading;
-
-  /// search text field input decoration
-  /// default
-  final InputDecoration? textFieldDecoration;
-
-  /// icon Color
-  /// default [Colors.white]
-  final Color? iconColor;
-
-  /// input text color
-  /// default [Colors.white]
-  final Color? searchTextCurserColor;
-
-  /// searcht text text style
-  /// default
-  final TextStyle? searchTextInput;
+  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
 
   const ChatSearchAppBar({
     Key? key,
-    this.leading,
-    this.textFieldDecoration =
-        const InputDecoration(hintText: '...', border: InputBorder.none),
-    this.iconColor = Colors.white,
-    this.searchTextCurserColor = Colors.white,
-    this.searchTextInput = const TextStyle(color: Colors.white),
+    required this.defaultSearchAppBarStyle,
   }) : super(key: key);
 
   @override
@@ -50,8 +25,11 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
   @override
   Widget build(BuildContext context) {
     return SubHeader(
-      action: const SizedBox.shrink(),
-      leading: widget.leading ??
+      iconColor: widget.defaultSearchAppBarStyle.iconColor,
+      decoration: widget.defaultSearchAppBarStyle.serachBarDecoration,
+      // show nav Icons for search results
+      action: const ChatSearchUpDown(),
+      leading: widget.defaultSearchAppBarStyle.leading ??
           IconButton(
             onPressed: () => context
                 .read<ChatSearchBloc>()
@@ -59,13 +37,13 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
             icon: const Icon(
               Icons.close,
             ),
-            color: widget.iconColor,
+            color: widget.defaultSearchAppBarStyle.iconColor,
           ),
       title: Expanded(
         child: TextField(
-          style: widget.searchTextInput,
-          cursorColor: widget.searchTextCurserColor,
-          decoration: widget.textFieldDecoration,
+          style: widget.defaultSearchAppBarStyle.searchTextInput,
+          cursorColor: widget.defaultSearchAppBarStyle.searchTextCurserColor,
+          decoration: widget.defaultSearchAppBarStyle.textFieldDecoration,
           focusNode: _foucsNode,
           onSubmitted: (value) {
             _foucsNode.unfocus();

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:record/record.dart';
@@ -12,7 +11,8 @@ class AudioRecordButton extends StatefulWidget {
   final Color recordingInactiveColor;
   final Color recordingInactiveBorderColor;
   final Color borderColor;
-  final Widget icon;
+  final Widget iconActiv;
+  final Widget iconInActiv;
   final double buttonRadius;
 
   const AudioRecordButton({
@@ -23,7 +23,8 @@ class AudioRecordButton extends StatefulWidget {
     this.recordingInactiveBorderColor = Colors.transparent,
     this.recordingOngoingColor = Colors.redAccent,
     this.borderColor = Colors.white30,
-    this.icon = const Icon(CupertinoIcons.mic),
+    this.iconActiv = const Icon(Icons.mic_none_outlined),
+    this.iconInActiv = const Icon(Icons.mic),
     this.buttonRadius = 23,
   }) : super(key: key);
 
@@ -110,28 +111,36 @@ class _AudioRecordButtonState extends State<AudioRecordButton>
           onPointerDown: (_) => _start(),
           onPointerUp: (_) => _stop(),
           child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: _isRecording
-                  ? widget.recordingInactiveColor
-                  : widget.recordingOngoingColor,
-              borderRadius: BorderRadius.circular(widget.buttonRadius),
-              border: Border.all(
-                width: 1,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
                 color: _isRecording
                     ? widget.recordingOngoingColor
-                    : widget.recordingInactiveBorderColor,
+                    : widget.recordingInactiveColor,
+                borderRadius: BorderRadius.circular(widget.buttonRadius),
+                border: Border.all(
+                  width: 2,
+                  color: _isRecording
+                      ? widget.recordingOngoingColor
+                      : widget.recordingInactiveBorderColor,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(2, 4),
+                  )
+                ],
               ),
-            ),
-            height: 46,
-            width: 46,
-            //TODO: make this color change from here (icon.copywith does not exist :(( )
-            child: widget.icon,
-            // SvgPicture.asset(
-            //   'assets/vectors/voiceMailIcon.svg',
-            //   color: _isRecording ? kColorAccent : kColorWhite,
-            // ),
-          ),
+              height: 46,
+              width: 46,
+              child: _isRecording ? widget.iconInActiv : widget.iconActiv
+
+              // SvgPicture.asset(
+              //   'assets/vectors/voiceMailIcon.svg',
+              //   color: _isRecording ? kColorAccent : kColorWhite,
+              // ),
+              ),
         ),
       ],
     );

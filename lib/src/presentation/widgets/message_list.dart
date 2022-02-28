@@ -6,10 +6,12 @@ import 'package:neon_chat/neon_chat.dart';
 
 class MessageList extends StatelessWidget {
   final FirebaseUser? otherUser;
+  final DefaultChatBubbleStyle defaultChatBubbleStyle;
 
   const MessageList({
     Key? key,
     required this.otherUser,
+    required this.defaultChatBubbleStyle,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,10 @@ class MessageList extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
+                  defaultChatBubbleStyle: defaultChatBubbleStyle,
                   message: message,
                   // TODO: fallback
-                  otherUserName: otherUser?.name ?? 'TODO',
+                  otherUserName: otherUser?.name ?? 'username',
                 ),
               ),
             ),
@@ -63,10 +66,7 @@ class _MessageListViewState extends State<_MessageListView> {
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (
-          context,
-          i,
-        ) {
+        (context, i) {
           final timestamp = widget.messages[i].timestamp ?? DateTime.now();
           bool last = false;
           bool showDate;
@@ -80,7 +80,6 @@ class _MessageListViewState extends State<_MessageListView> {
             timestamp.month,
             timestamp.day,
           );
-
           // Needed for inverted list
           DateTime previousDate = currentDate ?? messageDate;
 
@@ -92,6 +91,7 @@ class _MessageListViewState extends State<_MessageListView> {
             currentDate = messageDate;
           } else if (i == widget.messages.length - 1 && widget.inverted) {
             showDate = true;
+            currentDate = messageDate;
           } else {
             showDate = false;
           }
@@ -135,21 +135,26 @@ class _DateBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO
+    // TODO: get local setup
     // final text = date.toIso8601String();
     final text =
         DateFormat('d. MMM${date.year != DateTime.now().year ? ' yyyy' : ''}')
             .format(date);
-    return Center(
-      child:
-          // Padding(
-          //   // padding: kPadVertMedium,
-          //   child:
-          Text(
-        text,
-        // style: kTextListItem,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: const BorderRadius.all(Radius.circular(25))),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+          child: Text(
+            text,
+            style: const TextStyle(
+                color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
-      // ),
     );
   }
 }

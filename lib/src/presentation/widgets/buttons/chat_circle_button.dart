@@ -6,6 +6,7 @@ class ChatCircleButton extends StatelessWidget {
   final Color color;
   final Function()? onTap;
   final EdgeInsets? padding;
+  final BoxShadow shadow;
 
   const ChatCircleButton({
     Key? key,
@@ -14,6 +15,12 @@ class ChatCircleButton extends StatelessWidget {
     this.color = Colors.red,
     this.onTap,
     this.padding = const EdgeInsets.all(10),
+    this.shadow = const BoxShadow(
+      color: Colors.transparent,
+      spreadRadius: 2,
+      blurRadius: 5,
+      offset: Offset(2, 4),
+    ),
   }) : super(key: key);
 
   @override
@@ -23,9 +30,9 @@ class ChatCircleButton extends StatelessWidget {
       child: Container(
         padding: padding,
         decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(size / 2),
-        ),
+            color: color,
+            borderRadius: BorderRadius.circular(size / 2),
+            boxShadow: [shadow]),
         height: size,
         width: size,
         child: child,

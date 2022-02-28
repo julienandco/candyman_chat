@@ -6,10 +6,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:neon_chat/neon_chat.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/presentation/presentation.dart';
 
 class ChatAudioPlayer extends StatefulWidget {
   final ChatMessage message;
@@ -18,32 +16,14 @@ class ChatAudioPlayer extends StatefulWidget {
   /// in the backend) when given the AudioMessage's fileId.
   final String Function(String) getUploadURL;
 
-  final Widget playIcon;
-  final Widget playingIcon;
-  final TextStyle? labelStyle;
-  final Color sliderColor;
-  final Color activeTrackColor;
-  final Color thumbColor;
+  final DefaultAudioPlayerStyle defaultAudioPlayerStyle;
 
   const ChatAudioPlayer({
     Key? key,
     required this.message,
     required this.getUploadURL,
-    this.playIcon = const Icon(
-      Icons.play_arrow,
-      color: Colors.white,
-      size: 18,
-    ),
-    this.playingIcon = const Icon(
-      Icons.pause,
-      color: Colors.white,
-      size: 18,
-    ),
-    this.labelStyle,
-    this.sliderColor = Colors.red,
-    this.activeTrackColor = Colors.yellow,
-    this.thumbColor = Colors.redAccent,
-  });
+    required this.defaultAudioPlayerStyle,
+  }) : super(key: key);
 
   @override
   _ChatAudioPlayerState createState() => _ChatAudioPlayerState();
@@ -126,7 +106,9 @@ class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
         return Row(
           children: [
             ChatCircleButton(
-              child: data.isPlaying ? widget.playingIcon : widget.playIcon,
+              child: data.isPlaying
+                  ? widget.defaultAudioPlayerStyle.playingIcon
+                  : widget.defaultAudioPlayerStyle.playIcon,
               size: 30,
               onTap: onPlayPausePressed,
               padding: const EdgeInsets.all(5),
@@ -137,10 +119,11 @@ class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
                 position: data.position,
                 bufferedPosition: data.bufferedPosition,
                 onChangeEnd: player.seek,
-                labelStyle: widget.labelStyle,
-                sliderColor: widget.sliderColor,
-                activeTrackColor: widget.activeTrackColor,
-                thumbColor: widget.thumbColor,
+                labelStyle: widget.defaultAudioPlayerStyle.labelStyle,
+                sliderColor: widget.defaultAudioPlayerStyle.sliderColor,
+                activeTrackColor:
+                    widget.defaultAudioPlayerStyle.activeTrackColor,
+                thumbColor: widget.defaultAudioPlayerStyle.thumbColor,
               ),
             ),
           ],

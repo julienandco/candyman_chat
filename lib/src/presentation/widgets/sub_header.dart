@@ -8,12 +8,14 @@ class SubHeader extends StatelessWidget {
 
   final BoxDecoration decoration;
   final EdgeInsets padding;
+  final Color iconColor;
 
   const SubHeader({
     Key? key,
     this.title,
     this.action,
     this.leading,
+    this.iconColor = Colors.white,
     this.decoration = const BoxDecoration(
       color: Colors.blue,
       boxShadow: [
@@ -51,10 +53,10 @@ class SubHeader extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.only(
                             left: 20.0, top: 8, bottom: 8),
-                        child: const Icon(
+                        child: Icon(
                           CupertinoIcons.arrow_left,
                           size: 25,
-                          color: Colors.white,
+                          color: iconColor,
                         ),
                       ),
                     ),

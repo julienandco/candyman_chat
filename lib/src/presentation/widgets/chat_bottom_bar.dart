@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:animator/animator.dart' as animator;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animator/flutter_animator.dart';
@@ -12,55 +11,11 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 class ChatBottomBar extends StatefulWidget {
-  final Color chatBarColor;
-  final BorderRadius borderRadius;
-  final Color assetPickerColor;
-  final Color cameraPickerColor;
-  final BoxConstraints constraints;
-  final EdgeInsets padding;
-  final double? maxWidth;
-  final Widget? galleryIcon;
-  final Color? galleryIconColor;
-  final double galleryIconSize;
-  final Widget? galleryIconLabel;
-  final Widget? mediaPickerIcon;
-  final Color? mediaPickerIconColor;
-  final double mediaPickerIconSize;
-  final Widget? mediaPickerIconLabel;
-  final Widget? audioMessageIcon;
-  final TextStyle? audioRecordingLabelStyle;
-  final TextStyle? textFieldStyle;
-  final InputDecoration? textFieldDecoration;
-  final Widget? attachmentIcon;
-  final Widget? cameraIcon;
-  final Widget? sendIcon;
-  final double sendIconSize;
+  final DefaultBottomBarStyle defaultBottomBarStyle;
 
   const ChatBottomBar({
     Key? key,
-    this.chatBarColor = Colors.black12,
-    this.borderRadius = const BorderRadius.all(Radius.circular(15)),
-    this.assetPickerColor = Colors.red,
-    this.cameraPickerColor = Colors.red,
-    this.constraints = const BoxConstraints(maxWidth: kMaxWidth),
-    this.padding = const EdgeInsets.symmetric(horizontal: 15),
-    this.maxWidth,
-    this.galleryIcon,
-    this.galleryIconColor,
-    this.galleryIconSize = 40,
-    this.galleryIconLabel,
-    this.mediaPickerIcon,
-    this.mediaPickerIconColor,
-    this.mediaPickerIconSize = 40,
-    this.mediaPickerIconLabel,
-    this.audioMessageIcon,
-    this.audioRecordingLabelStyle,
-    this.textFieldStyle,
-    this.textFieldDecoration,
-    this.attachmentIcon,
-    this.cameraIcon,
-    this.sendIcon,
-    this.sendIconSize = 46,
+    required this.defaultBottomBarStyle,
   }) : super(key: key);
 
   @override
@@ -100,12 +55,12 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
 
   @override
   void didChangeDependencies() {
-    if (widget.maxWidth == null) {
+    if (widget.defaultBottomBarStyle.maxWidth == null) {
       _maxWidth = isWidthOverLimit(context)
           ? kMaxWidth
           : MediaQuery.of(context).size.width;
     } else {
-      _maxWidth = widget.maxWidth!;
+      _maxWidth = widget.defaultBottomBarStyle.maxWidth!;
     }
     super.didChangeDependencies();
   }
@@ -204,7 +159,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
             maxAssets: 3,
             requestType: RequestType.common,
             textDelegate: GermanTextDelegate(),
-            pickerTheme: AssetPicker.themeData(widget.assetPickerColor)) ??
+            pickerTheme: AssetPicker.themeData(
+                widget.defaultBottomBarStyle.assetPickerColor)) ??
         [];
     _sendMultipleFiles(assets);
   }
@@ -215,7 +171,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
         context,
         textDelegate: EnglishCameraPickerTextDelegate(),
         enableRecording: true,
-        theme: CameraPicker.themeData(widget.cameraPickerColor),
+        theme: CameraPicker.themeData(
+            widget.defaultBottomBarStyle.cameraPickerColor),
         resolutionPreset: ResolutionPreset.medium,
       );
 
@@ -248,14 +205,14 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        constraints: widget.constraints,
+        constraints: widget.defaultBottomBarStyle.constraints,
         child: AnimatedOpacity(
           opacity: _bottomBarIsHidden ? 0 : 1,
           duration: const Duration(milliseconds: 250),
           child: Material(
             color: Colors.transparent,
             child: Padding(
-              padding: widget.padding,
+              padding: widget.defaultBottomBarStyle.padding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -270,18 +227,18 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                         children: [
                           SizedBox(width: _maxWidth - 202),
                           BaseCircleButton(
-                            child: widget.galleryIcon ??
-                                const Icon(CupertinoIcons.photo_on_rectangle),
-                            color: widget.galleryIconColor ?? Colors.white,
-                            size: widget.galleryIconSize,
+                            child: widget.defaultBottomBarStyle.galleryIcon,
+                            color:
+                                widget.defaultBottomBarStyle.galleryIconColor,
+                            size: widget.defaultBottomBarStyle.galleryIconSize,
                             backgroundOpacity: 1,
                             padding: const EdgeInsets.all(10),
                             withShadow: true,
                             onTap: _pickFile,
                           ),
                           const SizedBox(width: 10),
-                          // TODO default text
-                          widget.galleryIconLabel ?? const Text('gallery'),
+                          widget.defaultBottomBarStyle.galleryIconLabel ??
+                              const Text('gallery'),
                         ],
                       ),
                     ),
@@ -297,18 +254,18 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                         children: [
                           SizedBox(width: _maxWidth - 202),
                           BaseCircleButton(
-                            child: widget.mediaPickerIcon ??
-                                const Icon(CupertinoIcons.selection_pin_in_out),
-                            color: widget.mediaPickerIconColor ?? Colors.white,
-                            size: widget.mediaPickerIconSize,
+                            child: widget.defaultBottomBarStyle.mediaPickerIcon,
+                            color: widget
+                                .defaultBottomBarStyle.mediaPickerIconColor,
+                            size: widget
+                                .defaultBottomBarStyle.mediaPickerIconSize,
                             backgroundOpacity: 1,
                             padding: const EdgeInsets.all(10),
                             onTap: _openMediaPickerPage,
                             withShadow: true,
                           ),
                           const SizedBox(width: 10),
-                          // TODO default text
-                          widget.mediaPickerIconLabel ??
+                          widget.defaultBottomBarStyle.mediaPickerIconLabel ??
                               const Text('select media'),
                         ],
                       ),
@@ -319,9 +276,14 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: widget.chatBarColor,
-                            borderRadius: widget.borderRadius,
-                          ),
+                              color: widget.defaultBottomBarStyle.chatBarColor,
+                              borderRadius:
+                                  widget.defaultBottomBarStyle.borderRadius,
+                              boxShadow: widget
+                                          .defaultBottomBarStyle.boxShadow !=
+                                      null
+                                  ? [widget.defaultBottomBarStyle.boxShadow!]
+                                  : []),
                           child: Stack(
                             children: [
                               AnimatedOpacity(
@@ -339,8 +301,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                             (context, animatorState, child) =>
                                                 Opacity(
                                           opacity: animatorState.value,
-                                          child: widget.audioMessageIcon ??
-                                              const Icon(CupertinoIcons.mic),
+                                          child: widget.defaultBottomBarStyle
+                                              .audioMessageIcon,
                                         ),
                                       ),
                                       Expanded(
@@ -348,7 +310,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                       ),
                                       Text(
                                         '$_recordingMinutes:$_recordingSeconds',
-                                        style: widget.audioRecordingLabelStyle
+                                        style: widget.defaultBottomBarStyle
+                                            .audioRecordingLabelStyle
                                             ?.copyWith(color: Colors.red),
                                       ),
                                       const SizedBox(width: 10),
@@ -364,7 +327,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 12, top: 12, bottom: 12),
+                                            left: 16, top: 2, bottom: 2),
                                         child: TextField(
                                           maxLines: 5,
                                           minLines: 1,
@@ -372,26 +335,31 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           controller: _textController,
-                                          style: widget.textFieldStyle,
+                                          style: widget.defaultBottomBarStyle
+                                              .textFieldStyle,
+                                          cursorColor: widget
+                                              .defaultBottomBarStyle
+                                              .curserColor,
                                           onSubmitted: (value) {
                                             _sendTextMessage(value);
                                           },
-                                          decoration:
-                                              widget.textFieldDecoration,
+                                          decoration: widget
+                                              .defaultBottomBarStyle
+                                              .textFieldDecoration,
                                         ),
                                       ),
                                     ),
                                     IconButton(
-                                      icon: widget.attachmentIcon ??
-                                          const Icon(CupertinoIcons.paperclip),
+                                      icon: widget
+                                          .defaultBottomBarStyle.attachmentIcon,
                                       onPressed: isWebOrMacOS
                                           ? _toggleShowAttachOptions
                                           : _pickFile,
                                     ),
                                     if (!isWebOrMacOS)
                                       IconButton(
-                                        icon: widget.cameraIcon ??
-                                            const Icon(CupertinoIcons.camera),
+                                        icon: widget
+                                            .defaultBottomBarStyle.cameraIcon,
                                         onPressed: _takePhotoFromCamera,
                                       ),
                                   ],
@@ -404,13 +372,10 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       const SizedBox(width: 15),
                       _showSentButton
                           ? ChatCircleButton(
-                              color: const Color.fromARGB(255, 24, 99, 26),
-                              child: widget.sendIcon ??
-                                  const Icon(
-                                    Icons.send_rounded,
-                                    color: Colors.white,
-                                  ),
-                              size: widget.sendIconSize,
+                              shadow: widget.defaultBottomBarStyle.boxShadow!,
+                              color: widget.defaultBottomBarStyle.iconsColor,
+                              child: widget.defaultBottomBarStyle.sendIcon,
+                              size: widget.defaultBottomBarStyle.sendIconSize,
                               onTap: () {
                                 if (_showSentButton) {
                                   _sendTextMessage(_textController.text);

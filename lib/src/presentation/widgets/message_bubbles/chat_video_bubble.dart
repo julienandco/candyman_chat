@@ -9,18 +9,15 @@ class ChatVideoBubble extends StatefulWidget {
   final ChatMessage message;
   final void Function()? onTap;
   final Function(String) getUploadURL;
-  final BoxDecoration? outerDecoration;
-  final BoxDecoration? innerDecoration;
-  final Widget? playIcon;
+
+  final DefaultVideoPlayerStyle defaultVideoPlayerStyle;
 
   const ChatVideoBubble({
     Key? key,
     required this.message,
     required this.getUploadURL,
+    required this.defaultVideoPlayerStyle,
     this.onTap,
-    this.outerDecoration,
-    this.innerDecoration,
-    this.playIcon,
   }) : super(key: key);
 
   @override
@@ -55,11 +52,10 @@ class _ChatVideoBubbleState extends State<ChatVideoBubble> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement style
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        decoration: widget.outerDecoration ??
+        decoration: widget.defaultVideoPlayerStyle.outerDecoration ??
             BoxDecoration(
               image: _thumbnailBytes != null
                   ? DecorationImage(
@@ -75,20 +71,11 @@ class _ChatVideoBubbleState extends State<ChatVideoBubble> {
         width: MediaQuery.of(context).size.width * 0.5,
         child: Center(
           child: Container(
-            height: 60,
-            width: 60,
-            decoration: widget.innerDecoration ??
-                const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.red,
-                ),
-            padding: const EdgeInsets.all(8),
-            child: widget.playIcon ??
-                const Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                ),
-          ),
+              height: 60,
+              width: 60,
+              decoration: widget.defaultVideoPlayerStyle.innerDecoration,
+              padding: const EdgeInsets.all(8),
+              child: widget.defaultVideoPlayerStyle.playIcon),
         ),
       ),
     );

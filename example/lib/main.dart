@@ -29,19 +29,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'NEON Chat Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyCustomConversationsLoader()
+      title: 'NEON Chat Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: // const MyCustomConversationsLoader()
 
-        //Uncomment the next lines to see the default look of the app
+          //Uncomment the next lines to see the default look of the app
 
-        // DefaultConversationsLoader(
-        //   firestore: getIt<FirebaseFirestore>(),
-        //   firebaseAuth: getIt<FirebaseAuth>(),
-        //   remoteDataSource: getIt<RemoteDataSource>(),
-        // ),
-        );
+          DefaultConversationsLoader(
+        firestore: getIt<FirebaseFirestore>(),
+        firebaseAuth: getIt<FirebaseAuth>(),
+        remoteDataSource: getIt<RemoteDataSource>(),
+        defaultSearchAppBarStyle: const DefaultSearchAppBarStyle(
+            textFieldDecoration: InputDecoration(
+                hintText: '...',
+                hintStyle: TextStyle(color: Colors.white38),
+                border: InputBorder.none),
+            serachBarDecoration: BoxDecoration(color: Colors.black)),
+      ),
+    );
   }
 }

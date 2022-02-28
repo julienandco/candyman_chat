@@ -6,18 +6,27 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
-//TODO: style
-
 class DefaultConversationsLoader extends StatelessWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
   final RemoteDataSource remoteDataSource;
   final FirebaseKeys firebaseKeys;
+  final DefaultConverstionsStyle defaultConverstionsStyle;
+  final DefaultConversationSyle defaultConversationSyle;
+  final DefaultChatBubbleStyle defaultChatBubbleStyle;
+  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
+  final DefaultBottomBarStyle defaultBottomBarStyle;
+
   const DefaultConversationsLoader({
     Key? key,
     required this.firestore,
     required this.firebaseAuth,
     required this.remoteDataSource,
+    this.defaultConverstionsStyle = const DefaultConverstionsStyle(),
+    this.defaultConversationSyle = const DefaultConversationSyle(),
+    this.defaultChatBubbleStyle = const DefaultChatBubbleStyle(),
+    this.defaultSearchAppBarStyle = const DefaultSearchAppBarStyle(),
+    this.defaultBottomBarStyle = const DefaultBottomBarStyle(),
     this.firebaseKeys = const FirebaseKeys(),
   }) : super(key: key);
 
@@ -38,6 +47,7 @@ class DefaultConversationsLoader extends StatelessWidget {
       firestore: firestore,
       firebaseKeys: firebaseKeys,
     );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -94,6 +104,11 @@ class DefaultConversationsLoader extends StatelessWidget {
                     firebaseAuth: firebaseAuth,
                     remoteDataSource: remoteDataSource,
                     firestore: firestore,
+                    defaultConverstionsStyle: defaultConverstionsStyle,
+                    defaultConversationSyle: defaultConversationSyle,
+                    defaultChatBubbleStyle: defaultChatBubbleStyle,
+                    defaultSearchAppBarStyle: defaultSearchAppBarStyle,
+                    defaultBottomBarStyle: defaultBottomBarStyle,
                   ),
                 ),
                 if (isWidthOverLimit(context))
@@ -104,6 +119,10 @@ class DefaultConversationsLoader extends StatelessWidget {
                         return Flexible(
                           child: DefaultConversationLoader(
                             key: Key(state.conversationId!),
+                            defaultChatBubbleStyle: defaultChatBubbleStyle,
+                            defaultConversationSyle: defaultConversationSyle,
+                            defaultSearchAppBarStyle: defaultSearchAppBarStyle,
+                            defaultBottomBarStyle: defaultBottomBarStyle,
                             firebaseAuth: firebaseAuth,
                             firestore: firestore,
                             remoteDataSource: remoteDataSource,

@@ -7,7 +7,7 @@ import 'package:video_player/video_player.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 
-//TODO: style and test
+//TODO:  test
 class ChatVideoPageWeb extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';
 
@@ -21,7 +21,8 @@ class ChatVideoPageWeb extends StatefulWidget {
   final Color? playerColor;
   final Color? backgroundColor;
 
-  ChatVideoPageWeb({
+  const ChatVideoPageWeb({
+    Key? key,
     required this.message,
     required this.getUploadURL,
     this.progressIndicator,
@@ -31,7 +32,7 @@ class ChatVideoPageWeb extends StatefulWidget {
     this.sliderColor,
     this.playerColor,
     this.backgroundColor,
-  });
+  }) : super(key: key);
 
   @override
   _ChatVideoPageState createState() => _ChatVideoPageState();

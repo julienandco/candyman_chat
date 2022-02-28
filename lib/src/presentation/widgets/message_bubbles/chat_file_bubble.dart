@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:neon_chat/neon_chat.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:neon_chat/src/conversation/conversation.dart';
-
 class ChatFileBubble extends StatefulWidget {
+  final ChatMessage message;
+  final String Function(String) getUploadURL;
+  final DefaultFileBubbleStyle defaultFileBubbleStyle;
+
   const ChatFileBubble({
     Key? key,
     required this.message,
     required this.getUploadURL,
-    this.downloadIcon,
-    this.progressIndicator,
-    // TODO: implement default value
-    this.fileTypeNotSupportedLabel = 'Not supported',
-    this.labelStyle,
+    required this.defaultFileBubbleStyle,
   }) : super(key: key);
-
-  final ChatMessage message;
-  final String Function(String) getUploadURL;
-  final Widget? downloadIcon;
-  final Widget? progressIndicator;
-  final String fileTypeNotSupportedLabel;
-  final TextStyle? labelStyle;
 
   @override
   _ChatFileBubbleState createState() => _ChatFileBubbleState();
@@ -56,13 +48,8 @@ class _ChatFileBubbleState extends State<ChatFileBubble>
               height: 20,
               child: widget.message.doneUpload
                   ? (!_isLoading
-                      ? widget.downloadIcon ??
-                          const Icon(
-                            Icons.download,
-                            color: Colors.red,
-                          )
-                      : widget.progressIndicator ??
-                          const CircularProgressIndicator())
+                      ? widget.defaultFileBubbleStyle.downloadIcon
+                      : widget.defaultFileBubbleStyle.progressIndicator)
                   : null,
             ),
           ),
@@ -70,8 +57,9 @@ class _ChatFileBubbleState extends State<ChatFileBubble>
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text(
-                widget.message.text ?? widget.fileTypeNotSupportedLabel,
-                style: widget.labelStyle,
+                widget.message.text ??
+                    widget.defaultFileBubbleStyle.fileTypeNotSupportedLabel,
+                style: widget.defaultFileBubbleStyle.labelStyle,
               ),
             ),
           ),
