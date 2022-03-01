@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class MessageList extends StatelessWidget {
   final FirebaseUser? otherUser;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
+  final GetUploadUrlUC getUploadUrlUC;
 
   const MessageList({
     Key? key,
     required this.otherUser,
     required this.defaultChatBubbleStyle,
+    required this.getUploadUrlUC,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,7 @@ class MessageList extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
                   defaultChatBubbleStyle: defaultChatBubbleStyle,
+                  getUploadUrlUC: getUploadUrlUC,
                   message: message,
                   // TODO: fallback
                   otherUserName: otherUser?.name ?? 'username',

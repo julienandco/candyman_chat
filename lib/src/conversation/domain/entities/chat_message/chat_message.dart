@@ -51,7 +51,7 @@ class ChatMessage with _$ChatMessage {
 
   bool get isDeleted => type == ChatMessageType.deleted;
 
-  //TODO: get correct locale, not hardcoded de
+  // TODO: get correct locale, not hardcoded de
   String get timestampFormated =>
       //DateFormat.Hm('de').format(timestamp ?? DateTime.now());
 
@@ -60,6 +60,6 @@ class ChatMessage with _$ChatMessage {
 
   bool get isMe => FirebaseAuth.instance.currentUser!.uid == senderId;
 
-//TODO: injection in package?
+  // TODO: injection in package?
   // bool get isMe => getIt<FirebaseAuth>().currentUser!.uid == senderId;
 }

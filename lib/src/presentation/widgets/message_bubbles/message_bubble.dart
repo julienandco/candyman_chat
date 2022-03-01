@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:neon_chat/src/core/core.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
@@ -15,6 +16,7 @@ class MessageBubble extends StatefulWidget {
   final Widget? otherUserAvatar;
   final String otherUserName;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
+  final GetUploadUrlUC getUploadUrlUC;
 
   const MessageBubble({
     Key? key,
@@ -22,6 +24,7 @@ class MessageBubble extends StatefulWidget {
     this.otherUserAvatar,
     required this.otherUserName,
     required this.defaultChatBubbleStyle,
+    required this.getUploadUrlUC,
   }) : super(key: key);
 
   @override
@@ -215,6 +218,7 @@ class _MessageBubbleState extends State<MessageBubble> {
                             : widget.defaultChatBubbleStyle.bubbleradius),
                       ),
                       child: MessageContentWidget(
+                        getUploadUrlUC: widget.getUploadUrlUC,
                         defaultAudioPlayerStyle: widget
                             .defaultChatBubbleStyle.defaultAudioPlayerStyle,
                         defaultVideoPlayerStyle: widget

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 
 import 'widgets/conversation_appbar_widget.dart';
 // import 'package:timeago/timeago.dart' as timeago;
@@ -13,6 +14,7 @@ class DefaultConversationPage extends StatefulWidget {
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
+  final GetUploadUrlUC getUploadUrlUC;
 
   const DefaultConversationPage({
     Key? key,
@@ -21,6 +23,7 @@ class DefaultConversationPage extends StatefulWidget {
     required this.defaultChatBubbleStyle,
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
+    required this.getUploadUrlUC,
   }) : super(key: key);
 
   @override
@@ -92,6 +95,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                       padding:
                           widget.defaultConversationStyle.messageListPadding,
                       sliver: MessageList(
+                        getUploadUrlUC: widget.getUploadUrlUC,
                         defaultChatBubbleStyle: widget.defaultChatBubbleStyle,
                         otherUser: context.watch<ChatBloc>().state.maybeMap(
                               orElse: () => null,

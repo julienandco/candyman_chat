@@ -7,22 +7,21 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ChatAudioPlayer extends StatefulWidget {
   final ChatMessage message;
 
-  /// Method that should return the UploadURL of the AudioMessage (where it is stored
-  /// in the backend) when given the AudioMessage's fileId.
-  final String Function(String) getUploadURL;
-
   final DefaultAudioPlayerStyle defaultAudioPlayerStyle;
+
+  final GetUploadUrlUC getUploadUrlUC;
 
   const ChatAudioPlayer({
     Key? key,
     required this.message,
-    required this.getUploadURL,
     required this.defaultAudioPlayerStyle,
+    required this.getUploadUrlUC,
   }) : super(key: key);
 
   @override
@@ -64,7 +63,9 @@ class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
         await player.setAudioSource(
             AudioSource.uri(Uri.parse(widget.message.filePath!)));
       } else if (widget.message.doneUpload) {
-        final url = widget.getUploadURL(widget.message.upload!.fileId);
+        final url = await widget.getUploadUrlUC
+                .call(id: widget.message.upload!.fileId) ??
+            '';
         await player.setUrl(url);
       }
     } catch (e) {

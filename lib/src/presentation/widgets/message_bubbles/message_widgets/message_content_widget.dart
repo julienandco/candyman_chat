@@ -14,6 +14,7 @@ class MessageContentWidget extends StatelessWidget {
   final DefaultAudioPlayerStyle defaultAudioPlayerStyle;
   final DefaultVideoPlayerStyle defaultVideoPlayerStyle;
   final DefaultFileBubbleStyle defaultFileBubbleStyle;
+  final GetUploadUrlUC getUploadUrlUC;
 
   const MessageContentWidget({
     Key? key,
@@ -28,6 +29,7 @@ class MessageContentWidget extends StatelessWidget {
     required this.defaultAudioPlayerStyle,
     required this.defaultVideoPlayerStyle,
     required this.defaultFileBubbleStyle,
+    required this.getUploadUrlUC,
   }) : super(key: key);
   final ChatMessage message;
   final List<Widget> footer;
@@ -47,8 +49,7 @@ class MessageContentWidget extends StatelessWidget {
               ChatAudioPlayer(
                 defaultAudioPlayerStyle: defaultAudioPlayerStyle,
                 message: message,
-                // TODO: get url from remote data source
-                getUploadURL: (e) => e,
+                getUploadUrlUC: getUploadUrlUC,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,9 +67,10 @@ class MessageContentWidget extends StatelessWidget {
               (!message.doneUpload && kIsWeb)
                   ? Text(messageIsUploadingLabel)
                   : ChatImageBubble(
-                      onTap: () => _openMediaViewer(context, message),
+                      onTap: () =>
+                          _openMediaViewer(context, message, getUploadUrlUC),
                       message: message,
-                      // TODO: get url from remote data source
+                      // TODO:
                       getRedirectedCachedNetworkImage: (u, p) => Container(),
                     ),
               Padding(
@@ -93,11 +95,12 @@ class MessageContentWidget extends StatelessWidget {
               if (!message.doneUpload && kIsWeb) Text(messageIsUploadingLabel),
               if (message.doneUpload)
                 ChatVideoBubble(
-                    defaultVideoPlayerStyle: defaultVideoPlayerStyle,
-                    onTap: () => _openMediaViewer(context, message),
-                    message: message,
-                    // TODO: get url from remote data source
-                    getUploadURL: (e) => e),
+                  defaultVideoPlayerStyle: defaultVideoPlayerStyle,
+                  onTap: () =>
+                      _openMediaViewer(context, message, getUploadUrlUC),
+                  message: message,
+                  getUploadUrlUC: getUploadUrlUC,
+                ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 5,
@@ -121,8 +124,7 @@ class MessageContentWidget extends StatelessWidget {
               ChatFileBubble(
                 defaultFileBubbleStyle: defaultFileBubbleStyle,
                 message: message,
-                //TODO: get url from remote data source
-                getUploadURL: (e) => e,
+                getUploadUrlUC: getUploadUrlUC,
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -163,9 +165,7 @@ class MessageContentWidget extends StatelessWidget {
 }
 
 void _openMediaViewer(
-  BuildContext context,
-  ChatMessage message,
-) {
+    BuildContext context, ChatMessage message, GetUploadUrlUC getUrl) {
   // TODO: get url from remote data source
   // Navigator.of(context).push(
   //   ChatVideoPage.route(
@@ -173,8 +173,10 @@ void _openMediaViewer(
   //     currentMediaMessage: message,
   //   ),
 
-  // Navigator.push(
-  //   context,
-  //   MaterialPageRoute(builder: (context) => ChatVideoPage(message: message)),
-  // );
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) =>
+            ChatVideoPage(message: message, getUploadUrlUC: getUrl)),
+  );
 }
