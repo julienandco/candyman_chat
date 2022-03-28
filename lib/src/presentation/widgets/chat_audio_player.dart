@@ -122,8 +122,7 @@ class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
                 onChangeEnd: player.seek,
                 labelStyle: widget.defaultAudioPlayerStyle.labelStyle,
                 sliderColor: widget.defaultAudioPlayerStyle.sliderColor,
-                activeTrackColor:
-                    widget.defaultAudioPlayerStyle.activeTrackColor,
+                activeTrackColor: widget.defaultAudioPlayerStyle.activeTrackColor,
                 thumbColor: widget.defaultAudioPlayerStyle.thumbColor,
               ),
             ),
@@ -207,9 +206,7 @@ class _SearchBarState extends State<_SearchBar> {
               value: min(widget.bufferedPosition.inMilliseconds.toDouble(),
                   widget.duration.inMilliseconds.toDouble()),
               onChanged: (value) {
-                setState(() {
-                  _dragValue = value;
-                });
+                setState(() => _dragValue = value);
                 if (widget.onChanged != null) {
                   widget.onChanged!(Duration(milliseconds: value.round()));
                 }
@@ -235,9 +232,7 @@ class _SearchBarState extends State<_SearchBar> {
             value: min(_dragValue ?? widget.position.inMilliseconds.toDouble(),
                 widget.duration.inMilliseconds.toDouble()),
             onChanged: (value) {
-              setState(() {
-                _dragValue = value;
-              });
+              setState(() => _dragValue = value);
               if (widget.onChanged != null) {
                 widget.onChanged!(Duration(milliseconds: value.round()));
               }

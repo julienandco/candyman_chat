@@ -33,9 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
       ),
       home: // const MyCustomConversationsLoader()
-
           // Uncomment the next lines to see the default look of the app
-
           DefaultConversationsLoader(
         firestore: getIt<FirebaseFirestore>(),
         firebaseAuth: getIt<FirebaseAuth>(),

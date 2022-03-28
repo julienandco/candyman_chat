@@ -63,6 +63,7 @@ class _MessageBubbleState extends State<MessageBubble> {
 
   MainAxisAlignment get _mainAxisAlignment =>
       widget.message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start;
+
   BoxConstraints? get _constraints {
     return isWidthOverLimit(context)
         ? const BoxConstraints(maxWidth: 250)

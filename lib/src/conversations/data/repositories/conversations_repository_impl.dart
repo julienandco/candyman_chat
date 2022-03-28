@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class ConversationsRepositoryImpl implements ConversationsRepository {
@@ -20,14 +21,22 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   String get _userId => firebaseAuth.currentUser!.uid;
 
   @override
-  Future<Conversation> createConversations(String chatPersonId) async {
+  Future<Conversation> createConversations(List<String> chatPersonId) async {
     final query = await _collection.where(firebaseKeys.conversationMembersKey,
         arrayContainsAny: [_userId]).get();
+
+    List<String> _members;
+    _members = chatPersonId;
+    _members.add(_userId);
+
     final conversations = query.docs
         .map((e) => Conversation.fromJson(e.data() as Map<String, dynamic>))
         .toList();
-    final list = conversations
-        .where((element) => element.conversationMembers.contains(chatPersonId));
+
+    final list = conversations.where((element) {
+      return listEquals(element.conversationMembers, _members);
+    });
+
     if (list.isNotEmpty) {
       final conversation = list.first;
       if (conversation.hiddenFrom.contains(_userId)) {
@@ -38,12 +47,10 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       final doc = _collection.doc();
       final conversation = Conversation(
         id: doc.id,
-        conversationMembers: [chatPersonId, _userId],
+        conversationMembers: _members,
         timestamp: DateTime.now(),
       );
-      await doc.set(
-        conversation.toJson(),
-      );
+      await doc.set(conversation.toJson());
       return conversation;
     }
   }
@@ -62,11 +69,8 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
             ) async {
               final userId = firebaseAuth.currentUser?.uid;
 
-              final snaps = data.docs
-                  .map(
-                    (doc) => doc.data(),
-                  )
-                  .toList();
+              final snaps = data.docs.map((doc) => doc.data()).toList();
+
               final chats = snaps
                   .map((json) => Conversation.fromJson(json))
                   .toList()

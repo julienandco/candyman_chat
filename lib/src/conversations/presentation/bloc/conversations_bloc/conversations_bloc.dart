@@ -27,9 +27,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     _conversationsStream = initializeConversationsStreamUC(
       onData: (event) {
         if (event.isNotEmpty) {
-          add(
-            _FetchChatItems(event),
-          );
+          add(_FetchChatItems(event));
         } else {
           add(const _OnData([]));
         }
@@ -53,21 +51,18 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
               final chatStream = initializeConversationItemStreamUC(
                 conversation: conversation,
                 otherUserId: chatPersonId,
-                onData: (event) => add(
-                  _OnChatItemsData(event),
-                ),
+                onData: (event) => add(_OnChatItemsData(event)),
                 onError: (err) {
                   log('fetchChatItems $err', name: '$runtimeType');
                 },
               );
-
               _conversationItemStreams.add(chatStream);
             }
           }
         },
+        
         onChatItemsData: (conversationItem) {
           emit(const ConversationsState.loadInProgress());
-
           emit(
             state.maybeMap(
               loadSuccess: (state) {
@@ -88,19 +83,17 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
             ),
           );
         },
+
         onData: (conversations) =>
             emit(ConversationsState.loadSuccess(conversations)),
-        onError: () => emit(
-          const ConversationsState.loadFailure(),
-        ),
+        onError: () => emit(const ConversationsState.loadFailure()),
         dispose: () {
           _conversationsStream?.cancel();
           _conversationItemStreams.map((e) => e.cancel());
           _conversationsStream = null;
-          emit(
-            const ConversationsState.initial(),
-          );
+          emit(const ConversationsState.initial());
         },
+
         hideConversation: (conversationId) {
           emit(
             state.maybeMap(

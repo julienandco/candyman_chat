@@ -340,15 +340,22 @@ PODS:
     - abseil/meta/type_traits
   - audio_session (0.0.1):
     - Flutter
+  - better_player (0.0.1):
+    - Cache (~> 6.0.0)
+    - Flutter
+    - GCDWebServer
+    - HLSCachingReverseProxyServer
+    - PINCache
   - BoringSSL-GRPC (0.0.7):
     - BoringSSL-GRPC/Implementation (= 0.0.7)
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Implementation (0.0.7):
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
+  - Cache (6.0.0)
   - camera (0.0.1):
     - Flutter
-  - cloud_firestore (3.1.8):
+  - cloud_firestore (3.1.10):
     - Firebase/Firestore (= 8.11.0)
     - firebase_core
     - Flutter
@@ -394,7 +401,7 @@ PODS:
   - Firebase/Firestore (8.11.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.11.0)
-  - firebase_auth (3.3.7):
+  - firebase_auth (3.3.11):
     - Firebase/Auth (= 8.11.0)
     - firebase_core
     - Flutter
@@ -429,6 +436,9 @@ PODS:
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
   - Flutter (1.0.0)
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
@@ -481,6 +491,9 @@ PODS:
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
   - GTMSessionFetcher/Core (1.7.0)
+  - HLSCachingReverseProxyServer (0.1.0):
+    - GCDWebServer (~> 3.5)
+    - PINCache (>= 3.0.1-beta.3)
   - just_audio (0.0.1):
     - Flutter
   - leveldb-library (1.22.1)
@@ -500,9 +513,17 @@ PODS:
   - nanopb/encode (2.30908.0)
   - path_provider_ios (0.0.1):
     - Flutter
-  - photo_manager (1.0.0):
+  - photo_manager (2.0.0):
     - Flutter
     - FlutterMacOS
+  - PINCache (3.0.3):
+    - PINCache/Arc-exception-safe (= 3.0.3)
+    - PINCache/Core (= 3.0.3)
+  - PINCache/Arc-exception-safe (3.0.3):
+    - PINCache/Core
+  - PINCache/Core (3.0.3):
+    - PINOperation (~> 1.2.1)
+  - PINOperation (1.2.1)
   - PromisesObjC (2.0.0)
   - record (0.0.1):
     - Flutter
@@ -522,6 +543,7 @@ PODS:
 
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
+  - better_player (from `.symlinks/plugins/better_player/ios`)
   - camera (from `.symlinks/plugins/camera/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
@@ -542,6 +564,7 @@ SPEC REPOS:
   trunk:
     - abseil
     - BoringSSL-GRPC
+    - Cache
     - DKImagePickerController
     - DKPhotoGallery
     - Firebase
@@ -549,15 +572,19 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - GCDWebServer
     - GoogleDataTransport
     - GoogleMaps
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - HLSCachingReverseProxyServer
     - leveldb-library
     - libwebp
     - nanopb
+    - PINCache
+    - PINOperation
     - PromisesObjC
     - SDWebImage
     - SwiftyGif
@@ -565,6 +592,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
+  better_player:
+    :path: ".symlinks/plugins/better_player/ios"
   camera:
     :path: ".symlinks/plugins/camera/ios"
   cloud_firestore:
@@ -599,33 +628,39 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
+  better_player: 2406bfe8175203c7a46fa15f9d778d73b12e1646
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   camera: 9993f92f2c793e87b65e35f3a23c70582afb05b1
-  cloud_firestore: 8bd22e19f6ccf3a0d1976ea298e0ce37c9ad5839
+  cloud_firestore: c6c42fe62809b7417aa3c45a6ef0c2812f7fb0d6
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
-  firebase_auth: 20bf788012988ef04ce608fada5b8d8cd1069302
+  firebase_auth: bdfbd5b10da1db6d5eb6ae7dbda5d81365b9cc9d
   firebase_core: 443bccfd6aa6b42f07be365b500773dc69db2d87
   FirebaseAuth: d96d73aba85d192d7a7aa0b86dd6d7f8ec170b4b
   FirebaseCore: 2f4f85b453cc8fea4bb2b37e370007d2bcafe3f0
   FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
   FirebaseFirestore: 3b2e4b532c68809b3df5f8d39d28b3398ffc196b
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  google_maps_flutter: abdb8dee6c52d4be36ad131ee6ebfacd14417c5a
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
+  google_maps_flutter: c59fc576c0d0c7f4dc4bd63832c862d22d5a7c6d
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleMaps: c213fc2334b7374144cede914da779b99be0ab74
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
-  photo_manager: 84fa94fbeb82e607333ea9a13c43b58e0903a463
+  photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
+  PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
+  PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   record: 7ee2393532f8553bbb09fa19e95478323b7c0a99
   SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f

@@ -32,15 +32,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
           List<ChatMessage>>.fromHandlers(
         handleData: (QuerySnapshot<Map<String, dynamic>> data,
             EventSink<List<ChatMessage>> sink) async {
-          final snaps = data.docs
-              .map(
-                (doc) => doc.data(),
-              )
-              .toList();
+          final snaps = data.docs.map((doc) => doc.data()).toList();
+
           var messages = List<ChatMessage>.from([]);
+
           for (var json in snaps) {
             final message = ChatMessage.fromJson(json);
+
             final userId = firebaseAuth.currentUser?.uid;
+
             if (!message.hiddenFrom.contains(userId)) messages.add(message);
           }
 
@@ -57,14 +57,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
           .doc(conversationId)
           .collection(firebaseKeys.messagesInConversationKey)
           .doc();
-      doc.set(
-        message
-            .copyWith(
-              doneUpload: true,
-              id: doc.id,
-            )
-            .toJson(),
-      );
+
+      doc.set(message.copyWith(doneUpload: true, id: doc.id).toJson());
+
       log('sent message', name: '$runtimeType');
     } catch (err) {
       log('$err', name: '$runtimeType');
@@ -89,13 +84,10 @@ class ConversationRepositoryImpl implements ConversationRepository {
         handleData: (QuerySnapshot<Map<String, dynamic>> data,
             EventSink<ChatMessage> sink) async {
           if (data.docs.isNotEmpty) {
-            final snap = data.docs
-                .map(
-                  (doc) => doc.data(),
-                )
-                .toList()
-                .first;
+            final snap = data.docs.map((doc) => doc.data()).toList().first;
+
             var message = ChatMessage.fromJson(snap);
+
             if (message.hiddenFrom.contains(userId)) {
               message = message.copyWith(type: ChatMessageType.deleted);
             }
@@ -115,14 +107,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
           .doc(conversationId)
           .collection(firebaseKeys.messagesInConversationKey)
           .doc();
-      doc.set(
-        message
-            .copyWith(
-              doneUpload: false,
-              id: doc.id,
-            )
-            .toJson(),
-      );
+
+      doc.set(message.copyWith(doneUpload: false, id: doc.id).toJson());
+
       log('sent file message', name: '$runtimeType');
       return ChatUploadFile(
         messageId: doc.id,
@@ -158,7 +145,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .collection(firebaseKeys.messagesInConversationKey)
         .doc(message.id)
         .update(
-      {firebaseKeys.messageTypeKey: ChatMessageType.deleted.firebaseKey},
+      {
+        firebaseKeys.messageTypeKey: ChatMessageType.deleted.firebaseKey,
+      },
     );
   }
 
@@ -172,9 +161,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .doc(message.id)
         .update(
       {
-        firebaseKeys.messageHiddenFromKey: FieldValue.arrayUnion(
-          [userId],
-        ),
+        firebaseKeys.messageHiddenFromKey: FieldValue.arrayUnion([userId]),
       },
     );
   }

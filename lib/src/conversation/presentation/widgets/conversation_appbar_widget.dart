@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 class ConversationAppbar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -52,26 +53,13 @@ class ConversationAppbar extends StatelessWidget
                 state.maybeMap(
                   orElse: () {},
                   loadSuccess: (state) => onAvertaTap,
-                  // openUserProfile(
-                  //   context,
-                  //   state.userProfile.id,
-                  //   user: state.userProfile,
-                  // );
                 );
               },
               child: Row(
                 children: [
                   state.maybeMap(
-                    // TODO
-                    loadSuccess: (state) => const CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 20.0,
-                    ),
-                    // UserAvatar(
-                    //   user: state.userProfile.isBlocked
-                    //       ? null
-                    //       : state.userProfile,
-                    // ),
+                    loadSuccess: (state) =>
+                        AvatarWidget(imgUrl: state.conversation.thumbnail),
                     orElse: () => const SizedBox.shrink(),
                   ),
                   const SizedBox(
@@ -79,14 +67,15 @@ class ConversationAppbar extends StatelessWidget
                   ),
                   SizedBox(
                     height: 40,
-                    //color: Colors.green,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
                           state.maybeMap(
-                            loadSuccess: (state) => state.userProfile.name,
+                            loadSuccess: (state) =>
+                                state.conversation.displayName ??
+                                state.userProfile.name,
                             orElse: () => '',
                           ),
                           style: const TextStyle(

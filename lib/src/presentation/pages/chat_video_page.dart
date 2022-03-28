@@ -53,10 +53,10 @@ class _ChatVideoPageState extends State<ChatVideoPage> {
 
   void _initPlayer() async {
     if (widget.message.doneUpload) {
-      final _url = await widget.getUploadUrlUC.call(id: widget.message.upload!.fileId);
+      final _url =
+          await widget.getUploadUrlUC.call(id: widget.message.upload!.fileId);
       // final _url = await getIt<GetUploadRedirectUrlForUrlUC>()
       //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
-
       if (_url == null) return;
       _controller = BetterPlayerController(
         playerConifg,
@@ -71,9 +71,7 @@ class _ChatVideoPageState extends State<ChatVideoPage> {
       );
       _controller?.videoPlayerController?.addListener(_videoListener);
 
-      setState(() {
-        isReady = true;
-      });
+      setState(() => isReady = true);
     } else {
       _controller = BetterPlayerController(
         playerConifg,
@@ -84,9 +82,7 @@ class _ChatVideoPageState extends State<ChatVideoPage> {
       );
       _controller?.videoPlayerController?.addListener(_videoListener);
 
-      setState(() {
-        isReady = true;
-      });
+      setState(() => isReady = true);
     }
   }
 

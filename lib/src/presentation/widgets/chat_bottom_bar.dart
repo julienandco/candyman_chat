@@ -146,34 +146,34 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   // }
 
   void _toggleShowAttachOptions() {
-    setState(() {
-      _showAttachOptions = !_showAttachOptions;
-    });
+    setState(() => _showAttachOptions = !_showAttachOptions);
   }
 
   void _openMediaPickerPage() async {
-    setState(() {
-      _showAttachOptions = false;
-    });
-    final List<AssetEntity> assets = await AssetPicker.pickAssets(context,
-            maxAssets: 3,
-            requestType: RequestType.common,
-            textDelegate: GermanTextDelegate(),
-            pickerTheme: AssetPicker.themeData(
-                widget.defaultBottomBarStyle.assetPickerColor)) ??
-        [];
-    _sendMultipleFiles(assets);
+    setState(() => _showAttachOptions = false);
+    final List<AssetEntity>? assets = await AssetPicker.pickAssets(
+      context,
+      pickerConfig: AssetPickerConfig(
+          maxAssets: 3,
+          requestType: RequestType.common,
+          pickerTheme: AssetPicker.themeData(
+              widget.defaultBottomBarStyle.assetPickerColor),
+          textDelegate: const GermanAssetPickerTextDelegate()),
+    );
+    _sendMultipleFiles(assets ?? []);
   }
 
   void _takePhotoFromCamera() async {
     try {
       final AssetEntity? file = await CameraPicker.pickFromCamera(
         context,
-        textDelegate: EnglishCameraPickerTextDelegate(),
-        enableRecording: true,
-        theme: CameraPicker.themeData(
-            widget.defaultBottomBarStyle.cameraPickerColor),
-        resolutionPreset: ResolutionPreset.medium,
+        pickerConfig: CameraPickerConfig(
+          enableRecording: true,
+          theme: CameraPicker.themeData(
+              widget.defaultBottomBarStyle.cameraPickerColor),
+          resolutionPreset: ResolutionPreset.medium,
+          textDelegate: EnglishCameraPickerTextDelegate(),
+        ),
       );
 
       if (file != null) {
@@ -191,9 +191,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   }
 
   void _pickFile() async {
-    setState(() {
-      _showAttachOptions = false;
-    });
+    setState(() => _showAttachOptions = false);
+
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
@@ -294,17 +293,18 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                   child: Row(
                                     children: [
                                       animator.Animator<double>(
-                                        tween: Tween(begin: 0.0, end: 1.0),
-                                        duration: const Duration(seconds: 1),
-                                        cycles: 0,
-                                        builder:
-                                            (context, animatorState, child) =>
-                                                Opacity(
-                                          opacity: animatorState.value,
-                                          child: widget.defaultBottomBarStyle
-                                              .audioMessageIcon,
-                                        ),
-                                      ),
+                                          tween: Tween(begin: 0.0, end: 1.0),
+                                          duration: const Duration(seconds: 1),
+                                          cycles: 0,
+                                          builder:
+                                              (context, animatorState, child) {
+                                            return Opacity(
+                                              opacity: animatorState.value,
+                                              child: widget
+                                                  .defaultBottomBarStyle
+                                                  .audioMessageIcon,
+                                            );
+                                          }),
                                       Expanded(
                                         child: Container(height: 38),
                                       ),

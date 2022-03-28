@@ -49,7 +49,6 @@ class MessageList extends StatelessWidget {
 class _MessageListView extends StatefulWidget {
   final List<ChatMessage> messages;
   final Widget Function(ChatMessage, int)? messageBuilder;
-
   final Widget Function(String)? dateBuilder;
   final bool inverted;
   const _MessageListView({

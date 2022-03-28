@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
-
-// TODO: Implement start/create new - singel/groupe chat
 class DefaultConversationsPage extends StatefulWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
@@ -54,7 +52,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
             ? FloatingActionButton(
                 onPressed: () =>
                     widget.defaultConverstionsStyle.fabAction ??
-
                     // Placeholder dialog
                     showDialog(
                       context: context,
@@ -156,6 +153,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
       ),
     );
   }
+
 
   @override
   bool get wantKeepAlive => true;

@@ -5,6 +5,6 @@ abstract class ConversationsRepository {
   Stream<Conversation> getConversation(String conversationId);
 
   Stream<int> getUnreadMessagesCount(String conversationId);
-  Future<Conversation> createConversations(String chatPersonId);
+  Future<Conversation> createConversations(List<String> chatPersonId);
   void hideConversations(String conversationId);
 }

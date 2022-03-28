@@ -96,8 +96,7 @@ class MessageContentWidget extends StatelessWidget {
               if (message.doneUpload)
                 ChatVideoBubble(
                   defaultVideoPlayerStyle: defaultVideoPlayerStyle,
-                  onTap: () =>
-                      _openMediaViewer(context, message, getUploadUrlUC),
+                  onTap: () => _openMediaViewer(context, message, getUploadUrlUC),
                   message: message,
                   getUploadUrlUC: getUploadUrlUC,
                 ),
@@ -166,13 +165,6 @@ class MessageContentWidget extends StatelessWidget {
 
 void _openMediaViewer(
     BuildContext context, ChatMessage message, GetUploadUrlUC getUrl) {
-  // TODO: get url from remote data source
-  // Navigator.of(context).push(
-  //   ChatVideoPage.route(
-  //     context,
-  //     currentMediaMessage: message,
-  //   ),
-
   Navigator.push(
     context,
     MaterialPageRoute(
