@@ -12,6 +12,7 @@ import 'message_widgets/check_mark_widget.dart';
 import 'message_widgets/message_content_widget.dart';
 
 class MessageBubble extends StatefulWidget {
+  final bool isGroupChat;
   final ChatMessage message;
   final Widget? otherUserAvatar;
   final String otherUserName;
@@ -20,6 +21,7 @@ class MessageBubble extends StatefulWidget {
 
   const MessageBubble({
     Key? key,
+    required this.isGroupChat,
     required this.message,
     this.otherUserAvatar,
     required this.otherUserName,
@@ -117,7 +119,7 @@ class _MessageBubbleState extends State<MessageBubble> {
         VisibilityDetector(
           key: Key(widget.message.id),
           onVisibilityChanged: (value) {
-            if (value.visibleFraction > 0.5) {
+            if (!widget.isGroupChat && value.visibleFraction > 0.5) {
               context
                   .read<ChatBloc>()
                   .add(ChatEvent.markAsSeen(widget.message));

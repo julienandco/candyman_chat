@@ -12,16 +12,4 @@ abstract class ConversationRepository {
 
   void markAsSeen(String conversationId, ChatMessage message);
   ChatUploadFile sendFileMessage(String conversationId, ChatMessage message);
-
-  //TODO: old
-  // Stream<List<ChatMessageModel>> getMessages(String conversationId);
-  // Stream<ChatMessageModel> getLastMessages(String conversationId);
-
-  // void sendMessage(String conversationId, ChatMessageModel message);
-  // void hideMessage(String conversationId, ChatMessageModel message);
-  // void deleteMessage(String conversationId, ChatMessageModel message);
-
-  // void markAsSeen(String conversationId, ChatMessageModel message);
-  // ChatUploadFile sendFileMessage(
-  //     String conversationId, ChatMessageModel message);
 }

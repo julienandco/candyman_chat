@@ -24,6 +24,7 @@ class Conversation with _$Conversation {
 
   //TODO: injection?
   /// return whether the conversation is hidden from the current user
+  /// //TODO: add firebase rule such that hidden stuff does not even get sent back
   bool get isHidden => hiddenFrom.contains(
         FirebaseAuth.instance.currentUser!.uid,
         // (element) => element == getIt<FirebaseAuth>().currentUser!.uid,

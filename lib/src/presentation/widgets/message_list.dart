@@ -30,6 +30,7 @@ class MessageList extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
+                  isGroupChat: state.conversation.isGroupChat,
                   defaultChatBubbleStyle: defaultChatBubbleStyle,
                   getUploadUrlUC: getUploadUrlUC,
                   message: message,
