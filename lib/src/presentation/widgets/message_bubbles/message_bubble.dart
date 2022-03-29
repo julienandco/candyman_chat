@@ -123,6 +123,10 @@ class _MessageBubbleState extends State<MessageBubble> {
               context
                   .read<ChatBloc>()
                   .add(ChatEvent.markAsSeen(widget.message));
+            } else if (widget.isGroupChat && value.visibleFraction > 0.5) {
+              context
+                  .read<ChatBloc>()
+                  .add(ChatEvent.markGroupMessageAsSeen(widget.message));
             }
           },
           child: Align(

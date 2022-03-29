@@ -64,6 +64,8 @@ class DefaultConversationLoader extends StatelessWidget {
             hideMessageUC: HideMessageUC(conversationRepository),
             deleteMessageUC: DeleteMessageUC(conversationRepository),
             markAsSeenUC: MarkMessageAsSeenUC(conversationRepository),
+            markGroupMessageAsSeenUC:
+                MarkGroupMessageAsSeenUC(conversationRepository),
             sendPlatformFileMessageUC: SendPlatformFileMessageUC(
                 conversationRepository: conversationRepository,
                 uploadManagerRepository: uploadManagerRepository),

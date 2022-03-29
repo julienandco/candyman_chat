@@ -205,4 +205,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
       ),
     );
   }
+
+  @override
+  void markGroupMessageAsSeen(String conversationId, ChatMessage message) {
+    // TODOGROUPSEEN: implement markGroupMessageAsSeen
+  }
 }

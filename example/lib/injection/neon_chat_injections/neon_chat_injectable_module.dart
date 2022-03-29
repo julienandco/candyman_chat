@@ -55,6 +55,10 @@ abstract class NEONChatInjectableModule {
       MarkMessageAsSeenUC(conversationRepository);
 
   @lazySingleton
+  MarkGroupMessageAsSeenUC get markGroupMessageAsSeenUC =>
+      MarkGroupMessageAsSeenUC(conversationRepository);
+
+  @lazySingleton
   SendPlatformFileMessageUC get sendPlatformFileMessageUC =>
       SendPlatformFileMessageUC(
           conversationRepository: conversationRepository,
@@ -96,6 +100,7 @@ abstract class NEONChatInjectableModule {
       hideMessageUC: hideMessageUC,
       deleteMessageUC: deleteMessageUC,
       markAsSeenUC: markAsSeenUC,
+      markGroupMessageAsSeenUC: markGroupMessageAsSeenUC,
       sendPlatformFileMessageUC: sendPlatformFileMessageUC,
       sendFileMessageUC: sendFileMessageUC,
       sendTextMessageUC: sendTextMessageUC,

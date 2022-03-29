@@ -147,4 +147,10 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       },
     );
   }
+
+  @override
+  Stream<int> getUnreadGroupMessagesCount(String conversationId) {
+    // TODOGROUPSEEN: implement getUnreadGroupMessagesCount
+    throw UnimplementedError();
+  }
 }

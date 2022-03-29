@@ -23,6 +23,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final HideMessageUC hideMessageUC;
   final DeleteMessageUC deleteMessageUC;
   final MarkMessageAsSeenUC markAsSeenUC;
+  final MarkGroupMessageAsSeenUC markGroupMessageAsSeenUC;
   final SendPlatformFileMessageUC sendPlatformFileMessageUC;
   final SendFileMessageUC sendFileMessageUC;
   final SendTextMessageUC sendTextMessageUC;
@@ -33,6 +34,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     required this.hideMessageUC,
     required this.deleteMessageUC,
     required this.markAsSeenUC,
+    required this.markGroupMessageAsSeenUC,
     required this.sendPlatformFileMessageUC,
     required this.sendFileMessageUC,
     required this.sendTextMessageUC,
@@ -166,6 +168,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           state.maybeMap(
             loadSuccess: (state) {
               markAsSeenUC(
+                  conversationId: state.conversation.id, message: message);
+            },
+            orElse: () {},
+          );
+        },
+        markGroupMessageAsSeen: (message) {
+          state.maybeMap(
+            loadSuccess: (state) {
+              markGroupMessageAsSeenUC(
                   conversationId: state.conversation.id, message: message);
             },
             orElse: () {},

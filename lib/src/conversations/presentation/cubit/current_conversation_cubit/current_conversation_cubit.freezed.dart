@@ -76,6 +76,8 @@ abstract class $CurrentConversationStateCopyWith<$Res> {
           $Res Function(CurrentConversationState) then) =
       _$CurrentConversationStateCopyWithImpl<$Res>;
   $Res call({ConversationItem? conversationItem});
+
+  $ConversationItemCopyWith<$Res>? get conversationItem;
 }
 
 /// @nodoc
@@ -98,6 +100,17 @@ class _$CurrentConversationStateCopyWithImpl<$Res>
               as ConversationItem?,
     ));
   }
+
+  @override
+  $ConversationItemCopyWith<$Res>? get conversationItem {
+    if (_value.conversationItem == null) {
+      return null;
+    }
+
+    return $ConversationItemCopyWith<$Res>(_value.conversationItem!, (value) {
+      return _then(_value.copyWith(conversationItem: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -107,6 +120,9 @@ abstract class _$StateCopyWith<$Res>
       __$StateCopyWithImpl<$Res>;
   @override
   $Res call({ConversationItem? conversationItem});
+
+  @override
+  $ConversationItemCopyWith<$Res>? get conversationItem;
 }
 
 /// @nodoc

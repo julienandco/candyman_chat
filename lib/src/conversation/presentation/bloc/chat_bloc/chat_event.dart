@@ -20,6 +20,8 @@ class ChatEvent with _$ChatEvent {
   const factory ChatEvent.sendFileMessage(PlatformFile file) = _SendFileMessage;
 
   const factory ChatEvent.markAsSeen(ChatMessage message) = _MarkAsSeen;
+  const factory ChatEvent.markGroupMessageAsSeen(ChatMessage message) =
+      _MarkGroupMessageAsSeen;
   const factory ChatEvent.deleteMessage(ChatMessage message) = _DeleteMessage;
   const factory ChatEvent.hideMessage(ChatMessage message) = _HideMessage;
 }
