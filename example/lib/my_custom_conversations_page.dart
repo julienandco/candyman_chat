@@ -6,6 +6,10 @@ import 'package:neon_chat/neon_chat.dart';
 class MyCustomConversationsPage extends StatelessWidget {
   const MyCustomConversationsPage({Key? key}) : super(key: key);
 
+  dynamic onOpenUserProfile() {
+    print('i did not implement this :D');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +57,7 @@ class MyCustomConversationsPage extends StatelessWidget {
                                 Future.delayed(const Duration(seconds: 3),
                                     () => Navigator.of(context).pop());
                               },
+                              onOpenUserProfile: onOpenUserProfile,
                             ),
                           )
                           .toList();

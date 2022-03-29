@@ -16,6 +16,7 @@ class DefaultConversationsLoader extends StatelessWidget {
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
+  final dynamic Function()? onOpenUserProfile;
 
   const DefaultConversationsLoader({
     Key? key,
@@ -28,6 +29,7 @@ class DefaultConversationsLoader extends StatelessWidget {
     this.defaultSearchAppBarStyle = const DefaultSearchAppBarStyle(),
     this.defaultBottomBarStyle = const DefaultBottomBarStyle(),
     this.firebaseKeys = const FirebaseKeys(),
+    this.onOpenUserProfile,
   }) : super(key: key);
 
   @override
@@ -108,6 +110,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                     defaultChatBubbleStyle: defaultChatBubbleStyle,
                     defaultSearchAppBarStyle: defaultSearchAppBarStyle,
                     defaultBottomBarStyle: defaultBottomBarStyle,
+                    onOpenUserProfile: onOpenUserProfile,
                   ),
                 ),
                 if (isWidthOverLimit(context))

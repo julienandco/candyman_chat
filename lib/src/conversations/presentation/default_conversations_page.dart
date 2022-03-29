@@ -15,18 +15,20 @@ class DefaultConversationsPage extends StatefulWidget {
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
+  final dynamic Function()? onOpenUserProfile;
 
-  const DefaultConversationsPage(
-      {Key? key,
-      required this.firestore,
-      required this.firebaseAuth,
-      required this.remoteDataSource,
-      required this.defaultConverstionsStyle,
-      required this.defaultConversationStyle,
-      required this.defaultChatBubbleStyle,
-      required this.defaultSearchAppBarStyle,
-      required this.defaultBottomBarStyle})
-      : super(key: key);
+  const DefaultConversationsPage({
+    Key? key,
+    required this.firestore,
+    required this.firebaseAuth,
+    required this.remoteDataSource,
+    required this.defaultConverstionsStyle,
+    required this.defaultConversationStyle,
+    required this.defaultChatBubbleStyle,
+    required this.defaultSearchAppBarStyle,
+    required this.defaultBottomBarStyle,
+    this.onOpenUserProfile,
+  }) : super(key: key);
 
   @override
   State<DefaultConversationsPage> createState() =>
@@ -129,6 +131,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                             ),
                                           );
                                         },
+                                        onOpenUserProfile:
+                                            widget.onOpenUserProfile,
                                       ),
                                     )
                                     .toList();
