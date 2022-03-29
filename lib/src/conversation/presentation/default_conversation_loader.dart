@@ -20,6 +20,7 @@ class DefaultConversationLoader extends StatelessWidget {
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
+  final Function()? onAppbarTap;
 
   const DefaultConversationLoader({
     Key? key,
@@ -32,6 +33,7 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
     this.showCloseButton = true,
+    this.onAppbarTap,
     this.firebaseKeys = const FirebaseKeys(),
   }) : super(key: key);
 
@@ -39,11 +41,6 @@ class DefaultConversationLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: get those out of context somehow?
     final conversationRepository = ConversationRepositoryImpl(
-      firestore: firestore,
-      firebaseAuth: firebaseAuth,
-      firebaseKeys: firebaseKeys,
-    );
-    final conversationsRepository = ConversationsRepositoryImpl(
       firestore: firestore,
       firebaseAuth: firebaseAuth,
       firebaseKeys: firebaseKeys,
@@ -89,6 +86,7 @@ class DefaultConversationLoader extends StatelessWidget {
         defaultSearchAppBarStyle: defaultSearchAppBarStyle,
         defaultBottomBarStyle: defaultBottomBarStyle,
         showCloseButton: showCloseButton,
+        onAppbarTap: onAppbarTap,
       ),
     );
   }

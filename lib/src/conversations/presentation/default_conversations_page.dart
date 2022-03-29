@@ -15,7 +15,8 @@ class DefaultConversationsPage extends StatefulWidget {
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
-  final dynamic Function()? onOpenUserProfile;
+  final Function()? onOpenUserProfile;
+  final Function()? onAppbarTap;
 
   const DefaultConversationsPage({
     Key? key,
@@ -28,6 +29,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
     this.onOpenUserProfile,
+    this.onAppbarTap,
   }) : super(key: key);
 
   @override
@@ -127,6 +129,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                                 remoteDataSource:
                                                     widget.remoteDataSource,
                                                 conversationItem: conversation,
+                                                onAppbarTap: widget.onAppbarTap,
                                               ),
                                             ),
                                           );

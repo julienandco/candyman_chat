@@ -7,13 +7,13 @@ class ConversationAppbar extends StatelessWidget
     implements PreferredSizeWidget {
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
 
-  const ConversationAppbar(
-      {Key? key,
-      required this.defaultSearchAppBarStyle,
-      required this.showCloseButton,
-      required this.barDecoration,
-      this.onAvertaTap})
-      : super(key: key);
+  const ConversationAppbar({
+    Key? key,
+    required this.defaultSearchAppBarStyle,
+    required this.showCloseButton,
+    required this.barDecoration,
+    this.onAvertaTap,
+  }) : super(key: key);
 
   final bool showCloseButton;
   final BoxDecoration barDecoration;

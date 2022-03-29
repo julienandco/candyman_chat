@@ -15,6 +15,7 @@ class DefaultConversationPage extends StatefulWidget {
   final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
   final DefaultBottomBarStyle defaultBottomBarStyle;
   final GetUploadUrlUC getUploadUrlUC;
+  final Function()? onAppbarTap;
 
   const DefaultConversationPage({
     Key? key,
@@ -24,6 +25,7 @@ class DefaultConversationPage extends StatefulWidget {
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
     required this.getUploadUrlUC,
+    this.onAppbarTap,
   }) : super(key: key);
 
   @override
@@ -78,6 +80,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
           child: Scaffold(
             backgroundColor: widget.defaultConversationStyle.backgroundColor,
             appBar: ConversationAppbar(
+              onAvertaTap: widget.onAppbarTap,
               defaultSearchAppBarStyle: widget.defaultSearchAppBarStyle,
               showCloseButton: !widget.showCloseButton,
               barDecoration:

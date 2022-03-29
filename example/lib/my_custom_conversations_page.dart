@@ -6,7 +6,7 @@ import 'package:neon_chat/neon_chat.dart';
 class MyCustomConversationsPage extends StatelessWidget {
   const MyCustomConversationsPage({Key? key}) : super(key: key);
 
-  dynamic onOpenUserProfile() {
+  void onOpenUserProfile() {
     print('i did not implement this :D');
   }
 
