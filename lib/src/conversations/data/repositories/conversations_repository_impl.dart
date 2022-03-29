@@ -21,7 +21,11 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   String get _userId => firebaseAuth.currentUser!.uid;
 
   @override
-  Future<Conversation> createConversation(List<String> chatPersonId) async {
+  Future<Conversation> createConversation(
+    List<String> chatPersonId, {
+    String? displayName,
+    String? thumbnail,
+  }) async {
     final query = await _collection.where(firebaseKeys.conversationMembersKey,
         arrayContainsAny: [_userId]).get();
 
@@ -37,6 +41,8 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       return listEquals(element.conversationMembers, _members);
     });
 
+    //TODO: thumbnail should be uploaded somewhere
+
     if (list.isNotEmpty) {
       final conversation = list.first;
       if (conversation.hiddenFrom.contains(_userId)) {
@@ -48,6 +54,8 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       final conversation = Conversation(
         id: doc.id,
         conversationMembers: _members,
+        displayName: displayName,
+        thumbnail: thumbnail,
         timestamp: DateTime.now(),
       );
       await doc.set(conversation.toJson());
