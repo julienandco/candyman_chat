@@ -9,7 +9,7 @@ In das ```pubspec.yaml``` des Projekts einfügen:
 ```yaml
 neon-chat:
     git: 
-        url: https://github.com/julien-neon/NEON_chat
+        url: https://github.com/NEON-Software-Solutions/NEON_chat
 ```
 
 ## Setup
