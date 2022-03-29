@@ -15,7 +15,7 @@ class SearchConversationsUC {
   List<ConversationItem> search(String query) {
     final results = <ConversationItem>{};
     for (int i = 0; i < _conversations.length; i++) {
-      String data = _conversations[i].conversationPartner.name;
+      String data = _conversations[i].displayName;
       if (data.toLowerCase().contains(query.toLowerCase())) {
         results.add(conversations[i]);
       }

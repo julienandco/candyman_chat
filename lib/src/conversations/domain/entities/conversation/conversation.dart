@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/core/data/models/my_datetime_converter.dart';
 
 part 'conversation.freezed.dart';
@@ -27,4 +28,6 @@ class Conversation with _$Conversation {
         FirebaseAuth.instance.currentUser!.uid,
         // (element) => element == getIt<FirebaseAuth>().currentUser!.uid,
       );
+
+  bool get isGroupChat => conversationMembers.length > 2;
 }

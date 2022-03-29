@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
+
 class DefaultConversationsPage extends StatefulWidget {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
@@ -75,72 +76,69 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
               return BlocBuilder<ConversationsBloc, ConversationsState>(
                 builder: (context, conversationsState) =>
                     conversationsState.maybeMap(
-                        loadSuccess: (loadedConversationsState) => ListView(
-                              controller: _scrollController,
-                              physics: const BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics(),
-                              ),
-                              children: conversationsState.maybeWhen(
-                                loadSuccess: (chatConversations) {
-                                  if (loadedConversationsState
-                                      .conversations.isEmpty) {
-                                    return [
-                                      widget.defaultConverstionsStyle
-                                          .emtpyConversation
-                                    ];
-                                  }
-                                  return (conversationsSearchState
-                                              .isSearchActive
-                                          ? conversationsSearchState
-                                              .conversations
-                                          : chatConversations)
-                                      .map(
-                                        (conversation) => ChatListItem(
-                                          defaultCahtListItem: widget
-                                              .defaultConverstionsStyle
-                                              .defaultChatListItem,
-                                          conversationItem: conversation,
-                                          userAvatar: const CircleAvatar(
-                                            backgroundColor:
-                                                Color.fromARGB(255, 25, 5, 55),
-                                            radius: 20.0,
-                                          ),
-                                          onOpenChat: () {
-                                            Navigator.push(
-                                              context,
-                                              CupertinoPageRoute(
-                                                builder: (context) =>
-                                                    DefaultConversationLoader(
-                                                  defaultSearchAppBarStyle: widget
-                                                      .defaultSearchAppBarStyle,
-                                                  defaultChatBubbleStyle: widget
-                                                      .defaultChatBubbleStyle,
-                                                  defaultConversationStyle: widget
-                                                      .defaultConversationStyle,
-                                                  defaultBottomBarStyle: widget
-                                                      .defaultBottomBarStyle,
-                                                  firebaseAuth:
-                                                      widget.firebaseAuth,
-                                                  firestore: widget.firestore,
-                                                  remoteDataSource:
-                                                      widget.remoteDataSource,
-                                                  userProfileId: conversation
-                                                      .conversationPartner.id,
-                                                  conversationId: conversation
-                                                      .conversation.id,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      )
-                                      .toList();
-                                },
-                                orElse: () => [
-                                  widget.defaultConverstionsStyle.loadingWidget
-                                ],
-                              ),
+                        loadSuccess: (loadedConversationsState) {
+                          return ListView(
+                            controller: _scrollController,
+                            physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics(),
                             ),
+                            children: conversationsState.maybeWhen(
+                              loadSuccess: (chatConversations) {
+                                if (loadedConversationsState
+                                    .conversations.isEmpty) {
+                                  return [
+                                    widget.defaultConverstionsStyle
+                                        .emtpyConversation
+                                  ];
+                                }
+                                return (conversationsSearchState.isSearchActive
+                                        ? conversationsSearchState.conversations
+                                        : chatConversations)
+                                    .map(
+                                      (conversation) => ChatListItem(
+                                        defaultChatListItem: widget
+                                            .defaultConverstionsStyle
+                                            .defaultChatListItem,
+                                        conversationItem: conversation,
+                                        userAvatar: const CircleAvatar(
+                                          backgroundColor:
+                                              Color.fromARGB(255, 25, 5, 55),
+                                          radius: 20.0,
+                                        ),
+                                        onOpenChat: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (context) =>
+                                                  DefaultConversationLoader(
+                                                defaultSearchAppBarStyle: widget
+                                                    .defaultSearchAppBarStyle,
+                                                defaultChatBubbleStyle: widget
+                                                    .defaultChatBubbleStyle,
+                                                defaultConversationStyle: widget
+                                                    .defaultConversationStyle,
+                                                defaultBottomBarStyle: widget
+                                                    .defaultBottomBarStyle,
+                                                firebaseAuth:
+                                                    widget.firebaseAuth,
+                                                firestore: widget.firestore,
+                                                remoteDataSource:
+                                                    widget.remoteDataSource,
+                                                conversationItem: conversation,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                    .toList();
+                              },
+                              orElse: () => [
+                                widget.defaultConverstionsStyle.loadingWidget
+                              ],
+                            ),
+                          );
+                        },
                         loadInProgress: (l) =>
                             widget.defaultConverstionsStyle.loadingWidget,
                         orElse: () => const Center(
@@ -153,7 +151,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
       ),
     );
   }
-
 
   @override
   bool get wantKeepAlive => true;

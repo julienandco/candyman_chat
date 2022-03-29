@@ -165,4 +165,44 @@ class ConversationRepositoryImpl implements ConversationRepository {
       },
     );
   }
+
+  @override
+  Stream<String> getDisplayName(String conversationId) {
+    return _conversations.doc(conversationId).snapshots().transform(
+      StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
+          String>.fromHandlers(
+        handleData: (DocumentSnapshot<Map<String, dynamic>> doc,
+            EventSink<String> sink) async {
+          final data = doc.data();
+          if (data != null &&
+              data.containsKey(firebaseKeys.conversationDisplayNameKey)) {
+            final displayName = data[firebaseKeys.conversationDisplayNameKey];
+
+            sink.add(displayName);
+          } else {
+            sink.add('PROBLEM'); //TODO
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  Stream<String?> getThumbnail(String conversationId) {
+    return _conversations.doc(conversationId).snapshots().transform(
+      StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
+          String?>.fromHandlers(
+        handleData: (DocumentSnapshot<Map<String, dynamic>> doc,
+            EventSink<String?> sink) async {
+          final data = doc.data();
+          if (data != null &&
+              data.containsKey(firebaseKeys.conversationThumbnailKey)) {
+            final thumbnailString = data[firebaseKeys.conversationThumbnailKey];
+
+            sink.add(thumbnailString);
+          }
+        },
+      ),
+    );
+  }
 }

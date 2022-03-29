@@ -97,10 +97,19 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                       sliver: MessageList(
                         getUploadUrlUC: widget.getUploadUrlUC,
                         defaultChatBubbleStyle: widget.defaultChatBubbleStyle,
-                        otherUser: context.watch<ChatBloc>().state.maybeMap(
-                              orElse: () => null,
-                              loadSuccess: (state) => state.userProfile,
-                            ),
+                        getAuthorNameForSenderId: (senderId) {
+                          return context.watch<ChatBloc>().state.maybeMap(
+                                orElse: () => 'undefined',
+                                loadSuccess: (state) {
+                                  if (state.conversation.isGroupChat) {
+                                    //TODO: this is wrong, how to get name of other user in group chat?
+                                    return 'TODO FÜR GRUPPENCHAT';
+                                  } else {
+                                    return state.displayName;
+                                  }
+                                },
+                              );
+                        },
                       ),
                     ),
                   ],

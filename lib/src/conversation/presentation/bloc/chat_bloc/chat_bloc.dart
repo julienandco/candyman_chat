@@ -9,7 +9,6 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
-import 'package:neon_chat/src/core/core.dart';
 
 part 'chat_state.dart';
 part 'chat_event.dart';
@@ -17,7 +16,6 @@ part 'chat_bloc.freezed.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   String? _conversationId;
-  String? _otherUserProfileId;
 
   final FirebaseAuth firebaseAuth;
   late final StreamSubscription _chatStream;
@@ -42,31 +40,27 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }) : super(const _Initial()) {
     on<ChatEvent>((event, emit) {
       event.when(
-        init: (conversationId, userProfileId) {
-          _conversationId = conversationId;
-          _otherUserProfileId = userProfileId;
+        init: (conversationItem) {
+          _conversationId = conversationItem.conversation.id;
 
           _chatStream = initStreamUC(
-            conversationId: conversationId,
-            otherUserProfileId: userProfileId,
+            conversationId: conversationItem.conversation.id,
             combiner: (
-              Conversation conversation,
               List<ChatMessage> messages,
-              FirebaseUser userProfile,
             ) =>
                 _OnData(
               messages,
-              userProfile,
-              conversation,
+              conversationItem.conversation,
+              conversationItem.displayName,
             ),
             onData: (onDataEvent) => add(onDataEvent),
           );
         },
-        onData: (messages, userProfile, conversation) => emit(
+        onData: (messages, conversation, displayName) => emit(
           ChatState.loadSuccess(
             messages: messages,
-            userProfile: userProfile,
             conversation: conversation,
+            displayName: displayName,
           ),
         ),
         sendTextMessage: (message) {
@@ -191,7 +185,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
   }
 
-  bool get _isInit => _conversationId != null && _otherUserProfileId != null;
+  bool get _isInit => _conversationId != null;
 
   @override
   Future<void> close() {

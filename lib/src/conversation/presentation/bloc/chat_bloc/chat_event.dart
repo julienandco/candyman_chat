@@ -3,13 +3,12 @@ part of 'chat_bloc.dart';
 @freezed
 class ChatEvent with _$ChatEvent {
   const factory ChatEvent.init({
-    required String conversationId,
-    required String otherUserId,
+    required ConversationItem conversationItem,
   }) = _Init;
   const factory ChatEvent.onData(
     List<ChatMessage> messages,
-    FirebaseUser userProfile,
     Conversation conversation,
+    String displayName,
   ) = _OnData;
   const factory ChatEvent.sendTextMessage(String message) = _SendTextMessage;
   const factory ChatEvent.sendImageMessage(String message) = _SendImageMessage;

@@ -10,8 +10,7 @@ import 'package:neon_chat/src/core/core.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 
 class DefaultConversationLoader extends StatelessWidget {
-  final String conversationId;
-  final String userProfileId;
+  final ConversationItem conversationItem;
   final bool showCloseButton;
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
@@ -24,8 +23,7 @@ class DefaultConversationLoader extends StatelessWidget {
 
   const DefaultConversationLoader({
     Key? key,
-    required this.userProfileId,
-    required this.conversationId,
+    required this.conversationItem,
     required this.firestore,
     required this.firebaseAuth,
     required this.remoteDataSource,
@@ -50,10 +48,7 @@ class DefaultConversationLoader extends StatelessWidget {
       firebaseAuth: firebaseAuth,
       firebaseKeys: firebaseKeys,
     );
-    final firebaseUserProfileRepository = FirebaseUserProfileRepositoryImpl(
-      firestore: firestore,
-      firebaseKeys: firebaseKeys,
-    );
+
     final fileUploadRepository = FileUploadRepositoryImpl(
       remoteDataSource: remoteDataSource,
     );
@@ -80,12 +75,10 @@ class DefaultConversationLoader extends StatelessWidget {
                 uploadManagerRepository: uploadManagerRepository),
             sendTextMessageUC: SendTextMessageUC(conversationRepository),
             initStreamUC: InitializeConversationStreamUC(
-                conversationRepository: conversationRepository,
-                conversationsRepository: conversationsRepository,
-                firebaseUserProfileRepository: firebaseUserProfileRepository),
+              conversationRepository: conversationRepository,
+            ),
           )..add(
-              ChatEvent.init(
-                  conversationId: conversationId, otherUserId: userProfileId),
+              ChatEvent.init(conversationItem: conversationItem),
             ),
         ),
       ],

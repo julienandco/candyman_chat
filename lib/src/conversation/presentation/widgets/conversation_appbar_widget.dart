@@ -73,10 +73,7 @@ class ConversationAppbar extends StatelessWidget
                       children: [
                         Text(
                           state.maybeMap(
-                            loadSuccess: (state) =>
-                                state.conversation
-                                    .displayName ?? //TODO: get access to convo item
-                                state.userProfile.name,
+                            loadSuccess: (state) => state.displayName,
                             orElse: () => '',
                           ),
                           style: const TextStyle(

@@ -6,13 +6,13 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class MessageList extends StatelessWidget {
-  final FirebaseUser? otherUser;
+  final String Function(String)? getAuthorNameForSenderId;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
   final GetUploadUrlUC getUploadUrlUC;
 
   const MessageList({
     Key? key,
-    required this.otherUser,
+    required this.getAuthorNameForSenderId,
     required this.defaultChatBubbleStyle,
     required this.getUploadUrlUC,
   }) : super(key: key);
@@ -33,8 +33,9 @@ class MessageList extends StatelessWidget {
                   defaultChatBubbleStyle: defaultChatBubbleStyle,
                   getUploadUrlUC: getUploadUrlUC,
                   message: message,
-                  // TODO: fallback
-                  otherUserName: otherUser?.name ?? 'username',
+                  otherUserName:
+                      getAuthorNameForSenderId?.call(message.senderId) ??
+                          'undefined',
                 ),
               ),
             ),

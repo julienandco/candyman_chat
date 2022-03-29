@@ -11,7 +11,16 @@ class ConversationItem with _$ConversationItem {
   factory ConversationItem({
     required Conversation conversation,
     required ChatMessage lastMessage,
+    required String displayName,
     required FirebaseUser conversationPartner,
     required int unreadMessagesCount,
   }) = _ConversationItem;
+
+  factory ConversationItem.groupConversation({
+    required Conversation conversation,
+    required ChatMessage lastMessage,
+    required String displayName,
+    String? thumbnail,
+    required int unreadMessagesCount,
+  }) = _GroupConversationItem;
 }

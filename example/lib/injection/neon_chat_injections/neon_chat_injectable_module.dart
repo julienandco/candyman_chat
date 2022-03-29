@@ -72,9 +72,8 @@ abstract class NEONChatInjectableModule {
   @lazySingleton
   InitializeConversationStreamUC get initializeConversationStreamUC =>
       InitializeConversationStreamUC(
-          conversationRepository: conversationRepository,
-          conversationsRepository: conversationsRepository,
-          firebaseUserProfileRepository: firebaseUserProfileRepository);
+        conversationRepository: conversationRepository,
+      );
 
   @lazySingleton
   InitializeConversationItemStreamUC get initializeConversationItemStreamUC =>

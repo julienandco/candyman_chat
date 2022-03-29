@@ -61,7 +61,6 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           }
         },
         onChatItemsData: (conversationItem) {
-          emit(const ConversationsState.loadInProgress());
           emit(
             state.maybeMap(
               loadSuccess: (state) {

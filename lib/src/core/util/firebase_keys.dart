@@ -15,6 +15,8 @@ class FirebaseKeys {
   final String conversationHiddenFromKey = 'hiddenFrom';
   final String conversationTimestampKey = 'timestamp';
   final String conversationDoneUploadKey = 'doneUpload';
+  final String conversationDisplayNameKey = 'displayName';
+  final String conversationThumbnailKey = 'thumbnail';
 
   final String messagesInConversationKey;
 

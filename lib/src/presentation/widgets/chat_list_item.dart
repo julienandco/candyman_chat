@@ -125,8 +125,7 @@ class _ChatListItemState extends State<ChatListItem> {
               context
                   .read<CurrentConversationCubit>()
                   .onCurrentConversationChanged(
-                    widget.conversationItem.conversationPartner.id,
-                    widget.conversationItem.conversation.id,
+                    widget.conversationItem,
                   );
             } else {
               widget.onOpenChat?.call();
@@ -148,7 +147,9 @@ class _ChatListItemState extends State<ChatListItem> {
                 color: (context
                                 .watch<CurrentConversationCubit>()
                                 .state
-                                .conversationId ==
+                                .conversationItem
+                                ?.conversation
+                                .id ==
                             widget.conversationItem.conversation.id ||
                         _onHover)
                     ? widget.defaultChatListItem.listTileHoverColor
@@ -173,7 +174,7 @@ class _ChatListItemState extends State<ChatListItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              widget.conversationItem.conversationPartner.name,
+                              widget.conversationItem.displayName,
                               style: widget.defaultChatListItem.titleTextStyle,
                             ),
                             Text(

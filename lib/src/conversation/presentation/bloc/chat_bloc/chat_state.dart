@@ -8,8 +8,8 @@ class ChatState with _$ChatState {
   const factory ChatState.loadInProgress() = _LoadInProgress;
   const factory ChatState.loadSuccess({
     required List<ChatMessage> messages,
-    required FirebaseUser userProfile,
     required Conversation conversation,
+    required String displayName,
   }) = _LoadSuccess;
   const factory ChatState.loadFailure() = _LoadFailure;
 

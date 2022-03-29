@@ -34,12 +34,11 @@ class MyCustomConversationsLoader extends StatelessWidget {
                     final currentConversationCubit =
                         context.read<CurrentConversationCubit>();
                     if (isWidthOverLimit(context) &&
-                        currentConversationCubit.state.conversationId == null &&
+                        currentConversationCubit.state.conversationItem ==
+                            null &&
                         conversations.isNotEmpty) {
-                      final firstChat = conversations.first;
-                      currentConversationCubit.onCurrentConversationChanged(
-                          firstChat.conversationPartner.id,
-                          firstChat.conversation.id);
+                      currentConversationCubit
+                          .onCurrentConversationChanged(conversations.first);
                     }
                   },
                   orElse: () {},

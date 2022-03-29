@@ -81,12 +81,11 @@ class DefaultConversationsLoader extends StatelessWidget {
                     final currentConversationCubit =
                         context.read<CurrentConversationCubit>();
                     if (isWidthOverLimit(context) &&
-                        currentConversationCubit.state.conversationId == null &&
+                        currentConversationCubit.state.conversationItem ==
+                            null &&
                         conversations.isNotEmpty) {
-                      final firstChat = conversations.first;
-                      currentConversationCubit.onCurrentConversationChanged(
-                          firstChat.conversationPartner.id,
-                          firstChat.conversation.id);
+                      currentConversationCubit
+                          .onCurrentConversationChanged(conversations.first);
                     }
                   },
                   orElse: () {},
@@ -115,10 +114,10 @@ class DefaultConversationsLoader extends StatelessWidget {
                   BlocBuilder<CurrentConversationCubit,
                       CurrentConversationState>(
                     builder: (context, state) {
-                      if (state.conversationId != null) {
+                      if (state.conversationItem != null) {
                         return Flexible(
                           child: DefaultConversationLoader(
-                            key: Key(state.conversationId!),
+                            key: Key(state.conversationItem!.conversation.id),
                             defaultChatBubbleStyle: defaultChatBubbleStyle,
                             defaultConversationStyle: defaultConversationStyle,
                             defaultSearchAppBarStyle: defaultSearchAppBarStyle,
@@ -126,8 +125,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                             firebaseAuth: firebaseAuth,
                             firestore: firestore,
                             remoteDataSource: remoteDataSource,
-                            userProfileId: state.userProfileId!,
-                            conversationId: state.conversationId!,
+                            conversationItem: state.conversationItem!,
                             showCloseButton: false,
                           ),
                         );
