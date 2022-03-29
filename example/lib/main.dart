@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 import 'firebase_options.dart';
@@ -34,27 +34,54 @@ class MyApp extends StatelessWidget {
       ),
       home: // const MyCustomConversationsLoader()
           // Uncomment the next lines to see the default look of the app
-          DefaultConversationsLoader(
-        firestore: getIt<FirebaseFirestore>(),
-        firebaseAuth: getIt<FirebaseAuth>(),
-        remoteDataSource: getIt<RemoteDataSource>(),
-        defaultConverstionsStyle: DefaultConverstionsStyle(
-          appBarTitle: const Text('NEON DEFAULT CHAT'),
-          defaultChatListItem:
-              DefaultChatListItem(listTileColor: Colors.grey[200]!),
-        ),
-        defaultSearchAppBarStyle: const DefaultSearchAppBarStyle(
+          MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => getIt<ConversationsSearchBloc>(),
+          ),
+          BlocProvider(
+            create: (context) => getIt<CurrentConversationCubit>(),
+          ),
+          BlocProvider(
+            create: (context) => getIt<ConversationsBloc>(),
+          ),
+        ],
+        child: DefaultConversationsLoader(
+          fileUploadRepository: getIt<FileUploadRepository>(),
+          chatBloc: () => ChatBloc(
+            firebaseAuth: getIt<FirebaseAuth>(),
+            hideMessageUC: getIt<HideMessageUC>(),
+            deleteMessageUC: getIt<DeleteMessageUC>(),
+            markAsSeenUC: getIt<MarkMessageAsSeenUC>(),
+            markGroupMessageAsSeenUC: getIt<MarkGroupMessageAsSeenUC>(),
+            sendPlatformFileMessageUC: getIt<SendPlatformFileMessageUC>(),
+            sendFileMessageUC: getIt<SendFileMessageUC>(),
+            sendTextMessageUC: getIt<SendTextMessageUC>(),
+            initStreamUC: getIt<InitializeConversationStreamUC>(),
+          ),
+          chatSearchBloc: () => ChatSearchBloc(),
+          defaultConverstionsStyle: DefaultConverstionsStyle(
+            appBarTitle: const Text('NEON DEFAULT CHAT'),
+            defaultChatListItem:
+                DefaultChatListItem(listTileColor: Colors.grey[200]!),
+          ),
+          defaultSearchAppBarStyle: const DefaultSearchAppBarStyle(
             textFieldDecoration: InputDecoration(
                 hintText: '...',
                 hintStyle: TextStyle(color: Colors.white38),
                 border: InputBorder.none),
-            serachBarDecoration:
-                BoxDecoration(color: Color.fromARGB(255, 25, 5, 55))),
-        defaultBottomBarStyle: const DefaultBottomBarStyle(
+            serachBarDecoration: BoxDecoration(
+              color: Color.fromARGB(255, 25, 5, 55),
+            ),
+          ),
+          defaultBottomBarStyle: const DefaultBottomBarStyle(
             textFieldDecoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Message...',
-                hintStyle: TextStyle(color: Colors.black38))),
+              border: InputBorder.none,
+              hintText: 'Message...',
+              hintStyle: TextStyle(color: Colors.black38),
+            ),
+          ),
+        ),
       ),
     );
   }

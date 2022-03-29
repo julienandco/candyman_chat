@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
@@ -7,10 +5,10 @@ import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationsLoader extends StatelessWidget {
-  final FirebaseFirestore firestore;
-  final FirebaseAuth firebaseAuth;
-  final RemoteDataSource remoteDataSource;
-  final FirebaseKeys firebaseKeys;
+  final FileUploadRepository fileUploadRepository;
+  final ChatBloc Function() chatBloc;
+  final ChatSearchBloc Function() chatSearchBloc;
+
   final DefaultConverstionsStyle defaultConverstionsStyle;
   final DefaultConversationStyle defaultConversationStyle;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
@@ -21,59 +19,22 @@ class DefaultConversationsLoader extends StatelessWidget {
 
   const DefaultConversationsLoader({
     Key? key,
-    required this.firestore,
-    required this.firebaseAuth,
-    required this.remoteDataSource,
+    required this.fileUploadRepository,
+    required this.chatBloc,
+    required this.chatSearchBloc,
     this.defaultConverstionsStyle = const DefaultConverstionsStyle(),
     this.defaultConversationStyle = const DefaultConversationStyle(),
     this.defaultChatBubbleStyle = const DefaultChatBubbleStyle(),
     this.defaultSearchAppBarStyle = const DefaultSearchAppBarStyle(),
     this.defaultBottomBarStyle = const DefaultBottomBarStyle(),
-    this.firebaseKeys = const FirebaseKeys(),
     this.onOpenUserProfile,
     this.onAppbarTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //TODO: get those out of context somehow?
-    final conversationRepository = ConversationRepositoryImpl(
-      firestore: firestore,
-      firebaseAuth: firebaseAuth,
-      firebaseKeys: firebaseKeys,
-    );
-    final conversationsRepository = ConversationsRepositoryImpl(
-      firestore: firestore,
-      firebaseAuth: firebaseAuth,
-      firebaseKeys: firebaseKeys,
-    );
-    final firebaseUserProfileRepository = FirebaseUserProfileRepositoryImpl(
-      firestore: firestore,
-      firebaseKeys: firebaseKeys,
-    );
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ConversationsSearchBloc(),
-        ),
-        BlocProvider(
-          create: (context) => CurrentConversationCubit(),
-        ),
-        BlocProvider<ConversationsBloc>(
-          create: (context) => ConversationsBloc(
-            hideConversationUC: HideConversationUC(conversationsRepository),
-            initializeConversationItemStreamUC:
-                InitializeConversationItemStreamUC(
-                    conversationRepository: conversationRepository,
-                    conversationsRepository: conversationsRepository,
-                    userProfileRepository: firebaseUserProfileRepository),
-            initializeConversationsStreamUC:
-                InitializeConversationsStreamUC(conversationsRepository),
-          ),
-        ),
-      ],
-      child: Builder(builder: (context) {
+    return Builder(
+      builder: (context) {
         return MultiBlocListener(
           listeners: [
             BlocListener<ConversationsBloc, ConversationsState>(
@@ -104,9 +65,9 @@ class DefaultConversationsLoader extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: DefaultConversationsPage(
-                    firebaseAuth: firebaseAuth,
-                    remoteDataSource: remoteDataSource,
-                    firestore: firestore,
+                    fileUploadRepository: fileUploadRepository,
+                    chatBloc: chatBloc,
+                    chatSearchBloc: chatSearchBloc,
                     defaultConverstionsStyle: defaultConverstionsStyle,
                     defaultConversationStyle: defaultConversationStyle,
                     defaultChatBubbleStyle: defaultChatBubbleStyle,
@@ -124,13 +85,13 @@ class DefaultConversationsLoader extends StatelessWidget {
                         return Flexible(
                           child: DefaultConversationLoader(
                             key: Key(state.conversationItem!.conversation.id),
+                            fileUploadRepository: fileUploadRepository,
+                            chatBloc: chatBloc,
+                            chatSearchBloc: chatSearchBloc,
                             defaultChatBubbleStyle: defaultChatBubbleStyle,
                             defaultConversationStyle: defaultConversationStyle,
                             defaultSearchAppBarStyle: defaultSearchAppBarStyle,
                             defaultBottomBarStyle: defaultBottomBarStyle,
-                            firebaseAuth: firebaseAuth,
-                            firestore: firestore,
-                            remoteDataSource: remoteDataSource,
                             conversationItem: state.conversationItem!,
                             showCloseButton: false,
                             onAppbarTap: onAppbarTap,
@@ -149,7 +110,7 @@ class DefaultConversationsLoader extends StatelessWidget {
             ),
           ),
         );
-      }),
+      },
     );
   }
 }

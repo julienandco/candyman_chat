@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,9 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
-  final FirebaseFirestore firestore;
-  final FirebaseAuth firebaseAuth;
-  final RemoteDataSource remoteDataSource;
+  final FileUploadRepository fileUploadRepository;
+  final ChatBloc Function() chatBloc;
+  final ChatSearchBloc Function() chatSearchBloc;
+
   final DefaultConverstionsStyle defaultConverstionsStyle;
   final DefaultConversationStyle defaultConversationStyle;
   final DefaultChatBubbleStyle defaultChatBubbleStyle;
@@ -20,9 +19,9 @@ class DefaultConversationsPage extends StatefulWidget {
 
   const DefaultConversationsPage({
     Key? key,
-    required this.firestore,
-    required this.firebaseAuth,
-    required this.remoteDataSource,
+    required this.fileUploadRepository,
+    required this.chatBloc,
+    required this.chatSearchBloc,
     required this.defaultConverstionsStyle,
     required this.defaultConversationStyle,
     required this.defaultChatBubbleStyle,
@@ -115,6 +114,11 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                             CupertinoPageRoute(
                                               builder: (context) =>
                                                   DefaultConversationLoader(
+                                                fileUploadRepository:
+                                                    widget.fileUploadRepository,
+                                                chatBloc: widget.chatBloc,
+                                                chatSearchBloc:
+                                                    widget.chatSearchBloc,
                                                 defaultSearchAppBarStyle: widget
                                                     .defaultSearchAppBarStyle,
                                                 defaultChatBubbleStyle: widget
@@ -123,11 +127,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                                     .defaultConversationStyle,
                                                 defaultBottomBarStyle: widget
                                                     .defaultBottomBarStyle,
-                                                firebaseAuth:
-                                                    widget.firebaseAuth,
-                                                firestore: widget.firestore,
-                                                remoteDataSource:
-                                                    widget.remoteDataSource,
                                                 conversationItem: conversation,
                                                 onAppbarTap: widget.onAppbarTap,
                                               ),
