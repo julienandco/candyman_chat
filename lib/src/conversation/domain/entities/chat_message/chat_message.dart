@@ -28,7 +28,6 @@ class ChatMessage with _$ChatMessage {
     @MyLatLngConverter() LatLng? location,
     @Default(false) bool seen,
     required String senderId,
-    required String receiverId,
     @MyDateTimeConverter() DateTime? timestamp,
     Upload? upload,
     @MyChatMessageTypeConverter() required ChatMessageType type,
@@ -40,7 +39,6 @@ class ChatMessage with _$ChatMessage {
 
   factory ChatMessage.empty() => ChatMessage(
         senderId: '',
-        receiverId: '',
         text: '',
         seen: false,
         type: ChatMessageType.text,
@@ -52,11 +50,8 @@ class ChatMessage with _$ChatMessage {
   bool get isDeleted => type == ChatMessageType.deleted;
 
   // TODO: get correct locale, not hardcoded de
-  String get timestampFormated =>
-      //DateFormat.Hm('de').format(timestamp ?? DateTime.now());
-
-      DateFormat('HH:mm').format(timestamp!);
-  // timestamp?.toIso8601String() ?? DateTime.now().toIso8601String();
+  String get timestampFormatted =>
+      DateFormat('HH:mm').format(timestamp ?? DateTime.now());
 
   bool get isMe => FirebaseAuth.instance.currentUser!.uid == senderId;
 

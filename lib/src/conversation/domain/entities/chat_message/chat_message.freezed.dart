@@ -28,7 +28,6 @@ class _$ChatMessageTearOff {
       @MyLatLngConverter() LatLng? location,
       bool seen = false,
       required String senderId,
-      required String receiverId,
       @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
       @MyChatMessageTypeConverter() required ChatMessageType type,
@@ -42,7 +41,6 @@ class _$ChatMessageTearOff {
       location: location,
       seen: seen,
       senderId: senderId,
-      receiverId: receiverId,
       timestamp: timestamp,
       upload: upload,
       type: type,
@@ -69,7 +67,6 @@ mixin _$ChatMessage {
   LatLng? get location => throw _privateConstructorUsedError;
   bool get seen => throw _privateConstructorUsedError;
   String get senderId => throw _privateConstructorUsedError;
-  String get receiverId => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
   Upload? get upload => throw _privateConstructorUsedError;
@@ -98,7 +95,6 @@ abstract class $ChatMessageCopyWith<$Res> {
       @MyLatLngConverter() LatLng? location,
       bool seen,
       String senderId,
-      String receiverId,
       @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
       @MyChatMessageTypeConverter() ChatMessageType type,
@@ -125,7 +121,6 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
     Object? location = freezed,
     Object? seen = freezed,
     Object? senderId = freezed,
-    Object? receiverId = freezed,
     Object? timestamp = freezed,
     Object? upload = freezed,
     Object? type = freezed,
@@ -154,10 +149,6 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
       senderId: senderId == freezed
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiverId: receiverId == freezed
-          ? _value.receiverId
-          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: timestamp == freezed
           ? _value.timestamp
@@ -215,7 +206,6 @@ abstract class _$ChatMessageCopyWith<$Res>
       @MyLatLngConverter() LatLng? location,
       bool seen,
       String senderId,
-      String receiverId,
       @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
       @MyChatMessageTypeConverter() ChatMessageType type,
@@ -245,7 +235,6 @@ class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
     Object? location = freezed,
     Object? seen = freezed,
     Object? senderId = freezed,
-    Object? receiverId = freezed,
     Object? timestamp = freezed,
     Object? upload = freezed,
     Object? type = freezed,
@@ -274,10 +263,6 @@ class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
       senderId: senderId == freezed
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiverId: receiverId == freezed
-          ? _value.receiverId
-          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: timestamp == freezed
           ? _value.timestamp
@@ -320,7 +305,6 @@ class _$_ChatMessage extends _ChatMessage {
       @MyLatLngConverter() this.location,
       this.seen = false,
       required this.senderId,
-      required this.receiverId,
       @MyDateTimeConverter() this.timestamp,
       this.upload,
       @MyChatMessageTypeConverter() required this.type,
@@ -347,8 +331,6 @@ class _$_ChatMessage extends _ChatMessage {
   @override
   final String senderId;
   @override
-  final String receiverId;
-  @override
   @MyDateTimeConverter()
   final DateTime? timestamp;
   @override
@@ -370,7 +352,7 @@ class _$_ChatMessage extends _ChatMessage {
 
   @override
   String toString() {
-    return 'ChatMessage(id: $id, text: $text, location: $location, seen: $seen, senderId: $senderId, receiverId: $receiverId, timestamp: $timestamp, upload: $upload, type: $type, doneUpload: $doneUpload, filePath: $filePath, audioDuration: $audioDuration, hiddenFrom: $hiddenFrom)';
+    return 'ChatMessage(id: $id, text: $text, location: $location, seen: $seen, senderId: $senderId, timestamp: $timestamp, upload: $upload, type: $type, doneUpload: $doneUpload, filePath: $filePath, audioDuration: $audioDuration, hiddenFrom: $hiddenFrom)';
   }
 
   @override
@@ -383,8 +365,6 @@ class _$_ChatMessage extends _ChatMessage {
             const DeepCollectionEquality().equals(other.location, location) &&
             const DeepCollectionEquality().equals(other.seen, seen) &&
             const DeepCollectionEquality().equals(other.senderId, senderId) &&
-            const DeepCollectionEquality()
-                .equals(other.receiverId, receiverId) &&
             const DeepCollectionEquality().equals(other.timestamp, timestamp) &&
             const DeepCollectionEquality().equals(other.upload, upload) &&
             const DeepCollectionEquality().equals(other.type, type) &&
@@ -405,7 +385,6 @@ class _$_ChatMessage extends _ChatMessage {
       const DeepCollectionEquality().hash(location),
       const DeepCollectionEquality().hash(seen),
       const DeepCollectionEquality().hash(senderId),
-      const DeepCollectionEquality().hash(receiverId),
       const DeepCollectionEquality().hash(timestamp),
       const DeepCollectionEquality().hash(upload),
       const DeepCollectionEquality().hash(type),
@@ -432,7 +411,6 @@ abstract class _ChatMessage extends ChatMessage {
       @MyLatLngConverter() LatLng? location,
       bool seen,
       required String senderId,
-      required String receiverId,
       @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
       @MyChatMessageTypeConverter() required ChatMessageType type,
@@ -456,8 +434,6 @@ abstract class _ChatMessage extends ChatMessage {
   bool get seen;
   @override
   String get senderId;
-  @override
-  String get receiverId;
   @override
   @MyDateTimeConverter()
   DateTime? get timestamp;

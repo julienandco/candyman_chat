@@ -77,7 +77,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                   conversationId: state.conversation.id,
                   message: ChatMessage(
                     senderId: firebaseAuth.currentUser!.uid,
-                    receiverId: state.conversation.receiverId,
                     type: ChatMessageType.text,
                     text: message,
                   ),
@@ -93,7 +92,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               sendFileMessageUC(
                 conversationId: state.conversation.id,
                 senderId: firebaseAuth.currentUser!.uid,
-                receiverId: state.conversation.receiverId,
                 type: ChatMessageType.voice,
                 filePath: messageString,
                 duration: duration,
@@ -109,7 +107,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               sendFileMessageUC(
                 conversationId: state.conversation.id,
                 senderId: firebaseAuth.currentUser!.uid,
-                receiverId: state.conversation.receiverId,
                 type: ChatMessageType.image,
                 filePath: messageString,
               );
@@ -123,7 +120,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               sendFileMessageUC(
                 conversationId: state.conversation.id,
                 senderId: firebaseAuth.currentUser!.uid,
-                receiverId: state.conversation.receiverId,
                 type: ChatMessageType.video,
                 filePath: messageString,
               );
@@ -152,7 +148,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                 sendFileMessageUC(
                   conversationId: state.conversation.id,
                   senderId: firebaseAuth.currentUser!.uid,
-                  receiverId: state.conversation.receiverId,
                   type: type,
                   filePath: file!.path,
                 );
@@ -167,7 +162,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               sendPlatformFileMessageUC(
                 conversationId: state.conversation.id,
                 senderId: firebaseAuth.currentUser!.uid,
-                receiverId: state.conversation.receiverId,
                 file: file,
               );
             },

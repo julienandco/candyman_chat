@@ -12,7 +12,6 @@ class SendFileMessageUC {
   void call({
     required String conversationId,
     required String senderId,
-    required String receiverId,
     required ChatMessageType type,
     required String filePath,
     Duration? duration,
@@ -22,7 +21,6 @@ class SendFileMessageUC {
     assert(type != ChatMessageType.voice || duration != null);
     final message = ChatMessage(
       senderId: senderId,
-      receiverId: receiverId,
       type: type,
       filePath: filePath,
       audioDuration: duration,

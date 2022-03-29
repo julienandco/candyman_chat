@@ -180,7 +180,7 @@ class _ChatListItemState extends State<ChatListItem> {
                               widget.conversationItem.lastMessage !=
                                       ChatMessage.empty()
                                   ? widget.conversationItem.lastMessage
-                                      .timestampFormated
+                                      .timestampFormatted
                                   : '',
                               style:
                                   widget.defaultCahtListItem.subtitleTextStyle,

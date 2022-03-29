@@ -14,7 +14,6 @@ _$_ChatMessage _$$_ChatMessageFromJson(Map<String, dynamic> json) =>
           const MyLatLngConverter().fromJson(json['location'] as GeoPoint?),
       seen: json['seen'] as bool? ?? false,
       senderId: json['senderId'] as String,
-      receiverId: json['receiverId'] as String,
       timestamp: const MyDateTimeConverter().fromJson(json['timestamp']),
       upload: json['upload'] == null
           ? null
@@ -37,7 +36,6 @@ Map<String, dynamic> _$$_ChatMessageToJson(_$_ChatMessage instance) =>
       'location': const MyLatLngConverter().toJson(instance.location),
       'seen': instance.seen,
       'senderId': instance.senderId,
-      'receiverId': instance.receiverId,
       'timestamp': const MyDateTimeConverter().toJson(instance.timestamp),
       'upload': instance.upload,
       'type': const MyChatMessageTypeConverter().toJson(instance.type),

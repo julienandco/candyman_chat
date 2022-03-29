@@ -14,7 +14,6 @@ class SendPlatformFileMessageUC {
   void call({
     required String conversationId,
     required String senderId,
-    required String receiverId,
     required PlatformFile file,
   }) {
     ChatMessageType type;
@@ -37,7 +36,6 @@ class SendPlatformFileMessageUC {
 
     final message = ChatMessage(
       senderId: senderId,
-      receiverId: receiverId,
       type: type,
       filePath: !kIsWeb ? file.path : '',
       text: file.name,

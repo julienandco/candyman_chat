@@ -84,7 +84,7 @@ class _MessageBubbleState extends State<MessageBubble> {
     }
     var footer = [
       Text(
-        widget.message.timestampFormated,
+        widget.message.timestampFormatted,
         style: widget.defaultChatBubbleStyle.messageTimestampStyle,
       ),
       if (widget.message.isMe)

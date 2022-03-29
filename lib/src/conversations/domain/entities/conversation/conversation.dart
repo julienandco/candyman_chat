@@ -21,12 +21,6 @@ class Conversation with _$Conversation {
   factory Conversation.fromJson(Map<String, dynamic> json) =>
       _$ConversationFromJson(json);
 
-//TODO: injection?
-  String get receiverId => conversationMembers.firstWhere(
-        (element) => element != FirebaseAuth.instance.currentUser!.uid,
-        // (element) => element != getIt<FirebaseAuth>().currentUser!.uid,
-      );
-
   //TODO: injection?
   /// return whether the conversation is hidden from the current user
   bool get isHidden => hiddenFrom.contains(
