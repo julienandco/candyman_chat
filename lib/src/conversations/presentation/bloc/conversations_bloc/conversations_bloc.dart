@@ -60,7 +60,6 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
             }
           }
         },
-        
         onChatItemsData: (conversationItem) {
           emit(const ConversationsState.loadInProgress());
           emit(
@@ -83,7 +82,6 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
             ),
           );
         },
-
         onData: (conversations) =>
             emit(ConversationsState.loadSuccess(conversations)),
         onError: () => emit(const ConversationsState.loadFailure()),
@@ -93,7 +91,6 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           _conversationsStream = null;
           emit(const ConversationsState.initial());
         },
-
         hideConversation: (conversationId) {
           emit(
             state.maybeMap(

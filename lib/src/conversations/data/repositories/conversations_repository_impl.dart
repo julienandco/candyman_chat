@@ -21,7 +21,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   String get _userId => firebaseAuth.currentUser!.uid;
 
   @override
-  Future<Conversation> createConversations(List<String> chatPersonId) async {
+  Future<Conversation> createConversation(List<String> chatPersonId) async {
     final query = await _collection.where(firebaseKeys.conversationMembersKey,
         arrayContainsAny: [_userId]).get();
 

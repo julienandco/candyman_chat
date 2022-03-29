@@ -74,7 +74,8 @@ class ConversationAppbar extends StatelessWidget
                         Text(
                           state.maybeMap(
                             loadSuccess: (state) =>
-                                state.conversation.displayName ??
+                                state.conversation
+                                    .displayName ?? //TODO: get access to convo item
                                 state.userProfile.name,
                             orElse: () => '',
                           ),
