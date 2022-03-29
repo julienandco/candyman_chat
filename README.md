@@ -74,6 +74,11 @@ dev_dependencies:
 Erstelle jetzt mithilfe von [mason][mason_link] das ```NEON-Chat-Injection-Brick```. Was? Du weißt nicht, wie das geht?
 Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den [NEON-Bricks][neon_bricks_link] durch. Die [Doku von Mason][mason_link] und [dieses Tutorial][mason_tutorial_link] sind auch sehr hilfreich.
 
+TL;DR:
+In das lib Verzeichnis wechseln und dann diesen Befehl ausführen:
+
+```mason make neon_chat_injection```
+
 Was? Dir steht das Brick nicht zur Verfügung, weil du diese App nicht mit der [NEON CLI][neon_cli_link] aufgesetzt hast? BigMac, bann den weg!
 
 Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du auch diese zwei Files im ```lib```-Ordner deines Projekts händisch (🤢) erstellen:
