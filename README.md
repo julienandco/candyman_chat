@@ -81,17 +81,16 @@ Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du auch diese zwei 
 ```neon_chat_injectable_module.dart```
 ```dart
 //TODOINIT: adjust this import to find your project's injection file
-import 'package:example/injection/injection.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:example/injection/injection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 @module
 abstract class NEONChatInjectableModule {
-  //TODOINIT: fill the firebase keys with custom ones if needed.
-  //TODOINIT: adjust firebaseKEys environment to the environment used by getIt
+  //TODO: fill the firebase keys with custom ones if needed.
+  //TODO: adjust firebaseKeys environment to the environment used by getIt
   @lazySingleton
   FirebaseKeys get firebaseKeys => const FirebaseKeys();
 
@@ -138,6 +137,10 @@ abstract class NEONChatInjectableModule {
       MarkMessageAsSeenUC(conversationRepository);
 
   @lazySingleton
+  MarkGroupMessageAsSeenUC get markGroupMessageAsSeenUC =>
+      MarkGroupMessageAsSeenUC(conversationRepository);
+
+  @lazySingleton
   SendPlatformFileMessageUC get sendPlatformFileMessageUC =>
       SendPlatformFileMessageUC(
           conversationRepository: conversationRepository,
@@ -155,9 +158,8 @@ abstract class NEONChatInjectableModule {
   @lazySingleton
   InitializeConversationStreamUC get initializeConversationStreamUC =>
       InitializeConversationStreamUC(
-          conversationRepository: conversationRepository,
-          conversationsRepository: conversationsRepository,
-          firebaseUserProfileRepository: firebaseUserProfileRepository);
+        conversationRepository: conversationRepository,
+      );
 
   @lazySingleton
   InitializeConversationItemStreamUC get initializeConversationItemStreamUC =>
@@ -180,6 +182,7 @@ abstract class NEONChatInjectableModule {
       hideMessageUC: hideMessageUC,
       deleteMessageUC: deleteMessageUC,
       markAsSeenUC: markAsSeenUC,
+      markGroupMessageAsSeenUC: markGroupMessageAsSeenUC,
       sendPlatformFileMessageUC: sendPlatformFileMessageUC,
       sendFileMessageUC: sendFileMessageUC,
       sendTextMessageUC: sendTextMessageUC,
