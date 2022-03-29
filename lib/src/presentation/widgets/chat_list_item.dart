@@ -12,7 +12,7 @@ class ChatListItem extends StatefulWidget {
   final Function()? onOpenChat;
   final Function()? onOpenUserProfile;
   final Widget userAvatar;
-  final DefaultChatListItem defaultCahtListItem;
+  final DefaultChatListItem defaultChatListItem;
 
   const ChatListItem({
     Key? key,
@@ -20,7 +20,7 @@ class ChatListItem extends StatefulWidget {
     this.onOpenChat,
     this.onOpenUserProfile,
     required this.userAvatar,
-    required this.defaultCahtListItem,
+    required this.defaultChatListItem,
   }) : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _ChatListItemState extends State<ChatListItem> {
               widget.conversationItem.lastMessage.text!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: widget.defaultCahtListItem.subtitleTextStyle,
+              style: widget.defaultChatListItem.subtitleTextStyle,
             );
           case ChatMessageType.image:
             text += '📷  ';
@@ -69,7 +69,7 @@ class _ChatListItemState extends State<ChatListItem> {
         }
         return Text(
           text + type.displayString,
-          style: widget.defaultCahtListItem.subtitleTextStyle,
+          style: widget.defaultChatListItem.subtitleTextStyle,
         );
       } else {
         return const SizedBox.shrink();
@@ -87,13 +87,13 @@ class _ChatListItemState extends State<ChatListItem> {
         menuOffset: 10.0,
         blurSize: 0.0,
         blurBackgroundColor:
-            widget.defaultCahtListItem.focusMenuBlurBackroundColor,
+            widget.defaultChatListItem.focusMenuBlurBackroundColor,
         menuWidth: MediaQuery.of(context).size.width * 0.6,
         menuBoxDecoration:
             BoxDecoration(borderRadius: BorderRadius.circular(50)),
         menuItems: [
           FocusedMenuItem(
-              backgroundColor: widget.defaultCahtListItem.focusMenueColor,
+              backgroundColor: widget.defaultChatListItem.focusMenueColor,
               title: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5 - 50,
                 child: Row(
@@ -102,12 +102,12 @@ class _ChatListItemState extends State<ChatListItem> {
                   children: [
                     Flexible(
                         fit: FlexFit.loose,
-                        child: widget.defaultCahtListItem.focusMenuIcon),
+                        child: widget.defaultChatListItem.focusMenuIcon),
                     Flexible(
                       fit: FlexFit.loose,
                       child: AutoSizeText(
-                        widget.defaultCahtListItem.focusMenuText,
-                        style: widget.defaultCahtListItem.focusMeueTextStyle,
+                        widget.defaultChatListItem.focusMenuText,
+                        style: widget.defaultChatListItem.focusMeueTextStyle,
                       ),
                     ),
                   ],
@@ -151,8 +151,8 @@ class _ChatListItemState extends State<ChatListItem> {
                                 .conversationId ==
                             widget.conversationItem.conversation.id ||
                         _onHover)
-                    ? widget.defaultCahtListItem.listTileHoverColor
-                    : widget.defaultCahtListItem.listTileColor,
+                    ? widget.defaultChatListItem.listTileHoverColor
+                    : widget.defaultChatListItem.listTileColor,
               ),
               child: Row(
                 children: [
@@ -174,7 +174,7 @@ class _ChatListItemState extends State<ChatListItem> {
                           children: [
                             Text(
                               widget.conversationItem.conversationPartner.name,
-                              style: widget.defaultCahtListItem.titleTextStyle,
+                              style: widget.defaultChatListItem.titleTextStyle,
                             ),
                             Text(
                               widget.conversationItem.lastMessage !=
@@ -183,7 +183,7 @@ class _ChatListItemState extends State<ChatListItem> {
                                       .timestampFormatted
                                   : '',
                               style:
-                                  widget.defaultCahtListItem.subtitleTextStyle,
+                                  widget.defaultChatListItem.subtitleTextStyle,
                             ),
                           ],
                         ),
@@ -200,14 +200,14 @@ class _ChatListItemState extends State<ChatListItem> {
                                   0)
                                 Badge(
                                   badgeColor:
-                                      widget.defaultCahtListItem.badgeColor,
+                                      widget.defaultChatListItem.badgeColor,
                                   padding: const EdgeInsets.all(6.0),
                                   elevation: 0.0,
                                   badgeContent: Text(
                                     widget.conversationItem.unreadMessagesCount
                                         .toString(),
                                     style: widget
-                                        .defaultCahtListItem.badgeTextStyle,
+                                        .defaultChatListItem.badgeTextStyle,
                                   ),
                                 ),
                             ],
