@@ -11,7 +11,7 @@ class ChatVideoBubble extends StatefulWidget {
   final void Function()? onTap;
   final GetUploadUrlUC getUploadUrlUC;
 
-  final DefaultVideoPlayerStyle defaultVideoPlayerStyle;
+  final VideoPlayerStyle defaultVideoPlayerStyle;
 
   const ChatVideoBubble({
     Key? key,

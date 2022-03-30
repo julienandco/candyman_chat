@@ -34,7 +34,7 @@ class MyCustomConversationsPage extends StatelessWidget {
                               : chatConversations)
                           .map(
                             (conversation) => ChatListItem(
-                              defaultChatListItem: DefaultChatListItem(
+                              chatListItemStyle: ChatListItemStyle(
                                   listTileColor: Colors.grey[200]!),
                               conversationItem: conversation,
                               userAvatar: Container(

@@ -13,14 +13,14 @@ import 'package:rxdart/rxdart.dart';
 class ChatAudioPlayer extends StatefulWidget {
   final ChatMessage message;
 
-  final DefaultAudioPlayerStyle defaultAudioPlayerStyle;
+  final AudioPlayerStyle audioPlayerStyle;
 
   final GetUploadUrlUC getUploadUrlUC;
 
   const ChatAudioPlayer({
     Key? key,
     required this.message,
-    required this.defaultAudioPlayerStyle,
+    required this.audioPlayerStyle,
     required this.getUploadUrlUC,
   }) : super(key: key);
 
@@ -108,8 +108,8 @@ class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
           children: [
             ChatCircleButton(
               child: data.isPlaying
-                  ? widget.defaultAudioPlayerStyle.playingIcon
-                  : widget.defaultAudioPlayerStyle.playIcon,
+                  ? widget.audioPlayerStyle.playingIcon
+                  : widget.audioPlayerStyle.playIcon,
               size: 30,
               onTap: onPlayPausePressed,
               padding: const EdgeInsets.all(5),
@@ -120,10 +120,10 @@ class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
                 position: data.position,
                 bufferedPosition: data.bufferedPosition,
                 onChangeEnd: player.seek,
-                labelStyle: widget.defaultAudioPlayerStyle.labelStyle,
-                sliderColor: widget.defaultAudioPlayerStyle.sliderColor,
-                activeTrackColor: widget.defaultAudioPlayerStyle.activeTrackColor,
-                thumbColor: widget.defaultAudioPlayerStyle.thumbColor,
+                labelStyle: widget.audioPlayerStyle.labelStyle,
+                sliderColor: widget.audioPlayerStyle.sliderColor,
+                activeTrackColor: widget.audioPlayerStyle.activeTrackColor,
+                thumbColor: widget.audioPlayerStyle.thumbColor,
               ),
             ),
           ],

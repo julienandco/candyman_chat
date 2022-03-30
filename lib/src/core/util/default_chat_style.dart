@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neon_chat/src/core/util/util.dart';
 
 // Conversations Style
-class DefaultConverstionsStyle {
+class ConversationsStyle {
   final Text appBarTitle;
   final Color appBarColor;
   final bool appBarCenterTitle;
@@ -12,9 +12,9 @@ class DefaultConverstionsStyle {
   final Function()? fabAction;
   final Widget emtpyConversation;
   final Widget loadingWidget;
-  final DefaultChatListItem defaultChatListItem;
+  final ChatListItemStyle defaultChatListItem;
 
-  const DefaultConverstionsStyle(
+  const ConversationsStyle(
       {this.appBarTitle = const Text('NEON CHAT'),
       this.appBarCenterTitle = true,
       this.appBarColor = const Color.fromARGB(255, 25, 5, 55),
@@ -26,16 +26,16 @@ class DefaultConverstionsStyle {
       this.loadingWidget = const Center(
         child: CircularProgressIndicator(color: Color.fromARGB(255, 25, 5, 55)),
       ),
-      this.defaultChatListItem = const DefaultChatListItem()});
+      this.defaultChatListItem = const ChatListItemStyle()});
 }
 
-class DefaultChatListItem {
+class ChatListItemStyle {
   final TextStyle lastMassageTextStyle;
   final Color focusMenuBlurBackroundColor;
   final String focusMenuText;
-  final TextStyle focusMeueTextStyle;
+  final TextStyle focusMenuTextStyle;
   final Widget focusMenuIcon;
-  final Color focusMenueColor;
+  final Color focusMenuColor;
   final Color listTileColor;
   final Color listTileHoverColor;
   final TextStyle titleTextStyle;
@@ -44,13 +44,13 @@ class DefaultChatListItem {
   final Color badgeColor;
   final TextStyle badgeTextStyle;
 
-  const DefaultChatListItem({
+  const ChatListItemStyle({
     this.lastMassageTextStyle = const TextStyle(color: Colors.black54),
     this.focusMenuBlurBackroundColor = Colors.black,
     this.focusMenuText = 'delete',
-    this.focusMeueTextStyle = const TextStyle(),
+    this.focusMenuTextStyle = const TextStyle(),
     this.focusMenuIcon = const Icon(Icons.delete, color: Colors.black),
-    this.focusMenueColor = Colors.white,
+    this.focusMenuColor = Colors.white,
     this.listTileColor = Colors.grey,
     this.listTileHoverColor = Colors.blueAccent,
     this.titleTextStyle =
@@ -64,22 +64,22 @@ class DefaultChatListItem {
 }
 
 // Conversation Style
-class DefaultConversationStyle {
+class ConversationStyle {
   final Color backgroundColor;
   final List<Color> ignorPointersColors;
   final EdgeInsetsGeometry messageListPadding;
-  final EdgeInsetsGeometry serachPadding;
+  final EdgeInsetsGeometry searchPadding;
 
-  const DefaultConversationStyle({
+  const ConversationStyle({
     this.backgroundColor = Colors.white,
     this.ignorPointersColors = const [Colors.black26, Colors.transparent],
     this.messageListPadding =
         const EdgeInsets.only(top: 20, bottom: 100, left: 20, right: 20),
-    this.serachPadding = const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+    this.searchPadding = const EdgeInsets.only(bottom: 10, left: 10, right: 10),
   });
 }
 
-class DefaultChatBubbleStyle {
+class ChatBubbleStyle {
   final double maxWidthPercentage;
   final bool showAvatar;
   final TextStyle? otherUserNameStyle;
@@ -99,16 +99,16 @@ class DefaultChatBubbleStyle {
   final String? messageBubbleDeletedLabel;
   final String? messageTypeNotSupportedLabel;
   final double bubbleradius;
-  final DefaultAudioPlayerStyle defaultAudioPlayerStyle;
-  final DefaultVideoPlayerStyle defaultVideoPlayerStyle;
-  final DefaultFileBubbleStyle defaultFileBubbleStyle;
+  final AudioPlayerStyle defaultAudioPlayerStyle;
+  final VideoPlayerStyle defaultVideoPlayerStyle;
+  final FileBubbleStyle defaultFileBubbleStyle;
 
   final void Function()? onCopyToClipboard;
   final void Function(
           void Function() onDeleteForMe, void Function() onDeleteForAll)?
       onShowDeletionDialog;
 
-  const DefaultChatBubbleStyle({
+  const ChatBubbleStyle({
     this.maxWidthPercentage = 2 / 3,
     this.showAvatar = false,
     this.otherUserNameStyle,
@@ -130,13 +130,13 @@ class DefaultChatBubbleStyle {
     this.bubbleradius = 16.0,
     this.onCopyToClipboard,
     this.onShowDeletionDialog,
-    this.defaultAudioPlayerStyle = const DefaultAudioPlayerStyle(),
-    this.defaultVideoPlayerStyle = const DefaultVideoPlayerStyle(),
-    this.defaultFileBubbleStyle = const DefaultFileBubbleStyle(),
+    this.defaultAudioPlayerStyle = const AudioPlayerStyle(),
+    this.defaultVideoPlayerStyle = const VideoPlayerStyle(),
+    this.defaultFileBubbleStyle = const FileBubbleStyle(),
   });
 }
 
-class DefaultSearchAppBarStyle {
+class SearchAppBarStyle {
   final Widget? leading;
   final InputDecoration textFieldDecoration;
   final Color iconColor;
@@ -144,7 +144,7 @@ class DefaultSearchAppBarStyle {
   final TextStyle searchTextInput;
   final BoxDecoration serachBarDecoration;
 
-  const DefaultSearchAppBarStyle({
+  const SearchAppBarStyle({
     this.leading,
     this.textFieldDecoration =
         const InputDecoration(hintText: '...', border: InputBorder.none),
@@ -156,7 +156,7 @@ class DefaultSearchAppBarStyle {
   });
 }
 
-class DefaultBottomBarStyle {
+class BottomBarStyle {
   final Color chatBarColor;
   final BorderRadius borderRadius;
   final Color assetPickerColor;
@@ -184,7 +184,7 @@ class DefaultBottomBarStyle {
   final double sendIconSize;
   final BoxShadow? boxShadow;
 
-  const DefaultBottomBarStyle({
+  const BottomBarStyle({
     this.chatBarColor = Colors.white,
     this.borderRadius = const BorderRadius.all(Radius.circular(25)),
     this.assetPickerColor = Colors.red,
@@ -222,7 +222,7 @@ class DefaultBottomBarStyle {
   });
 }
 
-class DefaultAudioPlayerStyle {
+class AudioPlayerStyle {
   final Widget playIcon;
   final Widget playingIcon;
   final TextStyle? labelStyle;
@@ -230,7 +230,7 @@ class DefaultAudioPlayerStyle {
   final Color activeTrackColor;
   final Color thumbColor;
 
-  const DefaultAudioPlayerStyle({
+  const AudioPlayerStyle({
     this.playIcon = const Icon(Icons.play_arrow, color: Colors.white, size: 18),
     this.playingIcon = const Icon(Icons.pause, color: Colors.white, size: 18),
     this.labelStyle,
@@ -240,12 +240,12 @@ class DefaultAudioPlayerStyle {
   });
 }
 
-class DefaultVideoPlayerStyle {
+class VideoPlayerStyle {
   final BoxDecoration? outerDecoration;
   final BoxDecoration innerDecoration;
   final Widget playIcon;
 
-  const DefaultVideoPlayerStyle({
+  const VideoPlayerStyle({
     this.outerDecoration,
     this.innerDecoration = const BoxDecoration(
       shape: BoxShape.circle,
@@ -255,13 +255,13 @@ class DefaultVideoPlayerStyle {
   });
 }
 
-class DefaultFileBubbleStyle {
+class FileBubbleStyle {
   final Widget downloadIcon;
   final Widget progressIndicator;
   final String fileTypeNotSupportedLabel;
   final TextStyle? labelStyle;
 
-  const DefaultFileBubbleStyle({
+  const FileBubbleStyle({
     this.downloadIcon = const Icon(
       Icons.download,
       color: Colors.red,

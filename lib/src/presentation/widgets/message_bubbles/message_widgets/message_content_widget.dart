@@ -11,9 +11,9 @@ class MessageContentWidget extends StatelessWidget {
   final String messageTypeNotSupportedLabel;
   final TextStyle? messageTypeNotSupportedStyle;
   final TextStyle? messageTextStyle;
-  final DefaultAudioPlayerStyle defaultAudioPlayerStyle;
-  final DefaultVideoPlayerStyle defaultVideoPlayerStyle;
-  final DefaultFileBubbleStyle defaultFileBubbleStyle;
+  final AudioPlayerStyle audioPlayerStyle;
+  final VideoPlayerStyle videoPlayerStyle;
+  final FileBubbleStyle fileBubbleStyle;
   final GetUploadUrlUC getUploadUrlUC;
 
   const MessageContentWidget({
@@ -26,9 +26,9 @@ class MessageContentWidget extends StatelessWidget {
     required this.messageTypeNotSupportedLabel,
     this.messageTypeNotSupportedStyle = const TextStyle(color: Colors.white),
     this.messageTextStyle = const TextStyle(color: Colors.white),
-    required this.defaultAudioPlayerStyle,
-    required this.defaultVideoPlayerStyle,
-    required this.defaultFileBubbleStyle,
+    required this.audioPlayerStyle,
+    required this.videoPlayerStyle,
+    required this.fileBubbleStyle,
     required this.getUploadUrlUC,
   }) : super(key: key);
   final ChatMessage message;
@@ -47,7 +47,7 @@ class MessageContentWidget extends StatelessWidget {
           child: Column(
             children: [
               ChatAudioPlayer(
-                defaultAudioPlayerStyle: defaultAudioPlayerStyle,
+                audioPlayerStyle: audioPlayerStyle,
                 message: message,
                 getUploadUrlUC: getUploadUrlUC,
               ),
@@ -95,8 +95,9 @@ class MessageContentWidget extends StatelessWidget {
               if (!message.doneUpload && kIsWeb) Text(messageIsUploadingLabel),
               if (message.doneUpload)
                 ChatVideoBubble(
-                  defaultVideoPlayerStyle: defaultVideoPlayerStyle,
-                  onTap: () => _openMediaViewer(context, message, getUploadUrlUC),
+                  defaultVideoPlayerStyle: videoPlayerStyle,
+                  onTap: () =>
+                      _openMediaViewer(context, message, getUploadUrlUC),
                   message: message,
                   getUploadUrlUC: getUploadUrlUC,
                 ),
@@ -121,7 +122,7 @@ class MessageContentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               ChatFileBubble(
-                defaultFileBubbleStyle: defaultFileBubbleStyle,
+                defaultFileBubbleStyle: fileBubbleStyle,
                 message: message,
                 getUploadUrlUC: getUploadUrlUC,
               ),

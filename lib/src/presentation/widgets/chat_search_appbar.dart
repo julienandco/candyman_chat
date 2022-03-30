@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class ChatSearchAppBar extends StatefulWidget {
-  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
+  final SearchAppBarStyle defaultSearchAppBarStyle;
 
   const ChatSearchAppBar({
     Key? key,

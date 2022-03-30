@@ -9,11 +9,11 @@ class DefaultConversationsPage extends StatefulWidget {
   final ChatBloc Function() chatBloc;
   final ChatSearchBloc Function() chatSearchBloc;
 
-  final DefaultConverstionsStyle defaultConverstionsStyle;
-  final DefaultConversationStyle defaultConversationStyle;
-  final DefaultChatBubbleStyle defaultChatBubbleStyle;
-  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
-  final DefaultBottomBarStyle defaultBottomBarStyle;
+  final ConversationsStyle defaultConverstionsStyle;
+  final ConversationStyle defaultConversationStyle;
+  final ChatBubbleStyle defaultChatBubbleStyle;
+  final SearchAppBarStyle defaultSearchAppBarStyle;
+  final BottomBarStyle defaultBottomBarStyle;
   final Function()? onOpenUserProfile;
   final Function()? onAppbarTap;
 
@@ -99,7 +99,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                         : chatConversations)
                                     .map(
                                       (conversation) => ChatListItem(
-                                        defaultChatListItem: widget
+                                        chatListItemStyle: widget
                                             .defaultConverstionsStyle
                                             .defaultChatListItem,
                                         conversationItem: conversation,

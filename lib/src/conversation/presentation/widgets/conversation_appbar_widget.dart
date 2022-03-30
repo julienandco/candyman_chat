@@ -5,7 +5,7 @@ import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 class ConversationAppbar extends StatelessWidget
     implements PreferredSizeWidget {
-  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
+  final SearchAppBarStyle defaultSearchAppBarStyle;
 
   const ConversationAppbar({
     Key? key,

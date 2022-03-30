@@ -12,7 +12,7 @@ class ChatListItem extends StatefulWidget {
   final Function()? onOpenChat;
   final Function()? onOpenUserProfile;
   final Widget userAvatar;
-  final DefaultChatListItem defaultChatListItem;
+  final ChatListItemStyle chatListItemStyle;
 
   const ChatListItem({
     Key? key,
@@ -20,7 +20,7 @@ class ChatListItem extends StatefulWidget {
     this.onOpenChat,
     this.onOpenUserProfile,
     required this.userAvatar,
-    required this.defaultChatListItem,
+    required this.chatListItemStyle,
   }) : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _ChatListItemState extends State<ChatListItem> {
               widget.conversationItem.lastMessage.text!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: widget.defaultChatListItem.subtitleTextStyle,
+              style: widget.chatListItemStyle.subtitleTextStyle,
             );
           case ChatMessageType.image:
             text += '📷  ';
@@ -69,7 +69,7 @@ class _ChatListItemState extends State<ChatListItem> {
         }
         return Text(
           text + type.displayString,
-          style: widget.defaultChatListItem.subtitleTextStyle,
+          style: widget.chatListItemStyle.subtitleTextStyle,
         );
       } else {
         return const SizedBox.shrink();
@@ -87,13 +87,13 @@ class _ChatListItemState extends State<ChatListItem> {
         menuOffset: 10.0,
         blurSize: 0.0,
         blurBackgroundColor:
-            widget.defaultChatListItem.focusMenuBlurBackroundColor,
+            widget.chatListItemStyle.focusMenuBlurBackroundColor,
         menuWidth: MediaQuery.of(context).size.width * 0.6,
         menuBoxDecoration:
             BoxDecoration(borderRadius: BorderRadius.circular(50)),
         menuItems: [
           FocusedMenuItem(
-              backgroundColor: widget.defaultChatListItem.focusMenueColor,
+              backgroundColor: widget.chatListItemStyle.focusMenuColor,
               title: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5 - 50,
                 child: Row(
@@ -102,12 +102,12 @@ class _ChatListItemState extends State<ChatListItem> {
                   children: [
                     Flexible(
                         fit: FlexFit.loose,
-                        child: widget.defaultChatListItem.focusMenuIcon),
+                        child: widget.chatListItemStyle.focusMenuIcon),
                     Flexible(
                       fit: FlexFit.loose,
                       child: AutoSizeText(
-                        widget.defaultChatListItem.focusMenuText,
-                        style: widget.defaultChatListItem.focusMeueTextStyle,
+                        widget.chatListItemStyle.focusMenuText,
+                        style: widget.chatListItemStyle.focusMenuTextStyle,
                       ),
                     ),
                   ],
@@ -152,8 +152,8 @@ class _ChatListItemState extends State<ChatListItem> {
                                 .id ==
                             widget.conversationItem.conversation.id ||
                         _onHover)
-                    ? widget.defaultChatListItem.listTileHoverColor
-                    : widget.defaultChatListItem.listTileColor,
+                    ? widget.chatListItemStyle.listTileHoverColor
+                    : widget.chatListItemStyle.listTileColor,
               ),
               child: Row(
                 children: [
@@ -175,7 +175,7 @@ class _ChatListItemState extends State<ChatListItem> {
                           children: [
                             Text(
                               widget.conversationItem.displayName,
-                              style: widget.defaultChatListItem.titleTextStyle,
+                              style: widget.chatListItemStyle.titleTextStyle,
                             ),
                             Text(
                               widget.conversationItem.lastMessage !=
@@ -183,8 +183,7 @@ class _ChatListItemState extends State<ChatListItem> {
                                   ? widget.conversationItem.lastMessage
                                       .timestampFormatted
                                   : '',
-                              style:
-                                  widget.defaultChatListItem.subtitleTextStyle,
+                              style: widget.chatListItemStyle.subtitleTextStyle,
                             ),
                           ],
                         ),
@@ -201,14 +200,14 @@ class _ChatListItemState extends State<ChatListItem> {
                                   0)
                                 Badge(
                                   badgeColor:
-                                      widget.defaultChatListItem.badgeColor,
+                                      widget.chatListItemStyle.badgeColor,
                                   padding: const EdgeInsets.all(6.0),
                                   elevation: 0.0,
                                   badgeContent: Text(
                                     widget.conversationItem.unreadMessagesCount
                                         .toString(),
-                                    style: widget
-                                        .defaultChatListItem.badgeTextStyle,
+                                    style:
+                                        widget.chatListItemStyle.badgeTextStyle,
                                   ),
                                 ),
                             ],

@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ChatFileBubble extends StatefulWidget {
   final ChatMessage message;
   final GetUploadUrlUC getUploadUrlUC;
-  final DefaultFileBubbleStyle defaultFileBubbleStyle;
+  final FileBubbleStyle defaultFileBubbleStyle;
 
   const ChatFileBubble({
     Key? key,

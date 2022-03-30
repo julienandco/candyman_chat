@@ -10,10 +10,10 @@ import 'widgets/conversation_appbar_widget.dart';
 
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
-  final DefaultConversationStyle defaultConversationStyle;
-  final DefaultChatBubbleStyle defaultChatBubbleStyle;
-  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
-  final DefaultBottomBarStyle defaultBottomBarStyle;
+  final ConversationStyle defaultConversationStyle;
+  final ChatBubbleStyle defaultChatBubbleStyle;
+  final SearchAppBarStyle defaultSearchAppBarStyle;
+  final BottomBarStyle defaultBottomBarStyle;
   final GetUploadUrlUC getUploadUrlUC;
   final Function()? onAppbarTap;
 

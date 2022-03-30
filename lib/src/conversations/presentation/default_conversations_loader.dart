@@ -9,11 +9,11 @@ class DefaultConversationsLoader extends StatelessWidget {
   final ChatBloc Function() chatBloc;
   final ChatSearchBloc Function() chatSearchBloc;
 
-  final DefaultConverstionsStyle defaultConverstionsStyle;
-  final DefaultConversationStyle defaultConversationStyle;
-  final DefaultChatBubbleStyle defaultChatBubbleStyle;
-  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
-  final DefaultBottomBarStyle defaultBottomBarStyle;
+  final ConversationsStyle conversationsStyle;
+  final ConversationStyle conversationStyle;
+  final ChatBubbleStyle chatBubbleStyle;
+  final SearchAppBarStyle searchAppBarStyle;
+  final BottomBarStyle bottomBarStyle;
   final Function()? onOpenUserProfile;
   final Function()? onAppbarTap;
 
@@ -22,11 +22,11 @@ class DefaultConversationsLoader extends StatelessWidget {
     required this.fileUploadRepository,
     required this.chatBloc,
     required this.chatSearchBloc,
-    this.defaultConverstionsStyle = const DefaultConverstionsStyle(),
-    this.defaultConversationStyle = const DefaultConversationStyle(),
-    this.defaultChatBubbleStyle = const DefaultChatBubbleStyle(),
-    this.defaultSearchAppBarStyle = const DefaultSearchAppBarStyle(),
-    this.defaultBottomBarStyle = const DefaultBottomBarStyle(),
+    required this.conversationsStyle,
+    required this.conversationStyle,
+    required this.chatBubbleStyle,
+    required this.searchAppBarStyle,
+    required this.bottomBarStyle,
     this.onOpenUserProfile,
     this.onAppbarTap,
   }) : super(key: key);
@@ -68,11 +68,11 @@ class DefaultConversationsLoader extends StatelessWidget {
                     fileUploadRepository: fileUploadRepository,
                     chatBloc: chatBloc,
                     chatSearchBloc: chatSearchBloc,
-                    defaultConverstionsStyle: defaultConverstionsStyle,
-                    defaultConversationStyle: defaultConversationStyle,
-                    defaultChatBubbleStyle: defaultChatBubbleStyle,
-                    defaultSearchAppBarStyle: defaultSearchAppBarStyle,
-                    defaultBottomBarStyle: defaultBottomBarStyle,
+                    defaultConverstionsStyle: conversationsStyle,
+                    defaultConversationStyle: conversationStyle,
+                    defaultChatBubbleStyle: chatBubbleStyle,
+                    defaultSearchAppBarStyle: searchAppBarStyle,
+                    defaultBottomBarStyle: bottomBarStyle,
                     onOpenUserProfile: onOpenUserProfile,
                     onAppbarTap: onAppbarTap,
                   ),
@@ -88,10 +88,10 @@ class DefaultConversationsLoader extends StatelessWidget {
                             fileUploadRepository: fileUploadRepository,
                             chatBloc: chatBloc,
                             chatSearchBloc: chatSearchBloc,
-                            defaultChatBubbleStyle: defaultChatBubbleStyle,
-                            defaultConversationStyle: defaultConversationStyle,
-                            defaultSearchAppBarStyle: defaultSearchAppBarStyle,
-                            defaultBottomBarStyle: defaultBottomBarStyle,
+                            defaultChatBubbleStyle: chatBubbleStyle,
+                            defaultConversationStyle: conversationStyle,
+                            defaultSearchAppBarStyle: searchAppBarStyle,
+                            defaultBottomBarStyle: bottomBarStyle,
                             conversationItem: state.conversationItem!,
                             showCloseButton: false,
                             onAppbarTap: onAppbarTap,

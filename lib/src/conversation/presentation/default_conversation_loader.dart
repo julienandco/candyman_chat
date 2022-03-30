@@ -14,10 +14,10 @@ class DefaultConversationLoader extends StatelessWidget {
   final ConversationItem conversationItem;
   final bool showCloseButton;
 
-  final DefaultConversationStyle defaultConversationStyle;
-  final DefaultChatBubbleStyle defaultChatBubbleStyle;
-  final DefaultSearchAppBarStyle defaultSearchAppBarStyle;
-  final DefaultBottomBarStyle defaultBottomBarStyle;
+  final ConversationStyle defaultConversationStyle;
+  final ChatBubbleStyle defaultChatBubbleStyle;
+  final SearchAppBarStyle defaultSearchAppBarStyle;
+  final BottomBarStyle defaultBottomBarStyle;
   final Function()? onAppbarTap;
 
   const DefaultConversationLoader({

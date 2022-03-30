@@ -11,7 +11,7 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 class ChatBottomBar extends StatefulWidget {
-  final DefaultBottomBarStyle defaultBottomBarStyle;
+  final BottomBarStyle defaultBottomBarStyle;
 
   const ChatBottomBar({
     Key? key,
