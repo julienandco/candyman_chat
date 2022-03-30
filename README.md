@@ -269,7 +269,7 @@ Ab jetzt wird differenziert!
 
 Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1.  
 
-Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei eine ```GetIt```-Instanz und kannst zahlreiche Styles zum customisen übergeben! (Komplettes Beispiel siehe ```example/lib/main.dart```)
+Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei eine ```GetIt```-Instanz und kannst zahlreiche Styles zum customisen und Methoden für den Appbar-Tap oder für das Öffnen eines Nutzerprofils übergeben! (Komplettes Beispiel siehe ```example/lib/main.dart```)
 
 ```dart
 ...

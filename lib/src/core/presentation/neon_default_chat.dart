@@ -16,6 +16,9 @@ class NeonChat extends StatelessWidget {
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
 
+  final Function()? onOpenUserProfile;
+  final Function()? onAppBarTap;
+
   const NeonChat({
     Key? key,
     required this.getItInstance,
@@ -24,6 +27,8 @@ class NeonChat extends StatelessWidget {
     this.searchAppBarStyle = const SearchAppBarStyle(),
     this.bottomBarStyle = const BottomBarStyle(),
     this.chatBubbleStyle = const ChatBubbleStyle(),
+    this.onAppBarTap,
+    this.onOpenUserProfile,
   }) : super(key: key);
 
   ChatBloc _generateChatBloc() => ChatBloc(
@@ -61,6 +66,8 @@ class NeonChat extends StatelessWidget {
         chatBubbleStyle: chatBubbleStyle,
         searchAppBarStyle: searchAppBarStyle,
         bottomBarStyle: bottomBarStyle,
+        onAppbarTap: onAppBarTap,
+        onOpenUserProfile: onOpenUserProfile,
       ),
     );
   }
