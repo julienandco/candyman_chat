@@ -22,10 +22,20 @@ FirebaseUser _$FirebaseUserFromJson(Map<String, dynamic> json) {
 class _$FirebaseUserTearOff {
   const _$FirebaseUserTearOff();
 
-  _FirebaseUser call({required String id, required String name}) {
+  _FirebaseUser call(
+      {required String id,
+      required String name,
+      String? profilePictureURL,
+      @MyDateTimeConverter() DateTime? lastActivity,
+      required List<String> blockedUsers,
+      required List<String> blockedByUsers}) {
     return _FirebaseUser(
       id: id,
       name: name,
+      profilePictureURL: profilePictureURL,
+      lastActivity: lastActivity,
+      blockedUsers: blockedUsers,
+      blockedByUsers: blockedByUsers,
     );
   }
 
@@ -41,6 +51,11 @@ const $FirebaseUser = _$FirebaseUserTearOff();
 mixin _$FirebaseUser {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get profilePictureURL => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime? get lastActivity => throw _privateConstructorUsedError;
+  List<String> get blockedUsers => throw _privateConstructorUsedError;
+  List<String> get blockedByUsers => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +68,13 @@ abstract class $FirebaseUserCopyWith<$Res> {
   factory $FirebaseUserCopyWith(
           FirebaseUser value, $Res Function(FirebaseUser) then) =
       _$FirebaseUserCopyWithImpl<$Res>;
-  $Res call({String id, String name});
+  $Res call(
+      {String id,
+      String name,
+      String? profilePictureURL,
+      @MyDateTimeConverter() DateTime? lastActivity,
+      List<String> blockedUsers,
+      List<String> blockedByUsers});
 }
 
 /// @nodoc
@@ -68,6 +89,10 @@ class _$FirebaseUserCopyWithImpl<$Res> implements $FirebaseUserCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? profilePictureURL = freezed,
+    Object? lastActivity = freezed,
+    Object? blockedUsers = freezed,
+    Object? blockedByUsers = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -78,6 +103,22 @@ class _$FirebaseUserCopyWithImpl<$Res> implements $FirebaseUserCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      profilePictureURL: profilePictureURL == freezed
+          ? _value.profilePictureURL
+          : profilePictureURL // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastActivity: lastActivity == freezed
+          ? _value.lastActivity
+          : lastActivity // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      blockedUsers: blockedUsers == freezed
+          ? _value.blockedUsers
+          : blockedUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      blockedByUsers: blockedByUsers == freezed
+          ? _value.blockedByUsers
+          : blockedByUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -89,7 +130,13 @@ abstract class _$FirebaseUserCopyWith<$Res>
           _FirebaseUser value, $Res Function(_FirebaseUser) then) =
       __$FirebaseUserCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name});
+  $Res call(
+      {String id,
+      String name,
+      String? profilePictureURL,
+      @MyDateTimeConverter() DateTime? lastActivity,
+      List<String> blockedUsers,
+      List<String> blockedByUsers});
 }
 
 /// @nodoc
@@ -106,6 +153,10 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? profilePictureURL = freezed,
+    Object? lastActivity = freezed,
+    Object? blockedUsers = freezed,
+    Object? blockedByUsers = freezed,
   }) {
     return _then(_FirebaseUser(
       id: id == freezed
@@ -116,6 +167,22 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      profilePictureURL: profilePictureURL == freezed
+          ? _value.profilePictureURL
+          : profilePictureURL // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastActivity: lastActivity == freezed
+          ? _value.lastActivity
+          : lastActivity // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      blockedUsers: blockedUsers == freezed
+          ? _value.blockedUsers
+          : blockedUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      blockedByUsers: blockedByUsers == freezed
+          ? _value.blockedByUsers
+          : blockedByUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -123,7 +190,13 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_FirebaseUser implements _FirebaseUser {
-  _$_FirebaseUser({required this.id, required this.name});
+  _$_FirebaseUser(
+      {required this.id,
+      required this.name,
+      this.profilePictureURL,
+      @MyDateTimeConverter() this.lastActivity,
+      required this.blockedUsers,
+      required this.blockedByUsers});
 
   factory _$_FirebaseUser.fromJson(Map<String, dynamic> json) =>
       _$$_FirebaseUserFromJson(json);
@@ -132,10 +205,19 @@ class _$_FirebaseUser implements _FirebaseUser {
   final String id;
   @override
   final String name;
+  @override
+  final String? profilePictureURL;
+  @override
+  @MyDateTimeConverter()
+  final DateTime? lastActivity;
+  @override
+  final List<String> blockedUsers;
+  @override
+  final List<String> blockedByUsers;
 
   @override
   String toString() {
-    return 'FirebaseUser(id: $id, name: $name)';
+    return 'FirebaseUser(id: $id, name: $name, profilePictureURL: $profilePictureURL, lastActivity: $lastActivity, blockedUsers: $blockedUsers, blockedByUsers: $blockedByUsers)';
   }
 
   @override
@@ -144,14 +226,26 @@ class _$_FirebaseUser implements _FirebaseUser {
         (other.runtimeType == runtimeType &&
             other is _FirebaseUser &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.profilePictureURL, profilePictureURL) &&
+            const DeepCollectionEquality()
+                .equals(other.lastActivity, lastActivity) &&
+            const DeepCollectionEquality()
+                .equals(other.blockedUsers, blockedUsers) &&
+            const DeepCollectionEquality()
+                .equals(other.blockedByUsers, blockedByUsers));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(profilePictureURL),
+      const DeepCollectionEquality().hash(lastActivity),
+      const DeepCollectionEquality().hash(blockedUsers),
+      const DeepCollectionEquality().hash(blockedByUsers));
 
   @JsonKey(ignore: true)
   @override
@@ -165,8 +259,13 @@ class _$_FirebaseUser implements _FirebaseUser {
 }
 
 abstract class _FirebaseUser implements FirebaseUser {
-  factory _FirebaseUser({required String id, required String name}) =
-      _$_FirebaseUser;
+  factory _FirebaseUser(
+      {required String id,
+      required String name,
+      String? profilePictureURL,
+      @MyDateTimeConverter() DateTime? lastActivity,
+      required List<String> blockedUsers,
+      required List<String> blockedByUsers}) = _$_FirebaseUser;
 
   factory _FirebaseUser.fromJson(Map<String, dynamic> json) =
       _$_FirebaseUser.fromJson;
@@ -175,6 +274,15 @@ abstract class _FirebaseUser implements FirebaseUser {
   String get id;
   @override
   String get name;
+  @override
+  String? get profilePictureURL;
+  @override
+  @MyDateTimeConverter()
+  DateTime? get lastActivity;
+  @override
+  List<String> get blockedUsers;
+  @override
+  List<String> get blockedByUsers;
   @override
   @JsonKey(ignore: true)
   _$FirebaseUserCopyWith<_FirebaseUser> get copyWith =>
