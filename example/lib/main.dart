@@ -8,23 +8,24 @@ import 'injection/injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   configureInjection(Env.dev);
 
-  // await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //   password: 'neon-chat-example!',
-  //   email: 'julien@neon.dev',
-  // );
+  await FirebaseAuth.instance.signInWithEmailAndPassword(
+    password: 'neon-chat-example!',
+    email: 'julien@neon.dev',
+  );
   // await FirebaseAuth.instance.signInWithEmailAndPassword(
   //   password: 'neon-chat-example1!',
   //   email: 'julien+1@neon.dev',
   // );
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-    password: 'neon-chat-example2!',
-    email: 'julien+2@neon.dev',
-  );
+  // await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //   password: 'neon-chat-example2!',
+  //   email: 'julien+2@neon.dev',
+  // );
 
   runApp(const MyApp());
 }
