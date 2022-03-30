@@ -7,7 +7,15 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
+///
+/// Instance of the NEON-Chat, that works out-of-the-box. Where I come from, we
+/// call such things MDMAzing.
+///
 class NeonChat extends StatelessWidget {
+  ///
+  /// Get It Instance the Chat heavily relies on. Should be structured as
+  /// described in the template shown in README.MD
+  ///
   final GetIt getItInstance;
 
   final ConversationStyle conversationStyle;
@@ -16,7 +24,21 @@ class NeonChat extends StatelessWidget {
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
 
+  ///
+  /// Gets called when a user taps on the AppBar within a 1-on-1 Chat.
+  /// Useful functionality would be to open the conversation partner's user
+  /// profile.
+  ///
+  /// Default Functionality is nothing, as the app-internal user profile
+  /// informations are not dealt with inside the NEON-Chat-Package.
+  ///
   final Function()? onOpenUserProfile;
+
+  ///
+  /// Gets called when a user taps on the AppBar within a Group Chat.
+  /// Default functionality is to open an overview screen that shows the
+  /// group's thumbnail, name and all the group members.
+  ///
   final Function()? onAppBarTap;
 
   const NeonChat({
