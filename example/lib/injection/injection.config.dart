@@ -23,7 +23,6 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   final nEONChatInjectableModule = _$NEONChatInjectableModule();
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   final remoteDataBaseInjectableModule = _$RemoteDataBaseInjectableModule();
-  gh.lazySingleton<_i3.ChatBloc>(() => nEONChatInjectableModule.chatBloc);
   gh.lazySingleton<_i3.ChatSearchBloc>(
       () => nEONChatInjectableModule.chatSearchBloc);
   gh.lazySingleton<_i3.ConversationRepository>(

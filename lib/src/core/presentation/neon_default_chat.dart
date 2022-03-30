@@ -68,8 +68,8 @@ class NeonChat extends StatelessWidget {
       ],
       child: DefaultConversationsLoader(
         fileUploadRepository: getItInstance<FileUploadRepository>(),
-        chatBloc: _generateChatBloc,
-        chatSearchBloc: () => ChatSearchBloc(),
+        generateChatBloc: _generateChatBloc,
+        generateChatSearchBloc: () => ChatSearchBloc(),
         conversationStyle: const ConversationStyle(),
         conversationsStyle: conversationsStyle ??
             ConversationsStyle(

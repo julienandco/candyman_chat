@@ -95,18 +95,6 @@ abstract class NEONChatInjectableModule {
       HideConversationUC(conversationsRepository);
 
   @lazySingleton
-  ChatBloc get chatBloc => ChatBloc(
-      firebaseAuth: getIt<FirebaseAuth>(),
-      hideMessageUC: hideMessageUC,
-      deleteMessageUC: deleteMessageUC,
-      markAsSeenUC: markAsSeenUC,
-      markGroupMessageAsSeenUC: markGroupMessageAsSeenUC,
-      sendPlatformFileMessageUC: sendPlatformFileMessageUC,
-      sendFileMessageUC: sendFileMessageUC,
-      sendTextMessageUC: sendTextMessageUC,
-      initStreamUC: initializeConversationStreamUC);
-
-  @lazySingleton
   ChatSearchBloc get chatSearchBloc => ChatSearchBloc();
 
   @lazySingleton
