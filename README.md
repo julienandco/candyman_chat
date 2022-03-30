@@ -45,7 +45,7 @@ Das komplette Setup (iOS und Android App in Firebase anmelden), geht übrigens s
 ```
 
 ZUSATZ:
-6. Es macht mehr Fun, wenn schon Daten vorhanden sind, dafür die Authentication und den Firestore populaten (Coming soon: ein Mörderskript, das das automatisch macht)! Am einfachsten ist es, Nutzername/PW Anmeldung zu aktivieren und dich dann programmatisch wie in ```example/lib/main.dart``` einzuloggen, ohne jegliche UI (nur am Anfang natürlich!)
+Es macht mehr Fun, wenn schon Daten vorhanden sind, dafür die Authentication und den Firestore populaten (Coming soon: ein Mörderskript, das das automatisch macht)! Am einfachsten ist es, Nutzername/PW Anmeldung zu aktivieren und dich dann programmatisch wie in ```example/lib/main.dart``` einzuloggen, ohne jegliche UI (nur am Anfang natürlich!)
 Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Naming Conventions in ```lib/core/util/firebase_keys.dart``` beachten bzw. eigene etablieren und eine Instanz der ```FirebaseKeys``` Datenstruktur erstellen. Diese im ```getIt``` des Projekts registrieren, damit der Chat darauf zugreifen kann. Beim Benennen der FirebaseKeys die Staging/Production Logik beachten!!! (Staging Chats in z.B. ```staging-conversations``` speichern)
 
 ## Nutzung
