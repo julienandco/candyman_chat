@@ -13,9 +13,17 @@ void main() async {
   );
   configureInjection(Env.dev);
 
+  // await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //   password: 'neon-chat-example!',
+  //   email: 'julien@neon.dev',
+  // );
+  // await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //   password: 'neon-chat-example1!',
+  //   email: 'julien+1@neon.dev',
+  // );
   await FirebaseAuth.instance.signInWithEmailAndPassword(
-    password: 'neon-chat-example!',
-    email: 'julien@neon.dev',
+    password: 'neon-chat-example2!',
+    email: 'julien+2@neon.dev',
   );
 
   runApp(const MyApp());
