@@ -24,17 +24,17 @@ class _$ConversationTearOff {
 
   _Conversation call(
       {required String id,
-      String? displayName,
-      required List<String> conversationMembers,
+      String? groupName,
+      required Map<String, Map<String, String?>> conversationMembers,
       String? thumbnail,
-      @MyDateTimeConverter() DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom = const []}) {
     return _Conversation(
       id: id,
-      displayName: displayName,
+      groupName: groupName,
       conversationMembers: conversationMembers,
       thumbnail: thumbnail,
-      timestamp: timestamp,
+      createdAt: createdAt,
       hiddenFrom: hiddenFrom,
     );
   }
@@ -50,11 +50,25 @@ const $Conversation = _$ConversationTearOff();
 /// @nodoc
 mixin _$Conversation {
   String get id => throw _privateConstructorUsedError;
-  String? get displayName => throw _privateConstructorUsedError;
-  List<String> get conversationMembers => throw _privateConstructorUsedError;
+
+  ///
+  /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+  ///
+  String? get groupName => throw _privateConstructorUsedError;
+
+  ///
+  /// Maps userIds to a Map of userNames and profilePicURLs
+  ///
+//TODO: rather list of firebase users? and write a custom translator
+  Map<String, Map<String, String?>> get conversationMembers =>
+      throw _privateConstructorUsedError; // required List<String> conversationMembers,
+  ///
+  /// The thumbnail of a conversation is either the profile picture of the
+  /// other user in a 1-on-1 chat or the group picture in a group chat.
+  ///
   String? get thumbnail => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
-  DateTime? get timestamp => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   List<String> get hiddenFrom => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -70,10 +84,10 @@ abstract class $ConversationCopyWith<$Res> {
       _$ConversationCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      String? displayName,
-      List<String> conversationMembers,
+      String? groupName,
+      Map<String, Map<String, String?>> conversationMembers,
       String? thumbnail,
-      @MyDateTimeConverter() DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
 
@@ -88,10 +102,10 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? displayName = freezed,
+    Object? groupName = freezed,
     Object? conversationMembers = freezed,
     Object? thumbnail = freezed,
-    Object? timestamp = freezed,
+    Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
     return _then(_value.copyWith(
@@ -99,21 +113,21 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: displayName == freezed
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
+      groupName: groupName == freezed
+          ? _value.groupName
+          : groupName // ignore: cast_nullable_to_non_nullable
               as String?,
       conversationMembers: conversationMembers == freezed
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Map<String, Map<String, String?>>,
       thumbnail: thumbnail == freezed
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
-      timestamp: timestamp == freezed
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       hiddenFrom: hiddenFrom == freezed
           ? _value.hiddenFrom
@@ -132,10 +146,10 @@ abstract class _$ConversationCopyWith<$Res>
   @override
   $Res call(
       {String id,
-      String? displayName,
-      List<String> conversationMembers,
+      String? groupName,
+      Map<String, Map<String, String?>> conversationMembers,
       String? thumbnail,
-      @MyDateTimeConverter() DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
 
@@ -152,10 +166,10 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? displayName = freezed,
+    Object? groupName = freezed,
     Object? conversationMembers = freezed,
     Object? thumbnail = freezed,
-    Object? timestamp = freezed,
+    Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
     return _then(_Conversation(
@@ -163,21 +177,21 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: displayName == freezed
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
+      groupName: groupName == freezed
+          ? _value.groupName
+          : groupName // ignore: cast_nullable_to_non_nullable
               as String?,
       conversationMembers: conversationMembers == freezed
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Map<String, Map<String, String?>>,
       thumbnail: thumbnail == freezed
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
-      timestamp: timestamp == freezed
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       hiddenFrom: hiddenFrom == freezed
           ? _value.hiddenFrom
@@ -192,10 +206,10 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
 class _$_Conversation extends _Conversation {
   _$_Conversation(
       {required this.id,
-      this.displayName,
+      this.groupName,
       required this.conversationMembers,
       this.thumbnail,
-      @MyDateTimeConverter() this.timestamp,
+      @MyDateTimeConverter() this.createdAt,
       this.hiddenFrom = const []})
       : super._();
 
@@ -205,21 +219,34 @@ class _$_Conversation extends _Conversation {
   @override
   final String id;
   @override
-  final String? displayName;
+
+  ///
+  /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+  ///
+  final String? groupName;
   @override
-  final List<String> conversationMembers;
-  @override
+
+  ///
+  /// Maps userIds to a Map of userNames and profilePicURLs
+  ///
+//TODO: rather list of firebase users? and write a custom translator
+  final Map<String, Map<String, String?>> conversationMembers;
+  @override // required List<String> conversationMembers,
+  ///
+  /// The thumbnail of a conversation is either the profile picture of the
+  /// other user in a 1-on-1 chat or the group picture in a group chat.
+  ///
   final String? thumbnail;
   @override
   @MyDateTimeConverter()
-  final DateTime? timestamp;
+  final DateTime? createdAt;
   @JsonKey()
   @override
   final List<String> hiddenFrom;
 
   @override
   String toString() {
-    return 'Conversation(id: $id, displayName: $displayName, conversationMembers: $conversationMembers, thumbnail: $thumbnail, timestamp: $timestamp, hiddenFrom: $hiddenFrom)';
+    return 'Conversation(id: $id, groupName: $groupName, conversationMembers: $conversationMembers, thumbnail: $thumbnail, createdAt: $createdAt, hiddenFrom: $hiddenFrom)';
   }
 
   @override
@@ -228,12 +255,11 @@ class _$_Conversation extends _Conversation {
         (other.runtimeType == runtimeType &&
             other is _Conversation &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.displayName, displayName) &&
+            const DeepCollectionEquality().equals(other.groupName, groupName) &&
             const DeepCollectionEquality()
                 .equals(other.conversationMembers, conversationMembers) &&
             const DeepCollectionEquality().equals(other.thumbnail, thumbnail) &&
-            const DeepCollectionEquality().equals(other.timestamp, timestamp) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality()
                 .equals(other.hiddenFrom, hiddenFrom));
   }
@@ -242,10 +268,10 @@ class _$_Conversation extends _Conversation {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(displayName),
+      const DeepCollectionEquality().hash(groupName),
       const DeepCollectionEquality().hash(conversationMembers),
       const DeepCollectionEquality().hash(thumbnail),
-      const DeepCollectionEquality().hash(timestamp),
+      const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(hiddenFrom));
 
   @JsonKey(ignore: true)
@@ -262,10 +288,10 @@ class _$_Conversation extends _Conversation {
 abstract class _Conversation extends Conversation {
   factory _Conversation(
       {required String id,
-      String? displayName,
-      required List<String> conversationMembers,
+      String? groupName,
+      required Map<String, Map<String, String?>> conversationMembers,
       String? thumbnail,
-      @MyDateTimeConverter() DateTime? timestamp,
+      @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom}) = _$_Conversation;
   _Conversation._() : super._();
 
@@ -275,14 +301,27 @@ abstract class _Conversation extends Conversation {
   @override
   String get id;
   @override
-  String? get displayName;
+
+  ///
+  /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+  ///
+  String? get groupName;
   @override
-  List<String> get conversationMembers;
-  @override
+
+  ///
+  /// Maps userIds to a Map of userNames and profilePicURLs
+  ///
+//TODO: rather list of firebase users? and write a custom translator
+  Map<String, Map<String, String?>> get conversationMembers;
+  @override // required List<String> conversationMembers,
+  ///
+  /// The thumbnail of a conversation is either the profile picture of the
+  /// other user in a 1-on-1 chat or the group picture in a group chat.
+  ///
   String? get thumbnail;
   @override
   @MyDateTimeConverter()
-  DateTime? get timestamp;
+  DateTime? get createdAt;
   @override
   List<String> get hiddenFrom;
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
@@ -9,7 +10,7 @@ class DefaultConversationsPage extends StatefulWidget {
   final ChatBloc Function() chatBloc;
   final ChatSearchBloc Function() chatSearchBloc;
 
-  final ConversationsStyle defaultConverstionsStyle;
+  final ConversationsStyle defaultConversationsStyle;
   final ConversationStyle defaultConversationStyle;
   final ChatBubbleStyle defaultChatBubbleStyle;
   final SearchAppBarStyle defaultSearchAppBarStyle;
@@ -22,7 +23,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.fileUploadRepository,
     required this.chatBloc,
     required this.chatSearchBloc,
-    required this.defaultConverstionsStyle,
+    required this.defaultConversationsStyle,
     required this.defaultConversationStyle,
     required this.defaultChatBubbleStyle,
     required this.defaultSearchAppBarStyle,
@@ -48,30 +49,37 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
       value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: widget.defaultConverstionsStyle.appBarCenterTitle,
-          title: widget.defaultConverstionsStyle.appBarTitle,
-          backgroundColor: widget.defaultConverstionsStyle.appBarColor,
+          centerTitle: widget.defaultConversationsStyle.appBarCenterTitle,
+          title: widget.defaultConversationsStyle.appBarTitle,
+          backgroundColor: widget.defaultConversationsStyle.appBarColor,
         ),
-        floatingActionButton: widget.defaultConverstionsStyle.showFab
+        floatingActionButton: !widget.defaultConversationsStyle.showFab
             ? FloatingActionButton(
                 onPressed: () =>
-                    widget.defaultConverstionsStyle.fabAction ??
-                    // Placeholder dialog
-                    showDialog(
-                      context: context,
-                      builder: (context) => Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          color: widget.defaultConverstionsStyle.fabColor,
-                          child: const Text(
-                            'START NEW CHAT',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                    widget.defaultConversationsStyle.fabAction ??
+                    //TODODELETE
+                    GetIt.instance<ConversationsRepository>()
+                        .createConversation(
+                      conversationPartnerID: 'w4KxTRn95eSYoiAvSiqaYGQ7auk1',
+                      conversationPartnerUserName: 'Julien2',
+                      conversationPartnerProfilePictureURL: 'www.kek2.de',
                     ),
-                backgroundColor: widget.defaultConverstionsStyle.fabColor,
-                child: widget.defaultConverstionsStyle.fabIcon)
+                // Placeholder dialog
+                // showDialog(
+                //   context: context,
+                //   builder: (context) => Center(
+                //     child: Container(
+                //       padding: const EdgeInsets.all(16),
+                //       color: widget.defaultConversationsStyle.fabColor,
+                //       child: const Text(
+                //         'START NEW CHAT',
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                backgroundColor: widget.defaultConversationsStyle.fabColor,
+                child: widget.defaultConversationsStyle.fabIcon)
             : null,
         body: SafeArea(
           child: BlocBuilder<ConversationsSearchBloc, ConversationsSearchState>(
@@ -90,7 +98,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 if (loadedConversationsState
                                     .conversations.isEmpty) {
                                   return [
-                                    widget.defaultConverstionsStyle
+                                    widget.defaultConversationsStyle
                                         .emtpyConversation
                                   ];
                                 }
@@ -100,7 +108,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                     .map(
                                       (conversation) => ChatListItem(
                                         chatListItemStyle: widget
-                                            .defaultConverstionsStyle
+                                            .defaultConversationsStyle
                                             .chatListItemStyle,
                                         conversationItem: conversation,
                                         userAvatar: const CircleAvatar(
@@ -140,13 +148,13 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                     .toList();
                               },
                               orElse: () => [
-                                widget.defaultConverstionsStyle.loadingWidget
+                                widget.defaultConversationsStyle.loadingWidget
                               ],
                             ),
                           );
                         },
                         loadInProgress: (l) =>
-                            widget.defaultConverstionsStyle.loadingWidget,
+                            widget.defaultConversationsStyle.loadingWidget,
                         orElse: () => const Center(
                               child: Text('No Conversations found!'),
                             )),

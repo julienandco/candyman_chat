@@ -14,10 +14,11 @@ void main() async {
   );
   configureInjection(Env.dev);
 
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
+  final creds = await FirebaseAuth.instance.signInWithEmailAndPassword(
     password: 'neon-chat-example!',
     email: 'julien@neon.dev',
   );
+  print(creds.user?.uid);
   // await FirebaseAuth.instance.signInWithEmailAndPassword(
   //   password: 'neon-chat-example1!',
   //   email: 'julien+1@neon.dev',

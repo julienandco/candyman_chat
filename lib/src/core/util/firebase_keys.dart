@@ -13,9 +13,9 @@ class FirebaseKeys {
   //Nur anfassen, wenn sich in [Conversation] etwas ändert!!! Wegen JSONSerializable!!!
   final String conversationMembersKey = 'conversationMembers';
   final String conversationHiddenFromKey = 'hiddenFrom';
-  final String conversationTimestampKey = 'timestamp';
+  final String conversationTimestampKey = 'createdAt';
   final String conversationDoneUploadKey = 'doneUpload';
-  final String conversationDisplayNameKey = 'displayName';
+  final String conversationGroupNameKey = 'groupName';
   final String conversationThumbnailKey = 'thumbnail';
 
   final String messagesInConversationKey;
@@ -31,6 +31,8 @@ class FirebaseKeys {
 
   //Nur anfassen, wenn sich in [FirebaseUser] etwas ändert!!! Wegen JSONSerializable!!!
   final String usersIdKey = 'id';
+  final String usersProfilePictureKey = 'profilePictureURL';
+  final String usersUserNameKey = 'name';
 
   const FirebaseKeys({
     this.environment = FirebaseEnvironment.staging,

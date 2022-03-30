@@ -174,7 +174,7 @@ class _ChatListItemState extends State<ChatListItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              widget.conversationItem.displayName,
+                              widget.conversationItem.conversation.displayName,
                               style: widget.chatListItemStyle.titleTextStyle,
                             ),
                             Text(

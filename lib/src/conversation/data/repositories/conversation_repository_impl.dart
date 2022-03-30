@@ -175,8 +175,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
             EventSink<String> sink) async {
           final data = doc.data();
           if (data != null &&
-              data.containsKey(firebaseKeys.conversationDisplayNameKey)) {
-            final displayName = data[firebaseKeys.conversationDisplayNameKey];
+              data.containsKey(firebaseKeys.conversationGroupNameKey)) {
+            final displayName = data[firebaseKeys.conversationGroupNameKey];
 
             sink.add(displayName);
           } else {

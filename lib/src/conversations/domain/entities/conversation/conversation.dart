@@ -12,10 +12,24 @@ class Conversation with _$Conversation {
 
   factory Conversation({
     required String id,
-    String? displayName,
-    required List<String> conversationMembers,
+
+    ///
+    /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+    ///
+    String? groupName,
+
+    ///
+    /// Maps userIds to a Map of userNames and profilePicURLs
+    ///
+    //TODO: rather list of firebase users? and write a custom translator
+    required Map<String, Map<String, String?>> conversationMembers,
+    // required List<String> conversationMembers,
+    ///
+    /// The thumbnail of a conversation is either the profile picture of the
+    /// other user in a 1-on-1 chat or the group picture in a group chat.
+    ///
     String? thumbnail,
-    @MyDateTimeConverter() DateTime? timestamp,
+    @MyDateTimeConverter() DateTime? createdAt,
     @Default([]) List<String> hiddenFrom,
   }) = _Conversation;
 
@@ -31,4 +45,16 @@ class Conversation with _$Conversation {
       );
 
   bool get isGroupChat => conversationMembers.length > 2;
+
+  //TODO: errorprone
+  String get displayName {
+    if (isGroupChat) {
+      return groupName ?? 'group'; //TODO: what to do?
+    } else {
+      final otherUserID = conversationMembers.keys.firstWhere(
+          (userID) => userID != FirebaseAuth.instance.currentUser!.uid);
+      final otherUserMap = conversationMembers[otherUserID]!;
+      return otherUserMap['name']!;
+    }
+  }
 }

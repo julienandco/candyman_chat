@@ -18,45 +18,63 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }) : _collection =
             firestore.collection(firebaseKeys.conversationsCollectionKey);
 
-  String get _userId => firebaseAuth.currentUser!.uid;
+  // String get _userId => firebaseAuth.currentUser!.uid;
+  User get _currentUser => firebaseAuth.currentUser!;
 
   @override
-  Future<Conversation> createConversation(
-    List<String> chatPersonId, {
-    String? displayName,
-    String? thumbnail,
+  Future<Conversation> createConversation({
+    required String conversationPartnerID,
+    required String conversationPartnerUserName,
+    String? conversationPartnerProfilePictureURL,
   }) async {
-    final query = await _collection.where(firebaseKeys.conversationMembersKey,
-        arrayContainsAny: [_userId]).get();
+    // This query checks whether a 1-on-1 conversation between [_userId]
+    // and [conversationPartnerID] already exists to make sure chat rooms are
+    // not duplicated.
+
+    final query = await _collection
+        .where('${firebaseKeys.conversationMembersKey}.$conversationPartnerID',
+            isNull: false)
+        .get();
 
     List<String> _members;
-    _members = chatPersonId;
-    _members.add(_userId);
+    _members = [conversationPartnerID];
+    _members.add(_currentUser.uid);
 
     final conversations = query.docs
         .map((e) => Conversation.fromJson(e.data() as Map<String, dynamic>))
         .toList();
 
     final list = conversations.where((element) {
-      return listEquals(element.conversationMembers, _members);
+      return listEquals(
+          List<String>.from(element.conversationMembers.keys), _members);
     });
 
-    //TODO: thumbnail should be uploaded somewhere
-
     if (list.isNotEmpty) {
+      // There is already a conversation between the two users.
       final conversation = list.first;
-      if (conversation.hiddenFrom.contains(_userId)) {
+      if (conversation.hiddenFrom.contains(_currentUser.uid)) {
         _unhideConversations(conversation.id);
       }
       return list.first;
     } else {
+      //TODO: thumbnail should be uploaded somewhere
+
       final doc = _collection.doc();
       final conversation = Conversation(
         id: doc.id,
-        conversationMembers: _members,
-        displayName: displayName,
-        thumbnail: thumbnail,
-        timestamp: DateTime.now(),
+        conversationMembers: {
+          _currentUser.uid: {
+            firebaseKeys.usersProfilePictureKey: _currentUser.photoURL,
+            firebaseKeys.usersUserNameKey: _currentUser.displayName,
+          },
+          conversationPartnerID: {
+            firebaseKeys.usersProfilePictureKey:
+                conversationPartnerProfilePictureURL,
+            firebaseKeys.usersUserNameKey: conversationPartnerUserName,
+          },
+        },
+        thumbnail: conversationPartnerProfilePictureURL,
+        createdAt: DateTime.now(),
       );
       await doc.set(conversation.toJson());
       return conversation;
@@ -66,27 +84,28 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   @override
   Stream<List<Conversation>> getAllConversations() {
     return _collection
-        .where(firebaseKeys.conversationMembersKey, arrayContainsAny: [_userId])
+        .where('${firebaseKeys.conversationMembersKey}.${_currentUser.uid}',
+            isNull: false)
         .snapshots()
         .transform(
-          StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-              List<Conversation>>.fromHandlers(
-            handleData: (
-              QuerySnapshot<Map<String, dynamic>> data,
-              EventSink<List<Conversation>> sink,
-            ) async {
-              final userId = firebaseAuth.currentUser?.uid;
+      StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
+          List<Conversation>>.fromHandlers(
+        handleData: (
+          QuerySnapshot<Map<String, dynamic>> data,
+          EventSink<List<Conversation>> sink,
+        ) async {
+          final userId = firebaseAuth.currentUser?.uid;
 
-              final snaps = data.docs.map((doc) => doc.data()).toList();
+          final snaps = data.docs.map((doc) => doc.data()).toList();
 
-              final chats = snaps
-                  .map((json) => Conversation.fromJson(json))
-                  .toList()
-                ..removeWhere((element) => element.hiddenFrom.contains(userId));
-              sink.add(chats);
-            },
-          ),
-        );
+          final chats = snaps
+              .map((json) => Conversation.fromJson(json))
+              .toList()
+            ..removeWhere((element) => element.hiddenFrom.contains(userId));
+          sink.add(chats);
+        },
+      ),
+    );
   }
 
   @override
@@ -94,7 +113,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     return _collection
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
-        .where(firebaseKeys.messageSenderIdKey, isNotEqualTo: _userId)
+        .where(firebaseKeys.messageSenderIdKey, isNotEqualTo: _currentUser.uid)
         .where(firebaseKeys.messageSeenKey, isEqualTo: false)
         .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
         .snapshots()
@@ -151,6 +170,15 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   @override
   Stream<int> getUnreadGroupMessagesCount(String conversationId) {
     // TODOGROUPSEEN: implement getUnreadGroupMessagesCount
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Conversation> createGroupConversation(
+      {required Map<String, Map<String, String>> conversationPartners,
+      required String displayName,
+      String? thumbnail}) {
+    // TODOCREATE: implement createGroupConversation
     throw UnimplementedError();
   }
 }

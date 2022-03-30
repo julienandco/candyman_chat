@@ -68,7 +68,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                     fileUploadRepository: fileUploadRepository,
                     chatBloc: generateChatBloc,
                     chatSearchBloc: generateChatSearchBloc,
-                    defaultConverstionsStyle: conversationsStyle,
+                    defaultConversationsStyle: conversationsStyle,
                     defaultConversationStyle: conversationStyle,
                     defaultChatBubbleStyle: chatBubbleStyle,
                     defaultSearchAppBarStyle: searchAppBarStyle,

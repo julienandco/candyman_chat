@@ -6,16 +6,16 @@ import 'package:neon_chat/src/conversations/conversations.dart';
 class SearchConversationsUC {
   SearchConversationsUC();
 
-  List<ConversationItem> _conversations = [];
+  List<ConversationItem> _conversationItems = [];
 
-  void initialize(List<ConversationItem> conversations) {
-    _conversations = conversations;
+  void initialize(List<ConversationItem> conversationItems) {
+    _conversationItems = conversationItems;
   }
 
   List<ConversationItem> search(String query) {
     final results = <ConversationItem>{};
-    for (int i = 0; i < _conversations.length; i++) {
-      String data = _conversations[i].displayName;
+    for (int i = 0; i < _conversationItems.length; i++) {
+      String data = _conversationItems[i].conversation.displayName;
       if (data.toLowerCase().contains(query.toLowerCase())) {
         results.add(conversations[i]);
       }
@@ -23,5 +23,5 @@ class SearchConversationsUC {
     return results.toList();
   }
 
-  List<ConversationItem> get conversations => _conversations;
+  List<ConversationItem> get conversations => _conversationItems;
 }

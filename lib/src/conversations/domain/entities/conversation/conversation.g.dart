@@ -9,12 +9,13 @@ part of 'conversation.dart';
 _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
     _$_Conversation(
       id: json['id'] as String,
-      displayName: json['displayName'] as String?,
-      conversationMembers: (json['conversationMembers'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      groupName: json['groupName'] as String?,
+      conversationMembers:
+          (json['conversationMembers'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(k, Map<String, String?>.from(e as Map)),
+      ),
       thumbnail: json['thumbnail'] as String?,
-      timestamp: const MyDateTimeConverter().fromJson(json['timestamp']),
+      createdAt: const MyDateTimeConverter().fromJson(json['createdAt']),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -24,9 +25,9 @@ _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_ConversationToJson(_$_Conversation instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'displayName': instance.displayName,
+      'groupName': instance.groupName,
       'conversationMembers': instance.conversationMembers,
       'thumbnail': instance.thumbnail,
-      'timestamp': const MyDateTimeConverter().toJson(instance.timestamp),
+      'createdAt': const MyDateTimeConverter().toJson(instance.createdAt),
       'hiddenFrom': instance.hiddenFrom,
     };

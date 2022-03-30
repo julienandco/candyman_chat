@@ -53,7 +53,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                 _OnData(
               messages,
               conversationItem.conversation,
-              conversationItem.displayName,
+              conversationItem.conversation.displayName,
             ),
             onData: (onDataEvent) => add(onDataEvent),
           );

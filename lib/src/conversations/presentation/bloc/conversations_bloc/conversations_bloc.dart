@@ -43,10 +43,10 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           _conversationItemStreams.map((e) => e.cancel());
 
           for (var conversation in conversations) {
-            if (conversation.timestamp != null) {
-              final chatPersonId = conversation.conversationMembers.firstWhere(
-                  (element) =>
-                      element != FirebaseAuth.instance.currentUser!.uid);
+            if (conversation.createdAt != null) {
+              final chatPersonId = conversation.conversationMembers.keys
+                  .firstWhere((userID) =>
+                      userID != FirebaseAuth.instance.currentUser!.uid);
 
               final chatStream = initializeConversationItemStreamUC(
                 conversation: conversation,
