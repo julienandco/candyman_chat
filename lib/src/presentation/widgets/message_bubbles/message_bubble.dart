@@ -196,38 +196,37 @@ class _MessageBubbleState extends State<MessageBubble> {
                               : widget.chatBubbleStyle.otherUserMessageColor,
                           borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(
-                                widget.chatBubbleStyle.bubbleradius),
+                                widget.chatBubbleStyle.bubbleRadius),
                             bottomLeft: Radius.circular(widget.message.isMe
-                                ? widget.chatBubbleStyle.bubbleradius
+                                ? widget.chatBubbleStyle.bubbleRadius
                                 : 0),
                             topLeft: Radius.circular(
-                                widget.chatBubbleStyle.bubbleradius),
+                                widget.chatBubbleStyle.bubbleRadius),
                             topRight: Radius.circular(widget.message.isMe
                                 ? 0
-                                : widget.chatBubbleStyle.bubbleradius),
+                                : widget.chatBubbleStyle.bubbleRadius),
                           ),
                         ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(
-                            widget.chatBubbleStyle.bubbleradius),
+                            widget.chatBubbleStyle.bubbleRadius),
                         bottomLeft: Radius.circular(widget.message.isMe
-                            ? widget.chatBubbleStyle.bubbleradius
+                            ? widget.chatBubbleStyle.bubbleRadius
                             : 0),
                         topLeft: Radius.circular(
-                            widget.chatBubbleStyle.bubbleradius),
+                            widget.chatBubbleStyle.bubbleRadius),
                         topRight: Radius.circular(widget.message.isMe
                             ? 0
-                            : widget.chatBubbleStyle.bubbleradius),
+                            : widget.chatBubbleStyle.bubbleRadius),
                       ),
                       child: MessageContentWidget(
                         getUploadUrlUC: widget.getUploadUrlUC,
                         audioPlayerStyle:
-                            widget.chatBubbleStyle.defaultAudioPlayerStyle,
+                            widget.chatBubbleStyle.audioPlayerStyle,
                         videoPlayerStyle:
-                            widget.chatBubbleStyle.defaultVideoPlayerStyle,
-                        fileBubbleStyle:
-                            widget.chatBubbleStyle.defaultFileBubbleStyle,
+                            widget.chatBubbleStyle.videoPlayerStyle,
+                        fileBubbleStyle: widget.chatBubbleStyle.fileBubbleStyle,
                         message: widget.message,
                         footer: footer,
                         messageBubbleDeletedLabel:

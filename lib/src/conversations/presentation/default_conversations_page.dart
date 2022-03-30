@@ -101,7 +101,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                       (conversation) => ChatListItem(
                                         chatListItemStyle: widget
                                             .defaultConverstionsStyle
-                                            .defaultChatListItem,
+                                            .chatListItemStyle,
                                         conversationItem: conversation,
                                         userAvatar: const CircleAvatar(
                                           backgroundColor:

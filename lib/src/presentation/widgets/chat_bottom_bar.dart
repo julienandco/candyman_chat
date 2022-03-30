@@ -339,7 +339,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                                               .textFieldStyle,
                                           cursorColor: widget
                                               .defaultBottomBarStyle
-                                              .curserColor,
+                                              .cursorColor,
                                           onSubmitted: (value) {
                                             _sendTextMessage(value);
                                           },

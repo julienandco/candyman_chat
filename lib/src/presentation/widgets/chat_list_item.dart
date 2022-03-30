@@ -87,7 +87,7 @@ class _ChatListItemState extends State<ChatListItem> {
         menuOffset: 10.0,
         blurSize: 0.0,
         blurBackgroundColor:
-            widget.chatListItemStyle.focusMenuBlurBackroundColor,
+            widget.chatListItemStyle.focusMenuBlurBackgroundColor,
         menuWidth: MediaQuery.of(context).size.width * 0.6,
         menuBoxDecoration:
             BoxDecoration(borderRadius: BorderRadius.circular(50)),

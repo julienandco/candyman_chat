@@ -12,7 +12,7 @@ class ConversationsStyle {
   final Function()? fabAction;
   final Widget emtpyConversation;
   final Widget loadingWidget;
-  final ChatListItemStyle defaultChatListItem;
+  final ChatListItemStyle chatListItemStyle;
 
   const ConversationsStyle(
       {this.appBarTitle = const Text('NEON CHAT'),
@@ -26,12 +26,12 @@ class ConversationsStyle {
       this.loadingWidget = const Center(
         child: CircularProgressIndicator(color: Color.fromARGB(255, 25, 5, 55)),
       ),
-      this.defaultChatListItem = const ChatListItemStyle()});
+      this.chatListItemStyle = const ChatListItemStyle()});
 }
 
 class ChatListItemStyle {
   final TextStyle lastMassageTextStyle;
-  final Color focusMenuBlurBackroundColor;
+  final Color focusMenuBlurBackgroundColor;
   final String focusMenuText;
   final TextStyle focusMenuTextStyle;
   final Widget focusMenuIcon;
@@ -46,7 +46,7 @@ class ChatListItemStyle {
 
   const ChatListItemStyle({
     this.lastMassageTextStyle = const TextStyle(color: Colors.black54),
-    this.focusMenuBlurBackroundColor = Colors.black,
+    this.focusMenuBlurBackgroundColor = Colors.black,
     this.focusMenuText = 'delete',
     this.focusMenuTextStyle = const TextStyle(),
     this.focusMenuIcon = const Icon(Icons.delete, color: Colors.black),
@@ -66,13 +66,13 @@ class ChatListItemStyle {
 // Conversation Style
 class ConversationStyle {
   final Color backgroundColor;
-  final List<Color> ignorPointersColors;
+  final List<Color> ignorePointersColors;
   final EdgeInsetsGeometry messageListPadding;
   final EdgeInsetsGeometry searchPadding;
 
   const ConversationStyle({
     this.backgroundColor = Colors.white,
-    this.ignorPointersColors = const [Colors.black26, Colors.transparent],
+    this.ignorePointersColors = const [Colors.black26, Colors.transparent],
     this.messageListPadding =
         const EdgeInsets.only(top: 20, bottom: 100, left: 20, right: 20),
     this.searchPadding = const EdgeInsets.only(bottom: 10, left: 10, right: 10),
@@ -98,15 +98,16 @@ class ChatBubbleStyle {
   final String? messageIsUploadingLabel;
   final String? messageBubbleDeletedLabel;
   final String? messageTypeNotSupportedLabel;
-  final double bubbleradius;
-  final AudioPlayerStyle defaultAudioPlayerStyle;
-  final VideoPlayerStyle defaultVideoPlayerStyle;
-  final FileBubbleStyle defaultFileBubbleStyle;
+  final double bubbleRadius;
+  final AudioPlayerStyle audioPlayerStyle;
+  final VideoPlayerStyle videoPlayerStyle;
+  final FileBubbleStyle fileBubbleStyle;
 
   final void Function()? onCopyToClipboard;
   final void Function(
-          void Function() onDeleteForMe, void Function() onDeleteForAll)?
-      onShowDeletionDialog;
+    void Function() onDeleteForMe,
+    void Function() onDeleteForAll,
+  )? onShowDeletionDialog;
 
   const ChatBubbleStyle({
     this.maxWidthPercentage = 2 / 3,
@@ -127,12 +128,12 @@ class ChatBubbleStyle {
     this.messageIsUploadingLabel,
     this.messageBubbleDeletedLabel,
     this.messageTypeNotSupportedLabel,
-    this.bubbleradius = 16.0,
+    this.bubbleRadius = 16.0,
     this.onCopyToClipboard,
     this.onShowDeletionDialog,
-    this.defaultAudioPlayerStyle = const AudioPlayerStyle(),
-    this.defaultVideoPlayerStyle = const VideoPlayerStyle(),
-    this.defaultFileBubbleStyle = const FileBubbleStyle(),
+    this.audioPlayerStyle = const AudioPlayerStyle(),
+    this.videoPlayerStyle = const VideoPlayerStyle(),
+    this.fileBubbleStyle = const FileBubbleStyle(),
   });
 }
 
@@ -179,7 +180,7 @@ class BottomBarStyle {
   final TextStyle? audioRecordingLabelStyle;
   final TextStyle? textFieldStyle;
   final InputDecoration? textFieldDecoration;
-  final Color curserColor;
+  final Color cursorColor;
   final Widget attachmentIcon;
   final Widget cameraIcon;
   final Widget sendIcon;
@@ -211,7 +212,7 @@ class BottomBarStyle {
       hintText: 'Message...',
       hintStyle: TextStyle(color: Colors.black38),
     ),
-    this.curserColor = Colors.black,
+    this.cursorColor = Colors.black,
     this.attachmentIcon = const Icon(Icons.attach_file),
     this.cameraIcon = const Icon(Icons.camera_alt_outlined),
     this.sendIcon = const Icon(

@@ -124,7 +124,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: widget
-                                .defaultConversationStyle.ignorPointersColors,
+                                .defaultConversationStyle.ignorePointersColors,
                             stops: const [0, 0.15])),
                   ),
                 ),
