@@ -11,7 +11,7 @@ class NeonChat extends StatelessWidget {
   final GetIt getItInstance;
 
   final ConversationStyle conversationStyle;
-  final ConversationsStyle? conversationsStyle;
+  final ConversationsStyle conversationsStyle;
   final ChatBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
@@ -20,23 +20,9 @@ class NeonChat extends StatelessWidget {
     Key? key,
     required this.getItInstance,
     this.conversationStyle = const ConversationStyle(),
-    this.conversationsStyle,
-    this.searchAppBarStyle = const SearchAppBarStyle(
-      textFieldDecoration: InputDecoration(
-          hintText: '...',
-          hintStyle: TextStyle(color: Colors.white38),
-          border: InputBorder.none),
-      serachBarDecoration: BoxDecoration(
-        color: Color.fromARGB(255, 25, 5, 55),
-      ),
-    ),
-    this.bottomBarStyle = const BottomBarStyle(
-      textFieldDecoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: 'Message...',
-        hintStyle: TextStyle(color: Colors.black38),
-      ),
-    ),
+    this.conversationsStyle = const ConversationsStyle(),
+    this.searchAppBarStyle = const SearchAppBarStyle(),
+    this.bottomBarStyle = const BottomBarStyle(),
     this.chatBubbleStyle = const ChatBubbleStyle(),
   }) : super(key: key);
 
@@ -71,12 +57,7 @@ class NeonChat extends StatelessWidget {
         generateChatBloc: _generateChatBloc,
         generateChatSearchBloc: () => ChatSearchBloc(),
         conversationStyle: const ConversationStyle(),
-        conversationsStyle: conversationsStyle ??
-            ConversationsStyle(
-              appBarTitle: const Text('NEON DEFAULT CHAT'),
-              defaultChatListItem:
-                  ChatListItemStyle(listTileColor: Colors.grey[200]!),
-            ),
+        conversationsStyle: conversationsStyle,
         chatBubbleStyle: chatBubbleStyle,
         searchAppBarStyle: searchAppBarStyle,
         bottomBarStyle: bottomBarStyle,

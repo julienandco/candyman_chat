@@ -26,7 +26,7 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
   Widget build(BuildContext context) {
     return SubHeader(
       iconColor: widget.defaultSearchAppBarStyle.iconColor,
-      decoration: widget.defaultSearchAppBarStyle.serachBarDecoration,
+      decoration: widget.defaultSearchAppBarStyle.searchBarDecoration,
       // show nav Icons for search results
       action: const ChatSearchUpDown(),
       leading: widget.defaultSearchAppBarStyle.leading ??
@@ -42,7 +42,7 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
       title: Expanded(
         child: TextField(
           style: widget.defaultSearchAppBarStyle.searchTextInput,
-          cursorColor: widget.defaultSearchAppBarStyle.searchTextCurserColor,
+          cursorColor: widget.defaultSearchAppBarStyle.searchTextCursorColor,
           decoration: widget.defaultSearchAppBarStyle.textFieldDecoration,
           focusNode: _foucsNode,
           onSubmitted: (value) {

@@ -140,18 +140,20 @@ class SearchAppBarStyle {
   final Widget? leading;
   final InputDecoration textFieldDecoration;
   final Color iconColor;
-  final Color searchTextCurserColor;
+  final Color searchTextCursorColor;
   final TextStyle searchTextInput;
-  final BoxDecoration serachBarDecoration;
+  final BoxDecoration searchBarDecoration;
 
   const SearchAppBarStyle({
     this.leading,
-    this.textFieldDecoration =
-        const InputDecoration(hintText: '...', border: InputBorder.none),
+    this.textFieldDecoration = const InputDecoration(
+        hintText: '...',
+        hintStyle: TextStyle(color: Colors.white38),
+        border: InputBorder.none),
     this.iconColor = Colors.white,
-    this.searchTextCurserColor = Colors.white,
+    this.searchTextCursorColor = Colors.white,
     this.searchTextInput = const TextStyle(color: Colors.white),
-    this.serachBarDecoration =
+    this.searchBarDecoration =
         const BoxDecoration(color: Color.fromARGB(255, 25, 5, 55)),
   });
 }
@@ -204,7 +206,11 @@ class BottomBarStyle {
     this.audioMessageIcon = const Icon(Icons.mic),
     this.audioRecordingLabelStyle,
     this.textFieldStyle,
-    this.textFieldDecoration,
+    this.textFieldDecoration = const InputDecoration(
+      border: InputBorder.none,
+      hintText: 'Message...',
+      hintStyle: TextStyle(color: Colors.black38),
+    ),
     this.curserColor = Colors.black,
     this.attachmentIcon = const Icon(Icons.attach_file),
     this.cameraIcon = const Icon(Icons.camera_alt_outlined),
