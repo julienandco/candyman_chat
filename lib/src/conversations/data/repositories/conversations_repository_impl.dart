@@ -30,7 +30,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     // This query checks whether a 1-on-1 conversation between [_userId]
     // and [conversationPartnerID] already exists to make sure chat rooms are
     // not duplicated.
-
+    //TODOQUERY
     final query = await _collection
         .where('${firebaseKeys.conversationMembersKey}.$conversationPartnerID',
             isNull: false)

@@ -75,7 +75,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
         .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
-        .orderBy(firebaseKeys.conversationTimestampKey, descending: true)
+        .orderBy(firebaseKeys.messageTimestampKey, descending: true)
         .limit(1)
         .snapshots()
         .transform(

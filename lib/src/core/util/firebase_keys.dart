@@ -26,6 +26,7 @@ class FirebaseKeys {
   final String messageDoneUploadKey = 'doneUpload';
   final String messageTypeKey = 'type';
   final String messageHiddenFromKey = 'hiddenFrom';
+  final String messageTimestampKey = 'timestamp';
 
   final String _usersCollectionKey;
 

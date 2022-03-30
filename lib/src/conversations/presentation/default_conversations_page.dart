@@ -87,72 +87,74 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
               return BlocBuilder<ConversationsBloc, ConversationsState>(
                 builder: (context, conversationsState) =>
                     conversationsState.maybeMap(
-                        loadSuccess: (loadedConversationsState) {
-                          return ListView(
-                            controller: _scrollController,
-                            physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics(),
-                            ),
-                            children: conversationsState.maybeWhen(
-                              loadSuccess: (chatConversations) {
-                                if (loadedConversationsState
-                                    .conversations.isEmpty) {
-                                  return [
-                                    widget.defaultConversationsStyle
-                                        .emtpyConversation
-                                  ];
-                                }
-                                return (conversationsSearchState.isSearchActive
-                                        ? conversationsSearchState.conversations
-                                        : chatConversations)
-                                    .map(
-                                      (conversation) => ChatListItem(
-                                        chatListItemStyle: widget
-                                            .defaultConversationsStyle
-                                            .chatListItemStyle,
-                                        conversationItem: conversation,
-                                        userAvatar: const CircleAvatar(
-                                          backgroundColor:
-                                              Color.fromARGB(255, 25, 5, 55),
-                                          radius: 20.0,
-                                        ),
-                                        onOpenChat: () {
-                                          Navigator.push(
-                                            context,
-                                            CupertinoPageRoute(
-                                              builder: (context) =>
-                                                  DefaultConversationLoader(
-                                                fileUploadRepository:
-                                                    widget.fileUploadRepository,
-                                                chatBloc: widget.chatBloc,
-                                                chatSearchBloc:
-                                                    widget.chatSearchBloc,
-                                                defaultSearchAppBarStyle: widget
-                                                    .defaultSearchAppBarStyle,
-                                                defaultChatBubbleStyle: widget
-                                                    .defaultChatBubbleStyle,
-                                                defaultConversationStyle: widget
-                                                    .defaultConversationStyle,
-                                                defaultBottomBarStyle: widget
-                                                    .defaultBottomBarStyle,
-                                                conversationItem: conversation,
-                                                onAppbarTap: widget.onAppbarTap,
+                        loadSuccess: (loadedConversationsState) => ListView(
+                              controller: _scrollController,
+                              physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics(),
+                              ),
+                              children: conversationsState.maybeWhen(
+                                loadSuccess: (chatConversations) {
+                                  if (loadedConversationsState
+                                      .conversations.isEmpty) {
+                                    return [
+                                      widget.defaultConversationsStyle
+                                          .emtpyConversation
+                                    ];
+                                  }
+                                  return (conversationsSearchState
+                                              .isSearchActive
+                                          ? conversationsSearchState
+                                              .conversations
+                                          : chatConversations)
+                                      .map(
+                                        (conversation) => ChatListItem(
+                                          chatListItemStyle: widget
+                                              .defaultConversationsStyle
+                                              .chatListItemStyle,
+                                          conversationItem: conversation,
+                                          userAvatar: const CircleAvatar(
+                                            backgroundColor:
+                                                Color.fromARGB(255, 25, 5, 55),
+                                            radius: 20.0,
+                                          ),
+                                          onOpenChat: () {
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    DefaultConversationLoader(
+                                                  fileUploadRepository: widget
+                                                      .fileUploadRepository,
+                                                  chatBloc: widget.chatBloc,
+                                                  chatSearchBloc:
+                                                      widget.chatSearchBloc,
+                                                  defaultSearchAppBarStyle: widget
+                                                      .defaultSearchAppBarStyle,
+                                                  defaultChatBubbleStyle: widget
+                                                      .defaultChatBubbleStyle,
+                                                  defaultConversationStyle: widget
+                                                      .defaultConversationStyle,
+                                                  defaultBottomBarStyle: widget
+                                                      .defaultBottomBarStyle,
+                                                  conversationItem:
+                                                      conversation,
+                                                  onAppbarTap:
+                                                      widget.onAppbarTap,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        onOpenUserProfile:
-                                            widget.onOpenUserProfile,
-                                      ),
-                                    )
-                                    .toList();
-                              },
-                              orElse: () => [
-                                widget.defaultConversationsStyle.loadingWidget
-                              ],
+                                            );
+                                          },
+                                          onOpenUserProfile:
+                                              widget.onOpenUserProfile,
+                                        ),
+                                      )
+                                      .toList();
+                                },
+                                orElse: () => [
+                                  widget.defaultConversationsStyle.loadingWidget
+                                ],
+                              ),
                             ),
-                          );
-                        },
                         loadInProgress: (l) =>
                             widget.defaultConversationsStyle.loadingWidget,
                         orElse: () => const Center(
