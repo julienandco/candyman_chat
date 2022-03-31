@@ -70,7 +70,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
           title: widget.conversationsStyle.appBarTitle,
           backgroundColor: widget.conversationsStyle.appBarColor,
         ),
-        floatingActionButton: !widget.conversationsStyle.showFab
+        floatingActionButton: widget.conversationsStyle.showFab
             ? FloatingActionButton(
                 onPressed: widget.conversationsStyle.fabAction ??
                     () async {
