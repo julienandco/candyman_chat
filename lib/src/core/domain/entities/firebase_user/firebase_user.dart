@@ -11,8 +11,8 @@ class FirebaseUser with _$FirebaseUser {
     required String name,
     String? profilePictureURL,
     @MyDateTimeConverter() DateTime? lastActivity,
-    required List<String> blockedUsers,
-    required List<String> blockedByUsers,
+    @Default([]) List<String> blockedUsers,
+    @Default([]) List<String> blockedByUsers,
   }) = _FirebaseUser;
 
   factory FirebaseUser.fromJson(Map<String, dynamic> json) =>

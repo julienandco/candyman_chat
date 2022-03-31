@@ -25,7 +25,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     return _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
-        .orderBy(firebaseKeys.conversationTimestampKey, descending: true)
+        .orderBy(firebaseKeys.messageTimestampKey, descending: true)
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
@@ -196,8 +196,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
             EventSink<String?> sink) async {
           final data = doc.data();
           if (data != null &&
-              data.containsKey(firebaseKeys.conversationThumbnailKey)) {
-            final thumbnailString = data[firebaseKeys.conversationThumbnailKey];
+              data.containsKey(firebaseKeys.conversationGroupPictureKey)) {
+            final thumbnailString =
+                data[firebaseKeys.conversationGroupPictureKey];
 
             sink.add(thumbnailString);
           }

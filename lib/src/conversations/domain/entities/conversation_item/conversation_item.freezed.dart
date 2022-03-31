@@ -39,7 +39,6 @@ mixin _$ConversationItem {
   ChatMessage get lastMessage =>
       throw _privateConstructorUsedError; // required String displayName,
 // required FirebaseUser conversationPartner,
-// String? thumbnail,
   int get unreadMessagesCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -173,7 +172,6 @@ class _$_ConversationItem implements _ConversationItem {
   final ChatMessage lastMessage;
   @override // required String displayName,
 // required FirebaseUser conversationPartner,
-// String? thumbnail,
   final int unreadMessagesCount;
 
   @override
@@ -219,7 +217,6 @@ abstract class _ConversationItem implements ConversationItem {
   ChatMessage get lastMessage;
   @override // required String displayName,
 // required FirebaseUser conversationPartner,
-// String? thumbnail,
   int get unreadMessagesCount;
   @override
   @JsonKey(ignore: true)

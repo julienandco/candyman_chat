@@ -27,8 +27,8 @@ class _$FirebaseUserTearOff {
       required String name,
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
-      required List<String> blockedUsers,
-      required List<String> blockedByUsers}) {
+      List<String> blockedUsers = const [],
+      List<String> blockedByUsers = const []}) {
     return _FirebaseUser(
       id: id,
       name: name,
@@ -195,8 +195,8 @@ class _$_FirebaseUser implements _FirebaseUser {
       required this.name,
       this.profilePictureURL,
       @MyDateTimeConverter() this.lastActivity,
-      required this.blockedUsers,
-      required this.blockedByUsers});
+      this.blockedUsers = const [],
+      this.blockedByUsers = const []});
 
   factory _$_FirebaseUser.fromJson(Map<String, dynamic> json) =>
       _$$_FirebaseUserFromJson(json);
@@ -210,8 +210,10 @@ class _$_FirebaseUser implements _FirebaseUser {
   @override
   @MyDateTimeConverter()
   final DateTime? lastActivity;
+  @JsonKey()
   @override
   final List<String> blockedUsers;
+  @JsonKey()
   @override
   final List<String> blockedByUsers;
 
@@ -264,8 +266,8 @@ abstract class _FirebaseUser implements FirebaseUser {
       required String name,
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
-      required List<String> blockedUsers,
-      required List<String> blockedByUsers}) = _$_FirebaseUser;
+      List<String> blockedUsers,
+      List<String> blockedByUsers}) = _$_FirebaseUser;
 
   factory _FirebaseUser.fromJson(Map<String, dynamic> json) =
       _$_FirebaseUser.fromJson;

@@ -24,6 +24,9 @@ class NeonChat extends StatelessWidget {
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
 
+  //TODO: function that provides all available users to create a chat with
+  //TODO: function onChatSuccessfully created, default function: opens chat
+
   ///
   /// Gets called when a user taps on the AppBar within a 1-on-1 Chat.
   /// Useful functionality would be to open the conversation partner's user

@@ -16,7 +16,7 @@ class FirebaseKeys {
   final String conversationTimestampKey = 'createdAt';
   final String conversationDoneUploadKey = 'doneUpload';
   final String conversationGroupNameKey = 'groupName';
-  final String conversationThumbnailKey = 'thumbnail';
+  final String conversationGroupPictureKey = 'groupPicture';
 
   final String messagesInConversationKey;
 

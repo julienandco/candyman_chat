@@ -10,11 +10,11 @@ _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
     _$_Conversation(
       id: json['id'] as String,
       groupName: json['groupName'] as String?,
+      groupPicture: json['groupPicture'] as String?,
       conversationMembers:
           (json['conversationMembers'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(k, Map<String, String?>.from(e as Map)),
+        (k, e) => MapEntry(k, e as Map<String, dynamic>),
       ),
-      thumbnail: json['thumbnail'] as String?,
       createdAt: const MyDateTimeConverter().fromJson(json['createdAt']),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -26,8 +26,8 @@ Map<String, dynamic> _$$_ConversationToJson(_$_Conversation instance) =>
     <String, dynamic>{
       'id': instance.id,
       'groupName': instance.groupName,
+      'groupPicture': instance.groupPicture,
       'conversationMembers': instance.conversationMembers,
-      'thumbnail': instance.thumbnail,
       'createdAt': const MyDateTimeConverter().toJson(instance.createdAt),
       'hiddenFrom': instance.hiddenFrom,
     };

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/core/data/models/my_datetime_converter.dart';
 
 part 'conversation.freezed.dart';
 part 'conversation.g.dart';
@@ -19,16 +19,17 @@ class Conversation with _$Conversation {
     String? groupName,
 
     ///
+    /// Is null for a 1-on-1 chat and otherwise the picture of the group chat.
+    ///
+    String? groupPicture,
+
+    ///
     /// Maps userIds to a Map of userNames and profilePicURLs
     ///
     //TODO: rather list of firebase users? and write a custom translator
-    required Map<String, Map<String, String?>> conversationMembers,
+    required Map<String, Map<String, dynamic>> conversationMembers,
     // required List<String> conversationMembers,
-    ///
-    /// The thumbnail of a conversation is either the profile picture of the
-    /// other user in a 1-on-1 chat or the group picture in a group chat.
-    ///
-    String? thumbnail,
+
     @MyDateTimeConverter() DateTime? createdAt,
     @Default([]) List<String> hiddenFrom,
   }) = _Conversation;
@@ -54,7 +55,19 @@ class Conversation with _$Conversation {
       final otherUserID = conversationMembers.keys.firstWhere(
           (userID) => userID != FirebaseAuth.instance.currentUser!.uid);
       final otherUserMap = conversationMembers[otherUserID]!;
-      return otherUserMap['name']!;
+      return otherUserMap[GetIt.instance<FirebaseKeys>().usersUserNameKey]!;
+    }
+  }
+
+  String? get thumbnail {
+    if (isGroupChat) {
+      return groupPicture;
+    } else {
+      final otherUserID = conversationMembers.keys.firstWhere(
+          (userID) => userID != FirebaseAuth.instance.currentUser!.uid);
+      final otherUserMap = conversationMembers[otherUserID]!;
+      return otherUserMap[
+          GetIt.instance<FirebaseKeys>().usersProfilePictureKey];
     }
   }
 }

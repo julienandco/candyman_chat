@@ -14,10 +14,10 @@ class DefaultConversationLoader extends StatelessWidget {
   final ConversationItem conversationItem;
   final bool showCloseButton;
 
-  final ConversationStyle defaultConversationStyle;
-  final ChatBubbleStyle defaultChatBubbleStyle;
-  final SearchAppBarStyle defaultSearchAppBarStyle;
-  final BottomBarStyle defaultBottomBarStyle;
+  final ConversationStyle conversationStyle;
+  final ChatBubbleStyle chatBubbleStyle;
+  final SearchAppBarStyle searchAppBarStyle;
+  final BottomBarStyle bottomBarStyle;
   final Function()? onAppbarTap;
 
   const DefaultConversationLoader({
@@ -26,10 +26,10 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.fileUploadRepository,
     required this.chatBloc,
     required this.chatSearchBloc,
-    required this.defaultConversationStyle,
-    required this.defaultChatBubbleStyle,
-    required this.defaultSearchAppBarStyle,
-    required this.defaultBottomBarStyle,
+    required this.conversationStyle,
+    required this.chatBubbleStyle,
+    required this.searchAppBarStyle,
+    required this.bottomBarStyle,
     this.showCloseButton = true,
     this.onAppbarTap,
   }) : super(key: key);
@@ -48,10 +48,10 @@ class DefaultConversationLoader extends StatelessWidget {
       ],
       child: DefaultConversationPage(
         getUploadUrlUC: GetUploadUrlUC(fileUploadRepository),
-        defaultChatBubbleStyle: defaultChatBubbleStyle,
-        defaultConversationStyle: defaultConversationStyle,
-        defaultSearchAppBarStyle: defaultSearchAppBarStyle,
-        defaultBottomBarStyle: defaultBottomBarStyle,
+        defaultChatBubbleStyle: chatBubbleStyle,
+        defaultConversationStyle: conversationStyle,
+        defaultSearchAppBarStyle: searchAppBarStyle,
+        defaultBottomBarStyle: bottomBarStyle,
         showCloseButton: showCloseButton,
         onAppbarTap: onAppbarTap,
       ),

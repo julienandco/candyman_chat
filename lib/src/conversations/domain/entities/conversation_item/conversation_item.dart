@@ -12,7 +12,7 @@ class ConversationItem with _$ConversationItem {
     required ChatMessage lastMessage,
     // required String displayName,
     // required FirebaseUser conversationPartner,
-    // String? thumbnail,
+
     required int unreadMessagesCount,
   }) = _ConversationItem;
 

@@ -12,12 +12,14 @@ _$_FirebaseUser _$$_FirebaseUserFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       profilePictureURL: json['profilePictureURL'] as String?,
       lastActivity: const MyDateTimeConverter().fromJson(json['lastActivity']),
-      blockedUsers: (json['blockedUsers'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      blockedByUsers: (json['blockedByUsers'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      blockedUsers: (json['blockedUsers'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      blockedByUsers: (json['blockedByUsers'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_FirebaseUserToJson(_$_FirebaseUser instance) =>

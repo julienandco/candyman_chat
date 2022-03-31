@@ -23,21 +23,21 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
 
   @override
   Future<Conversation> createConversation({
-    required String conversationPartnerID,
-    required String conversationPartnerUserName,
-    String? conversationPartnerProfilePictureURL,
+    required FirebaseUser me,
+    required FirebaseUser conversationPartner,
   }) async {
     // This query checks whether a 1-on-1 conversation between [_userId]
     // and [conversationPartnerID] already exists to make sure chat rooms are
     // not duplicated.
     //TODOQUERY
     final query = await _collection
-        .where('${firebaseKeys.conversationMembersKey}.$conversationPartnerID',
+        .where(
+            '${firebaseKeys.conversationMembersKey}.${conversationPartner.id}',
             isNull: false)
         .get();
 
     List<String> _members;
-    _members = [conversationPartnerID];
+    _members = [conversationPartner.id];
     _members.add(_currentUser.uid);
 
     final conversations = query.docs
@@ -57,23 +57,13 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       }
       return list.first;
     } else {
-      //TODO: thumbnail should be uploaded somewhere
-
       final doc = _collection.doc();
       final conversation = Conversation(
         id: doc.id,
         conversationMembers: {
-          _currentUser.uid: {
-            firebaseKeys.usersProfilePictureKey: _currentUser.photoURL,
-            firebaseKeys.usersUserNameKey: _currentUser.displayName,
-          },
-          conversationPartnerID: {
-            firebaseKeys.usersProfilePictureKey:
-                conversationPartnerProfilePictureURL,
-            firebaseKeys.usersUserNameKey: conversationPartnerUserName,
-          },
+          _currentUser.uid: me.toJson(),
+          conversationPartner.id: conversationPartner.toJson(),
         },
-        thumbnail: conversationPartnerProfilePictureURL,
         createdAt: DateTime.now(),
       );
       await doc.set(conversation.toJson());
@@ -178,6 +168,8 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       {required Map<String, Map<String, String>> conversationPartners,
       required String displayName,
       String? thumbnail}) {
+    //TODO: thumbnail should be uploaded somewhere
+
     // TODOCREATE: implement createGroupConversation
     throw UnimplementedError();
   }
