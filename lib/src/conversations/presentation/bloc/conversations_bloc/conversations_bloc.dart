@@ -74,10 +74,22 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
                     element.conversation.id ==
                     conversationItem.conversation.id);
                 conversations.add(conversationItem);
+
+                // sorting: newest unreads first, then chronologically
                 conversations.sort(
                   (b, a) {
-                    return (a.lastMessage.timestamp ?? DateTime.now())
-                        .compareTo((b.lastMessage.timestamp ?? DateTime.now()));
+                    if (a.unreadMessagesCount > 0 &&
+                        b.unreadMessagesCount == 0) {
+                      return 1;
+                    } else if (b.unreadMessagesCount > 0 &&
+                        a.unreadMessagesCount == 0) {
+                      return -1;
+                    } else {
+                      // both have none or some unread messages => chronologically
+                      return (a.lastMessage.timestamp ?? DateTime.now())
+                          .compareTo(
+                              (b.lastMessage.timestamp ?? DateTime.now()));
+                    }
                   },
                 );
                 return ConversationsState.loadSuccess(conversations);
