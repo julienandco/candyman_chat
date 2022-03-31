@@ -33,6 +33,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => nEONChatInjectableModule.conversationsRepository);
   gh.lazySingleton<_i3.ConversationsSearchBloc>(
       () => nEONChatInjectableModule.conversationsSearchBloc);
+  gh.lazySingleton<_i3.CreateConversationUC>(
+      () => nEONChatInjectableModule.createConversationUC);
   gh.lazySingleton<_i3.CurrentConversationCubit>(
       () => nEONChatInjectableModule.currentConversationCubit);
   gh.lazySingleton<_i3.DeleteMessageUC>(
@@ -47,6 +49,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => nEONChatInjectableModule.firebaseKeys);
   gh.lazySingleton<_i3.FirebaseUserProfileRepository>(
       () => nEONChatInjectableModule.firebaseUserProfileRepository);
+  gh.lazySingleton<_i3.GetFirebaseUserUC>(
+      () => nEONChatInjectableModule.getFirebaseUserUC);
   gh.lazySingleton<_i3.HideConversationUC>(
       () => nEONChatInjectableModule.hideConversationUC);
   gh.lazySingleton<_i3.HideMessageUC>(

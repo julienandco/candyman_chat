@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
@@ -18,6 +16,8 @@ class DefaultConversationsPage extends StatefulWidget {
   final Function()? onOpenUserProfile;
   final Function()? onAppbarTap;
 
+  final List<FirebaseUser> Function()? getNewConversationPartners;
+
   const DefaultConversationsPage({
     Key? key,
     required this.fileUploadRepository,
@@ -30,6 +30,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.bottomBarStyle,
     this.onOpenUserProfile,
     this.onAppbarTap,
+    this.getNewConversationPartners,
   }) : super(key: key);
 
   @override
@@ -40,6 +41,19 @@ class DefaultConversationsPage extends StatefulWidget {
 class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     with AutomaticKeepAliveClientMixin {
   final _scrollController = ScrollController();
+
+  void _openConversation(ConversationItem conversationItem) => openConversation(
+        context,
+        conversationItem: conversationItem,
+        fileUploadRepository: widget.fileUploadRepository,
+        generateChatBloc: widget.generateChatBloc,
+        generateChatSearchBloc: widget.generateChatSearchBloc,
+        searchAppBarStyle: widget.searchAppBarStyle,
+        chatBubbleStyle: widget.chatBubbleStyle,
+        conversationStyle: widget.conversationStyle,
+        bottomBarStyle: widget.bottomBarStyle,
+        onAppbarTap: widget.onAppbarTap,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -57,51 +71,30 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
             ? FloatingActionButton(
                 onPressed: widget.conversationsStyle.fabAction ??
                     () async {
-                      print('go');
-                      //TODODELETE
-                      final convo =
-                          await GetIt.instance<ConversationsRepository>()
-                              .createConversation(
-                        conversationPartner: FirebaseUser(
-                          id: 'w4Kx3Rn95eSYoiAvSiqaYGQ7auk1',
-                          name: 'Julien5',
-                        ),
-                        me: FirebaseUser(
-                          id: 'tAqmmpKhZecyewN53YmdOseiw2u2',
-                          name: 'Julien',
-                        ),
-                      );
-                      final newConversationItem = ConversationItem(
-                          conversation: convo,
-                          lastMessage: ChatMessage.empty(),
-                          unreadMessagesCount: 0);
+                      final pickedConvoPartners =
+                          widget.getNewConversationPartners?.call();
 
-                      openConversation(
-                        context,
-                        conversationItem: newConversationItem,
-                        fileUploadRepository: widget.fileUploadRepository,
-                        generateChatBloc: widget.generateChatBloc,
-                        generateChatSearchBloc: widget.generateChatSearchBloc,
-                        searchAppBarStyle: widget.searchAppBarStyle,
-                        chatBubbleStyle: widget.chatBubbleStyle,
-                        conversationStyle: widget.conversationStyle,
-                        bottomBarStyle: widget.bottomBarStyle,
-                        onAppbarTap: widget.onAppbarTap,
-                      );
-                      // Placeholder dialog
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (context) => Center(
-                      //     child: Container(
-                      //       padding: const EdgeInsets.all(16),
-                      //       color: widget.defaultConversationsStyle.fabColor,
-                      //       child: const Text(
-                      //         'START NEW CHAT',
-                      //         style: TextStyle(color: Colors.white),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      if (pickedConvoPartners != null &&
+                          pickedConvoPartners.isNotEmpty) {
+                        if (pickedConvoPartners.length == 1) {
+                          context.read<ConversationsBloc>().add(
+                                ConversationsEvent.createConversation(
+                                  conversationPartner:
+                                      pickedConvoPartners.first,
+                                  onSuccessfullyCreatedConversation:
+                                      _openConversation,
+                                ),
+                              );
+                        } else {
+                          context.read<ConversationsBloc>().add(
+                                ConversationsEvent.createGroupConversation(
+                                  conversationPartners: pickedConvoPartners,
+                                  onSuccessfullyCreatedGroupConversation:
+                                      _openConversation,
+                                ),
+                              );
+                        }
+                      }
                     },
                 backgroundColor: widget.conversationsStyle.fabColor,
                 child: widget.conversationsStyle.fabIcon)

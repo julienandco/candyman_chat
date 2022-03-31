@@ -27,6 +27,7 @@ class _$ConversationTearOff {
       String? groupName,
       String? groupPicture,
       required Map<String, Map<String, dynamic>> conversationMembers,
+      required bool isGroupChat,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom = const []}) {
     return _Conversation(
@@ -34,6 +35,7 @@ class _$ConversationTearOff {
       groupName: groupName,
       groupPicture: groupPicture,
       conversationMembers: conversationMembers,
+      isGroupChat: isGroupChat,
       createdAt: createdAt,
       hiddenFrom: hiddenFrom,
     );
@@ -67,6 +69,7 @@ mixin _$Conversation {
 //TODO: rather list of firebase users? and write a custom translator
   Map<String, Map<String, dynamic>> get conversationMembers =>
       throw _privateConstructorUsedError; // required List<String> conversationMembers,
+  bool get isGroupChat => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   List<String> get hiddenFrom => throw _privateConstructorUsedError;
@@ -87,6 +90,7 @@ abstract class $ConversationCopyWith<$Res> {
       String? groupName,
       String? groupPicture,
       Map<String, Map<String, dynamic>> conversationMembers,
+      bool isGroupChat,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
@@ -105,6 +109,7 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
     Object? groupName = freezed,
     Object? groupPicture = freezed,
     Object? conversationMembers = freezed,
+    Object? isGroupChat = freezed,
     Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
@@ -125,6 +130,10 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
               as Map<String, Map<String, dynamic>>,
+      isGroupChat: isGroupChat == freezed
+          ? _value.isGroupChat
+          : isGroupChat // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -149,6 +158,7 @@ abstract class _$ConversationCopyWith<$Res>
       String? groupName,
       String? groupPicture,
       Map<String, Map<String, dynamic>> conversationMembers,
+      bool isGroupChat,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
@@ -169,6 +179,7 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
     Object? groupName = freezed,
     Object? groupPicture = freezed,
     Object? conversationMembers = freezed,
+    Object? isGroupChat = freezed,
     Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
@@ -189,6 +200,10 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
               as Map<String, Map<String, dynamic>>,
+      isGroupChat: isGroupChat == freezed
+          ? _value.isGroupChat
+          : isGroupChat // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -209,6 +224,7 @@ class _$_Conversation extends _Conversation {
       this.groupName,
       this.groupPicture,
       required this.conversationMembers,
+      required this.isGroupChat,
       @MyDateTimeConverter() this.createdAt,
       this.hiddenFrom = const []})
       : super._();
@@ -238,6 +254,8 @@ class _$_Conversation extends _Conversation {
 //TODO: rather list of firebase users? and write a custom translator
   final Map<String, Map<String, dynamic>> conversationMembers;
   @override // required List<String> conversationMembers,
+  final bool isGroupChat;
+  @override
   @MyDateTimeConverter()
   final DateTime? createdAt;
   @JsonKey()
@@ -246,7 +264,7 @@ class _$_Conversation extends _Conversation {
 
   @override
   String toString() {
-    return 'Conversation(id: $id, groupName: $groupName, groupPicture: $groupPicture, conversationMembers: $conversationMembers, createdAt: $createdAt, hiddenFrom: $hiddenFrom)';
+    return 'Conversation(id: $id, groupName: $groupName, groupPicture: $groupPicture, conversationMembers: $conversationMembers, isGroupChat: $isGroupChat, createdAt: $createdAt, hiddenFrom: $hiddenFrom)';
   }
 
   @override
@@ -260,6 +278,8 @@ class _$_Conversation extends _Conversation {
                 .equals(other.groupPicture, groupPicture) &&
             const DeepCollectionEquality()
                 .equals(other.conversationMembers, conversationMembers) &&
+            const DeepCollectionEquality()
+                .equals(other.isGroupChat, isGroupChat) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality()
                 .equals(other.hiddenFrom, hiddenFrom));
@@ -272,6 +292,7 @@ class _$_Conversation extends _Conversation {
       const DeepCollectionEquality().hash(groupName),
       const DeepCollectionEquality().hash(groupPicture),
       const DeepCollectionEquality().hash(conversationMembers),
+      const DeepCollectionEquality().hash(isGroupChat),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(hiddenFrom));
 
@@ -292,6 +313,7 @@ abstract class _Conversation extends Conversation {
       String? groupName,
       String? groupPicture,
       required Map<String, Map<String, dynamic>> conversationMembers,
+      required bool isGroupChat,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom}) = _$_Conversation;
   _Conversation._() : super._();
@@ -321,6 +343,8 @@ abstract class _Conversation extends Conversation {
 //TODO: rather list of firebase users? and write a custom translator
   Map<String, Map<String, dynamic>> get conversationMembers;
   @override // required List<String> conversationMembers,
+  bool get isGroupChat;
+  @override
   @MyDateTimeConverter()
   DateTime? get createdAt;
   @override

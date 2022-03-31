@@ -34,6 +34,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  List<FirebaseUser> get _getMockConvoPartner =>
+      [FirebaseUser(id: 'w4Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien7')];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,7 +46,10 @@ class MyApp extends StatelessWidget {
       ),
       home: // const MyCustomConversationsLoader()
           // Uncomment the next lines to see the default look of the app
-          NeonChat(getItInstance: getIt),
+          NeonChat(
+        getItInstance: getIt,
+        getNewConversationPartners: () => _getMockConvoPartner,
+      ),
     );
   }
 }

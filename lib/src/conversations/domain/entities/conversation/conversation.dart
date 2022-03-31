@@ -30,6 +30,7 @@ class Conversation with _$Conversation {
     required Map<String, Map<String, dynamic>> conversationMembers,
     // required List<String> conversationMembers,
 
+    required bool isGroupChat,
     @MyDateTimeConverter() DateTime? createdAt,
     @Default([]) List<String> hiddenFrom,
   }) = _Conversation;
@@ -44,8 +45,6 @@ class Conversation with _$Conversation {
         FirebaseAuth.instance.currentUser!.uid,
         // (element) => element == getIt<FirebaseAuth>().currentUser!.uid,
       );
-
-  bool get isGroupChat => conversationMembers.length > 2;
 
   //TODO: errorprone
   String get displayName {

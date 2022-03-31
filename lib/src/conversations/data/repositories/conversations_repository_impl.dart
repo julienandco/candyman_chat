@@ -65,6 +65,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
           conversationPartner.id: conversationPartner.toJson(),
         },
         createdAt: DateTime.now(),
+        isGroupChat: false,
       );
       await doc.set(conversation.toJson());
       return conversation;

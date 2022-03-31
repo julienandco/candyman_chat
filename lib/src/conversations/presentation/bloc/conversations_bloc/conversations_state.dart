@@ -3,7 +3,8 @@ part of 'conversations_bloc.dart';
 @freezed
 class ConversationsState with _$ConversationsState {
   const ConversationsState._();
-  const factory ConversationsState.initial() = _Initial;
+  const factory ConversationsState.uninitialized() = _Uninitialized;
+  const factory ConversationsState.initialized() = _Initialized;
   const factory ConversationsState.loadInProgress() = _LoadInProgress;
   const factory ConversationsState.loadSuccess(
     List<ConversationItem> conversations,

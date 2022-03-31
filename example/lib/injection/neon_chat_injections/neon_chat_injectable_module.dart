@@ -82,9 +82,9 @@ abstract class NEONChatInjectableModule {
   @lazySingleton
   InitializeConversationItemStreamUC get initializeConversationItemStreamUC =>
       InitializeConversationItemStreamUC(
-          conversationRepository: conversationRepository,
-          conversationsRepository: conversationsRepository,
-          userProfileRepository: firebaseUserProfileRepository);
+        conversationRepository: conversationRepository,
+        conversationsRepository: conversationsRepository,
+      );
 
   @lazySingleton
   InitializeConversationsStreamUC get initializeConversationsStreamUC =>
@@ -95,6 +95,14 @@ abstract class NEONChatInjectableModule {
       HideConversationUC(conversationsRepository);
 
   @lazySingleton
+  GetFirebaseUserUC get getFirebaseUserUC =>
+      GetFirebaseUserUC(firebaseUserProfileRepository);
+
+  @lazySingleton
+  CreateConversationUC get createConversationUC =>
+      CreateConversationUC(conversationsRepository);
+
+  @lazySingleton
   ChatSearchBloc get chatSearchBloc => ChatSearchBloc();
 
   @lazySingleton
@@ -103,9 +111,12 @@ abstract class NEONChatInjectableModule {
 
   @lazySingleton
   ConversationsBloc get conversationsBloc => ConversationsBloc(
-      initializeConversationsStreamUC: initializeConversationsStreamUC,
-      initializeConversationItemStreamUC: initializeConversationItemStreamUC,
-      hideConversationUC: hideConversationUC);
+        initializeConversationsStreamUC: initializeConversationsStreamUC,
+        initializeConversationItemStreamUC: initializeConversationItemStreamUC,
+        hideConversationUC: hideConversationUC,
+        getFirebaseUserUC: getFirebaseUserUC,
+        createConversationUC: createConversationUC,
+      );
 
   @lazySingleton
   ConversationsSearchBloc get conversationsSearchBloc =>
