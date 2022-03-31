@@ -88,7 +88,10 @@ class ChatBubbleStyle {
   final double maxWidthPercentage;
   final bool showAvatar;
   final TextStyle? otherUserNameStyle;
-  final TextStyle? messageTimestampStyle;
+  final TextStyle? otherUserMessageTimestampStyle;
+  final TextStyle? ownMessageTimestampStyle;
+  final TextStyle? ownMessageTextStyle;
+  final TextStyle? otherUserMessageTextStyle;
   final Color focusedMenuItemBackgroundColor;
   final Widget? copyIcon;
   final Widget? deleteIcon;
@@ -117,8 +120,23 @@ class ChatBubbleStyle {
   const ChatBubbleStyle({
     this.maxWidthPercentage = 2 / 3,
     this.showAvatar = false,
-    this.otherUserNameStyle,
-    this.messageTimestampStyle,
+    this.otherUserNameStyle = const TextStyle(fontWeight: FontWeight.bold),
+    this.otherUserMessageTimestampStyle = const TextStyle(
+      fontSize: 12.0,
+      color: Colors.black,
+    ),
+    this.ownMessageTimestampStyle = const TextStyle(
+      fontSize: 12.0,
+      color: Colors.white,
+    ),
+    this.ownMessageTextStyle = const TextStyle(
+      fontSize: 18.0,
+      color: Colors.white,
+    ),
+    this.otherUserMessageTextStyle = const TextStyle(
+      fontSize: 18.0,
+      color: Colors.white,
+    ),
     this.focusedMenuItemBackgroundColor = Colors.white,
     this.copyIcon,
     this.deleteIcon,

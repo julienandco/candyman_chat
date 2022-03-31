@@ -91,7 +91,9 @@ class _MessageBubbleState extends State<MessageBubble> {
     var footer = [
       Text(
         widget.message.timestampFormatted,
-        style: widget.chatBubbleStyle.messageTimestampStyle,
+        style: widget.message.isMe
+            ? widget.chatBubbleStyle.ownMessageTimestampStyle
+            : widget.chatBubbleStyle.otherUserMessageTimestampStyle,
       ),
       if (widget.message.isMe)
         CheckMarkWidget(
@@ -100,26 +102,44 @@ class _MessageBubbleState extends State<MessageBubble> {
           receivedIcon: widget.chatBubbleStyle.receivedIcon,
         )
     ];
+
     if (!widget.message.isMe) footer = footer.reversed.toList();
+
+    var header = widget.isGroupChat && !widget.message.isMe
+        ? Padding(
+            padding: const EdgeInsets.only(
+              top: 5,
+              left: 15,
+              right: 15,
+              bottom: 5,
+            ),
+            child: AutoSizeText(
+              widget.otherUserName,
+              maxLines: 1,
+              style: widget.chatBubbleStyle.otherUserNameStyle,
+            ),
+          )
+        : null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (_showAvatar)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 7, left: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                widget.otherUserAvatar!,
-                const SizedBox(width: 5),
-                Text(
-                  widget.otherUserName,
-                  style: widget.chatBubbleStyle.otherUserNameStyle,
-                ),
-              ],
-            ),
-          ),
+        // if (_showAvatar)
+        //   Padding(
+        //     padding: const EdgeInsets.only(bottom: 7, left: 5),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         widget.otherUserAvatar!,
+        //         const SizedBox(width: 5),
+        //         Text(
+        //           widget.otherUserName,
+        //           style: widget.chatBubbleStyle.otherUserNameStyle,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
         VisibilityDetector(
           key: Key(widget.message.id),
           onVisibilityChanged: (value) {
@@ -232,6 +252,7 @@ class _MessageBubbleState extends State<MessageBubble> {
                         fileBubbleStyle: widget.chatBubbleStyle.fileBubbleStyle,
                         message: widget.message,
                         footer: footer,
+                        header: header,
                         messageBubbleDeletedLabel:
                             widget.chatBubbleStyle.messageBubbleDeletedLabel ??
                                 'deleted',
@@ -241,6 +262,9 @@ class _MessageBubbleState extends State<MessageBubble> {
                         messageIsUploadingLabel:
                             widget.chatBubbleStyle.messageIsUploadingLabel ??
                                 'uploading...',
+                        messageTextStyle: widget.message.isMe
+                            ? widget.chatBubbleStyle.ownMessageTextStyle
+                            : widget.chatBubbleStyle.otherUserMessageTextStyle,
                       ),
                     ),
                   ),

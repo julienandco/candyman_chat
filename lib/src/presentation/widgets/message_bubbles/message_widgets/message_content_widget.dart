@@ -15,10 +15,14 @@ class MessageContentWidget extends StatelessWidget {
   final VideoPlayerStyle videoPlayerStyle;
   final FileBubbleStyle fileBubbleStyle;
   final GetUploadUrlUC getUploadUrlUC;
+  final ChatMessage message;
+  final Widget? header;
+  final List<Widget> footer;
 
   const MessageContentWidget({
     Key? key,
     required this.message,
+    required this.header,
     required this.footer,
     required this.messageIsUploadingLabel,
     required this.messageBubbleDeletedLabel,
@@ -31,19 +35,38 @@ class MessageContentWidget extends StatelessWidget {
     required this.fileBubbleStyle,
     required this.getUploadUrlUC,
   }) : super(key: key);
-  final ChatMessage message;
-  final List<Widget> footer;
 
   @override
   Widget build(BuildContext context) {
-    return _getMessageContent(context);
+    if (header != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          header!,
+          _getMessageContent(context),
+        ],
+      );
+    } else {
+      return _getMessageContent(context);
+    }
   }
 
   Widget _getMessageContent(BuildContext context) {
+    final footerWidget = Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: footer.length > 1
+          ? MainAxisAlignment.spaceBetween
+          : MainAxisAlignment.end,
+      children: footer,
+    );
     switch (message.type) {
       case ChatMessageType.voice:
         return Container(
-          margin: const EdgeInsets.all(15),
+          margin: const EdgeInsets.only(
+            bottom: 15,
+            right: 15,
+            left: 15,
+          ),
           child: Column(
             children: [
               ChatAudioPlayer(
@@ -51,16 +74,13 @@ class MessageContentWidget extends StatelessWidget {
                 message: message,
                 getUploadUrlUC: getUploadUrlUC,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: footer,
-              )
+              footerWidget,
             ],
           ),
         );
       case ChatMessageType.image:
         return Container(
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
           width: MediaQuery.of(context).size.width * 0.5,
           child: Column(
             children: [
@@ -78,10 +98,7 @@ class MessageContentWidget extends StatelessWidget {
                   vertical: 5,
                   horizontal: 15,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: footer,
-                ),
+                child: footerWidget,
               ),
             ],
           ),
@@ -89,7 +106,7 @@ class MessageContentWidget extends StatelessWidget {
       case ChatMessageType.video:
         return Container(
           width: MediaQuery.of(context).size.width * 0.5,
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
           child: Column(
             children: [
               if (!message.doneUpload && kIsWeb) Text(messageIsUploadingLabel),
@@ -106,10 +123,7 @@ class MessageContentWidget extends StatelessWidget {
                   vertical: 5,
                   horizontal: 15,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: footer,
-                ),
+                child: footerWidget,
               ),
             ],
           ),
@@ -117,7 +131,7 @@ class MessageContentWidget extends StatelessWidget {
 
       case ChatMessageType.file:
         return Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -126,17 +140,13 @@ class MessageContentWidget extends StatelessWidget {
                 message: message,
                 getUploadUrlUC: getUploadUrlUC,
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: footer,
-              ),
+              footerWidget,
             ],
           ),
         );
       case ChatMessageType.deleted:
         return Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
           child: Text(
             messageBubbleDeletedLabel,
             style: messageBubbleDeletedStyle,
@@ -144,7 +154,12 @@ class MessageContentWidget extends StatelessWidget {
         );
       default:
         return Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.only(
+            bottom: 15,
+            right: 15,
+            left: 15,
+            top: 5,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -152,11 +167,7 @@ class MessageContentWidget extends StatelessWidget {
                 message.text ?? messageTypeNotSupportedLabel,
                 style: messageTextStyle,
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: footer,
-              ),
+              footerWidget,
             ],
           ),
         );

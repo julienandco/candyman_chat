@@ -109,8 +109,14 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                                 orElse: () => 'undefined',
                                 loadSuccess: (state) {
                                   if (state.conversation.isGroupChat) {
-                                    //TODO: this is wrong, how to get name of other user in group chat?
-                                    return 'TODO FÜR GRUPPENCHAT';
+                                    final author = state
+                                        .conversation.conversationMembers
+                                        .firstWhere(
+                                      (member) => member.id == senderId,
+                                      orElse: () => FirebaseUser(
+                                          id: 'dummy', name: 'unknown'), //TODO
+                                    );
+                                    return author.name;
                                   } else {
                                     return state.displayName;
                                   }
