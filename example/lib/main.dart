@@ -34,8 +34,20 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  List<FirebaseUser> get _getMockConvoPartner =>
-      [FirebaseUser(id: 'w4Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien7')];
+  DirectConversationCreationData get _getMockConvoCreationData =>
+      DirectConversationCreationData(
+          conversationPartner: FirebaseUser(
+              id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien7'));
+  GroupConversationCreationData get _getMockGroupConvoCreationData =>
+      GroupConversationCreationData(conversationMembers: [
+        FirebaseUser(id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien7'),
+        FirebaseUser(id: '94Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien9'),
+      ], groupName: 'gruppe-test-2');
+
+  /// Uncomment the [MyCustomConversationsLoader] to see a custom implementation
+  /// that only uses the chat's logic.
+  ///
+  /// Uncomment the [NeonChat] to see the default look and usage of the NEON Chat.
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +57,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
       ),
       home: // const MyCustomConversationsLoader()
-          // Uncomment the next lines to see the default look of the app
           NeonChat(
         getItInstance: getIt,
-        getNewConversationPartners: () => _getMockConvoPartner,
+        getConversationCreationData: () => _getMockGroupConvoCreationData,
       ),
     );
   }

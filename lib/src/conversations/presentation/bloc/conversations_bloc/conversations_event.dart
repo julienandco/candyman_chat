@@ -22,12 +22,12 @@ class ConversationsEvent with _$ConversationsEvent {
       _HideConversation;
 
   const factory ConversationsEvent.createConversation({
-    required FirebaseUser conversationPartner,
+    required DirectConversationCreationData creationData,
     Function(ConversationItem)? onSuccessfullyCreatedConversation,
   }) = _CreateConversation;
 
   const factory ConversationsEvent.createGroupConversation({
-    required List<FirebaseUser> conversationPartners,
+    required GroupConversationCreationData creationData,
     Function(ConversationItem)? onSuccessfullyCreatedGroupConversation,
   }) = _CreateGroupConversation;
 

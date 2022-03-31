@@ -1,16 +1,16 @@
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
-class CreateConversationUC {
+class CreateGroupConversationUC {
   final ConversationsRepository conversationsRepository;
 
-  CreateConversationUC(this.conversationsRepository);
+  CreateGroupConversationUC(this.conversationsRepository);
 
   Future<Conversation> call({
     required FirebaseUser me,
-    required DirectConversationCreationData creationData,
+    required GroupConversationCreationData creationData,
   }) async {
-    return await conversationsRepository.createConversation(
+    return await conversationsRepository.createGroupConversation(
       me: me,
       creationData: creationData,
     );

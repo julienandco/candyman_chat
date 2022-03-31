@@ -24,12 +24,10 @@ class Conversation with _$Conversation {
     String? groupPicture,
 
     ///
-    /// Maps userIds to a Map of userNames and profilePicURLs
+    /// Has two elements for a 1-on-1 chat and n elements for a group chat.
     ///
-    //TODO: rather list of firebase users? and write a custom translator
-    required Map<String, Map<String, dynamic>> conversationMembers,
-    // required List<String> conversationMembers,
-
+    @MyFirebaseUserListConverter()
+        required List<FirebaseUser> conversationMembers,
     required bool isGroupChat,
     @MyDateTimeConverter() DateTime? createdAt,
     @Default([]) List<String> hiddenFrom,
@@ -38,23 +36,18 @@ class Conversation with _$Conversation {
   factory Conversation.fromJson(Map<String, dynamic> json) =>
       _$ConversationFromJson(json);
 
-  //TODO: injection?
   /// return whether the conversation is hidden from the current user
-  /// //TODO: add firebase rule such that hidden stuff does not even get sent back
   bool get isHidden => hiddenFrom.contains(
-        FirebaseAuth.instance.currentUser!.uid,
-        // (element) => element == getIt<FirebaseAuth>().currentUser!.uid,
+        GetIt.instance<FirebaseAuth>().currentUser!.uid,
       );
 
-  //TODO: errorprone
   String get displayName {
     if (isGroupChat) {
       return groupName ?? 'group'; //TODO: what to do?
     } else {
-      final otherUserID = conversationMembers.keys.firstWhere(
-          (userID) => userID != FirebaseAuth.instance.currentUser!.uid);
-      final otherUserMap = conversationMembers[otherUserID]!;
-      return otherUserMap[GetIt.instance<FirebaseKeys>().usersUserNameKey]!;
+      final otherUser = conversationMembers.firstWhere(
+          (userID) => userID.id != FirebaseAuth.instance.currentUser!.uid);
+      return otherUser.name;
     }
   }
 
@@ -62,11 +55,9 @@ class Conversation with _$Conversation {
     if (isGroupChat) {
       return groupPicture;
     } else {
-      final otherUserID = conversationMembers.keys.firstWhere(
-          (userID) => userID != FirebaseAuth.instance.currentUser!.uid);
-      final otherUserMap = conversationMembers[otherUserID]!;
-      return otherUserMap[
-          GetIt.instance<FirebaseKeys>().usersProfilePictureKey];
+      final otherUser = conversationMembers.firstWhere(
+          (userID) => userID.id != FirebaseAuth.instance.currentUser!.uid);
+      return otherUser.profilePictureURL;
     }
   }
 }

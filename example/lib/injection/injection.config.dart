@@ -35,6 +35,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => nEONChatInjectableModule.conversationsSearchBloc);
   gh.lazySingleton<_i3.CreateConversationUC>(
       () => nEONChatInjectableModule.createConversationUC);
+  gh.lazySingleton<_i3.CreateGroupConversationUC>(
+      () => nEONChatInjectableModule.createGroupConversationUC);
   gh.lazySingleton<_i3.CurrentConversationCubit>(
       () => nEONChatInjectableModule.currentConversationCubit);
   gh.lazySingleton<_i3.DeleteMessageUC>(

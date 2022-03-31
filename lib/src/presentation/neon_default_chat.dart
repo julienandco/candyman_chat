@@ -28,9 +28,9 @@ class NeonChat extends StatelessWidget {
   /// Gets called when a user wants to start a new 1-on-1 or group chat.
   /// Possible implementation could be: a dialog shows up and lets the user
   /// selected all the wanted conversation partners and returns them as a
-  /// [List<FirebaseUser>].
+  /// [ConversationCreationData] instance.
   ///
-  final List<FirebaseUser> Function()? getNewConversationPartners;
+  final ConversationCreationData Function()? getConversationCreationData;
 
   //TODO: function onChatSuccessfully created, default function: opens chat
 
@@ -61,7 +61,7 @@ class NeonChat extends StatelessWidget {
     this.chatBubbleStyle = const ChatBubbleStyle(),
     this.onAppBarTap,
     this.onOpenUserProfile,
-    this.getNewConversationPartners,
+    this.getConversationCreationData,
   }) : super(key: key);
 
   ChatBloc _generateChatBloc() => ChatBloc(
@@ -103,7 +103,7 @@ class NeonChat extends StatelessWidget {
         bottomBarStyle: bottomBarStyle,
         onAppbarTap: onAppBarTap,
         onOpenUserProfile: onOpenUserProfile,
-        getNewConversationPartners: getNewConversationPartners,
+        getConversationCreationData: getConversationCreationData,
       ),
     );
   }

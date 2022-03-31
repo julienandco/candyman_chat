@@ -4,6 +4,7 @@ import 'package:neon_chat/src/core/util/util.dart';
 // Conversations Style
 class ConversationsStyle {
   final Text appBarTitle;
+  final Widget emptyConversationsWidget;
   final Color appBarColor;
   final bool appBarCenterTitle;
   final Color fabColor;
@@ -14,19 +15,23 @@ class ConversationsStyle {
   final Widget loadingWidget;
   final ChatListItemStyle chatListItemStyle;
 
-  const ConversationsStyle(
-      {this.appBarTitle = const Text('NEON CHAT'),
-      this.appBarCenterTitle = true,
-      this.appBarColor = const Color.fromARGB(255, 25, 5, 55),
-      this.fabColor = const Color.fromARGB(255, 25, 5, 55),
-      this.fabIcon = const Icon(Icons.message),
-      this.showFab = false,
-      this.fabAction,
-      this.emtpyConversation = const Center(child: Text('no conversations')),
-      this.loadingWidget = const Center(
-        child: CircularProgressIndicator(color: Color.fromARGB(255, 25, 5, 55)),
-      ),
-      this.chatListItemStyle = const ChatListItemStyle()});
+  const ConversationsStyle({
+    this.appBarTitle = const Text('NEON CHAT'),
+    this.appBarCenterTitle = true,
+    this.emptyConversationsWidget = const Center(
+      child: Text('No Conversations found!'),
+    ),
+    this.appBarColor = const Color.fromARGB(255, 25, 5, 55),
+    this.fabColor = const Color.fromARGB(255, 25, 5, 55),
+    this.fabIcon = const Icon(Icons.message),
+    this.showFab = false,
+    this.fabAction,
+    this.emtpyConversation = const Center(child: Text('no conversations')),
+    this.loadingWidget = const Center(
+      child: CircularProgressIndicator(color: Color.fromARGB(255, 25, 5, 55)),
+    ),
+    this.chatListItemStyle = const ChatListItemStyle(),
+  });
 }
 
 class ChatListItemStyle {

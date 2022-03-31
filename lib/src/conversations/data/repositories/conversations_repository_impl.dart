@@ -24,12 +24,13 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   @override
   Future<Conversation> createConversation({
     required FirebaseUser me,
-    required FirebaseUser conversationPartner,
+    required DirectConversationCreationData creationData,
   }) async {
+    final conversationPartner = creationData.conversationPartner;
+
     // This query checks whether a 1-on-1 conversation between [_userId]
     // and [conversationPartnerID] already exists to make sure chat rooms are
     // not duplicated.
-    //TODOQUERY
     final query = await _collection
         .where(
             '${firebaseKeys.conversationMembersKey}.${conversationPartner.id}',
@@ -46,7 +47,8 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
 
     final list = conversations.where((element) {
       return listEquals(
-          List<String>.from(element.conversationMembers.keys), _members);
+          List<String>.from(element.conversationMembers.map((user) => user.id)),
+          _members);
     });
 
     if (list.isNotEmpty) {
@@ -60,10 +62,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       final doc = _collection.doc();
       final conversation = Conversation(
         id: doc.id,
-        conversationMembers: {
-          _currentUser.uid: me.toJson(),
-          conversationPartner.id: conversationPartner.toJson(),
-        },
+        conversationMembers: [me, conversationPartner],
         createdAt: DateTime.now(),
         isGroupChat: false,
       );
@@ -119,6 +118,12 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   @override
+  Stream<int> getUnreadGroupMessagesCount(String conversationId) {
+    // TODOGROUPSEEN: implement getUnreadGroupMessagesCount
+    throw UnimplementedError();
+  }
+
+  @override
   Stream<Conversation> getConversation(String conversationId) {
     return _collection.doc(conversationId).snapshots().transform(
       StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
@@ -159,19 +164,22 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   @override
-  Stream<int> getUnreadGroupMessagesCount(String conversationId) {
-    // TODOGROUPSEEN: implement getUnreadGroupMessagesCount
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Conversation> createGroupConversation(
-      {required Map<String, Map<String, String>> conversationPartners,
-      required String displayName,
-      String? thumbnail}) {
+  Future<Conversation> createGroupConversation({
+    required FirebaseUser me,
+    required GroupConversationCreationData creationData,
+  }) async {
     //TODO: thumbnail should be uploaded somewhere
 
-    // TODOCREATE: implement createGroupConversation
-    throw UnimplementedError();
+    final doc = _collection.doc();
+    final conversation = Conversation(
+      id: doc.id,
+      conversationMembers: [...creationData.conversationMembers, me],
+      createdAt: DateTime.now(),
+      groupName: creationData.groupName,
+      groupPicture: creationData.groupPhoto,
+      isGroupChat: true,
+    );
+    await doc.set(conversation.toJson());
+    return conversation;
   }
 }

@@ -16,7 +16,9 @@ class DefaultConversationsPage extends StatefulWidget {
   final Function()? onOpenUserProfile;
   final Function()? onAppbarTap;
 
-  final List<FirebaseUser> Function()? getNewConversationPartners;
+  final Widget Function(String?)? getUserAvatar;
+
+  final ConversationCreationData Function()? getConversationCreationData;
 
   const DefaultConversationsPage({
     Key? key,
@@ -30,7 +32,8 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.bottomBarStyle,
     this.onOpenUserProfile,
     this.onAppbarTap,
-    this.getNewConversationPartners,
+    this.getUserAvatar,
+    this.getConversationCreationData,
   }) : super(key: key);
 
   @override
@@ -71,24 +74,24 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
             ? FloatingActionButton(
                 onPressed: widget.conversationsStyle.fabAction ??
                     () async {
-                      final pickedConvoPartners =
-                          widget.getNewConversationPartners?.call();
+                      final convoCreationData =
+                          widget.getConversationCreationData?.call();
 
-                      if (pickedConvoPartners != null &&
-                          pickedConvoPartners.isNotEmpty) {
-                        if (pickedConvoPartners.length == 1) {
+                      if (convoCreationData != null) {
+                        if (convoCreationData
+                            is DirectConversationCreationData) {
                           context.read<ConversationsBloc>().add(
                                 ConversationsEvent.createConversation(
-                                  conversationPartner:
-                                      pickedConvoPartners.first,
+                                  creationData: convoCreationData,
                                   onSuccessfullyCreatedConversation:
                                       _openConversation,
                                 ),
                               );
-                        } else {
+                        } else if (convoCreationData
+                            is GroupConversationCreationData) {
                           context.read<ConversationsBloc>().add(
                                 ConversationsEvent.createGroupConversation(
-                                  conversationPartners: pickedConvoPartners,
+                                  creationData: convoCreationData,
                                   onSuccessfullyCreatedGroupConversation:
                                       _openConversation,
                                 ),
@@ -105,70 +108,59 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
               return BlocBuilder<ConversationsBloc, ConversationsState>(
                 builder: (context, conversationsState) =>
                     conversationsState.maybeMap(
-                        loadSuccess: (loadedConversationsState) => ListView(
-                              controller: _scrollController,
-                              physics: const BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics(),
+                  loadSuccess: (loadedConversationsState) => ListView(
+                    controller: _scrollController,
+                    physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    children: conversationsState.maybeWhen(
+                      loadSuccess: (chatConversations) {
+                        if (loadedConversationsState.conversations.isEmpty) {
+                          return [widget.conversationsStyle.emtpyConversation];
+                        }
+                        return (conversationsSearchState.isSearchActive
+                                ? conversationsSearchState.conversations
+                                : chatConversations)
+                            .map(
+                              (conversationItem) => ChatListItem(
+                                chatListItemStyle:
+                                    widget.conversationsStyle.chatListItemStyle,
+                                conversationItem: conversationItem,
+                                userAvatar: widget.getUserAvatar?.call(
+                                        conversationItem
+                                            .conversation.thumbnail) ??
+                                    const CircleAvatar(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 25, 5, 55),
+                                      radius: 20.0,
+                                    ),
+                                onOpenChat: () => openConversation(
+                                  context,
+                                  conversationItem: conversationItem,
+                                  fileUploadRepository:
+                                      widget.fileUploadRepository,
+                                  generateChatBloc: widget.generateChatBloc,
+                                  generateChatSearchBloc:
+                                      widget.generateChatSearchBloc,
+                                  searchAppBarStyle: widget.searchAppBarStyle,
+                                  chatBubbleStyle: widget.chatBubbleStyle,
+                                  conversationStyle: widget.conversationStyle,
+                                  bottomBarStyle: widget.bottomBarStyle,
+                                  onAppbarTap: widget.onAppbarTap,
+                                ),
+                                onOpenUserProfile: widget.onOpenUserProfile,
                               ),
-                              children: conversationsState.maybeWhen(
-                                loadSuccess: (chatConversations) {
-                                  if (loadedConversationsState
-                                      .conversations.isEmpty) {
-                                    return [
-                                      widget
-                                          .conversationsStyle.emtpyConversation
-                                    ];
-                                  }
-                                  return (conversationsSearchState
-                                              .isSearchActive
-                                          ? conversationsSearchState
-                                              .conversations
-                                          : chatConversations)
-                                      .map(
-                                        (conversation) => ChatListItem(
-                                          chatListItemStyle: widget
-                                              .conversationsStyle
-                                              .chatListItemStyle,
-                                          conversationItem: conversation,
-                                          userAvatar: const CircleAvatar(
-                                            backgroundColor:
-                                                Color.fromARGB(255, 25, 5, 55),
-                                            radius: 20.0,
-                                          ),
-                                          onOpenChat: () => openConversation(
-                                            context,
-                                            conversationItem: conversation,
-                                            fileUploadRepository:
-                                                widget.fileUploadRepository,
-                                            generateChatBloc:
-                                                widget.generateChatBloc,
-                                            generateChatSearchBloc:
-                                                widget.generateChatSearchBloc,
-                                            searchAppBarStyle:
-                                                widget.searchAppBarStyle,
-                                            chatBubbleStyle:
-                                                widget.chatBubbleStyle,
-                                            conversationStyle:
-                                                widget.conversationStyle,
-                                            bottomBarStyle:
-                                                widget.bottomBarStyle,
-                                            onAppbarTap: widget.onAppbarTap,
-                                          ),
-                                          onOpenUserProfile:
-                                              widget.onOpenUserProfile,
-                                        ),
-                                      )
-                                      .toList();
-                                },
-                                orElse: () =>
-                                    [widget.conversationsStyle.loadingWidget],
-                              ),
-                            ),
-                        loadInProgress: (l) =>
-                            widget.conversationsStyle.loadingWidget,
-                        orElse: () => const Center(
-                              child: Text('No Conversations found!'),
-                            )),
+                            )
+                            .toList();
+                      },
+                      orElse: () => [widget.conversationsStyle.loadingWidget],
+                    ),
+                  ),
+                  loadInProgress: (l) =>
+                      widget.conversationsStyle.loadingWidget,
+                  orElse: () =>
+                      widget.conversationsStyle.emptyConversationsWidget,
+                ),
               );
             },
           ),

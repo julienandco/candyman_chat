@@ -103,6 +103,10 @@ abstract class NEONChatInjectableModule {
       CreateConversationUC(conversationsRepository);
 
   @lazySingleton
+  CreateGroupConversationUC get createGroupConversationUC =>
+      CreateGroupConversationUC(conversationsRepository);
+
+  @lazySingleton
   ChatSearchBloc get chatSearchBloc => ChatSearchBloc();
 
   @lazySingleton
@@ -116,6 +120,7 @@ abstract class NEONChatInjectableModule {
         hideConversationUC: hideConversationUC,
         getFirebaseUserUC: getFirebaseUserUC,
         createConversationUC: createConversationUC,
+        createGroupConversationUC: createGroupConversationUC,
       );
 
   @lazySingleton

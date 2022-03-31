@@ -16,8 +16,9 @@ class DefaultConversationsLoader extends StatelessWidget {
   final BottomBarStyle bottomBarStyle;
   final Function()? onOpenUserProfile;
   final Function()? onAppbarTap;
+  final Widget Function(String?)? getUserAvatar;
 
-  final List<FirebaseUser> Function()? getNewConversationPartners;
+  final ConversationCreationData Function()? getConversationCreationData;
 
   const DefaultConversationsLoader({
     Key? key,
@@ -31,7 +32,8 @@ class DefaultConversationsLoader extends StatelessWidget {
     required this.bottomBarStyle,
     this.onOpenUserProfile,
     this.onAppbarTap,
-    this.getNewConversationPartners,
+    this.getUserAvatar,
+    this.getConversationCreationData,
   }) : super(key: key);
 
   @override
@@ -78,7 +80,8 @@ class DefaultConversationsLoader extends StatelessWidget {
                     bottomBarStyle: bottomBarStyle,
                     onOpenUserProfile: onOpenUserProfile,
                     onAppbarTap: onAppbarTap,
-                    getNewConversationPartners: getNewConversationPartners,
+                    getUserAvatar: getUserAvatar,
+                    getConversationCreationData: getConversationCreationData,
                   ),
                 ),
                 if (isWidthOverLimit(context))

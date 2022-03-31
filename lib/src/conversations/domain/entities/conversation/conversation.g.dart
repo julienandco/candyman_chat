@@ -11,10 +11,8 @@ _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       groupName: json['groupName'] as String?,
       groupPicture: json['groupPicture'] as String?,
-      conversationMembers:
-          (json['conversationMembers'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(k, e as Map<String, dynamic>),
-      ),
+      conversationMembers: const MyFirebaseUserListConverter()
+          .fromJson(json['conversationMembers']),
       isGroupChat: json['isGroupChat'] as bool,
       createdAt: const MyDateTimeConverter().fromJson(json['createdAt']),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
@@ -28,7 +26,8 @@ Map<String, dynamic> _$$_ConversationToJson(_$_Conversation instance) =>
       'id': instance.id,
       'groupName': instance.groupName,
       'groupPicture': instance.groupPicture,
-      'conversationMembers': instance.conversationMembers,
+      'conversationMembers': const MyFirebaseUserListConverter()
+          .toJson(instance.conversationMembers),
       'isGroupChat': instance.isGroupChat,
       'createdAt': const MyDateTimeConverter().toJson(instance.createdAt),
       'hiddenFrom': instance.hiddenFrom,

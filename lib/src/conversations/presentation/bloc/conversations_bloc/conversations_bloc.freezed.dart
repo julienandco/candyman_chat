@@ -807,20 +807,20 @@ class _$ConversationsEventTearOff {
   }
 
   _CreateConversation createConversation(
-      {required FirebaseUser conversationPartner,
+      {required DirectConversationCreationData creationData,
       dynamic Function(ConversationItem)? onSuccessfullyCreatedConversation}) {
     return _CreateConversation(
-      conversationPartner: conversationPartner,
+      creationData: creationData,
       onSuccessfullyCreatedConversation: onSuccessfullyCreatedConversation,
     );
   }
 
   _CreateGroupConversation createGroupConversation(
-      {required List<FirebaseUser> conversationPartners,
+      {required GroupConversationCreationData creationData,
       dynamic Function(ConversationItem)?
           onSuccessfullyCreatedGroupConversation}) {
     return _CreateGroupConversation(
-      conversationPartners: conversationPartners,
+      creationData: creationData,
       onSuccessfullyCreatedGroupConversation:
           onSuccessfullyCreatedGroupConversation,
     );
@@ -849,12 +849,12 @@ mixin _$ConversationsEvent {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -870,12 +870,12 @@ mixin _$ConversationsEvent {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -891,12 +891,12 @@ mixin _$ConversationsEvent {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1039,12 +1039,12 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -1063,12 +1063,12 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1087,12 +1087,12 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1243,12 +1243,12 @@ class _$_FetchChatItems implements _FetchChatItems {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -1267,12 +1267,12 @@ class _$_FetchChatItems implements _FetchChatItems {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1291,12 +1291,12 @@ class _$_FetchChatItems implements _FetchChatItems {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1456,12 +1456,12 @@ class _$_OnChatItemsData implements _OnChatItemsData {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -1480,12 +1480,12 @@ class _$_OnChatItemsData implements _OnChatItemsData {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1504,12 +1504,12 @@ class _$_OnChatItemsData implements _OnChatItemsData {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1657,12 +1657,12 @@ class _$_OnData implements _OnData {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -1681,12 +1681,12 @@ class _$_OnData implements _OnData {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1705,12 +1705,12 @@ class _$_OnData implements _OnData {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1859,12 +1859,12 @@ class _$_HideConversation implements _HideConversation {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -1883,12 +1883,12 @@ class _$_HideConversation implements _HideConversation {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1907,12 +1907,12 @@ class _$_HideConversation implements _HideConversation {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -1995,10 +1995,8 @@ abstract class _$CreateConversationCopyWith<$Res> {
           _CreateConversation value, $Res Function(_CreateConversation) then) =
       __$CreateConversationCopyWithImpl<$Res>;
   $Res call(
-      {FirebaseUser conversationPartner,
+      {DirectConversationCreationData creationData,
       dynamic Function(ConversationItem)? onSuccessfullyCreatedConversation});
-
-  $FirebaseUserCopyWith<$Res> get conversationPartner;
 }
 
 /// @nodoc
@@ -2014,14 +2012,14 @@ class __$CreateConversationCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? conversationPartner = freezed,
+    Object? creationData = freezed,
     Object? onSuccessfullyCreatedConversation = freezed,
   }) {
     return _then(_CreateConversation(
-      conversationPartner: conversationPartner == freezed
-          ? _value.conversationPartner
-          : conversationPartner // ignore: cast_nullable_to_non_nullable
-              as FirebaseUser,
+      creationData: creationData == freezed
+          ? _value.creationData
+          : creationData // ignore: cast_nullable_to_non_nullable
+              as DirectConversationCreationData,
       onSuccessfullyCreatedConversation: onSuccessfullyCreatedConversation ==
               freezed
           ? _value.onSuccessfullyCreatedConversation
@@ -2029,30 +2027,22 @@ class __$CreateConversationCopyWithImpl<$Res>
               as dynamic Function(ConversationItem)?,
     ));
   }
-
-  @override
-  $FirebaseUserCopyWith<$Res> get conversationPartner {
-    return $FirebaseUserCopyWith<$Res>(_value.conversationPartner, (value) {
-      return _then(_value.copyWith(conversationPartner: value));
-    });
-  }
 }
 
 /// @nodoc
 
 class _$_CreateConversation implements _CreateConversation {
   const _$_CreateConversation(
-      {required this.conversationPartner,
-      this.onSuccessfullyCreatedConversation});
+      {required this.creationData, this.onSuccessfullyCreatedConversation});
 
   @override
-  final FirebaseUser conversationPartner;
+  final DirectConversationCreationData creationData;
   @override
   final dynamic Function(ConversationItem)? onSuccessfullyCreatedConversation;
 
   @override
   String toString() {
-    return 'ConversationsEvent.createConversation(conversationPartner: $conversationPartner, onSuccessfullyCreatedConversation: $onSuccessfullyCreatedConversation)';
+    return 'ConversationsEvent.createConversation(creationData: $creationData, onSuccessfullyCreatedConversation: $onSuccessfullyCreatedConversation)';
   }
 
   @override
@@ -2061,7 +2051,7 @@ class _$_CreateConversation implements _CreateConversation {
         (other.runtimeType == runtimeType &&
             other is _CreateConversation &&
             const DeepCollectionEquality()
-                .equals(other.conversationPartner, conversationPartner) &&
+                .equals(other.creationData, creationData) &&
             (identical(other.onSuccessfullyCreatedConversation,
                     onSuccessfullyCreatedConversation) ||
                 other.onSuccessfullyCreatedConversation ==
@@ -2071,7 +2061,7 @@ class _$_CreateConversation implements _CreateConversation {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(conversationPartner),
+      const DeepCollectionEquality().hash(creationData),
       onSuccessfullyCreatedConversation);
 
   @JsonKey(ignore: true)
@@ -2089,20 +2079,19 @@ class _$_CreateConversation implements _CreateConversation {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
-    return createConversation(
-        conversationPartner, onSuccessfullyCreatedConversation);
+    return createConversation(creationData, onSuccessfullyCreatedConversation);
   }
 
   @override
@@ -2114,12 +2103,12 @@ class _$_CreateConversation implements _CreateConversation {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -2127,7 +2116,7 @@ class _$_CreateConversation implements _CreateConversation {
     TResult Function()? dispose,
   }) {
     return createConversation?.call(
-        conversationPartner, onSuccessfullyCreatedConversation);
+        creationData, onSuccessfullyCreatedConversation);
   }
 
   @override
@@ -2139,12 +2128,12 @@ class _$_CreateConversation implements _CreateConversation {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -2154,7 +2143,7 @@ class _$_CreateConversation implements _CreateConversation {
   }) {
     if (createConversation != null) {
       return createConversation(
-          conversationPartner, onSuccessfullyCreatedConversation);
+          creationData, onSuccessfullyCreatedConversation);
     }
     return orElse();
   }
@@ -2215,11 +2204,11 @@ class _$_CreateConversation implements _CreateConversation {
 
 abstract class _CreateConversation implements ConversationsEvent {
   const factory _CreateConversation(
-      {required FirebaseUser conversationPartner,
+      {required DirectConversationCreationData creationData,
       dynamic Function(ConversationItem)?
           onSuccessfullyCreatedConversation}) = _$_CreateConversation;
 
-  FirebaseUser get conversationPartner;
+  DirectConversationCreationData get creationData;
   dynamic Function(ConversationItem)? get onSuccessfullyCreatedConversation;
   @JsonKey(ignore: true)
   _$CreateConversationCopyWith<_CreateConversation> get copyWith =>
@@ -2232,7 +2221,7 @@ abstract class _$CreateGroupConversationCopyWith<$Res> {
           $Res Function(_CreateGroupConversation) then) =
       __$CreateGroupConversationCopyWithImpl<$Res>;
   $Res call(
-      {List<FirebaseUser> conversationPartners,
+      {GroupConversationCreationData creationData,
       dynamic Function(ConversationItem)?
           onSuccessfullyCreatedGroupConversation});
 }
@@ -2251,14 +2240,14 @@ class __$CreateGroupConversationCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? conversationPartners = freezed,
+    Object? creationData = freezed,
     Object? onSuccessfullyCreatedGroupConversation = freezed,
   }) {
     return _then(_CreateGroupConversation(
-      conversationPartners: conversationPartners == freezed
-          ? _value.conversationPartners
-          : conversationPartners // ignore: cast_nullable_to_non_nullable
-              as List<FirebaseUser>,
+      creationData: creationData == freezed
+          ? _value.creationData
+          : creationData // ignore: cast_nullable_to_non_nullable
+              as GroupConversationCreationData,
       onSuccessfullyCreatedGroupConversation:
           onSuccessfullyCreatedGroupConversation == freezed
               ? _value.onSuccessfullyCreatedGroupConversation
@@ -2272,18 +2261,18 @@ class __$CreateGroupConversationCopyWithImpl<$Res>
 
 class _$_CreateGroupConversation implements _CreateGroupConversation {
   const _$_CreateGroupConversation(
-      {required this.conversationPartners,
+      {required this.creationData,
       this.onSuccessfullyCreatedGroupConversation});
 
   @override
-  final List<FirebaseUser> conversationPartners;
+  final GroupConversationCreationData creationData;
   @override
   final dynamic Function(ConversationItem)?
       onSuccessfullyCreatedGroupConversation;
 
   @override
   String toString() {
-    return 'ConversationsEvent.createGroupConversation(conversationPartners: $conversationPartners, onSuccessfullyCreatedGroupConversation: $onSuccessfullyCreatedGroupConversation)';
+    return 'ConversationsEvent.createGroupConversation(creationData: $creationData, onSuccessfullyCreatedGroupConversation: $onSuccessfullyCreatedGroupConversation)';
   }
 
   @override
@@ -2292,7 +2281,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
         (other.runtimeType == runtimeType &&
             other is _CreateGroupConversation &&
             const DeepCollectionEquality()
-                .equals(other.conversationPartners, conversationPartners) &&
+                .equals(other.creationData, creationData) &&
             (identical(other.onSuccessfullyCreatedGroupConversation,
                     onSuccessfullyCreatedGroupConversation) ||
                 other.onSuccessfullyCreatedGroupConversation ==
@@ -2302,7 +2291,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(conversationPartners),
+      const DeepCollectionEquality().hash(creationData),
       onSuccessfullyCreatedGroupConversation);
 
   @JsonKey(ignore: true)
@@ -2321,12 +2310,12 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -2334,7 +2323,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     required TResult Function() dispose,
   }) {
     return createGroupConversation(
-        conversationPartners, onSuccessfullyCreatedGroupConversation);
+        creationData, onSuccessfullyCreatedGroupConversation);
   }
 
   @override
@@ -2346,12 +2335,12 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -2359,7 +2348,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     TResult Function()? dispose,
   }) {
     return createGroupConversation?.call(
-        conversationPartners, onSuccessfullyCreatedGroupConversation);
+        creationData, onSuccessfullyCreatedGroupConversation);
   }
 
   @override
@@ -2371,12 +2360,12 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -2386,7 +2375,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   }) {
     if (createGroupConversation != null) {
       return createGroupConversation(
-          conversationPartners, onSuccessfullyCreatedGroupConversation);
+          creationData, onSuccessfullyCreatedGroupConversation);
     }
     return orElse();
   }
@@ -2447,11 +2436,11 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
 
 abstract class _CreateGroupConversation implements ConversationsEvent {
   const factory _CreateGroupConversation(
-      {required List<FirebaseUser> conversationPartners,
+      {required GroupConversationCreationData creationData,
       dynamic Function(ConversationItem)?
           onSuccessfullyCreatedGroupConversation}) = _$_CreateGroupConversation;
 
-  List<FirebaseUser> get conversationPartners;
+  GroupConversationCreationData get creationData;
   dynamic Function(ConversationItem)?
       get onSuccessfullyCreatedGroupConversation;
   @JsonKey(ignore: true)
@@ -2505,12 +2494,12 @@ class _$_OnError implements _OnError {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -2529,12 +2518,12 @@ class _$_OnError implements _OnError {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -2553,12 +2542,12 @@ class _$_OnError implements _OnError {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -2676,12 +2665,12 @@ class _$_Dispose implements _Dispose {
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
     required TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)
         createConversation,
     required TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
@@ -2700,12 +2689,12 @@ class _$_Dispose implements _Dispose {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
@@ -2724,12 +2713,12 @@ class _$_Dispose implements _Dispose {
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
     TResult Function(
-            FirebaseUser conversationPartner,
+            DirectConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedConversation)?
         createConversation,
     TResult Function(
-            List<FirebaseUser> conversationPartners,
+            GroupConversationCreationData creationData,
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,

@@ -20,6 +20,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   final HideConversationUC hideConversationUC;
   final GetFirebaseUserUC getFirebaseUserUC;
   final CreateConversationUC createConversationUC;
+  final CreateGroupConversationUC createGroupConversationUC;
 
   ConversationsBloc({
     required this.initializeConversationsStreamUC,
@@ -27,6 +28,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     required this.hideConversationUC,
     required this.getFirebaseUserUC,
     required this.createConversationUC,
+    required this.createGroupConversationUC,
   }) : super(const _Uninitialized()) {
     _conversationsStream = initializeConversationsStreamUC(
       onData: (event) {
@@ -109,39 +111,62 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           );
           hideConversationUC(conversationId);
         },
-        createConversation: (conversationPartner, onSuccess) async {
+        createConversation: (creationData, onSuccess) async {
           final currentState = state;
           if (_isInit && currentState is _LoadSuccess) {
             final me = await _me!.first;
             final conversation = await createConversationUC(
-                me: me, conversationPartner: conversationPartner);
-
-            // either return the already existing conversation item or create
-            // a new one.
-
-            final convoItem = currentState.conversations.firstWhere(
-              (convo) => convo.conversation.id == conversation.id,
-              orElse: () {
-                final newConvoItem = ConversationItem(
-                    conversation: conversation,
-                    lastMessage: ChatMessage.empty(),
-                    unreadMessagesCount: 0);
-
-                return newConvoItem;
-              },
+              me: me,
+              creationData: creationData,
             );
+
+            final convoItem = _getConversationItemForConversation(
+                currentItems: currentState.conversations,
+                conversation: conversation);
 
             onSuccess?.call(convoItem);
           }
         },
-        createGroupConversation: (conversationPartners, onSuccess) {
-          //TODO
+        createGroupConversation: (creationData, onSuccess) async {
+          final currentState = state;
+          if (_isInit && currentState is _LoadSuccess) {
+            final me = await _me!.first;
+            final conversation = await createGroupConversationUC(
+              me: me,
+              creationData: creationData,
+            );
+
+            final convoItem = _getConversationItemForConversation(
+                currentItems: currentState.conversations,
+                conversation: conversation);
+
+            onSuccess?.call(convoItem);
+          }
         },
       );
     });
   }
 
   bool get _isInit => _me != null;
+
+  ConversationItem _getConversationItemForConversation({
+    required List<ConversationItem> currentItems,
+    required Conversation conversation,
+  }) {
+    // either return the already existing conversation item or create
+    // a new one.
+    return currentItems.firstWhere(
+      (convo) => convo.conversation.id == conversation.id,
+      orElse: () {
+        final newConvoItem = ConversationItem(
+            conversation: conversation,
+            lastMessage: ChatMessage.empty(),
+            unreadMessagesCount: 0);
+
+        return newConvoItem;
+      },
+    );
+  }
 
   @override
   Future<void> close() {

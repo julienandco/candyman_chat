@@ -26,9 +26,11 @@ class _$ConversationTearOff {
       {required String id,
       String? groupName,
       String? groupPicture,
-      required Map<String, Map<String, dynamic>> conversationMembers,
+      @MyFirebaseUserListConverter()
+          required List<FirebaseUser> conversationMembers,
       required bool isGroupChat,
-      @MyDateTimeConverter() DateTime? createdAt,
+      @MyDateTimeConverter()
+          DateTime? createdAt,
       List<String> hiddenFrom = const []}) {
     return _Conversation(
       id: id,
@@ -64,11 +66,11 @@ mixin _$Conversation {
   String? get groupPicture => throw _privateConstructorUsedError;
 
   ///
-  /// Maps userIds to a Map of userNames and profilePicURLs
+  /// Has two elements for a 1-on-1 chat and n elements for a group chat.
   ///
-//TODO: rather list of firebase users? and write a custom translator
-  Map<String, Map<String, dynamic>> get conversationMembers =>
-      throw _privateConstructorUsedError; // required List<String> conversationMembers,
+  @MyFirebaseUserListConverter()
+  List<FirebaseUser> get conversationMembers =>
+      throw _privateConstructorUsedError;
   bool get isGroupChat => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -89,7 +91,7 @@ abstract class $ConversationCopyWith<$Res> {
       {String id,
       String? groupName,
       String? groupPicture,
-      Map<String, Map<String, dynamic>> conversationMembers,
+      @MyFirebaseUserListConverter() List<FirebaseUser> conversationMembers,
       bool isGroupChat,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
@@ -129,7 +131,7 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
       conversationMembers: conversationMembers == freezed
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
-              as Map<String, Map<String, dynamic>>,
+              as List<FirebaseUser>,
       isGroupChat: isGroupChat == freezed
           ? _value.isGroupChat
           : isGroupChat // ignore: cast_nullable_to_non_nullable
@@ -157,7 +159,7 @@ abstract class _$ConversationCopyWith<$Res>
       {String id,
       String? groupName,
       String? groupPicture,
-      Map<String, Map<String, dynamic>> conversationMembers,
+      @MyFirebaseUserListConverter() List<FirebaseUser> conversationMembers,
       bool isGroupChat,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
@@ -199,7 +201,7 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
       conversationMembers: conversationMembers == freezed
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
-              as Map<String, Map<String, dynamic>>,
+              as List<FirebaseUser>,
       isGroupChat: isGroupChat == freezed
           ? _value.isGroupChat
           : isGroupChat // ignore: cast_nullable_to_non_nullable
@@ -223,7 +225,7 @@ class _$_Conversation extends _Conversation {
       {required this.id,
       this.groupName,
       this.groupPicture,
-      required this.conversationMembers,
+      @MyFirebaseUserListConverter() required this.conversationMembers,
       required this.isGroupChat,
       @MyDateTimeConverter() this.createdAt,
       this.hiddenFrom = const []})
@@ -249,11 +251,11 @@ class _$_Conversation extends _Conversation {
   @override
 
   ///
-  /// Maps userIds to a Map of userNames and profilePicURLs
+  /// Has two elements for a 1-on-1 chat and n elements for a group chat.
   ///
-//TODO: rather list of firebase users? and write a custom translator
-  final Map<String, Map<String, dynamic>> conversationMembers;
-  @override // required List<String> conversationMembers,
+  @MyFirebaseUserListConverter()
+  final List<FirebaseUser> conversationMembers;
+  @override
   final bool isGroupChat;
   @override
   @MyDateTimeConverter()
@@ -312,9 +314,11 @@ abstract class _Conversation extends Conversation {
       {required String id,
       String? groupName,
       String? groupPicture,
-      required Map<String, Map<String, dynamic>> conversationMembers,
+      @MyFirebaseUserListConverter()
+          required List<FirebaseUser> conversationMembers,
       required bool isGroupChat,
-      @MyDateTimeConverter() DateTime? createdAt,
+      @MyDateTimeConverter()
+          DateTime? createdAt,
       List<String> hiddenFrom}) = _$_Conversation;
   _Conversation._() : super._();
 
@@ -338,11 +342,11 @@ abstract class _Conversation extends Conversation {
   @override
 
   ///
-  /// Maps userIds to a Map of userNames and profilePicURLs
+  /// Has two elements for a 1-on-1 chat and n elements for a group chat.
   ///
-//TODO: rather list of firebase users? and write a custom translator
-  Map<String, Map<String, dynamic>> get conversationMembers;
-  @override // required List<String> conversationMembers,
+  @MyFirebaseUserListConverter()
+  List<FirebaseUser> get conversationMembers;
+  @override
   bool get isGroupChat;
   @override
   @MyDateTimeConverter()

@@ -8,12 +8,11 @@ abstract class ConversationsRepository {
   Stream<int> getUnreadGroupMessagesCount(String conversationId);
   Future<Conversation> createConversation({
     required FirebaseUser me,
-    required FirebaseUser conversationPartner,
+    required DirectConversationCreationData creationData,
   });
   Future<Conversation> createGroupConversation({
-    required Map<String, Map<String, String>> conversationPartners,
-    required String displayName,
-    String? thumbnail,
+    required FirebaseUser me,
+    required GroupConversationCreationData creationData,
   });
   void hideConversations(String conversationId);
 }
