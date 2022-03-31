@@ -20,7 +20,7 @@ class NeonChat extends StatelessWidget {
 
   final ConversationStyle conversationStyle;
   final ConversationsStyle conversationsStyle;
-  final ChatBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
 
@@ -58,7 +58,7 @@ class NeonChat extends StatelessWidget {
     this.conversationsStyle = const ConversationsStyle(),
     this.searchAppBarStyle = const SearchAppBarStyle(),
     this.bottomBarStyle = const BottomBarStyle(),
-    this.chatBubbleStyle = const ChatBubbleStyle(),
+    this.chatBubbleStyle = const MessageBubbleStyle(),
     this.onAppBarTap,
     this.onOpenUserProfile,
     this.getConversationCreationData,

@@ -7,7 +7,7 @@ import 'package:neon_chat/neon_chat.dart';
 
 class MessageList extends StatelessWidget {
   final String Function(String)? getAuthorNameForSenderId;
-  final ChatBubbleStyle defaultChatBubbleStyle;
+  final MessageBubbleStyle defaultChatBubbleStyle;
   final GetUploadUrlUC getUploadUrlUC;
 
   const MessageList({
@@ -32,7 +32,7 @@ class MessageList extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
                   isGroupChat: state.conversation.isGroupChat,
-                  chatBubbleStyle: defaultChatBubbleStyle,
+                  messageBubbleStyle: defaultChatBubbleStyle,
                   getUploadUrlUC: getUploadUrlUC,
                   message: message,
                   otherUserName:

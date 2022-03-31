@@ -1,19 +1,14 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
+import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 
-class MessageContentWidget extends StatelessWidget {
-  final String messageIsUploadingLabel;
-  final String messageBubbleDeletedLabel;
-  final TextStyle? messageBubbleDeletedStyle;
-  final String messageTypeNotSupportedLabel;
-  final TextStyle? messageTypeNotSupportedStyle;
-  final TextStyle? messageTextStyle;
-  final AudioPlayerStyle audioPlayerStyle;
-  final VideoPlayerStyle videoPlayerStyle;
-  final FileBubbleStyle fileBubbleStyle;
+class MessageContentWidget extends StatefulWidget {
+  final MessageBubbleStyle messageBubbleStyle;
+
   final GetUploadUrlUC getUploadUrlUC;
   final ChatMessage message;
   final Widget? header;
@@ -24,25 +19,24 @@ class MessageContentWidget extends StatelessWidget {
     required this.message,
     required this.header,
     required this.footer,
-    required this.messageIsUploadingLabel,
-    required this.messageBubbleDeletedLabel,
-    this.messageBubbleDeletedStyle = const TextStyle(color: Colors.white),
-    required this.messageTypeNotSupportedLabel,
-    this.messageTypeNotSupportedStyle = const TextStyle(color: Colors.white),
-    this.messageTextStyle = const TextStyle(color: Colors.white),
-    required this.audioPlayerStyle,
-    required this.videoPlayerStyle,
-    required this.fileBubbleStyle,
+    required this.messageBubbleStyle,
     required this.getUploadUrlUC,
   }) : super(key: key);
 
   @override
+  State<MessageContentWidget> createState() => _MessageContentWidgetState();
+}
+
+class _MessageContentWidgetState extends State<MessageContentWidget> {
+  PreviewData? _linkPreviewData;
+
+  @override
   Widget build(BuildContext context) {
-    if (header != null) {
+    if (widget.header != null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          header!,
+          widget.header!,
           _getMessageContent(context),
         ],
       );
@@ -54,12 +48,12 @@ class MessageContentWidget extends StatelessWidget {
   Widget _getMessageContent(BuildContext context) {
     final footerWidget = Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: footer.length > 1
+      mainAxisAlignment: widget.footer.length > 1
           ? MainAxisAlignment.spaceBetween
           : MainAxisAlignment.end,
-      children: footer,
+      children: widget.footer,
     );
-    switch (message.type) {
+    switch (widget.message.type) {
       case ChatMessageType.voice:
         return Container(
           margin: const EdgeInsets.only(
@@ -70,9 +64,9 @@ class MessageContentWidget extends StatelessWidget {
           child: Column(
             children: [
               ChatAudioPlayer(
-                audioPlayerStyle: audioPlayerStyle,
-                message: message,
-                getUploadUrlUC: getUploadUrlUC,
+                audioPlayerStyle: widget.messageBubbleStyle.audioPlayerStyle,
+                message: widget.message,
+                getUploadUrlUC: widget.getUploadUrlUC,
               ),
               footerWidget,
             ],
@@ -84,12 +78,12 @@ class MessageContentWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.5,
           child: Column(
             children: [
-              (!message.doneUpload && kIsWeb)
-                  ? Text(messageIsUploadingLabel)
+              (!widget.message.doneUpload && kIsWeb)
+                  ? Text(widget.messageBubbleStyle.messageIsUploadingLabel)
                   : ChatImageBubble(
-                      onTap: () =>
-                          _openMediaViewer(context, message, getUploadUrlUC),
-                      message: message,
+                      onTap: () => _openMediaViewer(
+                          context, widget.message, widget.getUploadUrlUC),
+                      message: widget.message,
                       // TODO:
                       getRedirectedCachedNetworkImage: (u, p) => Container(),
                     ),
@@ -109,14 +103,16 @@ class MessageContentWidget extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
           child: Column(
             children: [
-              if (!message.doneUpload && kIsWeb) Text(messageIsUploadingLabel),
-              if (message.doneUpload)
+              if (!widget.message.doneUpload && kIsWeb)
+                Text(widget.messageBubbleStyle.messageIsUploadingLabel),
+              if (widget.message.doneUpload)
                 ChatVideoBubble(
-                  defaultVideoPlayerStyle: videoPlayerStyle,
-                  onTap: () =>
-                      _openMediaViewer(context, message, getUploadUrlUC),
-                  message: message,
-                  getUploadUrlUC: getUploadUrlUC,
+                  defaultVideoPlayerStyle:
+                      widget.messageBubbleStyle.videoPlayerStyle,
+                  onTap: () => _openMediaViewer(
+                      context, widget.message, widget.getUploadUrlUC),
+                  message: widget.message,
+                  getUploadUrlUC: widget.getUploadUrlUC,
                 ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -136,9 +132,10 @@ class MessageContentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               ChatFileBubble(
-                defaultFileBubbleStyle: fileBubbleStyle,
-                message: message,
-                getUploadUrlUC: getUploadUrlUC,
+                defaultFileBubbleStyle:
+                    widget.messageBubbleStyle.fileBubbleStyle,
+                message: widget.message,
+                getUploadUrlUC: widget.getUploadUrlUC,
               ),
               footerWidget,
             ],
@@ -148,11 +145,14 @@ class MessageContentWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
           child: Text(
-            messageBubbleDeletedLabel,
-            style: messageBubbleDeletedStyle,
+            widget.messageBubbleStyle.messageBubbleDeletedLabel,
+            style: widget.messageBubbleStyle.messageBubbleDeletedLabelStyle,
           ),
         );
       default:
+        final isURL = widget.message.text == null
+            ? false
+            : (Uri.tryParse(widget.message.text!)?.isAbsolute ?? false);
         return Padding(
           padding: const EdgeInsets.only(
             bottom: 15,
@@ -163,10 +163,37 @@ class MessageContentWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LinkWell(
-                message.text ?? messageTypeNotSupportedLabel,
-                style: messageTextStyle,
-              ),
+              // LinkWell(
+              if (isURL)
+                LinkPreview(
+                  width: MediaQuery.of(context).size.width,
+                  onPreviewDataFetched: (data) {
+                    setState(() {
+                      _linkPreviewData = data;
+                    });
+                  },
+                  previewData: _linkPreviewData,
+                  openOnPreviewImageTap: true,
+                  openOnPreviewTitleTap: true,
+                  text: widget.message.text ??
+                      widget.messageBubbleStyle.messageTypeNotSupportedLabel,
+                  textStyle: widget.message.isMe
+                      ? widget.messageBubbleStyle.ownMessageTextStyle
+                      : widget.messageBubbleStyle.otherUserMessageTextStyle,
+                  linkStyle: widget.messageBubbleStyle.linkTextStyle,
+                  metadataTextStyle:
+                      widget.messageBubbleStyle.linkPreviewBodyTextStyle,
+                  metadataTitleStyle:
+                      widget.messageBubbleStyle.linkPreviewTitleTextStyle,
+                )
+              else
+                LinkWell(
+                  widget.message.text ??
+                      widget.messageBubbleStyle.messageTypeNotSupportedLabel,
+                  style: widget.message.isMe
+                      ? widget.messageBubbleStyle.ownMessageTextStyle
+                      : widget.messageBubbleStyle.otherUserMessageTextStyle,
+                ),
               footerWidget,
             ],
           ),

@@ -16,7 +16,7 @@ class MessageBubble extends StatefulWidget {
   final ChatMessage message;
   final Widget? otherUserAvatar;
   final String otherUserName;
-  final ChatBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle messageBubbleStyle;
   final GetUploadUrlUC getUploadUrlUC;
 
   const MessageBubble({
@@ -25,7 +25,7 @@ class MessageBubble extends StatefulWidget {
     required this.message,
     this.otherUserAvatar,
     required this.otherUserName,
-    required this.chatBubbleStyle,
+    required this.messageBubbleStyle,
     required this.getUploadUrlUC,
   }) : super(key: key);
 
@@ -39,7 +39,7 @@ class _MessageBubbleState extends State<MessageBubble> {
   @override
   void initState() {
     super.initState();
-    _showAvatar = widget.chatBubbleStyle.showAvatar &&
+    _showAvatar = widget.messageBubbleStyle.showAvatar &&
         widget.otherUserAvatar != null &&
         !widget.message.isMe;
   }
@@ -47,7 +47,7 @@ class _MessageBubbleState extends State<MessageBubble> {
   void showDeleteMessageDialog() {
     bool canDeleteMessage = !widget.message.isDeleted && widget.message.isMe;
     if (canDeleteMessage) {
-      widget.chatBubbleStyle.onShowDeletionDialog?.call(
+      widget.messageBubbleStyle.onShowDeletionDialog?.call(
         () {
           context
               .read<ConversationBloc>()
@@ -75,12 +75,12 @@ class _MessageBubbleState extends State<MessageBubble> {
         ? const BoxConstraints(maxWidth: 250)
         : BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width *
-                widget.chatBubbleStyle.maxWidthPercentage);
+                widget.messageBubbleStyle.maxWidthPercentage);
   }
 
   void copyToClipboard() async {
     await Clipboard.setData(ClipboardData(text: widget.message.text));
-    widget.chatBubbleStyle.onCopyToClipboard?.call();
+    widget.messageBubbleStyle.onCopyToClipboard?.call();
   }
 
   @override
@@ -92,14 +92,14 @@ class _MessageBubbleState extends State<MessageBubble> {
       Text(
         widget.message.timestampFormatted,
         style: widget.message.isMe
-            ? widget.chatBubbleStyle.ownMessageTimestampStyle
-            : widget.chatBubbleStyle.otherUserMessageTimestampStyle,
+            ? widget.messageBubbleStyle.ownMessageTimestampStyle
+            : widget.messageBubbleStyle.otherUserMessageTimestampStyle,
       ),
       if (widget.message.isMe)
         CheckMarkWidget(
           message: widget.message,
-          seenIcon: widget.chatBubbleStyle.seenIcon,
-          receivedIcon: widget.chatBubbleStyle.receivedIcon,
+          seenIcon: widget.messageBubbleStyle.seenIcon,
+          receivedIcon: widget.messageBubbleStyle.receivedIcon,
         )
     ];
 
@@ -116,7 +116,7 @@ class _MessageBubbleState extends State<MessageBubble> {
             child: AutoSizeText(
               widget.otherUserName,
               maxLines: 1,
-              style: widget.chatBubbleStyle.otherUserNameStyle,
+              style: widget.messageBubbleStyle.otherUserNameStyle,
             ),
           )
         : null;
@@ -171,7 +171,7 @@ class _MessageBubbleState extends State<MessageBubble> {
                     for (var i in [1, 2])
                       FocusedMenuItem(
                         backgroundColor: widget
-                            .chatBubbleStyle.focusedMenuItemBackgroundColor,
+                            .messageBubbleStyle.focusedMenuItemBackgroundColor,
                         title: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.5 - 50,
                           child: Row(
@@ -181,12 +181,12 @@ class _MessageBubbleState extends State<MessageBubble> {
                               Flexible(
                                 fit: FlexFit.loose,
                                 child: i == 1
-                                    ? widget.chatBubbleStyle.copyIcon ??
+                                    ? widget.messageBubbleStyle.copyIcon ??
                                         const Icon(
                                           Icons.copy,
                                           color: Colors.black,
                                         )
-                                    : widget.chatBubbleStyle.deleteIcon ??
+                                    : widget.messageBubbleStyle.deleteIcon ??
                                         const Icon(Icons.delete,
                                             color: Colors.black),
                               ),
@@ -194,12 +194,13 @@ class _MessageBubbleState extends State<MessageBubble> {
                                 fit: FlexFit.loose,
                                 child: AutoSizeText(
                                   i == 1
-                                      ? (widget.chatBubbleStyle.copyLabel ??
+                                      ? (widget.messageBubbleStyle.copyLabel ??
                                           'copy')
-                                      : (widget.chatBubbleStyle.deleteLabel ??
+                                      : (widget
+                                              .messageBubbleStyle.deleteLabel ??
                                           'delete'),
-                                  style:
-                                      widget.chatBubbleStyle.actionLabelStyle,
+                                  style: widget
+                                      .messageBubbleStyle.actionLabelStyle,
                                 ),
                               ),
                             ],
@@ -212,59 +213,43 @@ class _MessageBubbleState extends State<MessageBubble> {
                   ],
                   child: Container(
                     constraints: _constraints,
-                    decoration: widget.chatBubbleStyle.decoration ??
+                    decoration: widget.messageBubbleStyle.decoration ??
                         BoxDecoration(
                           color: widget.message.isMe
-                              ? widget.chatBubbleStyle.ownMessageColor
-                              : widget.chatBubbleStyle.otherUserMessageColor,
+                              ? widget.messageBubbleStyle.ownMessageColor
+                              : widget.messageBubbleStyle.otherUserMessageColor,
                           borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(
-                                widget.chatBubbleStyle.bubbleRadius),
+                                widget.messageBubbleStyle.bubbleRadius),
                             bottomLeft: Radius.circular(widget.message.isMe
-                                ? widget.chatBubbleStyle.bubbleRadius
+                                ? widget.messageBubbleStyle.bubbleRadius
                                 : 0),
                             topLeft: Radius.circular(
-                                widget.chatBubbleStyle.bubbleRadius),
+                                widget.messageBubbleStyle.bubbleRadius),
                             topRight: Radius.circular(widget.message.isMe
                                 ? 0
-                                : widget.chatBubbleStyle.bubbleRadius),
+                                : widget.messageBubbleStyle.bubbleRadius),
                           ),
                         ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(
-                            widget.chatBubbleStyle.bubbleRadius),
+                            widget.messageBubbleStyle.bubbleRadius),
                         bottomLeft: Radius.circular(widget.message.isMe
-                            ? widget.chatBubbleStyle.bubbleRadius
+                            ? widget.messageBubbleStyle.bubbleRadius
                             : 0),
                         topLeft: Radius.circular(
-                            widget.chatBubbleStyle.bubbleRadius),
+                            widget.messageBubbleStyle.bubbleRadius),
                         topRight: Radius.circular(widget.message.isMe
                             ? 0
-                            : widget.chatBubbleStyle.bubbleRadius),
+                            : widget.messageBubbleStyle.bubbleRadius),
                       ),
                       child: MessageContentWidget(
                         getUploadUrlUC: widget.getUploadUrlUC,
-                        audioPlayerStyle:
-                            widget.chatBubbleStyle.audioPlayerStyle,
-                        videoPlayerStyle:
-                            widget.chatBubbleStyle.videoPlayerStyle,
-                        fileBubbleStyle: widget.chatBubbleStyle.fileBubbleStyle,
+                        messageBubbleStyle: widget.messageBubbleStyle,
                         message: widget.message,
                         footer: footer,
                         header: header,
-                        messageBubbleDeletedLabel:
-                            widget.chatBubbleStyle.messageBubbleDeletedLabel ??
-                                'deleted',
-                        messageTypeNotSupportedLabel: widget
-                                .chatBubbleStyle.messageTypeNotSupportedLabel ??
-                            'not supported',
-                        messageIsUploadingLabel:
-                            widget.chatBubbleStyle.messageIsUploadingLabel ??
-                                'uploading...',
-                        messageTextStyle: widget.message.isMe
-                            ? widget.chatBubbleStyle.ownMessageTextStyle
-                            : widget.chatBubbleStyle.otherUserMessageTextStyle,
                       ),
                     ),
                   ),

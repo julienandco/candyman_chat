@@ -11,7 +11,7 @@ import 'widgets/conversation_appbar_widget.dart';
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
   final ConversationStyle defaultConversationStyle;
-  final ChatBubbleStyle defaultChatBubbleStyle;
+  final MessageBubbleStyle defaultChatBubbleStyle;
   final SearchAppBarStyle defaultSearchAppBarStyle;
   final BottomBarStyle defaultBottomBarStyle;
   final GetUploadUrlUC getUploadUrlUC;

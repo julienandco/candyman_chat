@@ -12,7 +12,7 @@ void openConversation(
   required ConversationBloc Function() generateConversationBloc,
   required ConversationSearchBloc Function() generateConversationSearchBloc,
   SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
-  ChatBubbleStyle chatBubbleStyle = const ChatBubbleStyle(),
+  MessageBubbleStyle chatBubbleStyle = const MessageBubbleStyle(),
   ConversationStyle conversationStyle = const ConversationStyle(),
   BottomBarStyle bottomBarStyle = const BottomBarStyle(),
   Function()? onAppbarTap,

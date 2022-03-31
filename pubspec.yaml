@@ -30,6 +30,7 @@ dependencies:
   animator: ^3.1.0
   flutter_animator: ^3.2.1
   just_audio: ^0.9.20
+  flutter_chat_types: ^3.3.1
 
   # Firebase
   firebase_auth: ^3.3.11
@@ -49,6 +50,7 @@ dependencies:
   auto_size_text_pk: ^3.0.0
   visibility_detector: ^0.2.2
   linkwell: ^2.0.6
+  flutter_link_previewer: ^2.6.3
   video_thumbnail: ^0.4.6
   # better_player: 0.0.81
   better_player:

@@ -15,7 +15,7 @@ class DefaultConversationLoader extends StatelessWidget {
   final bool showCloseButton;
 
   final ConversationStyle conversationStyle;
-  final ChatBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
   final Function()? onAppbarTap;

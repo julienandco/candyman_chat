@@ -10,7 +10,7 @@ class DefaultConversationsPage extends StatefulWidget {
 
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
-  final ChatBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
   final Function()? onOpenUserProfile;

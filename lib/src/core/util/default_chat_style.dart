@@ -84,7 +84,7 @@ class ConversationStyle {
   });
 }
 
-class ChatBubbleStyle {
+class MessageBubbleStyle {
   final double maxWidthPercentage;
   final bool showAvatar;
   final TextStyle? otherUserNameStyle;
@@ -98,14 +98,18 @@ class ChatBubbleStyle {
   final String? copyLabel;
   final String? deleteLabel;
   final TextStyle? actionLabelStyle;
+  final TextStyle? linkPreviewTitleTextStyle;
+  final TextStyle? linkTextStyle;
+  final TextStyle? linkPreviewBodyTextStyle;
   final Color ownMessageColor;
   final Color otherUserMessageColor;
   final BoxDecoration? decoration;
   final Widget? seenIcon;
   final Widget? receivedIcon;
-  final String? messageIsUploadingLabel;
-  final String? messageBubbleDeletedLabel;
-  final String? messageTypeNotSupportedLabel;
+  final String messageIsUploadingLabel;
+  final String messageBubbleDeletedLabel;
+  final TextStyle? messageBubbleDeletedLabelStyle;
+  final String messageTypeNotSupportedLabel;
   final double bubbleRadius;
   final AudioPlayerStyle audioPlayerStyle;
   final VideoPlayerStyle videoPlayerStyle;
@@ -117,7 +121,7 @@ class ChatBubbleStyle {
     void Function() onDeleteForAll,
   )? onShowDeletionDialog;
 
-  const ChatBubbleStyle({
+  const MessageBubbleStyle({
     this.maxWidthPercentage = 2 / 3,
     this.showAvatar = false,
     this.otherUserNameStyle = const TextStyle(fontWeight: FontWeight.bold),
@@ -142,17 +146,27 @@ class ChatBubbleStyle {
     this.deleteIcon,
     this.copyLabel,
     this.deleteLabel,
+    this.linkTextStyle,
     this.actionLabelStyle,
     this.ownMessageColor = const Color.fromARGB(255, 25, 5, 55),
     this.otherUserMessageColor = Colors.grey,
     this.decoration,
     this.seenIcon,
     this.receivedIcon,
-    this.messageIsUploadingLabel,
-    this.messageBubbleDeletedLabel,
-    this.messageTypeNotSupportedLabel,
+    this.messageBubbleDeletedLabelStyle,
+    this.messageIsUploadingLabel = 'uploading...',
+    this.messageBubbleDeletedLabel = 'deleted',
+    this.messageTypeNotSupportedLabel = 'not supported',
     this.bubbleRadius = 16.0,
     this.onCopyToClipboard,
+    this.linkPreviewBodyTextStyle = const TextStyle(
+      fontSize: 14.0,
+      color: Colors.white,
+    ),
+    this.linkPreviewTitleTextStyle = const TextStyle(
+      fontSize: 18.0,
+      color: Colors.white,
+    ),
     this.onShowDeletionDialog,
     this.audioPlayerStyle = const AudioPlayerStyle(),
     this.videoPlayerStyle = const VideoPlayerStyle(),
