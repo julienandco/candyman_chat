@@ -6,7 +6,6 @@ import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 
 import 'widgets/conversation_appbar_widget.dart';
-// import 'package:timeago/timeago.dart' as timeago;
 
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;

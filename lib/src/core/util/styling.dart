@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neon_chat/src/core/util/util.dart';
 
-// Conversations Style
+/// Style data structure for the Conversations page
 class ConversationsStyle {
   final Text appBarTitle;
   final Widget emptyConversationsWidget;
@@ -13,7 +13,7 @@ class ConversationsStyle {
   final Function()? fabAction;
   final Widget emtpyConversation;
   final Widget loadingWidget;
-  final ChatListItemStyle chatListItemStyle;
+  final ConversationListItemStyle chatListItemStyle;
 
   const ConversationsStyle({
     this.appBarTitle = const Text('NEON CHAT'),
@@ -30,11 +30,12 @@ class ConversationsStyle {
     this.loadingWidget = const Center(
       child: CircularProgressIndicator(color: Color.fromARGB(255, 25, 5, 55)),
     ),
-    this.chatListItemStyle = const ChatListItemStyle(),
+    this.chatListItemStyle = const ConversationListItemStyle(),
   });
 }
 
-class ChatListItemStyle {
+/// Style data structure for elements of the [ConversationListItem] Widget
+class ConversationListItemStyle {
   final TextStyle lastMassageTextStyle;
   final Color focusMenuBlurBackgroundColor;
   final String focusMenuText;
@@ -49,7 +50,7 @@ class ChatListItemStyle {
   final Color badgeColor;
   final TextStyle badgeTextStyle;
 
-  const ChatListItemStyle({
+  const ConversationListItemStyle({
     this.lastMassageTextStyle = const TextStyle(color: Colors.black54),
     this.focusMenuBlurBackgroundColor = Colors.black,
     this.focusMenuText = 'delete',
@@ -68,7 +69,7 @@ class ChatListItemStyle {
   });
 }
 
-// Conversation Style
+/// Style data structure for a Conversation page
 class ConversationStyle {
   final Color backgroundColor;
   final List<Color> ignorePointersColors;
@@ -84,6 +85,7 @@ class ConversationStyle {
   });
 }
 
+/// Style data structure for the [MessageBubble] data structure
 class MessageBubbleStyle {
   final double maxWidthPercentage;
   final bool showAvatar;
@@ -174,6 +176,7 @@ class MessageBubbleStyle {
   });
 }
 
+/// Style data structure for the [SearchAppBar] widget
 class SearchAppBarStyle {
   final Widget? leading;
   final InputDecoration textFieldDecoration;
@@ -198,6 +201,7 @@ class SearchAppBarStyle {
   });
 }
 
+/// Style data structure for the [BottomBar] widget
 class BottomBarStyle {
   final Color chatBarColor;
   final BorderRadius borderRadius;

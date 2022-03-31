@@ -36,11 +36,14 @@ class Conversation with _$Conversation {
   factory Conversation.fromJson(Map<String, dynamic> json) =>
       _$ConversationFromJson(json);
 
-  /// return whether the conversation is hidden from the current user
+  /// Returns whether the conversation is hidden from the current user
   bool get isHidden => hiddenFrom.contains(
         GetIt.instance<FirebaseAuth>().currentUser!.uid,
       );
 
+  /// The name that is shown to the user. Either group name for group chats
+  /// or conversation partner's name for 1-on-1 chats.
+  ///
   String get displayName {
     if (isGroupChat) {
       return groupName ?? 'group'; //TODO: what to do?
@@ -51,6 +54,10 @@ class Conversation with _$Conversation {
     }
   }
 
+  /// The url of the picture that is shown to the user inside the avatar.
+  /// Either group picture for group chats or conversation partner's avatar
+  ///  for 1-on-1 chats.
+  ///
   String? get thumbnail {
     if (isGroupChat) {
       return groupPicture;
@@ -61,6 +68,7 @@ class Conversation with _$Conversation {
     }
   }
 
+  /// Getter for 1-on-1 chats, that returns the direct conversation partner.
   FirebaseUser? getConversationPartner(String? myId) {
     if (isGroupChat || myId == null) return null;
     return conversationMembers.firstWhere((member) => member.id != myId);

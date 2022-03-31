@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
   final FileUploadRepository fileUploadRepository;
@@ -122,18 +123,16 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 ? conversationsSearchState.conversations
                                 : chatConversations)
                             .map(
-                              (conversationItem) => ChatListItem(
+                              (conversationItem) => ConversationListItem(
                                 chatListItemStyle:
                                     widget.conversationsStyle.chatListItemStyle,
                                 conversationItem: conversationItem,
                                 userAvatar: widget.getUserAvatar?.call(
                                         conversationItem
                                             .conversation.thumbnail) ??
-                                    const CircleAvatar(
-                                      backgroundColor:
-                                          Color.fromARGB(255, 25, 5, 55),
-                                      radius: 20.0,
-                                    ),
+                                    AvatarWidget(
+                                        imgUrl: conversationItem
+                                            .conversation.thumbnail),
                                 onOpenChat: () => openConversation(
                                   context,
                                   conversationItem: conversationItem,

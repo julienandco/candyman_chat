@@ -134,13 +134,7 @@ class _AudioRecordButtonState extends State<AudioRecordButton>
               ),
               height: 46,
               width: 46,
-              child: _isRecording ? widget.iconInActiv : widget.iconActiv
-
-              // SvgPicture.asset(
-              //   'assets/vectors/voiceMailIcon.svg',
-              //   color: _isRecording ? kColorAccent : kColorWhite,
-              // ),
-              ),
+              child: _isRecording ? widget.iconInActiv : widget.iconActiv),
         ),
       ],
     );

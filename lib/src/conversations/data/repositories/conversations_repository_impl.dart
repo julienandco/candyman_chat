@@ -18,7 +18,6 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }) : _collection =
             firestore.collection(firebaseKeys.conversationsCollectionKey);
 
-  // String get _userId => firebaseAuth.currentUser!.uid;
   User get _currentUser => firebaseAuth.currentUser!;
 
   @override

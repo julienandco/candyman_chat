@@ -64,59 +64,60 @@ class DefaultConversationsLoader extends StatelessWidget {
             ),
           ],
           child: Scaffold(
-            body: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            body:
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: DefaultConversationsPage(
-                    fileUploadRepository: fileUploadRepository,
-                    generateConversationBloc: generateConversationBloc,
-                    generateConversationSearchBloc:
-                        generateConversationSearchBloc,
-                    conversationsStyle: conversationsStyle,
-                    conversationStyle: conversationStyle,
-                    chatBubbleStyle: chatBubbleStyle,
-                    searchAppBarStyle: searchAppBarStyle,
-                    bottomBarStyle: bottomBarStyle,
-                    onOpenUserProfile: onOpenUserProfile,
-                    onAppbarTap: onAppbarTap,
-                    getUserAvatar: getUserAvatar,
-                    getConversationCreationData: getConversationCreationData,
-                  ),
-                ),
-                if (isWidthOverLimit(context))
-                  BlocBuilder<CurrentConversationCubit,
-                      CurrentConversationState>(
-                    builder: (context, state) {
-                      if (state.conversationItem != null) {
-                        return Flexible(
-                          child: DefaultConversationLoader(
-                            key: Key(state.conversationItem!.conversation.id),
-                            fileUploadRepository: fileUploadRepository,
-                            conversationBloc: generateConversationBloc,
-                            conversationSearchBloc:
-                                generateConversationSearchBloc,
-                            chatBubbleStyle: chatBubbleStyle,
-                            conversationStyle: conversationStyle,
-                            searchAppBarStyle: searchAppBarStyle,
-                            bottomBarStyle: bottomBarStyle,
-                            conversationItem: state.conversationItem!,
-                            showCloseButton: false,
-                            onAppbarTap: onAppbarTap,
-                          ),
-                        );
-                      } else {
-                        return const Expanded(
-                          child: Center(
-                            child: Text('chats'),
-                          ),
-                        );
-                      }
-                    },
-                  )
-              ],
+              width: MediaQuery.of(context).size.width,
+              child: DefaultConversationsPage(
+                fileUploadRepository: fileUploadRepository,
+                generateConversationBloc: generateConversationBloc,
+                generateConversationSearchBloc: generateConversationSearchBloc,
+                conversationsStyle: conversationsStyle,
+                conversationStyle: conversationStyle,
+                chatBubbleStyle: chatBubbleStyle,
+                searchAppBarStyle: searchAppBarStyle,
+                bottomBarStyle: bottomBarStyle,
+                onOpenUserProfile: onOpenUserProfile,
+                onAppbarTap: onAppbarTap,
+                getUserAvatar: getUserAvatar,
+                getConversationCreationData: getConversationCreationData,
+              ),
             ),
+            //TODOASKHADI
+            // if (isWidthOverLimit(context))
+            //   BlocBuilder<CurrentConversationCubit,
+            //       CurrentConversationState>(
+            //     builder: (context, state) {
+            //       if (state.conversationItem != null) {
+            //         return Flexible(
+            //           child: DefaultConversationLoader(
+            //             key: Key(state.conversationItem!.conversation.id),
+            //             fileUploadRepository: fileUploadRepository,
+            //             conversationBloc: generateConversationBloc,
+            //             conversationSearchBloc:
+            //                 generateConversationSearchBloc,
+            //             chatBubbleStyle: chatBubbleStyle,
+            //             conversationStyle: conversationStyle,
+            //             searchAppBarStyle: searchAppBarStyle,
+            //             bottomBarStyle: bottomBarStyle,
+            //             conversationItem: state.conversationItem!,
+            //             showCloseButton: false,
+            //             onAppbarTap: onAppbarTap,
+            //           ),
+            //         );
+            //       } else {
+            //         return const Expanded(
+            //           child: Center(
+            //             child: Text('chats'),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   )
+            //   ],
+            // ),
           ),
         );
       },

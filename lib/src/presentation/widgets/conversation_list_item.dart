@@ -7,14 +7,14 @@ import 'package:focused_menu/modals.dart';
 
 import 'package:neon_chat/neon_chat.dart';
 
-class ChatListItem extends StatefulWidget {
+class ConversationListItem extends StatefulWidget {
   final ConversationItem conversationItem;
   final Function()? onOpenChat;
   final Function()? onOpenUserProfile;
   final Widget userAvatar;
-  final ChatListItemStyle chatListItemStyle;
+  final ConversationListItemStyle chatListItemStyle;
 
-  const ChatListItem({
+  const ConversationListItem({
     Key? key,
     required this.conversationItem,
     this.onOpenChat,
@@ -24,10 +24,10 @@ class ChatListItem extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ChatListItemState createState() => _ChatListItemState();
+  _ConversationListItemState createState() => _ConversationListItemState();
 }
 
-class _ChatListItemState extends State<ChatListItem> {
+class _ConversationListItemState extends State<ConversationListItem> {
   bool _onHover = false;
 
   @override

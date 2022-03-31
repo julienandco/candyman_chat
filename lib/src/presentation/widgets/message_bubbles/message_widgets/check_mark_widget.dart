@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neon_chat/neon_chat.dart';
 
-// TODO: custom Icons
 class CheckMarkWidget extends StatelessWidget {
   final ChatMessage message;
   final Widget? seenIcon;

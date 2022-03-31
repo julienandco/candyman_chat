@@ -33,8 +33,8 @@ class MyCustomConversationsPage extends StatelessWidget {
                               ? conversationsSearchState.conversations
                               : chatConversations)
                           .map(
-                            (conversation) => ChatListItem(
-                              chatListItemStyle: ChatListItemStyle(
+                            (conversation) => ConversationListItem(
+                              chatListItemStyle: ConversationListItemStyle(
                                   listTileColor: Colors.grey[200]!),
                               conversationItem: conversation,
                               userAvatar: Container(
