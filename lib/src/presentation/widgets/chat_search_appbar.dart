@@ -32,8 +32,8 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
       leading: widget.defaultSearchAppBarStyle.leading ??
           IconButton(
             onPressed: () => context
-                .read<ChatSearchBloc>()
-                .add(const ChatSearchEvent.toggleSearch()),
+                .read<ConversationSearchBloc>()
+                .add(const ConversationSearchEvent.toggleSearch()),
             icon: const Icon(
               Icons.close,
             ),
@@ -47,7 +47,9 @@ class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
           focusNode: _foucsNode,
           onSubmitted: (value) {
             _foucsNode.unfocus();
-            context.read<ChatSearchBloc>().add(ChatSearchEvent.query(value));
+            context
+                .read<ConversationSearchBloc>()
+                .add(ConversationSearchEvent.query(value));
           },
         ),
       ),

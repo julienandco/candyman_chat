@@ -64,7 +64,7 @@ class NeonChat extends StatelessWidget {
     this.getConversationCreationData,
   }) : super(key: key);
 
-  ChatBloc _generateChatBloc() => ChatBloc(
+  ConversationBloc _generateChatBloc() => ConversationBloc(
         firebaseAuth: getItInstance<FirebaseAuth>(),
         hideMessageUC: getItInstance<HideMessageUC>(),
         deleteMessageUC: getItInstance<DeleteMessageUC>(),
@@ -94,8 +94,8 @@ class NeonChat extends StatelessWidget {
       ],
       child: DefaultConversationsLoader(
         fileUploadRepository: getItInstance<FileUploadRepository>(),
-        generateChatBloc: _generateChatBloc,
-        generateChatSearchBloc: () => ChatSearchBloc(),
+        generateConversationBloc: _generateChatBloc,
+        generateConversationSearchBloc: () => ConversationSearchBloc(),
         conversationStyle: conversationStyle,
         conversationsStyle: conversationsStyle,
         chatBubbleStyle: chatBubbleStyle,

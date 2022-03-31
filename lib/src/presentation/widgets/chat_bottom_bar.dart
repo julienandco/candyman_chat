@@ -83,31 +83,41 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
 
   void _sendTextMessage(String content) {
     _textController.clear();
-    context.read<ChatBloc>().add(ChatEvent.sendTextMessage(content));
+    context
+        .read<ConversationBloc>()
+        .add(ConversationEvent.sendTextMessage(content));
   }
 
   void _sendImageMessage(String imagePath) {
-    context.read<ChatBloc>().add(ChatEvent.sendImageMessage((imagePath)));
+    context
+        .read<ConversationBloc>()
+        .add(ConversationEvent.sendImageMessage((imagePath)));
   }
 
   void _sendVideoMessage(String videoPath) {
-    context.read<ChatBloc>().add(ChatEvent.sendVideoMessage(videoPath));
+    context
+        .read<ConversationBloc>()
+        .add(ConversationEvent.sendVideoMessage(videoPath));
   }
 
   void _sendMultipleFiles(List<AssetEntity> files) {
-    context.read<ChatBloc>().add(ChatEvent.sendMultipleFiles(files));
+    context
+        .read<ConversationBloc>()
+        .add(ConversationEvent.sendMultipleFiles(files));
   }
 
   void _sendAudioMessage(String audioPath, Duration duration) {
     if (duration.inSeconds > 0) {
       context
-          .read<ChatBloc>()
-          .add(ChatEvent.sendVoiceMessage(audioPath, duration));
+          .read<ConversationBloc>()
+          .add(ConversationEvent.sendVoiceMessage(audioPath, duration));
     }
   }
 
   void _sendFileMessage(PlatformFile filePath) {
-    context.read<ChatBloc>().add(ChatEvent.sendFileMessage(filePath));
+    context
+        .read<ConversationBloc>()
+        .add(ConversationEvent.sendFileMessage(filePath));
   }
 
   //TODO

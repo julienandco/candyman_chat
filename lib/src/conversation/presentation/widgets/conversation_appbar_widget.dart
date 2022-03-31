@@ -22,8 +22,8 @@ class ConversationAppbar extends StatelessWidget
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        final chatBloc = context.watch<ChatBloc>();
-        final chatSearchBloc = context.watch<ChatSearchBloc>();
+        final chatBloc = context.watch<ConversationBloc>();
+        final chatSearchBloc = context.watch<ConversationSearchBloc>();
 
         if (!chatSearchBloc.state.isSearchActive) {
           final state = chatBloc.state;
@@ -94,8 +94,8 @@ class ConversationAppbar extends StatelessWidget
             ),
             action: IconButton(
               onPressed: () => context
-                  .read<ChatSearchBloc>()
-                  .add(const ChatSearchEvent.toggleSearch()),
+                  .read<ConversationSearchBloc>()
+                  .add(const ConversationSearchEvent.toggleSearch()),
               icon: const Icon(
                 Icons.search,
                 color: Colors.white,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatSearchUpDown extends StatelessWidget {
@@ -19,7 +18,7 @@ class ChatSearchUpDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatSearchBloc, ChatSearchState>(
+    return BlocBuilder<ConversationSearchBloc, ConversationSearchState>(
       builder: (context, state) {
         if (state.isSearchActive && state.messageIndices.isNotEmpty) {
           return Row(
@@ -31,8 +30,8 @@ class ChatSearchUpDown extends StatelessWidget {
                       iconSize: 35,
                       icon: goUpIcon,
                       onPressed: () => context
-                          .read<ChatSearchBloc>()
-                          .add(const ChatSearchEvent.onGoResultUp()),
+                          .read<ConversationSearchBloc>()
+                          .add(const ConversationSearchEvent.onGoResultUp()),
                     )
                   : const SizedBox(
                       height: 35,
@@ -43,8 +42,8 @@ class ChatSearchUpDown extends StatelessWidget {
                       iconSize: 35,
                       icon: goDownIcon,
                       onPressed: () => context
-                          .read<ChatSearchBloc>()
-                          .add(const ChatSearchEvent.onGoResultDown()),
+                          .read<ConversationSearchBloc>()
+                          .add(const ConversationSearchEvent.onGoResultDown()),
                     )
                   : const SizedBox(
                       height: 35,

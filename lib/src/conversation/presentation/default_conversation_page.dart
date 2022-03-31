@@ -61,13 +61,13 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ChatBloc, ChatState>(
+    return BlocListener<ConversationBloc, ConversationState>(
       listener: (context, state) {
         state.maybeMap(
           loadSuccess: (state) {
             if (state.messages.isNotEmpty) {
-              context.read<ChatSearchBloc>().add(
-                    ChatSearchEvent.initialize(state.messages),
+              context.read<ConversationSearchBloc>().add(
+                    ConversationSearchEvent.initialize(state.messages),
                   );
             }
           },
@@ -90,8 +90,9 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
               children: [
                 CustomScrollView(
                   reverse: true,
-                  controller:
-                      context.read<ChatSearchBloc>().messageListController,
+                  controller: context
+                      .read<ConversationSearchBloc>()
+                      .messageListController,
                   physics: const BouncingScrollPhysics(),
                   slivers: [
                     SliverPadding(
@@ -101,7 +102,10 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                         getUploadUrlUC: widget.getUploadUrlUC,
                         defaultChatBubbleStyle: widget.defaultChatBubbleStyle,
                         getAuthorNameForSenderId: (senderId) {
-                          return context.watch<ChatBloc>().state.maybeMap(
+                          return context
+                              .watch<ConversationBloc>()
+                              .state
+                              .maybeMap(
                                 orElse: () => 'undefined',
                                 loadSuccess: (state) {
                                   if (state.conversation.isGroupChat) {
@@ -133,7 +137,8 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                   left: 10,
                   right: 10,
                   child: SafeArea(
-                    child: BlocBuilder<ChatSearchBloc, ChatSearchState>(
+                    child: BlocBuilder<ConversationSearchBloc,
+                        ConversationSearchState>(
                       builder: (context, state) {
                         if (state.isSearchActive) {
                           return const SizedBox.shrink();
@@ -142,7 +147,8 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                             padding: isWidthOverLimit(context)
                                 ? const EdgeInsets.only(bottom: 100)
                                 : EdgeInsets.zero,
-                            child: BlocBuilder<ChatBloc, ChatState>(
+                            child: BlocBuilder<ConversationBloc,
+                                ConversationState>(
                               builder: (context, state) {
                                 return state.maybeMap(
                                   loadSuccess: (state) {

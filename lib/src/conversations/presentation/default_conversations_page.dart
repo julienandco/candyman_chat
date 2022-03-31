@@ -5,8 +5,8 @@ import 'package:neon_chat/neon_chat.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
   final FileUploadRepository fileUploadRepository;
-  final ChatBloc Function() generateChatBloc;
-  final ChatSearchBloc Function() generateChatSearchBloc;
+  final ConversationBloc Function() generateConversationBloc;
+  final ConversationSearchBloc Function() generateConversationSearchBloc;
 
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
@@ -23,8 +23,8 @@ class DefaultConversationsPage extends StatefulWidget {
   const DefaultConversationsPage({
     Key? key,
     required this.fileUploadRepository,
-    required this.generateChatBloc,
-    required this.generateChatSearchBloc,
+    required this.generateConversationBloc,
+    required this.generateConversationSearchBloc,
     required this.conversationsStyle,
     required this.conversationStyle,
     required this.chatBubbleStyle,
@@ -49,8 +49,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
         context,
         conversationItem: conversationItem,
         fileUploadRepository: widget.fileUploadRepository,
-        generateChatBloc: widget.generateChatBloc,
-        generateChatSearchBloc: widget.generateChatSearchBloc,
+        generateConversationBloc: widget.generateConversationBloc,
+        generateConversationSearchBloc: widget.generateConversationSearchBloc,
         searchAppBarStyle: widget.searchAppBarStyle,
         chatBubbleStyle: widget.chatBubbleStyle,
         conversationStyle: widget.conversationStyle,
@@ -139,9 +139,10 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   conversationItem: conversationItem,
                                   fileUploadRepository:
                                       widget.fileUploadRepository,
-                                  generateChatBloc: widget.generateChatBloc,
-                                  generateChatSearchBloc:
-                                      widget.generateChatSearchBloc,
+                                  generateConversationBloc:
+                                      widget.generateConversationBloc,
+                                  generateConversationSearchBloc:
+                                      widget.generateConversationSearchBloc,
                                   searchAppBarStyle: widget.searchAppBarStyle,
                                   chatBubbleStyle: widget.chatBubbleStyle,
                                   conversationStyle: widget.conversationStyle,

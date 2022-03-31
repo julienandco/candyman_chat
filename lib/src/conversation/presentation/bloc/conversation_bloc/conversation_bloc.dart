@@ -10,11 +10,11 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 
-part 'chat_state.dart';
-part 'chat_event.dart';
-part 'chat_bloc.freezed.dart';
+part 'conversation_state.dart';
+part 'conversation_event.dart';
+part 'conversation_bloc.freezed.dart';
 
-class ChatBloc extends Bloc<ChatEvent, ChatState> {
+class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   String? _conversationId;
 
   final FirebaseAuth firebaseAuth;
@@ -29,7 +29,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final SendTextMessageUC sendTextMessageUC;
   final InitializeConversationStreamUC initStreamUC;
 
-  ChatBloc({
+  ConversationBloc({
     required this.firebaseAuth,
     required this.hideMessageUC,
     required this.deleteMessageUC,
@@ -40,7 +40,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     required this.sendTextMessageUC,
     required this.initStreamUC,
   }) : super(const _Initial()) {
-    on<ChatEvent>((event, emit) {
+    on<ConversationEvent>((event, emit) {
       event.when(
         init: (conversationItem) {
           _conversationId = conversationItem.conversation.id;
@@ -59,7 +59,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           );
         },
         onData: (messages, conversation, displayName) => emit(
-          ChatState.loadSuccess(
+          ConversationState.loadSuccess(
             messages: messages,
             conversation: conversation,
             displayName: displayName,

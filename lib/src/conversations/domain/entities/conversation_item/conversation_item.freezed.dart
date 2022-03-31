@@ -36,9 +36,7 @@ const $ConversationItem = _$ConversationItemTearOff();
 /// @nodoc
 mixin _$ConversationItem {
   Conversation get conversation => throw _privateConstructorUsedError;
-  ChatMessage get lastMessage =>
-      throw _privateConstructorUsedError; // required String displayName,
-// required FirebaseUser conversationPartner,
+  ChatMessage get lastMessage => throw _privateConstructorUsedError;
   int get unreadMessagesCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -170,8 +168,7 @@ class _$_ConversationItem implements _ConversationItem {
   final Conversation conversation;
   @override
   final ChatMessage lastMessage;
-  @override // required String displayName,
-// required FirebaseUser conversationPartner,
+  @override
   final int unreadMessagesCount;
 
   @override
@@ -215,8 +212,7 @@ abstract class _ConversationItem implements ConversationItem {
   Conversation get conversation;
   @override
   ChatMessage get lastMessage;
-  @override // required String displayName,
-// required FirebaseUser conversationPartner,
+  @override
   int get unreadMessagesCount;
   @override
   @JsonKey(ignore: true)

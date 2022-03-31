@@ -4,11 +4,12 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 
-part 'chat_search_state.dart';
-part 'chat_search_event.dart';
-part 'chat_search_bloc.freezed.dart';
+part 'conversation_search_state.dart';
+part 'conversation_search_event.dart';
+part 'conversation_search_bloc.freezed.dart';
 
-class ChatSearchBloc extends Bloc<ChatSearchEvent, ChatSearchState> {
+class ConversationSearchBloc
+    extends Bloc<ConversationSearchEvent, ConversationSearchState> {
   final searchUC = SearchConversationUC();
 
   /// This Function is called when no search results are found. This could
@@ -17,9 +18,9 @@ class ChatSearchBloc extends Bloc<ChatSearchEvent, ChatSearchState> {
 
   final messageListController = AutoScrollController();
 
-  ChatSearchBloc({this.onNoSearchResultsFound})
+  ConversationSearchBloc({this.onNoSearchResultsFound})
       : super(const _State(messageIndices: [])) {
-    on<ChatSearchEvent>((event, emit) {
+    on<ConversationSearchEvent>((event, emit) {
       event.when(
         initialize: (messages) {
           searchUC.initialize(messages);

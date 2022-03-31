@@ -6,8 +6,8 @@ import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationsLoader extends StatelessWidget {
   final FileUploadRepository fileUploadRepository;
-  final ChatBloc Function() generateChatBloc;
-  final ChatSearchBloc Function() generateChatSearchBloc;
+  final ConversationBloc Function() generateConversationBloc;
+  final ConversationSearchBloc Function() generateConversationSearchBloc;
 
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
@@ -23,8 +23,8 @@ class DefaultConversationsLoader extends StatelessWidget {
   const DefaultConversationsLoader({
     Key? key,
     required this.fileUploadRepository,
-    required this.generateChatBloc,
-    required this.generateChatSearchBloc,
+    required this.generateConversationBloc,
+    required this.generateConversationSearchBloc,
     required this.conversationsStyle,
     required this.conversationStyle,
     required this.chatBubbleStyle,
@@ -71,8 +71,9 @@ class DefaultConversationsLoader extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: DefaultConversationsPage(
                     fileUploadRepository: fileUploadRepository,
-                    generateChatBloc: generateChatBloc,
-                    generateChatSearchBloc: generateChatSearchBloc,
+                    generateConversationBloc: generateConversationBloc,
+                    generateConversationSearchBloc:
+                        generateConversationSearchBloc,
                     conversationsStyle: conversationsStyle,
                     conversationStyle: conversationStyle,
                     chatBubbleStyle: chatBubbleStyle,
@@ -93,8 +94,9 @@ class DefaultConversationsLoader extends StatelessWidget {
                           child: DefaultConversationLoader(
                             key: Key(state.conversationItem!.conversation.id),
                             fileUploadRepository: fileUploadRepository,
-                            chatBloc: generateChatBloc,
-                            chatSearchBloc: generateChatSearchBloc,
+                            conversationBloc: generateConversationBloc,
+                            conversationSearchBloc:
+                                generateConversationSearchBloc,
                             chatBubbleStyle: chatBubbleStyle,
                             conversationStyle: conversationStyle,
                             searchAppBarStyle: searchAppBarStyle,

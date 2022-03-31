@@ -107,7 +107,7 @@ abstract class NEONChatInjectableModule {
       CreateGroupConversationUC(conversationsRepository);
 
   @lazySingleton
-  ChatSearchBloc get chatSearchBloc => ChatSearchBloc();
+  ConversationSearchBloc get conversationSearchBloc => ConversationSearchBloc();
 
   @lazySingleton
   CurrentConversationCubit get currentConversationCubit =>

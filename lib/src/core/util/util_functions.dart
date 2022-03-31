@@ -9,8 +9,8 @@ void openConversation(
   BuildContext context, {
   required ConversationItem conversationItem,
   required FileUploadRepository fileUploadRepository,
-  required ChatBloc Function() generateChatBloc,
-  required ChatSearchBloc Function() generateChatSearchBloc,
+  required ConversationBloc Function() generateConversationBloc,
+  required ConversationSearchBloc Function() generateConversationSearchBloc,
   SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
   ChatBubbleStyle chatBubbleStyle = const ChatBubbleStyle(),
   ConversationStyle conversationStyle = const ConversationStyle(),
@@ -23,8 +23,8 @@ void openConversation(
     CupertinoPageRoute(
       builder: (context) => DefaultConversationLoader(
         fileUploadRepository: fileUploadRepository,
-        chatBloc: generateChatBloc,
-        chatSearchBloc: generateChatSearchBloc,
+        conversationBloc: generateConversationBloc,
+        conversationSearchBloc: generateConversationSearchBloc,
         searchAppBarStyle: searchAppBarStyle,
         chatBubbleStyle: chatBubbleStyle,
         conversationStyle: conversationStyle,

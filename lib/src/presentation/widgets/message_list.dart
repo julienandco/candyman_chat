@@ -18,7 +18,7 @@ class MessageList extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatBloc, ChatState>(
+    return BlocBuilder<ConversationBloc, ConversationState>(
       builder: (context, state) {
         return state.maybeMap(
           loadSuccess: (state) => _MessageListView(
@@ -26,7 +26,8 @@ class MessageList extends StatelessWidget {
             messageBuilder: (ChatMessage message, int index) => AutoScrollTag(
               key: ValueKey(message.id),
               index: index,
-              controller: context.read<ChatSearchBloc>().messageListController,
+              controller:
+                  context.read<ConversationSearchBloc>().messageListController,
               child: Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(

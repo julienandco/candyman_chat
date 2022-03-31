@@ -49,11 +49,15 @@ class _MessageBubbleState extends State<MessageBubble> {
     if (canDeleteMessage) {
       widget.chatBubbleStyle.onShowDeletionDialog?.call(
         () {
-          context.read<ChatBloc>().add(ChatEvent.hideMessage(widget.message));
+          context
+              .read<ConversationBloc>()
+              .add(ConversationEvent.hideMessage(widget.message));
           Navigator.pop(context);
         },
         () {
-          context.read<ChatBloc>().add(ChatEvent.deleteMessage(widget.message));
+          context
+              .read<ConversationBloc>()
+              .add(ConversationEvent.deleteMessage(widget.message));
           Navigator.pop(context);
         },
       );
@@ -121,12 +125,11 @@ class _MessageBubbleState extends State<MessageBubble> {
           onVisibilityChanged: (value) {
             if (!widget.isGroupChat && value.visibleFraction > 0.5) {
               context
-                  .read<ChatBloc>()
-                  .add(ChatEvent.markAsSeen(widget.message));
+                  .read<ConversationBloc>()
+                  .add(ConversationEvent.markAsSeen(widget.message));
             } else if (widget.isGroupChat && value.visibleFraction > 0.5) {
-              context
-                  .read<ChatBloc>()
-                  .add(ChatEvent.markGroupMessageAsSeen(widget.message));
+              context.read<ConversationBloc>().add(
+                  ConversationEvent.markGroupMessageAsSeen(widget.message));
             }
           },
           child: Align(

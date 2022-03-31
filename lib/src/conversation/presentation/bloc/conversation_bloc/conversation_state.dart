@@ -1,17 +1,17 @@
-part of 'chat_bloc.dart';
+part of 'conversation_bloc.dart';
 
 @freezed
-class ChatState with _$ChatState {
-  const ChatState._();
+class ConversationState with _$ConversationState {
+  const ConversationState._();
 
-  const factory ChatState.initial() = _Initial;
-  const factory ChatState.loadInProgress() = _LoadInProgress;
-  const factory ChatState.loadSuccess({
+  const factory ConversationState.initial() = _Initial;
+  const factory ConversationState.loadInProgress() = _LoadInProgress;
+  const factory ConversationState.loadSuccess({
     required List<ChatMessage> messages,
     required Conversation conversation,
     required String displayName,
   }) = _LoadSuccess;
-  const factory ChatState.loadFailure() = _LoadFailure;
+  const factory ConversationState.loadFailure() = _LoadFailure;
 
   List<ChatMessage> getMediaMessages() => maybeMap(
         loadSuccess: (state) {

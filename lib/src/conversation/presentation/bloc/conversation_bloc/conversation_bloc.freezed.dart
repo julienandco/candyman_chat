@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'chat_bloc.dart';
+part of 'conversation_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,8 +15,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$ChatStateTearOff {
-  const _$ChatStateTearOff();
+class _$ConversationStateTearOff {
+  const _$ConversationStateTearOff();
 
   _Initial initial() {
     return const _Initial();
@@ -43,10 +43,10 @@ class _$ChatStateTearOff {
 }
 
 /// @nodoc
-const $ChatState = _$ChatStateTearOff();
+const $ConversationState = _$ConversationStateTearOff();
 
 /// @nodoc
-mixin _$ChatState {
+mixin _$ConversationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -106,18 +106,20 @@ mixin _$ChatState {
 }
 
 /// @nodoc
-abstract class $ChatStateCopyWith<$Res> {
-  factory $ChatStateCopyWith(ChatState value, $Res Function(ChatState) then) =
-      _$ChatStateCopyWithImpl<$Res>;
+abstract class $ConversationStateCopyWith<$Res> {
+  factory $ConversationStateCopyWith(
+          ConversationState value, $Res Function(ConversationState) then) =
+      _$ConversationStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ChatStateCopyWithImpl<$Res> implements $ChatStateCopyWith<$Res> {
-  _$ChatStateCopyWithImpl(this._value, this._then);
+class _$ConversationStateCopyWithImpl<$Res>
+    implements $ConversationStateCopyWith<$Res> {
+  _$ConversationStateCopyWithImpl(this._value, this._then);
 
-  final ChatState _value;
+  final ConversationState _value;
   // ignore: unused_field
-  final $Res Function(ChatState) _then;
+  final $Res Function(ConversationState) _then;
 }
 
 /// @nodoc
@@ -127,7 +129,7 @@ abstract class _$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+class __$InitialCopyWithImpl<$Res> extends _$ConversationStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -143,13 +145,13 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatState.initial()';
+    return 'ConversationState.initial()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ChatState.initial'));
+    properties..add(DiagnosticsProperty('type', 'ConversationState.initial'));
   }
 
   @override
@@ -242,7 +244,7 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   }
 }
 
-abstract class _Initial extends ChatState {
+abstract class _Initial extends ConversationState {
   const factory _Initial() = _$_Initial;
   const _Initial._() : super._();
 }
@@ -255,7 +257,8 @@ abstract class _$LoadInProgressCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadInProgressCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+class __$LoadInProgressCopyWithImpl<$Res>
+    extends _$ConversationStateCopyWithImpl<$Res>
     implements _$LoadInProgressCopyWith<$Res> {
   __$LoadInProgressCopyWithImpl(
       _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
@@ -272,13 +275,14 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatState.loadInProgress()';
+    return 'ConversationState.loadInProgress()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ChatState.loadInProgress'));
+    properties
+      ..add(DiagnosticsProperty('type', 'ConversationState.loadInProgress'));
   }
 
   @override
@@ -371,7 +375,7 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   }
 }
 
-abstract class _LoadInProgress extends ChatState {
+abstract class _LoadInProgress extends ConversationState {
   const factory _LoadInProgress() = _$_LoadInProgress;
   const _LoadInProgress._() : super._();
 }
@@ -390,7 +394,8 @@ abstract class _$LoadSuccessCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadSuccessCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+class __$LoadSuccessCopyWithImpl<$Res>
+    extends _$ConversationStateCopyWithImpl<$Res>
     implements _$LoadSuccessCopyWith<$Res> {
   __$LoadSuccessCopyWithImpl(
       _LoadSuccess _value, $Res Function(_LoadSuccess) _then)
@@ -447,14 +452,14 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatState.loadSuccess(messages: $messages, conversation: $conversation, displayName: $displayName)';
+    return 'ConversationState.loadSuccess(messages: $messages, conversation: $conversation, displayName: $displayName)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatState.loadSuccess'))
+      ..add(DiagnosticsProperty('type', 'ConversationState.loadSuccess'))
       ..add(DiagnosticsProperty('messages', messages))
       ..add(DiagnosticsProperty('conversation', conversation))
       ..add(DiagnosticsProperty('displayName', displayName));
@@ -565,7 +570,7 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
   }
 }
 
-abstract class _LoadSuccess extends ChatState {
+abstract class _LoadSuccess extends ConversationState {
   const factory _LoadSuccess(
       {required List<ChatMessage> messages,
       required Conversation conversation,
@@ -588,7 +593,8 @@ abstract class _$LoadFailureCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadFailureCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+class __$LoadFailureCopyWithImpl<$Res>
+    extends _$ConversationStateCopyWithImpl<$Res>
     implements _$LoadFailureCopyWith<$Res> {
   __$LoadFailureCopyWithImpl(
       _LoadFailure _value, $Res Function(_LoadFailure) _then)
@@ -605,13 +611,14 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatState.loadFailure()';
+    return 'ConversationState.loadFailure()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ChatState.loadFailure'));
+    properties
+      ..add(DiagnosticsProperty('type', 'ConversationState.loadFailure'));
   }
 
   @override
@@ -704,14 +711,14 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   }
 }
 
-abstract class _LoadFailure extends ChatState {
+abstract class _LoadFailure extends ConversationState {
   const factory _LoadFailure() = _$_LoadFailure;
   const _LoadFailure._() : super._();
 }
 
 /// @nodoc
-class _$ChatEventTearOff {
-  const _$ChatEventTearOff();
+class _$ConversationEventTearOff {
+  const _$ConversationEventTearOff();
 
   _Init init({required ConversationItem conversationItem}) {
     return _Init(
@@ -791,10 +798,10 @@ class _$ChatEventTearOff {
 }
 
 /// @nodoc
-const $ChatEvent = _$ChatEventTearOff();
+const $ConversationEvent = _$ConversationEventTearOff();
 
 /// @nodoc
-mixin _$ChatEvent {
+mixin _$ConversationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
@@ -904,18 +911,20 @@ mixin _$ChatEvent {
 }
 
 /// @nodoc
-abstract class $ChatEventCopyWith<$Res> {
-  factory $ChatEventCopyWith(ChatEvent value, $Res Function(ChatEvent) then) =
-      _$ChatEventCopyWithImpl<$Res>;
+abstract class $ConversationEventCopyWith<$Res> {
+  factory $ConversationEventCopyWith(
+          ConversationEvent value, $Res Function(ConversationEvent) then) =
+      _$ConversationEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ChatEventCopyWithImpl<$Res> implements $ChatEventCopyWith<$Res> {
-  _$ChatEventCopyWithImpl(this._value, this._then);
+class _$ConversationEventCopyWithImpl<$Res>
+    implements $ConversationEventCopyWith<$Res> {
+  _$ConversationEventCopyWithImpl(this._value, this._then);
 
-  final ChatEvent _value;
+  final ConversationEvent _value;
   // ignore: unused_field
-  final $Res Function(ChatEvent) _then;
+  final $Res Function(ConversationEvent) _then;
 }
 
 /// @nodoc
@@ -928,7 +937,7 @@ abstract class _$InitCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
+class __$InitCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
     implements _$InitCopyWith<$Res> {
   __$InitCopyWithImpl(_Init _value, $Res Function(_Init) _then)
       : super(_value, (v) => _then(v as _Init));
@@ -966,14 +975,14 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.init(conversationItem: $conversationItem)';
+    return 'ConversationEvent.init(conversationItem: $conversationItem)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.init'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.init'))
       ..add(DiagnosticsProperty('conversationItem', conversationItem));
   }
 
@@ -1126,7 +1135,7 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
   }
 }
 
-abstract class _Init implements ChatEvent {
+abstract class _Init implements ConversationEvent {
   const factory _Init({required ConversationItem conversationItem}) = _$_Init;
 
   ConversationItem get conversationItem;
@@ -1147,7 +1156,7 @@ abstract class _$OnDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$OnDataCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
+class __$OnDataCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
     implements _$OnDataCopyWith<$Res> {
   __$OnDataCopyWithImpl(_OnData _value, $Res Function(_OnData) _then)
       : super(_value, (v) => _then(v as _OnData));
@@ -1199,14 +1208,14 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.onData(messages: $messages, conversation: $conversation, displayName: $displayName)';
+    return 'ConversationEvent.onData(messages: $messages, conversation: $conversation, displayName: $displayName)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.onData'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.onData'))
       ..add(DiagnosticsProperty('messages', messages))
       ..add(DiagnosticsProperty('conversation', conversation))
       ..add(DiagnosticsProperty('displayName', displayName));
@@ -1367,7 +1376,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   }
 }
 
-abstract class _OnData implements ChatEvent {
+abstract class _OnData implements ConversationEvent {
   const factory _OnData(List<ChatMessage> messages, Conversation conversation,
       String displayName) = _$_OnData;
 
@@ -1387,7 +1396,8 @@ abstract class _$SendTextMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$SendTextMessageCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
+class __$SendTextMessageCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$SendTextMessageCopyWith<$Res> {
   __$SendTextMessageCopyWithImpl(
       _SendTextMessage _value, $Res Function(_SendTextMessage) _then)
@@ -1421,14 +1431,14 @@ class _$_SendTextMessage
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.sendTextMessage(message: $message)';
+    return 'ConversationEvent.sendTextMessage(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.sendTextMessage'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.sendTextMessage'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -1580,7 +1590,7 @@ class _$_SendTextMessage
   }
 }
 
-abstract class _SendTextMessage implements ChatEvent {
+abstract class _SendTextMessage implements ConversationEvent {
   const factory _SendTextMessage(String message) = _$_SendTextMessage;
 
   String get message;
@@ -1599,7 +1609,7 @@ abstract class _$SendImageMessageCopyWith<$Res> {
 
 /// @nodoc
 class __$SendImageMessageCopyWithImpl<$Res>
-    extends _$ChatEventCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$SendImageMessageCopyWith<$Res> {
   __$SendImageMessageCopyWithImpl(
       _SendImageMessage _value, $Res Function(_SendImageMessage) _then)
@@ -1633,14 +1643,14 @@ class _$_SendImageMessage
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.sendImageMessage(message: $message)';
+    return 'ConversationEvent.sendImageMessage(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.sendImageMessage'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.sendImageMessage'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -1792,7 +1802,7 @@ class _$_SendImageMessage
   }
 }
 
-abstract class _SendImageMessage implements ChatEvent {
+abstract class _SendImageMessage implements ConversationEvent {
   const factory _SendImageMessage(String message) = _$_SendImageMessage;
 
   String get message;
@@ -1811,7 +1821,7 @@ abstract class _$SendVoiceMessageCopyWith<$Res> {
 
 /// @nodoc
 class __$SendVoiceMessageCopyWithImpl<$Res>
-    extends _$ChatEventCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$SendVoiceMessageCopyWith<$Res> {
   __$SendVoiceMessageCopyWithImpl(
       _SendVoiceMessage _value, $Res Function(_SendVoiceMessage) _then)
@@ -1852,14 +1862,14 @@ class _$_SendVoiceMessage
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.sendVoiceMessage(message: $message, duration: $duration)';
+    return 'ConversationEvent.sendVoiceMessage(message: $message, duration: $duration)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.sendVoiceMessage'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.sendVoiceMessage'))
       ..add(DiagnosticsProperty('message', message))
       ..add(DiagnosticsProperty('duration', duration));
   }
@@ -2015,7 +2025,7 @@ class _$_SendVoiceMessage
   }
 }
 
-abstract class _SendVoiceMessage implements ChatEvent {
+abstract class _SendVoiceMessage implements ConversationEvent {
   const factory _SendVoiceMessage(String message, Duration duration) =
       _$_SendVoiceMessage;
 
@@ -2036,7 +2046,7 @@ abstract class _$SendVideoMessageCopyWith<$Res> {
 
 /// @nodoc
 class __$SendVideoMessageCopyWithImpl<$Res>
-    extends _$ChatEventCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$SendVideoMessageCopyWith<$Res> {
   __$SendVideoMessageCopyWithImpl(
       _SendVideoMessage _value, $Res Function(_SendVideoMessage) _then)
@@ -2070,14 +2080,14 @@ class _$_SendVideoMessage
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.sendVideoMessage(message: $message)';
+    return 'ConversationEvent.sendVideoMessage(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.sendVideoMessage'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.sendVideoMessage'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -2229,7 +2239,7 @@ class _$_SendVideoMessage
   }
 }
 
-abstract class _SendVideoMessage implements ChatEvent {
+abstract class _SendVideoMessage implements ConversationEvent {
   const factory _SendVideoMessage(String message) = _$_SendVideoMessage;
 
   String get message;
@@ -2248,7 +2258,7 @@ abstract class _$SendMultipleFilesCopyWith<$Res> {
 
 /// @nodoc
 class __$SendMultipleFilesCopyWithImpl<$Res>
-    extends _$ChatEventCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$SendMultipleFilesCopyWith<$Res> {
   __$SendMultipleFilesCopyWithImpl(
       _SendMultipleFiles _value, $Res Function(_SendMultipleFiles) _then)
@@ -2282,14 +2292,14 @@ class _$_SendMultipleFiles
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.sendMultipleFiles(files: $files)';
+    return 'ConversationEvent.sendMultipleFiles(files: $files)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.sendMultipleFiles'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.sendMultipleFiles'))
       ..add(DiagnosticsProperty('files', files));
   }
 
@@ -2441,7 +2451,7 @@ class _$_SendMultipleFiles
   }
 }
 
-abstract class _SendMultipleFiles implements ChatEvent {
+abstract class _SendMultipleFiles implements ConversationEvent {
   const factory _SendMultipleFiles(List<AssetEntity> files) =
       _$_SendMultipleFiles;
 
@@ -2460,7 +2470,8 @@ abstract class _$SendFileMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$SendFileMessageCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
+class __$SendFileMessageCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$SendFileMessageCopyWith<$Res> {
   __$SendFileMessageCopyWithImpl(
       _SendFileMessage _value, $Res Function(_SendFileMessage) _then)
@@ -2494,14 +2505,14 @@ class _$_SendFileMessage
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.sendFileMessage(file: $file)';
+    return 'ConversationEvent.sendFileMessage(file: $file)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.sendFileMessage'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.sendFileMessage'))
       ..add(DiagnosticsProperty('file', file));
   }
 
@@ -2653,7 +2664,7 @@ class _$_SendFileMessage
   }
 }
 
-abstract class _SendFileMessage implements ChatEvent {
+abstract class _SendFileMessage implements ConversationEvent {
   const factory _SendFileMessage(PlatformFile file) = _$_SendFileMessage;
 
   PlatformFile get file;
@@ -2673,7 +2684,8 @@ abstract class _$MarkAsSeenCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$MarkAsSeenCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
+class __$MarkAsSeenCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$MarkAsSeenCopyWith<$Res> {
   __$MarkAsSeenCopyWithImpl(
       _MarkAsSeen _value, $Res Function(_MarkAsSeen) _then)
@@ -2712,14 +2724,14 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.markAsSeen(message: $message)';
+    return 'ConversationEvent.markAsSeen(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.markAsSeen'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.markAsSeen'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -2871,7 +2883,7 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   }
 }
 
-abstract class _MarkAsSeen implements ChatEvent {
+abstract class _MarkAsSeen implements ConversationEvent {
   const factory _MarkAsSeen(ChatMessage message) = _$_MarkAsSeen;
 
   ChatMessage get message;
@@ -2892,7 +2904,7 @@ abstract class _$MarkGroupMessageAsSeenCopyWith<$Res> {
 
 /// @nodoc
 class __$MarkGroupMessageAsSeenCopyWithImpl<$Res>
-    extends _$ChatEventCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$MarkGroupMessageAsSeenCopyWith<$Res> {
   __$MarkGroupMessageAsSeenCopyWithImpl(_MarkGroupMessageAsSeen _value,
       $Res Function(_MarkGroupMessageAsSeen) _then)
@@ -2933,14 +2945,15 @@ class _$_MarkGroupMessageAsSeen
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.markGroupMessageAsSeen(message: $message)';
+    return 'ConversationEvent.markGroupMessageAsSeen(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.markGroupMessageAsSeen'))
+      ..add(DiagnosticsProperty(
+          'type', 'ConversationEvent.markGroupMessageAsSeen'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -3093,7 +3106,7 @@ class _$_MarkGroupMessageAsSeen
   }
 }
 
-abstract class _MarkGroupMessageAsSeen implements ChatEvent {
+abstract class _MarkGroupMessageAsSeen implements ConversationEvent {
   const factory _MarkGroupMessageAsSeen(ChatMessage message) =
       _$_MarkGroupMessageAsSeen;
 
@@ -3114,7 +3127,8 @@ abstract class _$DeleteMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$DeleteMessageCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
+class __$DeleteMessageCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$DeleteMessageCopyWith<$Res> {
   __$DeleteMessageCopyWithImpl(
       _DeleteMessage _value, $Res Function(_DeleteMessage) _then)
@@ -3153,14 +3167,14 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.deleteMessage(message: $message)';
+    return 'ConversationEvent.deleteMessage(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.deleteMessage'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.deleteMessage'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -3312,7 +3326,7 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   }
 }
 
-abstract class _DeleteMessage implements ChatEvent {
+abstract class _DeleteMessage implements ConversationEvent {
   const factory _DeleteMessage(ChatMessage message) = _$_DeleteMessage;
 
   ChatMessage get message;
@@ -3332,7 +3346,8 @@ abstract class _$HideMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$HideMessageCopyWithImpl<$Res> extends _$ChatEventCopyWithImpl<$Res>
+class __$HideMessageCopyWithImpl<$Res>
+    extends _$ConversationEventCopyWithImpl<$Res>
     implements _$HideMessageCopyWith<$Res> {
   __$HideMessageCopyWithImpl(
       _HideMessage _value, $Res Function(_HideMessage) _then)
@@ -3371,14 +3386,14 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatEvent.hideMessage(message: $message)';
+    return 'ConversationEvent.hideMessage(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatEvent.hideMessage'))
+      ..add(DiagnosticsProperty('type', 'ConversationEvent.hideMessage'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -3530,7 +3545,7 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   }
 }
 
-abstract class _HideMessage implements ChatEvent {
+abstract class _HideMessage implements ConversationEvent {
   const factory _HideMessage(ChatMessage message) = _$_HideMessage;
 
   ChatMessage get message;

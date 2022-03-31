@@ -1,9 +1,9 @@
-part of 'chat_search_bloc.dart';
+part of 'conversation_search_bloc.dart';
 
 @freezed
-class ChatSearchState with _$ChatSearchState {
-  const ChatSearchState._();
-  const factory ChatSearchState.state({
+class ConversationSearchState with _$ConversationSearchState {
+  const ConversationSearchState._();
+  const factory ConversationSearchState.state({
     required List<int> messageIndices,
     @Default(0) int currentResultIndex,
     @Default(false) bool isSearchActive,

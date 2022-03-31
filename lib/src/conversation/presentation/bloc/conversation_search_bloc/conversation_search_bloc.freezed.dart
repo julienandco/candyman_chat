@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'chat_search_bloc.dart';
+part of 'conversation_search_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,8 +15,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$ChatSearchStateTearOff {
-  const _$ChatSearchStateTearOff();
+class _$ConversationSearchStateTearOff {
+  const _$ConversationSearchStateTearOff();
 
   _State state(
       {required List<int> messageIndices,
@@ -31,10 +31,10 @@ class _$ChatSearchStateTearOff {
 }
 
 /// @nodoc
-const $ChatSearchState = _$ChatSearchStateTearOff();
+const $ConversationSearchState = _$ConversationSearchStateTearOff();
 
 /// @nodoc
-mixin _$ChatSearchState {
+mixin _$ConversationSearchState {
   List<int> get messageIndices => throw _privateConstructorUsedError;
   int get currentResultIndex => throw _privateConstructorUsedError;
   bool get isSearchActive => throw _privateConstructorUsedError;
@@ -79,27 +79,27 @@ mixin _$ChatSearchState {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ChatSearchStateCopyWith<ChatSearchState> get copyWith =>
+  $ConversationSearchStateCopyWith<ConversationSearchState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChatSearchStateCopyWith<$Res> {
-  factory $ChatSearchStateCopyWith(
-          ChatSearchState value, $Res Function(ChatSearchState) then) =
-      _$ChatSearchStateCopyWithImpl<$Res>;
+abstract class $ConversationSearchStateCopyWith<$Res> {
+  factory $ConversationSearchStateCopyWith(ConversationSearchState value,
+          $Res Function(ConversationSearchState) then) =
+      _$ConversationSearchStateCopyWithImpl<$Res>;
   $Res call(
       {List<int> messageIndices, int currentResultIndex, bool isSearchActive});
 }
 
 /// @nodoc
-class _$ChatSearchStateCopyWithImpl<$Res>
-    implements $ChatSearchStateCopyWith<$Res> {
-  _$ChatSearchStateCopyWithImpl(this._value, this._then);
+class _$ConversationSearchStateCopyWithImpl<$Res>
+    implements $ConversationSearchStateCopyWith<$Res> {
+  _$ConversationSearchStateCopyWithImpl(this._value, this._then);
 
-  final ChatSearchState _value;
+  final ConversationSearchState _value;
   // ignore: unused_field
-  final $Res Function(ChatSearchState) _then;
+  final $Res Function(ConversationSearchState) _then;
 
   @override
   $Res call({
@@ -125,7 +125,8 @@ class _$ChatSearchStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$StateCopyWith<$Res> implements $ChatSearchStateCopyWith<$Res> {
+abstract class _$StateCopyWith<$Res>
+    implements $ConversationSearchStateCopyWith<$Res> {
   factory _$StateCopyWith(_State value, $Res Function(_State) then) =
       __$StateCopyWithImpl<$Res>;
   @override
@@ -134,7 +135,8 @@ abstract class _$StateCopyWith<$Res> implements $ChatSearchStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$StateCopyWithImpl<$Res> extends _$ChatSearchStateCopyWithImpl<$Res>
+class __$StateCopyWithImpl<$Res>
+    extends _$ConversationSearchStateCopyWithImpl<$Res>
     implements _$StateCopyWith<$Res> {
   __$StateCopyWithImpl(_State _value, $Res Function(_State) _then)
       : super(_value, (v) => _then(v as _State));
@@ -185,7 +187,7 @@ class _$_State extends _State {
 
   @override
   String toString() {
-    return 'ChatSearchState.state(messageIndices: $messageIndices, currentResultIndex: $currentResultIndex, isSearchActive: $isSearchActive)';
+    return 'ConversationSearchState.state(messageIndices: $messageIndices, currentResultIndex: $currentResultIndex, isSearchActive: $isSearchActive)';
   }
 
   @override
@@ -276,7 +278,7 @@ class _$_State extends _State {
   }
 }
 
-abstract class _State extends ChatSearchState {
+abstract class _State extends ConversationSearchState {
   const factory _State(
       {required List<int> messageIndices,
       int currentResultIndex,
@@ -295,8 +297,8 @@ abstract class _State extends ChatSearchState {
 }
 
 /// @nodoc
-class _$ChatSearchEventTearOff {
-  const _$ChatSearchEventTearOff();
+class _$ConversationSearchEventTearOff {
+  const _$ConversationSearchEventTearOff();
 
   _Initialize initialize(List<ChatMessage> messages) {
     return _Initialize(
@@ -324,10 +326,10 @@ class _$ChatSearchEventTearOff {
 }
 
 /// @nodoc
-const $ChatSearchEvent = _$ChatSearchEventTearOff();
+const $ConversationSearchEvent = _$ConversationSearchEventTearOff();
 
 /// @nodoc
-mixin _$ChatSearchEvent {
+mixin _$ConversationSearchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ChatMessage> messages) initialize,
@@ -387,20 +389,20 @@ mixin _$ChatSearchEvent {
 }
 
 /// @nodoc
-abstract class $ChatSearchEventCopyWith<$Res> {
-  factory $ChatSearchEventCopyWith(
-          ChatSearchEvent value, $Res Function(ChatSearchEvent) then) =
-      _$ChatSearchEventCopyWithImpl<$Res>;
+abstract class $ConversationSearchEventCopyWith<$Res> {
+  factory $ConversationSearchEventCopyWith(ConversationSearchEvent value,
+          $Res Function(ConversationSearchEvent) then) =
+      _$ConversationSearchEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ChatSearchEventCopyWithImpl<$Res>
-    implements $ChatSearchEventCopyWith<$Res> {
-  _$ChatSearchEventCopyWithImpl(this._value, this._then);
+class _$ConversationSearchEventCopyWithImpl<$Res>
+    implements $ConversationSearchEventCopyWith<$Res> {
+  _$ConversationSearchEventCopyWithImpl(this._value, this._then);
 
-  final ChatSearchEvent _value;
+  final ConversationSearchEvent _value;
   // ignore: unused_field
-  final $Res Function(ChatSearchEvent) _then;
+  final $Res Function(ConversationSearchEvent) _then;
 }
 
 /// @nodoc
@@ -413,7 +415,7 @@ abstract class _$InitializeCopyWith<$Res> {
 
 /// @nodoc
 class __$InitializeCopyWithImpl<$Res>
-    extends _$ChatSearchEventCopyWithImpl<$Res>
+    extends _$ConversationSearchEventCopyWithImpl<$Res>
     implements _$InitializeCopyWith<$Res> {
   __$InitializeCopyWithImpl(
       _Initialize _value, $Res Function(_Initialize) _then)
@@ -445,7 +447,7 @@ class _$_Initialize implements _Initialize {
 
   @override
   String toString() {
-    return 'ChatSearchEvent.initialize(messages: $messages)';
+    return 'ConversationSearchEvent.initialize(messages: $messages)';
   }
 
   @override
@@ -546,7 +548,7 @@ class _$_Initialize implements _Initialize {
   }
 }
 
-abstract class _Initialize implements ChatSearchEvent {
+abstract class _Initialize implements ConversationSearchEvent {
   const factory _Initialize(List<ChatMessage> messages) = _$_Initialize;
 
   List<ChatMessage> get messages;
@@ -564,7 +566,7 @@ abstract class _$ToggleSearchCopyWith<$Res> {
 
 /// @nodoc
 class __$ToggleSearchCopyWithImpl<$Res>
-    extends _$ChatSearchEventCopyWithImpl<$Res>
+    extends _$ConversationSearchEventCopyWithImpl<$Res>
     implements _$ToggleSearchCopyWith<$Res> {
   __$ToggleSearchCopyWithImpl(
       _ToggleSearch _value, $Res Function(_ToggleSearch) _then)
@@ -581,7 +583,7 @@ class _$_ToggleSearch implements _ToggleSearch {
 
   @override
   String toString() {
-    return 'ChatSearchEvent.toggleSearch()';
+    return 'ConversationSearchEvent.toggleSearch()';
   }
 
   @override
@@ -674,7 +676,7 @@ class _$_ToggleSearch implements _ToggleSearch {
   }
 }
 
-abstract class _ToggleSearch implements ChatSearchEvent {
+abstract class _ToggleSearch implements ConversationSearchEvent {
   const factory _ToggleSearch() = _$_ToggleSearch;
 }
 
@@ -686,7 +688,8 @@ abstract class _$QueryCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$QueryCopyWithImpl<$Res> extends _$ChatSearchEventCopyWithImpl<$Res>
+class __$QueryCopyWithImpl<$Res>
+    extends _$ConversationSearchEventCopyWithImpl<$Res>
     implements _$QueryCopyWith<$Res> {
   __$QueryCopyWithImpl(_Query _value, $Res Function(_Query) _then)
       : super(_value, (v) => _then(v as _Query));
@@ -717,7 +720,7 @@ class _$_Query implements _Query {
 
   @override
   String toString() {
-    return 'ChatSearchEvent.query(term: $term)';
+    return 'ConversationSearchEvent.query(term: $term)';
   }
 
   @override
@@ -818,7 +821,7 @@ class _$_Query implements _Query {
   }
 }
 
-abstract class _Query implements ChatSearchEvent {
+abstract class _Query implements ConversationSearchEvent {
   const factory _Query(String term) = _$_Query;
 
   String get term;
@@ -835,7 +838,7 @@ abstract class _$OnGoResultUpCopyWith<$Res> {
 
 /// @nodoc
 class __$OnGoResultUpCopyWithImpl<$Res>
-    extends _$ChatSearchEventCopyWithImpl<$Res>
+    extends _$ConversationSearchEventCopyWithImpl<$Res>
     implements _$OnGoResultUpCopyWith<$Res> {
   __$OnGoResultUpCopyWithImpl(
       _OnGoResultUp _value, $Res Function(_OnGoResultUp) _then)
@@ -852,7 +855,7 @@ class _$_OnGoResultUp implements _OnGoResultUp {
 
   @override
   String toString() {
-    return 'ChatSearchEvent.onGoResultUp()';
+    return 'ConversationSearchEvent.onGoResultUp()';
   }
 
   @override
@@ -945,7 +948,7 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   }
 }
 
-abstract class _OnGoResultUp implements ChatSearchEvent {
+abstract class _OnGoResultUp implements ConversationSearchEvent {
   const factory _OnGoResultUp() = _$_OnGoResultUp;
 }
 
@@ -958,7 +961,7 @@ abstract class _$OnGoResultDownCopyWith<$Res> {
 
 /// @nodoc
 class __$OnGoResultDownCopyWithImpl<$Res>
-    extends _$ChatSearchEventCopyWithImpl<$Res>
+    extends _$ConversationSearchEventCopyWithImpl<$Res>
     implements _$OnGoResultDownCopyWith<$Res> {
   __$OnGoResultDownCopyWithImpl(
       _OnGoResultDown _value, $Res Function(_OnGoResultDown) _then)
@@ -975,7 +978,7 @@ class _$_OnGoResultDown implements _OnGoResultDown {
 
   @override
   String toString() {
-    return 'ChatSearchEvent.onGoResultDown()';
+    return 'ConversationSearchEvent.onGoResultDown()';
   }
 
   @override
@@ -1068,6 +1071,6 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   }
 }
 
-abstract class _OnGoResultDown implements ChatSearchEvent {
+abstract class _OnGoResultDown implements ConversationSearchEvent {
   const factory _OnGoResultDown() = _$_OnGoResultDown;
 }
