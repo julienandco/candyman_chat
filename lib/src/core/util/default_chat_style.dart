@@ -56,7 +56,7 @@ class ChatListItemStyle {
     this.focusMenuTextStyle = const TextStyle(),
     this.focusMenuIcon = const Icon(Icons.delete, color: Colors.black),
     this.focusMenuColor = Colors.white,
-    this.listTileColor = Colors.grey,
+    this.listTileColor = Colors.black12,
     this.listTileHoverColor = Colors.blueAccent,
     this.titleTextStyle =
         const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
