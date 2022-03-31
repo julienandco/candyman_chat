@@ -180,6 +180,7 @@ class SearchAppBarStyle {
   final Color iconColor;
   final Color searchTextCursorColor;
   final TextStyle searchTextInput;
+  final String lastActivityPrefix;
   final BoxDecoration searchBarDecoration;
 
   const SearchAppBarStyle({
@@ -188,6 +189,7 @@ class SearchAppBarStyle {
         hintText: '...',
         hintStyle: TextStyle(color: Colors.white38),
         border: InputBorder.none),
+    this.lastActivityPrefix = 'last seen at: ',
     this.iconColor = Colors.white,
     this.searchTextCursorColor = Colors.white,
     this.searchTextInput = const TextStyle(color: Colors.white),

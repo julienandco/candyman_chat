@@ -81,7 +81,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
             backgroundColor: widget.defaultConversationStyle.backgroundColor,
             appBar: ConversationAppbar(
               onAvertaTap: widget.onAppbarTap,
-              defaultSearchAppBarStyle: widget.defaultSearchAppBarStyle,
+              searchAppBarStyle: widget.defaultSearchAppBarStyle,
               showCloseButton: !widget.showCloseButton,
               barDecoration:
                   const BoxDecoration(color: Color.fromARGB(255, 25, 5, 55)),

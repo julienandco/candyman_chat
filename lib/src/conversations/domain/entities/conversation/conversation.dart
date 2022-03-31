@@ -60,4 +60,9 @@ class Conversation with _$Conversation {
       return otherUser.profilePictureURL;
     }
   }
+
+  FirebaseUser? getConversationPartner(String? myId) {
+    if (isGroupChat || myId == null) return null;
+    return conversationMembers.firstWhere((member) => member.id != myId);
+  }
 }

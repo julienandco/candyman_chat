@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
@@ -5,47 +6,45 @@ import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 class ConversationAppbar extends StatelessWidget
     implements PreferredSizeWidget {
-  final SearchAppBarStyle defaultSearchAppBarStyle;
+  final SearchAppBarStyle searchAppBarStyle;
+  final bool showCloseButton;
+  final BoxDecoration barDecoration;
+  final Function()? onAvertaTap;
 
   const ConversationAppbar({
     Key? key,
-    required this.defaultSearchAppBarStyle,
+    required this.searchAppBarStyle,
     required this.showCloseButton,
     required this.barDecoration,
     this.onAvertaTap,
   }) : super(key: key);
 
-  final bool showCloseButton;
-  final BoxDecoration barDecoration;
-  final Function()? onAvertaTap;
   @override
   Widget build(BuildContext context) {
+    final me = FirebaseAuth.instance.currentUser;
     return Builder(
       builder: (context) {
-        final chatBloc = context.watch<ConversationBloc>();
-        final chatSearchBloc = context.watch<ConversationSearchBloc>();
+        final conversationBloc = context.watch<ConversationBloc>();
+        final conversationSearchBloc = context.watch<ConversationSearchBloc>();
 
-        if (!chatSearchBloc.state.isSearchActive) {
-          final state = chatBloc.state;
+        if (!conversationSearchBloc.state.isSearchActive) {
+          final state = conversationBloc.state;
           final lastActiveAt = state.mapOrNull(
             loadSuccess: (state) {
-              // TODO: setup last active get
-              // final timestamp = state.userProfile.lastActiveAt;
-              // return timestamp != null
-              //     ? timeago.format(
-              //         timestamp,
-              //         locale:
-              //             EasyLocalization.of(context)?.locale.languageCode ??
-              //                 'en',
-              //       )
-              //     : null;
+              final timestamp = state.conversation.isGroupChat
+                  ? null
+                  : state.conversation
+                      .getConversationPartner(me?.uid)
+                      ?.lastActivity;
+
+              return timestamp != null ? formatDatetime(timestamp) : null;
             },
           );
           return SubHeader(
             decoration: barDecoration,
             leading: showCloseButton
                 ? const Padding(padding: EdgeInsets.symmetric(horizontal: 20))
-                : null, //Padding(padding: kPadLeftMedium) : null,
+                : null,
             title: GestureDetector(
               key: const Key('Conversation_Page_Header'),
               behavior: HitTestBehavior.opaque,
@@ -83,7 +82,7 @@ class ConversationAppbar extends StatelessWidget
                         ),
                         if (lastActiveAt != null)
                           Text(
-                            lastActiveAt,
+                            searchAppBarStyle.lastActivityPrefix + lastActiveAt,
                             style: const TextStyle(color: Colors.white54),
                           )
                       ],
@@ -104,7 +103,7 @@ class ConversationAppbar extends StatelessWidget
           );
         } else {
           return ChatSearchAppBar(
-            defaultSearchAppBarStyle: defaultSearchAppBarStyle,
+            defaultSearchAppBarStyle: searchAppBarStyle,
           );
         }
       },
