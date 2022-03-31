@@ -68,6 +68,24 @@ class Conversation with _$Conversation {
     }
   }
 
+  bool get isBlocked {
+    if (isGroupChat) {
+      //TODO
+      return false;
+    } else {
+      final firstUser = conversationMembers.first;
+      final secondUser = conversationMembers.last;
+
+      if (firstUser.blockedUsers.contains(secondUser.id) ||
+          firstUser.blockedByUsers.contains(secondUser.id) ||
+          secondUser.blockedUsers.contains(firstUser.id) ||
+          secondUser.blockedByUsers.contains(firstUser.id)) {
+        return true;
+      }
+      return false;
+    }
+  }
+
   /// Getter for 1-on-1 chats, that returns the direct conversation partner.
   FirebaseUser? getConversationPartner(String? myId) {
     if (isGroupChat || myId == null) return null;

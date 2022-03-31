@@ -39,6 +39,8 @@ class ConversationListItemStyle {
   final TextStyle lastMassageTextStyle;
   final Color focusMenuBlurBackgroundColor;
   final String focusMenuText;
+  final String chatBlockedLabel;
+  final TextStyle? chatBlockedLabelStyle;
   final TextStyle focusMenuTextStyle;
   final Widget focusMenuIcon;
   final Color focusMenuColor;
@@ -53,6 +55,8 @@ class ConversationListItemStyle {
   const ConversationListItemStyle({
     this.lastMassageTextStyle = const TextStyle(color: Colors.black54),
     this.focusMenuBlurBackgroundColor = Colors.black,
+    this.chatBlockedLabel = 'blocked',
+    this.chatBlockedLabelStyle,
     this.focusMenuText = 'delete',
     this.focusMenuTextStyle = const TextStyle(),
     this.focusMenuIcon = const Icon(Icons.delete, color: Colors.black),

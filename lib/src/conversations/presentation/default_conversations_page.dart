@@ -124,7 +124,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 : chatConversations)
                             .map(
                               (conversationItem) => ConversationListItem(
-                                chatListItemStyle:
+                                conversationListItemStyle:
                                     widget.conversationsStyle.chatListItemStyle,
                                 conversationItem: conversationItem,
                                 userAvatar: widget.getUserAvatar?.call(

@@ -12,7 +12,7 @@ class ConversationListItem extends StatefulWidget {
   final Function()? onOpenChat;
   final Function()? onOpenUserProfile;
   final Widget userAvatar;
-  final ConversationListItemStyle chatListItemStyle;
+  final ConversationListItemStyle conversationListItemStyle;
 
   const ConversationListItem({
     Key? key,
@@ -20,7 +20,7 @@ class ConversationListItem extends StatefulWidget {
     this.onOpenChat,
     this.onOpenUserProfile,
     required this.userAvatar,
-    required this.chatListItemStyle,
+    required this.conversationListItemStyle,
   }) : super(key: key);
 
   @override
@@ -33,13 +33,12 @@ class _ConversationListItemState extends State<ConversationListItem> {
   @override
   Widget build(BuildContext context) {
     Widget lastMessageBuilder() {
-      // if (widget.conversationItem.conversationPartner.isBlocked) {
-      //   return Text(
-      //     'chatBlocked'.tr(),
-      //     style: kTextChatMessageTime,
-      //   );
-      // } else
-      if (widget.conversationItem.lastMessage != ChatMessage.empty()) {
+      if (widget.conversationItem.conversation.isBlocked) {
+        return Text(
+          widget.conversationListItemStyle.chatBlockedLabel,
+          style: widget.conversationListItemStyle.chatBlockedLabelStyle,
+        );
+      } else if (widget.conversationItem.lastMessage != ChatMessage.empty()) {
         final type = widget.conversationItem.lastMessage.type;
         String text = '';
         switch (type) {
@@ -48,7 +47,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
               widget.conversationItem.lastMessage.text!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: widget.chatListItemStyle.subtitleTextStyle,
+              style: widget.conversationListItemStyle.subtitleTextStyle,
             );
           case ChatMessageType.image:
             text += '📷  ';
@@ -69,7 +68,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
         }
         return Text(
           text + type.displayString,
-          style: widget.chatListItemStyle.subtitleTextStyle,
+          style: widget.conversationListItemStyle.subtitleTextStyle,
         );
       } else {
         return const SizedBox.shrink();
@@ -87,13 +86,13 @@ class _ConversationListItemState extends State<ConversationListItem> {
         menuOffset: 10.0,
         blurSize: 0.0,
         blurBackgroundColor:
-            widget.chatListItemStyle.focusMenuBlurBackgroundColor,
+            widget.conversationListItemStyle.focusMenuBlurBackgroundColor,
         menuWidth: MediaQuery.of(context).size.width * 0.6,
         menuBoxDecoration:
             BoxDecoration(borderRadius: BorderRadius.circular(50)),
         menuItems: [
           FocusedMenuItem(
-              backgroundColor: widget.chatListItemStyle.focusMenuColor,
+              backgroundColor: widget.conversationListItemStyle.focusMenuColor,
               title: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5 - 50,
                 child: Row(
@@ -102,12 +101,13 @@ class _ConversationListItemState extends State<ConversationListItem> {
                   children: [
                     Flexible(
                         fit: FlexFit.loose,
-                        child: widget.chatListItemStyle.focusMenuIcon),
+                        child: widget.conversationListItemStyle.focusMenuIcon),
                     Flexible(
                       fit: FlexFit.loose,
                       child: AutoSizeText(
-                        widget.chatListItemStyle.focusMenuText,
-                        style: widget.chatListItemStyle.focusMenuTextStyle,
+                        widget.conversationListItemStyle.focusMenuText,
+                        style:
+                            widget.conversationListItemStyle.focusMenuTextStyle,
                       ),
                     ),
                   ],
@@ -152,8 +152,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
                                 .id ==
                             widget.conversationItem.conversation.id ||
                         _onHover)
-                    ? widget.chatListItemStyle.listTileHoverColor
-                    : widget.chatListItemStyle.listTileColor,
+                    ? widget.conversationListItemStyle.listTileHoverColor
+                    : widget.conversationListItemStyle.listTileColor,
               ),
               child: Row(
                 children: [
@@ -175,7 +175,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
                           children: [
                             Text(
                               widget.conversationItem.conversation.displayName,
-                              style: widget.chatListItemStyle.titleTextStyle,
+                              style: widget
+                                  .conversationListItemStyle.titleTextStyle,
                             ),
                             Text(
                               widget.conversationItem.lastMessage !=
@@ -183,7 +184,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
                                   ? widget.conversationItem.lastMessage
                                       .timestampFormatted
                                   : '',
-                              style: widget.chatListItemStyle.subtitleTextStyle,
+                              style: widget
+                                  .conversationListItemStyle.subtitleTextStyle,
                             ),
                           ],
                         ),
@@ -199,15 +201,15 @@ class _ConversationListItemState extends State<ConversationListItem> {
                               if (widget.conversationItem.unreadMessagesCount !=
                                   0)
                                 Badge(
-                                  badgeColor:
-                                      widget.chatListItemStyle.badgeColor,
+                                  badgeColor: widget
+                                      .conversationListItemStyle.badgeColor,
                                   padding: const EdgeInsets.all(6.0),
                                   elevation: 0.0,
                                   badgeContent: Text(
                                     widget.conversationItem.unreadMessagesCount
                                         .toString(),
-                                    style:
-                                        widget.chatListItemStyle.badgeTextStyle,
+                                    style: widget.conversationListItemStyle
+                                        .badgeTextStyle,
                                   ),
                                 ),
                             ],
