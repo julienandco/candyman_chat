@@ -34,6 +34,7 @@ class FirebaseKeys {
   final String usersIdKey = 'id';
   final String usersProfilePictureKey = 'profilePictureURL';
   final String usersUserNameKey = 'name';
+  final String usersGroupMessageSeenKey = 'groupMessageSeenTimestamps';
 
   const FirebaseKeys({
     this.environment = FirebaseEnvironment.staging,

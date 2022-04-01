@@ -117,9 +117,35 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   @override
-  Stream<int> getUnreadGroupMessagesCount(String conversationId) {
-    // TODOGROUPSEEN: implement getUnreadGroupMessagesCount
-    throw UnimplementedError();
+  Stream<int> getUnreadGroupMessagesCount({
+    required String conversationId,
+    required Timestamp lastSeenTimestamp,
+  }) {
+    return _collection
+        .doc(conversationId)
+        .collection(firebaseKeys.messagesInConversationKey)
+        .where(firebaseKeys.messageTimestampKey,
+            isGreaterThan: lastSeenTimestamp)
+        .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
+        .snapshots()
+        .transform(
+      StreamTransformer.fromHandlers(
+        handleData: (QuerySnapshot<Map<String, dynamic>> data,
+            EventSink<int> sink) async {
+          // comment for future me: as of today (01.04.2022), lazy-ass firebase
+          // only allows queries with inequality operators on just one field,
+          // so you cannot check for uid != currentUid AND
+          // timestamp < lastSeenTimestamp.
+          //
+          // So we query for the timestamp argument (more gets filtered out)
+          // and then filter out our own messages locally. wtf google.
+          final unreadMessagesNotFromMe = data.docs.where((doc) =>
+              doc.data()[firebaseKeys.messageSenderIdKey] != _currentUser.uid);
+
+          sink.add(unreadMessagesNotFromMe.length);
+        },
+      ),
+    );
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 abstract class ConversationsRepository {
@@ -5,7 +6,10 @@ abstract class ConversationsRepository {
   Stream<Conversation> getConversation(String conversationId);
 
   Stream<int> getUnreadMessagesCount(String conversationId);
-  Stream<int> getUnreadGroupMessagesCount(String conversationId);
+  Stream<int> getUnreadGroupMessagesCount({
+    required String conversationId,
+    required Timestamp lastSeenTimestamp,
+  });
   Future<Conversation> createConversation({
     required FirebaseUser me,
     required DirectConversationCreationData creationData,

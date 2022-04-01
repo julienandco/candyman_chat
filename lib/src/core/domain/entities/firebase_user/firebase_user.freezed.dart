@@ -28,7 +28,8 @@ class _$FirebaseUserTearOff {
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers = const [],
-      List<String> blockedByUsers = const []}) {
+      List<String> blockedByUsers = const [],
+      Map<String, DateTime> groupMessageSeenTimestamps = const {}}) {
     return _FirebaseUser(
       id: id,
       name: name,
@@ -36,6 +37,7 @@ class _$FirebaseUserTearOff {
       lastActivity: lastActivity,
       blockedUsers: blockedUsers,
       blockedByUsers: blockedByUsers,
+      groupMessageSeenTimestamps: groupMessageSeenTimestamps,
     );
   }
 
@@ -56,6 +58,8 @@ mixin _$FirebaseUser {
   DateTime? get lastActivity => throw _privateConstructorUsedError;
   List<String> get blockedUsers => throw _privateConstructorUsedError;
   List<String> get blockedByUsers => throw _privateConstructorUsedError;
+  Map<String, DateTime> get groupMessageSeenTimestamps =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,7 +78,8 @@ abstract class $FirebaseUserCopyWith<$Res> {
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers,
-      List<String> blockedByUsers});
+      List<String> blockedByUsers,
+      Map<String, DateTime> groupMessageSeenTimestamps});
 }
 
 /// @nodoc
@@ -93,6 +98,7 @@ class _$FirebaseUserCopyWithImpl<$Res> implements $FirebaseUserCopyWith<$Res> {
     Object? lastActivity = freezed,
     Object? blockedUsers = freezed,
     Object? blockedByUsers = freezed,
+    Object? groupMessageSeenTimestamps = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -119,6 +125,10 @@ class _$FirebaseUserCopyWithImpl<$Res> implements $FirebaseUserCopyWith<$Res> {
           ? _value.blockedByUsers
           : blockedByUsers // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      groupMessageSeenTimestamps: groupMessageSeenTimestamps == freezed
+          ? _value.groupMessageSeenTimestamps
+          : groupMessageSeenTimestamps // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
     ));
   }
 }
@@ -136,7 +146,8 @@ abstract class _$FirebaseUserCopyWith<$Res>
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers,
-      List<String> blockedByUsers});
+      List<String> blockedByUsers,
+      Map<String, DateTime> groupMessageSeenTimestamps});
 }
 
 /// @nodoc
@@ -157,6 +168,7 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
     Object? lastActivity = freezed,
     Object? blockedUsers = freezed,
     Object? blockedByUsers = freezed,
+    Object? groupMessageSeenTimestamps = freezed,
   }) {
     return _then(_FirebaseUser(
       id: id == freezed
@@ -183,6 +195,10 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
           ? _value.blockedByUsers
           : blockedByUsers // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      groupMessageSeenTimestamps: groupMessageSeenTimestamps == freezed
+          ? _value.groupMessageSeenTimestamps
+          : groupMessageSeenTimestamps // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
     ));
   }
 }
@@ -196,7 +212,8 @@ class _$_FirebaseUser implements _FirebaseUser {
       this.profilePictureURL,
       @MyDateTimeConverter() this.lastActivity,
       this.blockedUsers = const [],
-      this.blockedByUsers = const []});
+      this.blockedByUsers = const [],
+      this.groupMessageSeenTimestamps = const {}});
 
   factory _$_FirebaseUser.fromJson(Map<String, dynamic> json) =>
       _$$_FirebaseUserFromJson(json);
@@ -216,10 +233,13 @@ class _$_FirebaseUser implements _FirebaseUser {
   @JsonKey()
   @override
   final List<String> blockedByUsers;
+  @JsonKey()
+  @override
+  final Map<String, DateTime> groupMessageSeenTimestamps;
 
   @override
   String toString() {
-    return 'FirebaseUser(id: $id, name: $name, profilePictureURL: $profilePictureURL, lastActivity: $lastActivity, blockedUsers: $blockedUsers, blockedByUsers: $blockedByUsers)';
+    return 'FirebaseUser(id: $id, name: $name, profilePictureURL: $profilePictureURL, lastActivity: $lastActivity, blockedUsers: $blockedUsers, blockedByUsers: $blockedByUsers, groupMessageSeenTimestamps: $groupMessageSeenTimestamps)';
   }
 
   @override
@@ -236,7 +256,9 @@ class _$_FirebaseUser implements _FirebaseUser {
             const DeepCollectionEquality()
                 .equals(other.blockedUsers, blockedUsers) &&
             const DeepCollectionEquality()
-                .equals(other.blockedByUsers, blockedByUsers));
+                .equals(other.blockedByUsers, blockedByUsers) &&
+            const DeepCollectionEquality().equals(
+                other.groupMessageSeenTimestamps, groupMessageSeenTimestamps));
   }
 
   @override
@@ -247,7 +269,8 @@ class _$_FirebaseUser implements _FirebaseUser {
       const DeepCollectionEquality().hash(profilePictureURL),
       const DeepCollectionEquality().hash(lastActivity),
       const DeepCollectionEquality().hash(blockedUsers),
-      const DeepCollectionEquality().hash(blockedByUsers));
+      const DeepCollectionEquality().hash(blockedByUsers),
+      const DeepCollectionEquality().hash(groupMessageSeenTimestamps));
 
   @JsonKey(ignore: true)
   @override
@@ -267,7 +290,8 @@ abstract class _FirebaseUser implements FirebaseUser {
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers,
-      List<String> blockedByUsers}) = _$_FirebaseUser;
+      List<String> blockedByUsers,
+      Map<String, DateTime> groupMessageSeenTimestamps}) = _$_FirebaseUser;
 
   factory _FirebaseUser.fromJson(Map<String, dynamic> json) =
       _$_FirebaseUser.fromJson;
@@ -285,6 +309,8 @@ abstract class _FirebaseUser implements FirebaseUser {
   List<String> get blockedUsers;
   @override
   List<String> get blockedByUsers;
+  @override
+  Map<String, DateTime> get groupMessageSeenTimestamps;
   @override
   @JsonKey(ignore: true)
   _$FirebaseUserCopyWith<_FirebaseUser> get copyWith =>
