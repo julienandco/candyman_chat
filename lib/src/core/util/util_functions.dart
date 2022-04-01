@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform, kIsWeb;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 bool get isWebOrMacOS =>
     kIsWeb || defaultTargetPlatform == TargetPlatform.macOS;
@@ -26,7 +29,7 @@ void openConversation(
   MessageBubbleStyle chatBubbleStyle = const MessageBubbleStyle(),
   ConversationStyle conversationStyle = const ConversationStyle(),
   BottomBarStyle bottomBarStyle = const BottomBarStyle(),
-  Function()? onAppbarTap,
+  Function(Conversation)? onAppbarTap,
   bool showCloseButton = true,
 }) {
   Navigator.push(
@@ -43,6 +46,64 @@ void openConversation(
         conversationItem: conversationItem,
         onAppbarTap: onAppbarTap,
         showCloseButton: showCloseButton,
+      ),
+    ),
+  );
+}
+
+void defaultOnGroupChatAppBarTap(
+  BuildContext context, {
+  required GroupChatOverviewStyle style,
+  required Conversation conversation,
+  Function(String)? onOpenUserProfile,
+}) {
+  Navigator.push(
+    context,
+    CupertinoPageRoute(
+      builder: (context) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value:
+            const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: style.centerAppbarTitle,
+            title: Text(conversation.displayName),
+            backgroundColor: style.appBarColor,
+          ),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30.0),
+                child: AvatarWidget(
+                  imgUrl: conversation.thumbnail,
+                  size: MediaQuery.of(context).size.width * 0.3,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    style.memberListTitle,
+                    style: style.memberListTitleStyle,
+                  ),
+                ),
+              ),
+              const Divider(),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: conversation.conversationMembers.length,
+                itemBuilder: (context, i) => Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: GroupConversationMemberListItem(
+                    user: conversation.conversationMembers[i],
+                    style: style,
+                    onOpenUserProfile: onOpenUserProfile,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     ),
   );

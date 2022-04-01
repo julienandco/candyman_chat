@@ -14,8 +14,8 @@ class DefaultConversationsLoader extends StatelessWidget {
   final MessageBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
-  final Function()? onOpenUserProfile;
-  final Function()? onAppbarTap;
+  final Function(Conversation)? onOpenUserProfile;
+  final Function(Conversation)? onAppbarTap;
   final Widget Function(String?)? getUserAvatar;
 
   final ConversationCreationData Function()? getConversationCreationData;
@@ -80,7 +80,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                     searchAppBarStyle: searchAppBarStyle,
                     bottomBarStyle: bottomBarStyle,
                     onOpenUserProfile: onOpenUserProfile,
-                    onAppbarTap: onAppbarTap,
+                    onShowGroupInfo: onAppbarTap,
                     getUserAvatar: getUserAvatar,
                     getConversationCreationData: getConversationCreationData,
                   ),

@@ -14,8 +14,8 @@ class DefaultConversationsPage extends StatefulWidget {
   final MessageBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
-  final Function()? onOpenUserProfile;
-  final Function()? onAppbarTap;
+  final Function(Conversation)? onOpenUserProfile;
+  final Function(Conversation)? onShowGroupInfo;
 
   final Widget Function(String?)? getUserAvatar;
 
@@ -32,7 +32,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     this.onOpenUserProfile,
-    this.onAppbarTap,
+    this.onShowGroupInfo,
     this.getUserAvatar,
     this.getConversationCreationData,
   }) : super(key: key);
@@ -56,7 +56,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
         chatBubbleStyle: widget.chatBubbleStyle,
         conversationStyle: widget.conversationStyle,
         bottomBarStyle: widget.bottomBarStyle,
-        onAppbarTap: widget.onAppbarTap,
+        onAppbarTap: widget.onShowGroupInfo,
       );
 
   @override
@@ -127,13 +127,13 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 conversationListItemStyle:
                                     widget.conversationsStyle.chatListItemStyle,
                                 conversationItem: conversationItem,
-                                userAvatar: widget.getUserAvatar?.call(
-                                        conversationItem
+                                conversationThumbnail: widget.getUserAvatar
+                                        ?.call(conversationItem
                                             .conversation.thumbnail) ??
                                     AvatarWidget(
                                         imgUrl: conversationItem
                                             .conversation.thumbnail),
-                                onOpenChat: () => openConversation(
+                                onOpenConversation: () => openConversation(
                                   context,
                                   conversationItem: conversationItem,
                                   fileUploadRepository:
@@ -146,9 +146,17 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   chatBubbleStyle: widget.chatBubbleStyle,
                                   conversationStyle: widget.conversationStyle,
                                   bottomBarStyle: widget.bottomBarStyle,
-                                  onAppbarTap: widget.onAppbarTap,
+                                  onAppbarTap:
+                                      conversationItem.conversation.isGroupChat
+                                          ? widget.onShowGroupInfo
+                                          : widget.onOpenUserProfile,
                                 ),
-                                onOpenUserProfile: widget.onOpenUserProfile,
+                                onOpenConversationInfo: conversationItem
+                                        .conversation.isGroupChat
+                                    ? () => widget.onShowGroupInfo
+                                        ?.call(conversationItem.conversation)
+                                    : () => widget.onOpenUserProfile
+                                        ?.call(conversationItem.conversation),
                               ),
                             )
                             .toList();

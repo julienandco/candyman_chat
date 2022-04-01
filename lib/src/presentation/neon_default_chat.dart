@@ -20,7 +20,7 @@ class NeonChat extends StatelessWidget {
 
   final ConversationStyle conversationStyle;
   final ConversationsStyle conversationsStyle;
-  final MessageBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
 
@@ -42,14 +42,28 @@ class NeonChat extends StatelessWidget {
   /// Default Functionality is nothing, as the app-internal user profile
   /// informations are not dealt with inside the NEON-Chat-Package.
   ///
-  final Function()? onOpenUserProfile;
+  final Function(Conversation)? onDirectChatAppBarTap;
+
+  ///
+  /// Gets called when a user taps on another user within the group chat
+  /// overview page.
+  ///
+  /// Default Functionality is nothing.
+  ///
+  final Function(String)? onOpenUserProfile;
 
   ///
   /// Gets called when a user taps on the AppBar within a Group Chat.
   /// Default functionality is to open an overview screen that shows the
   /// group's thumbnail, name and all the group members.
   ///
-  final Function()? onAppBarTap;
+  final Function(Conversation)? onGroupChatAppBarTap;
+
+  ///
+  /// Set to true, if no [onGroupChatAppBarTap] is provided and the default
+  /// functionality should also not be triggered.
+  ///
+  final bool disableGroupChatAbbBarTap;
 
   const NeonChat({
     Key? key,
@@ -58,10 +72,12 @@ class NeonChat extends StatelessWidget {
     this.conversationsStyle = const ConversationsStyle(),
     this.searchAppBarStyle = const SearchAppBarStyle(),
     this.bottomBarStyle = const BottomBarStyle(),
-    this.chatBubbleStyle = const MessageBubbleStyle(),
-    this.onAppBarTap,
-    this.onOpenUserProfile,
+    this.messageBubbleStyle = const MessageBubbleStyle(),
+    this.onGroupChatAppBarTap,
+    this.disableGroupChatAbbBarTap = false,
+    this.onDirectChatAppBarTap,
     this.getConversationCreationData,
+    this.onOpenUserProfile,
   }) : super(key: key);
 
   ConversationBloc _generateChatBloc() => ConversationBloc(
@@ -98,11 +114,21 @@ class NeonChat extends StatelessWidget {
         generateConversationSearchBloc: () => ConversationSearchBloc(),
         conversationStyle: conversationStyle,
         conversationsStyle: conversationsStyle,
-        chatBubbleStyle: chatBubbleStyle,
+        chatBubbleStyle: messageBubbleStyle,
         searchAppBarStyle: searchAppBarStyle,
         bottomBarStyle: bottomBarStyle,
-        onAppbarTap: onAppBarTap,
-        onOpenUserProfile: onOpenUserProfile,
+        onAppbarTap: onGroupChatAppBarTap ??
+            (disableGroupChatAbbBarTap
+                ? null
+                : (conversation) => defaultOnGroupChatAppBarTap(
+                      context,
+                      style: GroupChatOverviewStyle(
+                        appBarColor: conversationsStyle.appBarColor,
+                      ),
+                      conversation: conversation,
+                      onOpenUserProfile: onOpenUserProfile,
+                    )),
+        onOpenUserProfile: onDirectChatAppBarTap,
         getConversationCreationData: getConversationCreationData,
       ),
     );

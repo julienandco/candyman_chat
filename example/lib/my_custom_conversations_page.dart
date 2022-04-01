@@ -38,12 +38,12 @@ class MyCustomConversationsPage extends StatelessWidget {
                                   ConversationListItemStyle(
                                       listTileColor: Colors.grey[200]!),
                               conversationItem: conversation,
-                              userAvatar: Container(
+                              conversationThumbnail: Container(
                                 height: 30,
                                 width: 30,
                                 color: Colors.green,
                               ),
-                              onOpenChat: () {
+                              onOpenConversation: () {
                                 showDialog(
                                   context: context,
                                   builder: (context) => Center(
@@ -58,7 +58,7 @@ class MyCustomConversationsPage extends StatelessWidget {
                                 Future.delayed(const Duration(seconds: 3),
                                     () => Navigator.of(context).pop());
                               },
-                              onOpenUserProfile: onOpenUserProfile,
+                              onOpenConversationInfo: onOpenUserProfile,
                             ),
                           )
                           .toList();

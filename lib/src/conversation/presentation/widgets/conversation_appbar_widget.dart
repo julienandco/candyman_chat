@@ -9,7 +9,7 @@ class ConversationAppbar extends StatelessWidget
   final SearchAppBarStyle searchAppBarStyle;
   final bool showCloseButton;
   final BoxDecoration barDecoration;
-  final Function()? onAvertaTap;
+  final Function(Conversation)? onAvertaTap;
 
   const ConversationAppbar({
     Key? key,
@@ -51,7 +51,7 @@ class ConversationAppbar extends StatelessWidget
               onTap: () {
                 state.maybeMap(
                   orElse: () {},
-                  loadSuccess: (state) => onAvertaTap,
+                  loadSuccess: (state) => onAvertaTap?.call(state.conversation),
                 );
               },
               child: Row(

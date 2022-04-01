@@ -14,7 +14,7 @@ class DefaultConversationPage extends StatefulWidget {
   final SearchAppBarStyle defaultSearchAppBarStyle;
   final BottomBarStyle defaultBottomBarStyle;
   final GetUploadUrlUC getUploadUrlUC;
-  final Function()? onAppbarTap;
+  final Function(Conversation)? onAppbarTap;
 
   const DefaultConversationPage({
     Key? key,

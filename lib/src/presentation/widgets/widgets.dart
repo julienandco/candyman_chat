@@ -6,3 +6,4 @@ export 'message_bubbles/message_bubbles.dart';
 export 'conversation_list_item.dart';
 export 'message_list.dart';
 export 'sub_header.dart';
+export 'group_conversation_member_list_item.dart';

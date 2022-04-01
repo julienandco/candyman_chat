@@ -39,8 +39,8 @@ class ConversationListItemStyle {
   final TextStyle lastMassageTextStyle;
   final Color focusMenuBlurBackgroundColor;
   final String focusMenuText;
-  final String chatBlockedLabel;
-  final TextStyle? chatBlockedLabelStyle;
+  final String conversationBlockedLabel;
+  final TextStyle? conversationBlockedLabelStyle;
   final TextStyle focusMenuTextStyle;
   final Widget focusMenuIcon;
   final Color focusMenuColor;
@@ -55,8 +55,8 @@ class ConversationListItemStyle {
   const ConversationListItemStyle({
     this.lastMassageTextStyle = const TextStyle(color: Colors.black54),
     this.focusMenuBlurBackgroundColor = Colors.black,
-    this.chatBlockedLabel = 'blocked',
-    this.chatBlockedLabelStyle,
+    this.conversationBlockedLabel = 'blocked',
+    this.conversationBlockedLabelStyle,
     this.focusMenuText = 'delete',
     this.focusMenuTextStyle = const TextStyle(),
     this.focusMenuIcon = const Icon(Icons.delete, color: Colors.black),
@@ -70,6 +70,23 @@ class ConversationListItemStyle {
     this.badgeColor = const Color.fromARGB(255, 25, 5, 55),
     this.badgeTextStyle = const TextStyle(
         color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12),
+  });
+}
+
+/// Style data structure for the group chat overview page
+class GroupChatOverviewStyle {
+  final Color appBarColor;
+  final String memberListTitle;
+  final TextStyle? memberListTitleStyle;
+  final bool centerAppbarTitle;
+  final TextStyle? userNameTextStyle;
+
+  const GroupChatOverviewStyle({
+    required this.appBarColor,
+    this.memberListTitle = 'Members',
+    this.memberListTitleStyle,
+    this.centerAppbarTitle = true,
+    this.userNameTextStyle,
   });
 }
 

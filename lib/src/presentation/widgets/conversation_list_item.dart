@@ -9,17 +9,17 @@ import 'package:neon_chat/neon_chat.dart';
 
 class ConversationListItem extends StatefulWidget {
   final ConversationItem conversationItem;
-  final Function()? onOpenChat;
-  final Function()? onOpenUserProfile;
-  final Widget userAvatar;
+  final Function()? onOpenConversation;
+  final Function()? onOpenConversationInfo;
+  final Widget conversationThumbnail;
   final ConversationListItemStyle conversationListItemStyle;
 
   const ConversationListItem({
     Key? key,
     required this.conversationItem,
-    this.onOpenChat,
-    this.onOpenUserProfile,
-    required this.userAvatar,
+    this.onOpenConversation,
+    this.onOpenConversationInfo,
+    required this.conversationThumbnail,
     required this.conversationListItemStyle,
   }) : super(key: key);
 
@@ -35,8 +35,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
     Widget lastMessageBuilder() {
       if (widget.conversationItem.conversation.isBlocked) {
         return Text(
-          widget.conversationListItemStyle.chatBlockedLabel,
-          style: widget.conversationListItemStyle.chatBlockedLabelStyle,
+          widget.conversationListItemStyle.conversationBlockedLabel,
+          style: widget.conversationListItemStyle.conversationBlockedLabelStyle,
         );
       } else if (widget.conversationItem.lastMessage != ChatMessage.empty()) {
         final type = widget.conversationItem.lastMessage.type;
@@ -128,7 +128,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
                     widget.conversationItem,
                   );
             } else {
-              widget.onOpenChat?.call();
+              widget.onOpenConversation?.call();
             }
           },
           child: MouseRegion(
@@ -159,8 +159,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
                 children: [
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: widget.onOpenUserProfile,
-                    child: widget.userAvatar,
+                    onTap: widget.onOpenConversationInfo,
+                    child: widget.conversationThumbnail,
                   ),
                   const SizedBox(
                     width: 15,
