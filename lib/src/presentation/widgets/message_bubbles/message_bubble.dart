@@ -4,15 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
-import 'package:neon_chat/src/core/core.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:neon_chat/src/conversation/conversation.dart';
 import 'message_widgets/check_mark_widget.dart';
 import 'message_widgets/message_content_widget.dart';
 
 class MessageBubble extends StatefulWidget {
   final bool isGroupChat;
+  final DateTime? groupChatLastSeenTimestamp;
   final ChatMessage message;
   final Widget? otherUserAvatar;
   final String otherUserName;
@@ -24,10 +24,12 @@ class MessageBubble extends StatefulWidget {
     required this.isGroupChat,
     required this.message,
     this.otherUserAvatar,
+    this.groupChatLastSeenTimestamp,
     required this.otherUserName,
     required this.messageBubbleStyle,
     required this.getUploadUrlUC,
-  }) : super(key: key);
+  })  : assert(!isGroupChat || groupChatLastSeenTimestamp != null),
+        super(key: key);
 
   @override
   _MessageBubbleState createState() => _MessageBubbleState();
@@ -143,11 +145,17 @@ class _MessageBubbleState extends State<MessageBubble> {
         VisibilityDetector(
           key: Key(widget.message.id),
           onVisibilityChanged: (value) {
-            if (!widget.isGroupChat && value.visibleFraction > 0.5) {
+            if (!widget.isGroupChat &&
+                value.visibleFraction > 0.5 &&
+                !widget.message.seen) {
               context
                   .read<ConversationBloc>()
                   .add(ConversationEvent.markAsSeen(widget.message));
-            } else if (widget.isGroupChat && value.visibleFraction > 0.5) {
+            } else if (widget.isGroupChat &&
+                value.visibleFraction > 0.5 &&
+                (widget.message.timestamp == null ||
+                    widget.groupChatLastSeenTimestamp!
+                        .isBefore(widget.message.timestamp!))) {
               context.read<ConversationBloc>().add(
                   ConversationEvent.markGroupMessageAsSeen(widget.message));
             }

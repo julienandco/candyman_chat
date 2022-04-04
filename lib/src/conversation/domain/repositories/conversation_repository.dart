@@ -11,6 +11,5 @@ abstract class ConversationRepository {
   void deleteMessage(String conversationId, ChatMessage message);
 
   void markAsSeen(String conversationId, ChatMessage message);
-  void markGroupMessageAsSeen(String conversationId, ChatMessage message);
   ChatUploadFile sendFileMessage(String conversationId, ChatMessage message);
 }

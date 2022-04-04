@@ -9,7 +9,12 @@ class MarkGroupMessageAsSeenUC {
     required String conversationId,
     required ChatMessage message,
   }) {
-    return conversationRepository.markGroupMessageAsSeen(
-        conversationId, message);
+    //TODOGROUPSEEN: cache the current time as timestamp or cache the timestamp
+    // of last message read? latter is more accurate, but way more function calls
+    // so way more cache writes
+
+    //TODOGROUPSEEN: only call this every now and then (fb sync of your timestamp map)
+    // return conversationRepository.markGroupMessageAsSeen(
+    //     conversationId, message);
   }
 }
