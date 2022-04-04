@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:neon_chat/neon_chat.dart';
 
@@ -21,6 +22,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   final GetFirebaseUserUC getFirebaseUserUC;
   final CreateConversationUC createConversationUC;
   final CreateGroupConversationUC createGroupConversationUC;
+  final GetAllGroupTimestampsUC getAllGroupTimestampsUC;
 
   ConversationsBloc({
     required this.initializeConversationsStreamUC,
@@ -29,6 +31,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     required this.getFirebaseUserUC,
     required this.createConversationUC,
     required this.createGroupConversationUC,
+    required this.getAllGroupTimestampsUC,
   }) : super(const _Uninitialized()) {
     _conversationsStream = initializeConversationsStreamUC(
       onData: (event) {
@@ -49,13 +52,20 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           _me = getFirebaseUserUC(userId: myId);
           emit(const ConversationsState.initialized());
         },
-        fetchChatItems: (conversations) {
+        fetchChatItems: (conversations) async {
           _conversationItemStreams.map((e) => e.cancel());
+          print('getting ...');
+          final groupchatTimestamps = await getAllGroupTimestampsUC();
+          print(
+              'CONVERSATIONS BLOC FETCHED TIMESTAMPS: ${groupchatTimestamps.timestamps.toString()}');
 
           for (var conversation in conversations) {
             if (conversation.createdAt != null) {
               final chatStream = initializeConversationItemStreamUC(
                 conversation: conversation,
+                timestamp: Timestamp.fromDate(
+                    groupchatTimestamps.timestamps[conversation.id] ??
+                        DateTime(1970)),
                 onData: (event) => add(_OnChatItemsData(event)),
                 onError: (err) {
                   log('fetchChatItems $err', name: '$runtimeType');

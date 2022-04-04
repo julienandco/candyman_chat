@@ -31,6 +31,7 @@ class MessageList extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
+                  //TODOGROUPSEEN: pass the timestamp
                   isGroupChat: state.conversation.isGroupChat,
                   messageBubbleStyle: defaultChatBubbleStyle,
                   getUploadUrlUC: getUploadUrlUC,

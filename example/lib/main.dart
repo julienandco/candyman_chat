@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 import 'firebase_options.dart';
@@ -13,6 +14,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   configureInjection(Env.dev);
+
+  Hive.initFlutter();
+  Hive.registerAdapter(TimestampMapAdapter());
 
   final creds = await FirebaseAuth.instance.signInWithEmailAndPassword(
     password: 'neon-chat-example!',
