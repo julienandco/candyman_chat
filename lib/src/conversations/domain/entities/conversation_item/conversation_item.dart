@@ -11,5 +11,7 @@ class ConversationItem with _$ConversationItem {
     required Conversation conversation,
     required ChatMessage lastMessage,
     required int unreadMessagesCount,
+    //TODO unreequire it
+    required DateTime groupConversationLastSeenTimestamp,
   }) = _ConversationItem;
 }

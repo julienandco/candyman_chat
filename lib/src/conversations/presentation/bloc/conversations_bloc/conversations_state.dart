@@ -6,9 +6,9 @@ class ConversationsState with _$ConversationsState {
   const factory ConversationsState.uninitialized() = _Uninitialized;
   const factory ConversationsState.initialized() = _Initialized;
   const factory ConversationsState.loadInProgress() = _LoadInProgress;
-  const factory ConversationsState.loadSuccess(
-    List<ConversationItem> conversations,
-  ) = _LoadSuccess;
+  const factory ConversationsState.loadSuccess({
+    required List<ConversationItem> conversations,
+  }) = _LoadSuccess;
   const factory ConversationsState.loadFailure() = _LoadFailure;
 
   bool get haveUnreadMessages {

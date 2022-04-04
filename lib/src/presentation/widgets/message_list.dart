@@ -9,12 +9,14 @@ class MessageList extends StatelessWidget {
   final String Function(String)? getAuthorNameForSenderId;
   final MessageBubbleStyle defaultChatBubbleStyle;
   final GetUploadUrlUC getUploadUrlUC;
+  final DateTime? conversationLastSeenTimestamp;
 
   const MessageList({
     Key? key,
     required this.getAuthorNameForSenderId,
     required this.defaultChatBubbleStyle,
     required this.getUploadUrlUC,
+    this.conversationLastSeenTimestamp,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class MessageList extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
-                  //TODOGROUPSEEN: pass the timestamp
+                  groupChatLastSeenTimestamp: conversationLastSeenTimestamp,
                   isGroupChat: state.conversation.isGroupChat,
                   messageBubbleStyle: defaultChatBubbleStyle,
                   getUploadUrlUC: getUploadUrlUC,

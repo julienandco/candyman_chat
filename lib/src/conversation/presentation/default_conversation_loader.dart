@@ -40,7 +40,9 @@ class DefaultConversationLoader extends StatelessWidget {
       providers: [
         BlocProvider<ConversationBloc>(
           create: (context) => conversationBloc()
-            ..add(ConversationEvent.init(conversationItem: conversationItem)),
+            ..add(ConversationEvent.init(
+              conversationItem: conversationItem,
+            )),
         ),
         BlocProvider<ConversationSearchBloc>(
           create: (context) => conversationSearchBloc(),
@@ -48,7 +50,7 @@ class DefaultConversationLoader extends StatelessWidget {
       ],
       child: DefaultConversationPage(
         getUploadUrlUC: GetUploadUrlUC(fileUploadRepository),
-        defaultChatBubbleStyle: chatBubbleStyle,
+        defaultMessageBubbleStyle: chatBubbleStyle,
         defaultConversationStyle: conversationStyle,
         defaultSearchAppBarStyle: searchAppBarStyle,
         defaultBottomBarStyle: bottomBarStyle,

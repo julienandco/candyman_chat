@@ -54,15 +54,17 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
               messages,
               conversationItem.conversation,
               conversationItem.conversation.displayName,
+              conversationItem.groupConversationLastSeenTimestamp,
             ),
             onData: (onDataEvent) => add(onDataEvent),
           );
         },
-        onData: (messages, conversation, displayName) => emit(
+        onData: (messages, conversation, displayName, timestamp) => emit(
           ConversationState.loadSuccess(
             messages: messages,
             conversation: conversation,
             displayName: displayName,
+            groupConversationLastSeenTimestamp: timestamp,
           ),
         ),
         sendTextMessage: (message) {

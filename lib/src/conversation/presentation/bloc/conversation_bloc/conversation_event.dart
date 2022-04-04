@@ -9,6 +9,7 @@ class ConversationEvent with _$ConversationEvent {
     List<ChatMessage> messages,
     Conversation conversation,
     String displayName,
+    DateTime groupConversationLastSeenTimestamp,
   ) = _OnData;
   const factory ConversationEvent.sendTextMessage(String message) =
       _SendTextMessage;

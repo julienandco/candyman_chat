@@ -33,24 +33,6 @@ class NeonChatCacheService {
     return timestamps;
   }
 
-  // //TODOGROUPSEEN: needed?
-  // Future<Timestamp?> getTimestampForGroupChat(String groupChatID) async {
-  //   String? timestampMapCacheString = await cache.groupMessageTimestamps;
-
-  //   TimestampMap timestampMap;
-
-  //   if (timestampMapCacheString != null) {
-  //     print('CACHE SERVICE FETCHED FROM CACHE: $timestampMapCacheString');
-  //     timestampMap =
-  //         TimestampMap.fromJSON(json.decode(timestampMapCacheString));
-  //   } else {
-  //     timestampMap = await _initializeCache();
-  //   }
-
-  //   final groupChatDate = timestampMap.timestamps[groupChatID];
-  //   return groupChatDate;
-  // }
-
   Future<TimestampMap> get groupchatsTimestampMap async {
     TimestampMap? timestampMap = await cache.groupMessageTimestamps;
 

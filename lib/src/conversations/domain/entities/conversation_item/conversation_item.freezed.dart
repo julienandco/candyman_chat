@@ -21,11 +21,13 @@ class _$ConversationItemTearOff {
   _ConversationItem call(
       {required Conversation conversation,
       required ChatMessage lastMessage,
-      required int unreadMessagesCount}) {
+      required int unreadMessagesCount,
+      required DateTime groupConversationLastSeenTimestamp}) {
     return _ConversationItem(
       conversation: conversation,
       lastMessage: lastMessage,
       unreadMessagesCount: unreadMessagesCount,
+      groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
     );
   }
 }
@@ -37,7 +39,10 @@ const $ConversationItem = _$ConversationItemTearOff();
 mixin _$ConversationItem {
   Conversation get conversation => throw _privateConstructorUsedError;
   ChatMessage get lastMessage => throw _privateConstructorUsedError;
-  int get unreadMessagesCount => throw _privateConstructorUsedError;
+  int get unreadMessagesCount =>
+      throw _privateConstructorUsedError; //TODO unreequire it
+  DateTime get groupConversationLastSeenTimestamp =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ConversationItemCopyWith<ConversationItem> get copyWith =>
@@ -52,7 +57,8 @@ abstract class $ConversationItemCopyWith<$Res> {
   $Res call(
       {Conversation conversation,
       ChatMessage lastMessage,
-      int unreadMessagesCount});
+      int unreadMessagesCount,
+      DateTime groupConversationLastSeenTimestamp});
 
   $ConversationCopyWith<$Res> get conversation;
   $ChatMessageCopyWith<$Res> get lastMessage;
@@ -72,6 +78,7 @@ class _$ConversationItemCopyWithImpl<$Res>
     Object? conversation = freezed,
     Object? lastMessage = freezed,
     Object? unreadMessagesCount = freezed,
+    Object? groupConversationLastSeenTimestamp = freezed,
   }) {
     return _then(_value.copyWith(
       conversation: conversation == freezed
@@ -86,6 +93,11 @@ class _$ConversationItemCopyWithImpl<$Res>
           ? _value.unreadMessagesCount
           : unreadMessagesCount // ignore: cast_nullable_to_non_nullable
               as int,
+      groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp ==
+              freezed
+          ? _value.groupConversationLastSeenTimestamp
+          : groupConversationLastSeenTimestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 
@@ -114,7 +126,8 @@ abstract class _$ConversationItemCopyWith<$Res>
   $Res call(
       {Conversation conversation,
       ChatMessage lastMessage,
-      int unreadMessagesCount});
+      int unreadMessagesCount,
+      DateTime groupConversationLastSeenTimestamp});
 
   @override
   $ConversationCopyWith<$Res> get conversation;
@@ -138,6 +151,7 @@ class __$ConversationItemCopyWithImpl<$Res>
     Object? conversation = freezed,
     Object? lastMessage = freezed,
     Object? unreadMessagesCount = freezed,
+    Object? groupConversationLastSeenTimestamp = freezed,
   }) {
     return _then(_ConversationItem(
       conversation: conversation == freezed
@@ -152,6 +166,11 @@ class __$ConversationItemCopyWithImpl<$Res>
           ? _value.unreadMessagesCount
           : unreadMessagesCount // ignore: cast_nullable_to_non_nullable
               as int,
+      groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp ==
+              freezed
+          ? _value.groupConversationLastSeenTimestamp
+          : groupConversationLastSeenTimestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -162,7 +181,8 @@ class _$_ConversationItem implements _ConversationItem {
   _$_ConversationItem(
       {required this.conversation,
       required this.lastMessage,
-      required this.unreadMessagesCount});
+      required this.unreadMessagesCount,
+      required this.groupConversationLastSeenTimestamp});
 
   @override
   final Conversation conversation;
@@ -170,10 +190,12 @@ class _$_ConversationItem implements _ConversationItem {
   final ChatMessage lastMessage;
   @override
   final int unreadMessagesCount;
+  @override //TODO unreequire it
+  final DateTime groupConversationLastSeenTimestamp;
 
   @override
   String toString() {
-    return 'ConversationItem(conversation: $conversation, lastMessage: $lastMessage, unreadMessagesCount: $unreadMessagesCount)';
+    return 'ConversationItem(conversation: $conversation, lastMessage: $lastMessage, unreadMessagesCount: $unreadMessagesCount, groupConversationLastSeenTimestamp: $groupConversationLastSeenTimestamp)';
   }
 
   @override
@@ -186,7 +208,10 @@ class _$_ConversationItem implements _ConversationItem {
             const DeepCollectionEquality()
                 .equals(other.lastMessage, lastMessage) &&
             const DeepCollectionEquality()
-                .equals(other.unreadMessagesCount, unreadMessagesCount));
+                .equals(other.unreadMessagesCount, unreadMessagesCount) &&
+            const DeepCollectionEquality().equals(
+                other.groupConversationLastSeenTimestamp,
+                groupConversationLastSeenTimestamp));
   }
 
   @override
@@ -194,7 +219,8 @@ class _$_ConversationItem implements _ConversationItem {
       runtimeType,
       const DeepCollectionEquality().hash(conversation),
       const DeepCollectionEquality().hash(lastMessage),
-      const DeepCollectionEquality().hash(unreadMessagesCount));
+      const DeepCollectionEquality().hash(unreadMessagesCount),
+      const DeepCollectionEquality().hash(groupConversationLastSeenTimestamp));
 
   @JsonKey(ignore: true)
   @override
@@ -204,9 +230,11 @@ class _$_ConversationItem implements _ConversationItem {
 
 abstract class _ConversationItem implements ConversationItem {
   factory _ConversationItem(
-      {required Conversation conversation,
-      required ChatMessage lastMessage,
-      required int unreadMessagesCount}) = _$_ConversationItem;
+          {required Conversation conversation,
+          required ChatMessage lastMessage,
+          required int unreadMessagesCount,
+          required DateTime groupConversationLastSeenTimestamp}) =
+      _$_ConversationItem;
 
   @override
   Conversation get conversation;
@@ -214,6 +242,8 @@ abstract class _ConversationItem implements ConversationItem {
   ChatMessage get lastMessage;
   @override
   int get unreadMessagesCount;
+  @override //TODO unreequire it
+  DateTime get groupConversationLastSeenTimestamp;
   @override
   @JsonKey(ignore: true)
   _$ConversationItemCopyWith<_ConversationItem> get copyWith =>

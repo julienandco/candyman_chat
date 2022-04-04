@@ -30,9 +30,9 @@ class _$ConversationsStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<ConversationItem> conversations) {
+  _LoadSuccess loadSuccess({required List<ConversationItem> conversations}) {
     return _LoadSuccess(
-      conversations,
+      conversations: conversations,
     );
   }
 
@@ -517,7 +517,7 @@ class __$LoadSuccessCopyWithImpl<$Res>
     Object? conversations = freezed,
   }) {
     return _then(_LoadSuccess(
-      conversations == freezed
+      conversations: conversations == freezed
           ? _value.conversations
           : conversations // ignore: cast_nullable_to_non_nullable
               as List<ConversationItem>,
@@ -528,7 +528,7 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess(this.conversations) : super._();
+  const _$_LoadSuccess({required this.conversations}) : super._();
 
   @override
   final List<ConversationItem> conversations;
@@ -638,7 +638,7 @@ class _$_LoadSuccess extends _LoadSuccess {
 }
 
 abstract class _LoadSuccess extends ConversationsState {
-  const factory _LoadSuccess(List<ConversationItem> conversations) =
+  const factory _LoadSuccess({required List<ConversationItem> conversations}) =
       _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 

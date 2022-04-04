@@ -10,7 +10,7 @@ import 'widgets/conversation_appbar_widget.dart';
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
   final ConversationStyle defaultConversationStyle;
-  final MessageBubbleStyle defaultChatBubbleStyle;
+  final MessageBubbleStyle defaultMessageBubbleStyle;
   final SearchAppBarStyle defaultSearchAppBarStyle;
   final BottomBarStyle defaultBottomBarStyle;
   final GetUploadUrlUC getUploadUrlUC;
@@ -20,7 +20,7 @@ class DefaultConversationPage extends StatefulWidget {
     Key? key,
     required this.showCloseButton,
     required this.defaultConversationStyle,
-    required this.defaultChatBubbleStyle,
+    required this.defaultMessageBubbleStyle,
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
     required this.getUploadUrlUC,
@@ -98,8 +98,15 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                       padding:
                           widget.defaultConversationStyle.messageListPadding,
                       sliver: MessageList(
+                        conversationLastSeenTimestamp:
+                            context.watch<ConversationBloc>().state.maybeMap(
+                                  loadSuccess: (loaded) =>
+                                      loaded.groupConversationLastSeenTimestamp,
+                                  orElse: () => null,
+                                ),
                         getUploadUrlUC: widget.getUploadUrlUC,
-                        defaultChatBubbleStyle: widget.defaultChatBubbleStyle,
+                        defaultChatBubbleStyle:
+                            widget.defaultMessageBubbleStyle,
                         getAuthorNameForSenderId: (senderId) {
                           return context
                               .watch<ConversationBloc>()
