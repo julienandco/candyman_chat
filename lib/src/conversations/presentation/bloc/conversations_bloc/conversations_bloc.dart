@@ -10,6 +10,8 @@ part 'conversations_state.dart';
 part 'conversations_event.dart';
 part 'conversations_bloc.freezed.dart';
 
+//TODOGROUPSEEN: the markGroupMessageAsRead should trigger here (maybe even build own bloc for that) and cancel the one convoItemStream and generate a new one, with the new timestamp
+
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   StreamSubscription? _conversationsStream;
   Stream<FirebaseUser>? _me;
