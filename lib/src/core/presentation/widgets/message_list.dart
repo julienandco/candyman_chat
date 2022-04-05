@@ -8,14 +8,18 @@ import 'package:neon_chat/neon_chat.dart';
 class MessageList extends StatelessWidget {
   final String Function(String)? getAuthorNameForSenderId;
   final MessageBubbleStyle defaultChatBubbleStyle;
-  final GetUploadUrlUC getUploadUrlUC;
+  final GetUploadUrlUC
+      getUploadUrlUC; //TODO: ugly, move this in some logic layer
+
   final DateTime? conversationLastSeenTimestamp;
+  final void Function(DateTime) updateLastSeenTimestampForConversation;
 
   const MessageList({
     Key? key,
     required this.getAuthorNameForSenderId,
     required this.defaultChatBubbleStyle,
     required this.getUploadUrlUC,
+    required this.updateLastSeenTimestampForConversation,
     this.conversationLastSeenTimestamp,
   }) : super(key: key);
   @override
@@ -33,6 +37,8 @@ class MessageList extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: MessageBubble(
+                  updateLastSeenTimestampForGroupConvo:
+                      updateLastSeenTimestampForConversation,
                   groupChatLastSeenTimestamp: conversationLastSeenTimestamp,
                   isGroupChat: state.conversation.isGroupChat,
                   messageBubbleStyle: defaultChatBubbleStyle,

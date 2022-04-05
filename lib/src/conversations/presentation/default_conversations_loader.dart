@@ -18,6 +18,9 @@ class DefaultConversationsLoader extends StatelessWidget {
   final Function(Conversation)? onAppbarTap;
   final Widget Function(String?)? getUserAvatar;
 
+  final void Function(BuildContext, {required TimestampMap timestamps})
+      initializeConversationsBloc;
+
   final ConversationCreationData Function()? getConversationCreationData;
 
   const DefaultConversationsLoader({
@@ -30,6 +33,7 @@ class DefaultConversationsLoader extends StatelessWidget {
     required this.chatBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
+    required this.initializeConversationsBloc,
     this.onOpenUserProfile,
     this.onAppbarTap,
     this.getUserAvatar,
@@ -42,6 +46,14 @@ class DefaultConversationsLoader extends StatelessWidget {
       builder: (context) {
         return MultiBlocListener(
           listeners: [
+            BlocListener<GroupConversationTimestampsBloc,
+                GroupConversationTimestampsState>(listener: (context, state) {
+              state.maybeWhen(
+                loaded: ((timestampMap) => initializeConversationsBloc(context,
+                    timestamps: timestampMap)),
+                orElse: () {},
+              );
+            }),
             BlocListener<ConversationsBloc, ConversationsState>(
               listener: (context, state) {
                 state.maybeWhen(

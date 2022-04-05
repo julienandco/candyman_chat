@@ -776,9 +776,11 @@ abstract class _LoadFailure extends ConversationsState {
 class _$ConversationsEventTearOff {
   const _$ConversationsEventTearOff();
 
-  _InitializeMyFirebaseUser initialize({required String myId}) {
+  _InitializeMyFirebaseUser initialize(
+      {required String myId, required TimestampMap timestamps}) {
     return _InitializeMyFirebaseUser(
       myId: myId,
+      timestamps: timestamps,
     );
   }
 
@@ -842,7 +844,7 @@ const $ConversationsEvent = _$ConversationsEventTearOff();
 mixin _$ConversationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -864,7 +866,7 @@ mixin _$ConversationsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -885,7 +887,7 @@ mixin _$ConversationsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -970,7 +972,9 @@ abstract class _$InitializeMyFirebaseUserCopyWith<$Res> {
   factory _$InitializeMyFirebaseUserCopyWith(_InitializeMyFirebaseUser value,
           $Res Function(_InitializeMyFirebaseUser) then) =
       __$InitializeMyFirebaseUserCopyWithImpl<$Res>;
-  $Res call({String myId});
+  $Res call({String myId, TimestampMap timestamps});
+
+  $TimestampMapCopyWith<$Res> get timestamps;
 }
 
 /// @nodoc
@@ -988,27 +992,42 @@ class __$InitializeMyFirebaseUserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? myId = freezed,
+    Object? timestamps = freezed,
   }) {
     return _then(_InitializeMyFirebaseUser(
       myId: myId == freezed
           ? _value.myId
           : myId // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamps: timestamps == freezed
+          ? _value.timestamps
+          : timestamps // ignore: cast_nullable_to_non_nullable
+              as TimestampMap,
     ));
+  }
+
+  @override
+  $TimestampMapCopyWith<$Res> get timestamps {
+    return $TimestampMapCopyWith<$Res>(_value.timestamps, (value) {
+      return _then(_value.copyWith(timestamps: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
-  const _$_InitializeMyFirebaseUser({required this.myId});
+  const _$_InitializeMyFirebaseUser(
+      {required this.myId, required this.timestamps});
 
   @override
   final String myId;
+  @override
+  final TimestampMap timestamps;
 
   @override
   String toString() {
-    return 'ConversationsEvent.initialize(myId: $myId)';
+    return 'ConversationsEvent.initialize(myId: $myId, timestamps: $timestamps)';
   }
 
   @override
@@ -1016,12 +1035,16 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _InitializeMyFirebaseUser &&
-            const DeepCollectionEquality().equals(other.myId, myId));
+            const DeepCollectionEquality().equals(other.myId, myId) &&
+            const DeepCollectionEquality()
+                .equals(other.timestamps, timestamps));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(myId));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(myId),
+      const DeepCollectionEquality().hash(timestamps));
 
   @JsonKey(ignore: true)
   @override
@@ -1032,7 +1055,7 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -1051,13 +1074,13 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
-    return initialize(myId);
+    return initialize(myId, timestamps);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1075,13 +1098,13 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
-    return initialize?.call(myId);
+    return initialize?.call(myId, timestamps);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1101,7 +1124,7 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     required TResult orElse(),
   }) {
     if (initialize != null) {
-      return initialize(myId);
+      return initialize(myId, timestamps);
     }
     return orElse();
   }
@@ -1161,10 +1184,12 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
 }
 
 abstract class _InitializeMyFirebaseUser implements ConversationsEvent {
-  const factory _InitializeMyFirebaseUser({required String myId}) =
-      _$_InitializeMyFirebaseUser;
+  const factory _InitializeMyFirebaseUser(
+      {required String myId,
+      required TimestampMap timestamps}) = _$_InitializeMyFirebaseUser;
 
   String get myId;
+  TimestampMap get timestamps;
   @JsonKey(ignore: true)
   _$InitializeMyFirebaseUserCopyWith<_InitializeMyFirebaseUser> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1236,7 +1261,7 @@ class _$_FetchChatItems implements _FetchChatItems {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -1261,7 +1286,7 @@ class _$_FetchChatItems implements _FetchChatItems {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1285,7 +1310,7 @@ class _$_FetchChatItems implements _FetchChatItems {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1449,7 +1474,7 @@ class _$_OnChatItemsData implements _OnChatItemsData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -1474,7 +1499,7 @@ class _$_OnChatItemsData implements _OnChatItemsData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1498,7 +1523,7 @@ class _$_OnChatItemsData implements _OnChatItemsData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1650,7 +1675,7 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -1675,7 +1700,7 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1699,7 +1724,7 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1852,7 +1877,7 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -1877,7 +1902,7 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -1901,7 +1926,7 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2072,7 +2097,7 @@ class _$_CreateConversation implements _CreateConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -2097,7 +2122,7 @@ class _$_CreateConversation implements _CreateConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2122,7 +2147,7 @@ class _$_CreateConversation implements _CreateConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2303,7 +2328,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -2329,7 +2354,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2354,7 +2379,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2487,7 +2512,7 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -2512,7 +2537,7 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2536,7 +2561,7 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2658,7 +2683,7 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId) initialize,
+    required TResult Function(String myId, TimestampMap timestamps) initialize,
     required TResult Function(List<Conversation> conversations) fetchChatItems,
     required TResult Function(ConversationItem conversationItem)
         onChatItemsData,
@@ -2683,7 +2708,7 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
@@ -2707,7 +2732,7 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId)? initialize,
+    TResult Function(String myId, TimestampMap timestamps)? initialize,
     TResult Function(List<Conversation> conversations)? fetchChatItems,
     TResult Function(ConversationItem conversationItem)? onChatItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,

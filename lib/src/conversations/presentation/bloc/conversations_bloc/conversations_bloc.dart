@@ -10,8 +10,6 @@ part 'conversations_state.dart';
 part 'conversations_event.dart';
 part 'conversations_bloc.freezed.dart';
 
-//TODOGROUPSEEN: the markGroupMessageAsRead should trigger here (maybe even build own bloc for that) and cancel the one convoItemStream and generate a new one, with the new timestamp
-
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   StreamSubscription? _conversationsStream;
   Stream<FirebaseUser>? _me;
@@ -25,7 +23,6 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   final GetFirebaseUserUC getFirebaseUserUC;
   final CreateConversationUC createConversationUC;
   final CreateGroupConversationUC createGroupConversationUC;
-  final GetAllGroupTimestampsUC getAllGroupTimestampsUC;
 
   ConversationsBloc({
     required this.initializeConversationsStreamUC,
@@ -34,7 +31,6 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     required this.getFirebaseUserUC,
     required this.createConversationUC,
     required this.createGroupConversationUC,
-    required this.getAllGroupTimestampsUC,
   }) : super(const _Uninitialized()) {
     on<_InitializeMyFirebaseUser>(_onInitialize);
     on<_FetchChatItems>(_onFetchChatItems);
@@ -50,12 +46,8 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   Future<void> _onInitialize(
       _InitializeMyFirebaseUser event, Emitter emit) async {
     _me = getFirebaseUserUC(userId: event.myId);
-    print('getting ...');
 
-    _timestampMap = await getAllGroupTimestampsUC();
-
-    print(
-        'CONVERSATIONS BLOC FETCHED TIMESTAMPS: ${_timestampMap!.timestamps.toString()}');
+    _timestampMap = event.timestamps;
 
     _conversationsStream = initializeConversationsStreamUC(
       onData: (event) {
@@ -215,7 +207,6 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
       orElse: () {
         final newConvoItem = ConversationItem(
             conversation: conversation,
-            groupConversationLastSeenTimestamp: DateTime(1970),
             lastMessage: ChatMessage.empty(),
             unreadMessagesCount: 0);
 

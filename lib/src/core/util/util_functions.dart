@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 bool get isWebOrMacOS =>
     kIsWeb || defaultTargetPlatform == TargetPlatform.macOS;

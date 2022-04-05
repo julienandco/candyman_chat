@@ -1,5 +1,6 @@
 import 'package:neon_chat/src/conversation/conversation.dart';
 
+//TODOGROUPSEEN: not used anywhere yet
 class MarkGroupMessageAsSeenUC {
   final ConversationRepository conversationRepository;
 

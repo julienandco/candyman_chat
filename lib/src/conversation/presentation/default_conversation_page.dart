@@ -58,9 +58,16 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
     super.didChangeDependencies();
   }
 
+  void _updateTimestampForGroupConversation(
+      String conversationId, DateTime timestamp) {
+    context.read<GroupConversationTimestampsBloc>().add(
+        GroupConversationTimestampsEvent.setNewTimestamp(
+            conversationId: conversationId, timestamp: timestamp));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ConversationBloc, ConversationState>(
+    return BlocConsumer<ConversationBloc, ConversationState>(
       listener: (context, state) {
         state.maybeMap(
           loadSuccess: (state) {
@@ -73,116 +80,120 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
           orElse: () {},
         );
       },
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
-        child: KeyboardDismisser(
-          child: Scaffold(
-            backgroundColor: widget.defaultConversationStyle.backgroundColor,
-            appBar: ConversationAppbar(
-              onAvertaTap: widget.onAppbarTap,
-              searchAppBarStyle: widget.defaultSearchAppBarStyle,
-              showCloseButton: !widget.showCloseButton,
-              barDecoration:
-                  const BoxDecoration(color: Color.fromARGB(255, 25, 5, 55)),
-            ),
-            body: Stack(
-              children: [
-                CustomScrollView(
-                  reverse: true,
-                  controller: context
-                      .read<ConversationSearchBloc>()
-                      .messageListController,
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    SliverPadding(
-                      padding:
-                          widget.defaultConversationStyle.messageListPadding,
-                      sliver: MessageList(
-                        conversationLastSeenTimestamp:
-                            context.watch<ConversationBloc>().state.maybeMap(
-                                  loadSuccess: (loaded) =>
-                                      loaded.groupConversationLastSeenTimestamp,
-                                  orElse: () => null,
-                                ),
-                        getUploadUrlUC: widget.getUploadUrlUC,
-                        defaultChatBubbleStyle:
-                            widget.defaultMessageBubbleStyle,
-                        getAuthorNameForSenderId: (senderId) {
-                          return context
-                              .watch<ConversationBloc>()
+      builder: (context, conversationState) => conversationState.maybeMap(
+        loadSuccess: (loadedConversationState) =>
+            AnnotatedRegion<SystemUiOverlayStyle>(
+          value:
+              const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+          child: KeyboardDismisser(
+            child: Scaffold(
+              backgroundColor: widget.defaultConversationStyle.backgroundColor,
+              appBar: ConversationAppbar(
+                onAvertaTap: widget.onAppbarTap,
+                searchAppBarStyle: widget.defaultSearchAppBarStyle,
+                showCloseButton: !widget.showCloseButton,
+                barDecoration:
+                    const BoxDecoration(color: Color.fromARGB(255, 25, 5, 55)),
+              ),
+              body: Stack(
+                children: [
+                  CustomScrollView(
+                    reverse: true,
+                    controller: context
+                        .read<ConversationSearchBloc>()
+                        .messageListController,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverPadding(
+                        padding:
+                            widget.defaultConversationStyle.messageListPadding,
+                        sliver: MessageList(
+                          updateLastSeenTimestampForConversation: (timestamp) =>
+                              _updateTimestampForGroupConversation(
+                                  loadedConversationState.conversation.id,
+                                  timestamp),
+                          conversationLastSeenTimestamp: context
+                              .read<GroupConversationTimestampsBloc>()
                               .state
-                              .maybeMap(
-                                orElse: () => 'undefined',
-                                loadSuccess: (state) {
-                                  if (state.conversation.isGroupChat) {
-                                    final author = state
-                                        .conversation.conversationMembers
-                                        .firstWhere(
-                                      (member) => member.id == senderId,
-                                      orElse: () => FirebaseUser(
-                                          id: 'dummy', name: 'unknown'), //TODO
-                                    );
-                                    return author.name;
-                                  } else {
-                                    return state.displayName;
-                                  }
-                                },
+                              .map(
+                                  uninitialized: (_) => null,
+                                  loaded: (loadedState) => loadedState
+                                          .timestampMap.timestamps[
+                                      loadedConversationState.conversation.id]),
+                          getUploadUrlUC: widget.getUploadUrlUC,
+                          defaultChatBubbleStyle:
+                              widget.defaultMessageBubbleStyle,
+                          getAuthorNameForSenderId: (senderId) {
+                            if (loadedConversationState
+                                .conversation.isGroupChat) {
+                              final author = loadedConversationState
+                                  .conversation.conversationMembers
+                                  .firstWhere(
+                                (member) => member.id == senderId,
+                                orElse: () => FirebaseUser(
+                                    id: 'dummy', name: 'unknown'), //TODO
                               );
+                              return author.name;
+                            } else {
+                              return loadedConversationState.displayName;
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  IgnorePointer(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: widget.defaultConversationStyle
+                                  .ignorePointersColors,
+                              stops: const [0, 0.15])),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    right: 10,
+                    child: SafeArea(
+                      child: BlocBuilder<ConversationSearchBloc,
+                          ConversationSearchState>(
+                        builder: (context, state) {
+                          if (state.isSearchActive) {
+                            return const SizedBox.shrink();
+                          } else {
+                            return Padding(
+                              padding: isWidthOverLimit(context)
+                                  ? const EdgeInsets.only(bottom: 100)
+                                  : EdgeInsets.zero,
+                              child: BlocBuilder<ConversationBloc,
+                                  ConversationState>(
+                                builder: (context, state) {
+                                  return state.maybeMap(
+                                    loadSuccess: (state) {
+                                      return ChatBottomBar(
+                                        defaultBottomBarStyle:
+                                            widget.defaultBottomBarStyle,
+                                      );
+                                    },
+                                    orElse: () => const SizedBox.shrink(),
+                                  );
+                                },
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),
-                  ],
-                ),
-                IgnorePointer(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: widget
-                                .defaultConversationStyle.ignorePointersColors,
-                            stops: const [0, 0.15])),
                   ),
-                ),
-                Positioned(
-                  bottom: 10,
-                  left: 10,
-                  right: 10,
-                  child: SafeArea(
-                    child: BlocBuilder<ConversationSearchBloc,
-                        ConversationSearchState>(
-                      builder: (context, state) {
-                        if (state.isSearchActive) {
-                          return const SizedBox.shrink();
-                        } else {
-                          return Padding(
-                            padding: isWidthOverLimit(context)
-                                ? const EdgeInsets.only(bottom: 100)
-                                : EdgeInsets.zero,
-                            child: BlocBuilder<ConversationBloc,
-                                ConversationState>(
-                              builder: (context, state) {
-                                return state.maybeMap(
-                                  loadSuccess: (state) {
-                                    return ChatBottomBar(
-                                      defaultBottomBarStyle:
-                                          widget.defaultBottomBarStyle,
-                                    );
-                                  },
-                                  orElse: () => const SizedBox.shrink(),
-                                );
-                              },
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
+        orElse: () => const CircularProgressIndicator(), //TODO
       ),
     );
   }

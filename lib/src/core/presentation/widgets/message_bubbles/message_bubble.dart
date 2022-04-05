@@ -17,6 +17,7 @@ class MessageBubble extends StatefulWidget {
   final Widget? otherUserAvatar;
   final String otherUserName;
   final MessageBubbleStyle messageBubbleStyle;
+  final void Function(DateTime) updateLastSeenTimestampForGroupConvo;
   final GetUploadUrlUC getUploadUrlUC;
 
   const MessageBubble({
@@ -28,6 +29,7 @@ class MessageBubble extends StatefulWidget {
     required this.otherUserName,
     required this.messageBubbleStyle,
     required this.getUploadUrlUC,
+    required this.updateLastSeenTimestampForGroupConvo,
   })  : assert(!isGroupChat || groupChatLastSeenTimestamp != null),
         super(key: key);
 
@@ -156,8 +158,8 @@ class _MessageBubbleState extends State<MessageBubble> {
                 (widget.message.timestamp == null ||
                     widget.groupChatLastSeenTimestamp!
                         .isBefore(widget.message.timestamp!))) {
-              context.read<ConversationBloc>().add(
-                  ConversationEvent.markGroupMessageAsSeen(widget.message));
+              widget.updateLastSeenTimestampForGroupConvo(
+                  widget.message.timestamp!);
             }
           },
           child: Align(

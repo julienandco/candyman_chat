@@ -45,6 +45,7 @@ class Conversation with _$Conversation {
   /// or conversation partner's name for 1-on-1 chats.
   ///
   String get displayName {
+    //TODO: add currentUserUID as Argument, so we can get rid of thie firebase auth call here
     if (isGroupChat) {
       return groupName ?? 'group'; //TODO: what to do?
     } else {

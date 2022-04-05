@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,17 +87,30 @@ class NeonChat extends StatelessWidget {
         hideMessageUC: getItInstance<HideMessageUC>(),
         deleteMessageUC: getItInstance<DeleteMessageUC>(),
         markAsSeenUC: getItInstance<MarkMessageAsSeenUC>(),
-        markGroupMessageAsSeenUC: getItInstance<MarkGroupMessageAsSeenUC>(),
         sendPlatformFileMessageUC: getItInstance<SendPlatformFileMessageUC>(),
         sendFileMessageUC: getItInstance<SendFileMessageUC>(),
         sendTextMessageUC: getItInstance<SendTextMessageUC>(),
         initStreamUC: getItInstance<InitializeConversationStreamUC>(),
       );
 
+  GroupConversationTimestampsBloc get _timestampsBloc =>
+      GroupConversationTimestampsBloc(
+        getAllTimestampsUC: getItInstance<GetAllGroupTimestampsUC>(),
+      );
+
+  void _initializeConversationsBloc(BuildContext context,
+          {required TimestampMap timestamps}) =>
+      context.read<ConversationsBloc>().add(ConversationsEvent.initialize(
+          myId: getItInstance<FirebaseAuth>().currentUser!.uid,
+          timestamps: timestamps));
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+            create: (context) => _timestampsBloc
+              ..add(const GroupConversationTimestampsEvent.initialize())),
         BlocProvider(
           create: (context) => getItInstance<ConversationsSearchBloc>(),
         ),
@@ -103,12 +118,11 @@ class NeonChat extends StatelessWidget {
           create: (context) => getItInstance<CurrentConversationCubit>(),
         ),
         BlocProvider(
-          create: (context) => getItInstance<ConversationsBloc>()
-            ..add(ConversationsEvent.initialize(
-                myId: getItInstance<FirebaseAuth>().currentUser!.uid)),
+          create: (context) => getItInstance<ConversationsBloc>(),
         ),
       ],
       child: DefaultConversationsLoader(
+        initializeConversationsBloc: _initializeConversationsBloc,
         fileUploadRepository: getItInstance<FileUploadRepository>(),
         generateConversationBloc: _generateChatBloc,
         generateConversationSearchBloc: () => ConversationSearchBloc(),

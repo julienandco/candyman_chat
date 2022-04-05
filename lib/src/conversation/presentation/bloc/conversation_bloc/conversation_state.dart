@@ -10,7 +10,6 @@ class ConversationState with _$ConversationState {
     required List<ChatMessage> messages,
     required Conversation conversation,
     required String displayName,
-    required DateTime groupConversationLastSeenTimestamp,
   }) = _LoadSuccess;
   const factory ConversationState.loadFailure() = _LoadFailure;
 

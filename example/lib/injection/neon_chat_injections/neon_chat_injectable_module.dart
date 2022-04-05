@@ -125,7 +125,6 @@ abstract class NEONChatInjectableModule {
         getFirebaseUserUC: getFirebaseUserUC,
         createConversationUC: createConversationUC,
         createGroupConversationUC: createGroupConversationUC,
-        getAllGroupTimestampsUC: getAllGroupTimestampsUC,
       );
 
   @lazySingleton

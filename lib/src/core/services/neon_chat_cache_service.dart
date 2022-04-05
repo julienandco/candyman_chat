@@ -24,6 +24,8 @@ class NeonChatCacheService {
       // if not-null, write to cache
       cache.setGroupMessageTimestamps(timestamps);
     } else {
+      print(
+          'NOTHING FOUND IN FIREBASE, INITIALIZING TIMESTAMPS IN FIREBASE...');
       timestamps = await userRepo
           .initializeFirebaseUserGroupChatTimestamps(_currentUser.uid);
       print('CACHE SERVICE WRITES TO CACHE: ${timestamps.toString()}');
@@ -41,7 +43,7 @@ class NeonChatCacheService {
       print(timestampMap.toString());
       return timestampMap;
     } else {
-      print('init...');
+      print('fetching from firebase...');
       return await _initializeCache();
     }
   }

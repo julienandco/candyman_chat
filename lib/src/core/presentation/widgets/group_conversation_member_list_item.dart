@@ -2,7 +2,6 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 class GroupConversationMemberListItem extends StatelessWidget {
   final Function(String)? onOpenUserProfile;

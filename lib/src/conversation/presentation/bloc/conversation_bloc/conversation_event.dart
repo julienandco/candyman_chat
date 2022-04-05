@@ -9,7 +9,6 @@ class ConversationEvent with _$ConversationEvent {
     List<ChatMessage> messages,
     Conversation conversation,
     String displayName,
-    DateTime groupConversationLastSeenTimestamp,
   ) = _OnData;
   const factory ConversationEvent.sendTextMessage(String message) =
       _SendTextMessage;
@@ -25,8 +24,7 @@ class ConversationEvent with _$ConversationEvent {
       _SendFileMessage;
 
   const factory ConversationEvent.markAsSeen(ChatMessage message) = _MarkAsSeen;
-  const factory ConversationEvent.markGroupMessageAsSeen(ChatMessage message) =
-      _MarkGroupMessageAsSeen;
+
   const factory ConversationEvent.deleteMessage(ChatMessage message) =
       _DeleteMessage;
   const factory ConversationEvent.hideMessage(ChatMessage message) =

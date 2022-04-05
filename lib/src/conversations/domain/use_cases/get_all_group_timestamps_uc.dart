@@ -1,4 +1,3 @@
-//TODOGROUPSEEN: register it in getit
 import 'package:neon_chat/neon_chat.dart';
 
 class GetAllGroupTimestampsUC {

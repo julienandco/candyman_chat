@@ -42,7 +42,6 @@ class InitializeConversationItemStreamUC {
         int unreadCount,
       ) =>
           ConversationItem(
-        groupConversationLastSeenTimestamp: timestamp.toDate(),
         lastMessage: lastMessage,
         conversation: conversation,
         unreadMessagesCount: unreadCount,

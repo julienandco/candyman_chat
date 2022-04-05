@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/presentation/widgets/avatar_widget.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
   final FileUploadRepository fileUploadRepository;

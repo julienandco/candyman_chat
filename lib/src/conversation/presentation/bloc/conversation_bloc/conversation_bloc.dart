@@ -23,7 +23,6 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   final HideMessageUC hideMessageUC;
   final DeleteMessageUC deleteMessageUC;
   final MarkMessageAsSeenUC markAsSeenUC;
-  final MarkGroupMessageAsSeenUC markGroupMessageAsSeenUC;
   final SendPlatformFileMessageUC sendPlatformFileMessageUC;
   final SendFileMessageUC sendFileMessageUC;
   final SendTextMessageUC sendTextMessageUC;
@@ -34,7 +33,6 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     required this.hideMessageUC,
     required this.deleteMessageUC,
     required this.markAsSeenUC,
-    required this.markGroupMessageAsSeenUC,
     required this.sendPlatformFileMessageUC,
     required this.sendFileMessageUC,
     required this.sendTextMessageUC,
@@ -54,17 +52,15 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
               messages,
               conversationItem.conversation,
               conversationItem.conversation.displayName,
-              conversationItem.groupConversationLastSeenTimestamp,
             ),
             onData: (onDataEvent) => add(onDataEvent),
           );
         },
-        onData: (messages, conversation, displayName, timestamp) => emit(
+        onData: (messages, conversation, displayName) => emit(
           ConversationState.loadSuccess(
             messages: messages,
             conversation: conversation,
             displayName: displayName,
-            groupConversationLastSeenTimestamp: timestamp,
           ),
         ),
         sendTextMessage: (message) {
@@ -170,15 +166,6 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
           state.maybeMap(
             loadSuccess: (state) {
               markAsSeenUC(
-                  conversationId: state.conversation.id, message: message);
-            },
-            orElse: () {},
-          );
-        },
-        markGroupMessageAsSeen: (message) {
-          state.maybeMap(
-            loadSuccess: (state) {
-              markGroupMessageAsSeenUC(
                   conversationId: state.conversation.id, message: message);
             },
             orElse: () {},
