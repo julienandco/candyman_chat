@@ -11,7 +11,7 @@ class MessageList extends StatelessWidget {
   final GetUploadUrlUC
       getUploadUrlUC; //TODO: ugly, move this in some logic layer
 
-  final DateTime? conversationLastSeenTimestamp;
+  final DateTime conversationLastSeenTimestamp;
   final void Function(DateTime) updateLastSeenTimestampForConversation;
 
   const MessageList({
@@ -20,7 +20,7 @@ class MessageList extends StatelessWidget {
     required this.defaultChatBubbleStyle,
     required this.getUploadUrlUC,
     required this.updateLastSeenTimestampForConversation,
-    this.conversationLastSeenTimestamp,
+    required this.conversationLastSeenTimestamp,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

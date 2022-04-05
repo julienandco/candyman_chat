@@ -48,14 +48,9 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
   final _scrollController = ScrollController();
 
   void _openConversation(ConversationItem conversationItem) {
-    DateTime? timestamp;
-    if (conversationItem.conversation.isGroupChat) {}
-    final timestampsState =
-        context.read<GroupConversationTimestampsBloc>().state;
-    timestamp = timestampsState.maybeMap(
-        orElse: () => null,
-        loaded: (loadedState) =>
-            loadedState.timestampMap[conversationItem.conversation.id]);
+    final timestamp = context
+        .read<GroupConversationTimestampsBloc>()
+        .getLastSeenTimestampForConversation(conversationItem.conversation);
     openConversation(
       context,
       conversationItem: conversationItem,
@@ -150,13 +145,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   context,
                                   groupChatLastSeenTimestamp: context
                                       .read<GroupConversationTimestampsBloc>()
-                                      .state
-                                      .maybeMap(
-                                          orElse: () => null,
-                                          loaded: (loadedState) =>
-                                              loadedState.timestampMap[
-                                                  conversationItem
-                                                      .conversation.id]),
+                                      .getLastSeenTimestampForConversation(
+                                          conversationItem.conversation),
                                   conversationItem: conversationItem,
                                   updateGroupConversationTimestamp:
                                       widget.updateGroupConversationTimestamp,

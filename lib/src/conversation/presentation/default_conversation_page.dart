@@ -14,7 +14,7 @@ class DefaultConversationPage extends StatefulWidget {
   final SearchAppBarStyle defaultSearchAppBarStyle;
   final BottomBarStyle defaultBottomBarStyle;
   final GetUploadUrlUC getUploadUrlUC;
-  final DateTime? groupConversationLastSeenTimestamp;
+  final DateTime groupConversationLastSeenTimestamp;
   final Function(DateTime) updateTimestampForConversation;
   final Function(Conversation)? onAppbarTap;
 
@@ -27,7 +27,7 @@ class DefaultConversationPage extends StatefulWidget {
     required this.defaultBottomBarStyle,
     required this.getUploadUrlUC,
     required this.updateTimestampForConversation,
-    this.groupConversationLastSeenTimestamp,
+    required this.groupConversationLastSeenTimestamp,
     this.onAppbarTap,
   }) : super(key: key);
 

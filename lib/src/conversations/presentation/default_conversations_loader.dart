@@ -125,14 +125,8 @@ class DefaultConversationsLoader extends StatelessWidget {
                             conversationBloc: generateConversationBloc,
                             groupConversationLastSeenTimestamp: context
                                 .read<GroupConversationTimestampsBloc>()
-                                .state
-                                .maybeMap(
-                                    orElse: () => null,
-                                    loaded: (loadedState) =>
-                                        loadedState.timestampMap[state
-                                            .conversationItem
-                                            ?.conversation
-                                            .id]),
+                                .getLastSeenTimestampForConversation(
+                                    state.conversationItem!.conversation),
                             conversationSearchBloc:
                                 generateConversationSearchBloc,
                             chatBubbleStyle: chatBubbleStyle,

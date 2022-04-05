@@ -25,7 +25,7 @@ void openConversation(
   required ConversationBloc Function() generateConversationBloc,
   required ConversationSearchBloc Function() generateConversationSearchBloc,
   required Function(String, DateTime) updateGroupConversationTimestamp,
-  DateTime? groupChatLastSeenTimestamp,
+  required DateTime groupChatLastSeenTimestamp,
   SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
   MessageBubbleStyle chatBubbleStyle = const MessageBubbleStyle(),
   ConversationStyle conversationStyle = const ConversationStyle(),

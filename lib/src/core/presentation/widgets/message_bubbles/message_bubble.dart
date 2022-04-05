@@ -12,7 +12,7 @@ import 'message_widgets/message_content_widget.dart';
 
 class MessageBubble extends StatefulWidget {
   final bool isGroupChat;
-  final DateTime? groupChatLastSeenTimestamp;
+  final DateTime groupChatLastSeenTimestamp;
   final ChatMessage message;
   final Widget? otherUserAvatar;
   final String otherUserName;
@@ -25,13 +25,12 @@ class MessageBubble extends StatefulWidget {
     required this.isGroupChat,
     required this.message,
     this.otherUserAvatar,
-    this.groupChatLastSeenTimestamp,
+    required this.groupChatLastSeenTimestamp,
     required this.otherUserName,
     required this.messageBubbleStyle,
     required this.getUploadUrlUC,
     required this.updateLastSeenTimestampForGroupConvo,
-  })  : assert(!isGroupChat || groupChatLastSeenTimestamp != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _MessageBubbleState createState() => _MessageBubbleState();
@@ -156,7 +155,7 @@ class _MessageBubbleState extends State<MessageBubble> {
             } else if (widget.isGroupChat &&
                 value.visibleFraction > 0.5 &&
                 (widget.message.timestamp == null ||
-                    widget.groupChatLastSeenTimestamp!
+                    widget.groupChatLastSeenTimestamp
                         .isBefore(widget.message.timestamp!))) {
               widget.updateLastSeenTimestampForGroupConvo(
                   widget.message.timestamp!);

@@ -14,7 +14,7 @@ class DefaultConversationLoader extends StatelessWidget {
   final ConversationItem conversationItem;
   final bool showCloseButton;
 
-  final DateTime? groupConversationLastSeenTimestamp;
+  final DateTime groupConversationLastSeenTimestamp;
 
   final ConversationStyle conversationStyle;
   final MessageBubbleStyle chatBubbleStyle;
@@ -34,7 +34,7 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
-    this.groupConversationLastSeenTimestamp,
+    required this.groupConversationLastSeenTimestamp,
     this.showCloseButton = true,
     this.onAppbarTap,
   }) : super(key: key);
