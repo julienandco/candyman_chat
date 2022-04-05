@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get_it/get_it.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/conversations/conversations.dart';
+
 import 'package:rxdart/rxdart.dart';
 
 class InitializeConversationItemStreamUC {

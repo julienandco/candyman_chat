@@ -18,6 +18,24 @@ bool isWidthOverLimit(BuildContext context) =>
 String formatDatetime(DateTime? date) =>
     DateFormat('HH:mm').format(date ?? DateTime.now());
 
+String formatLastActiveDateTime(DateTime? date) {
+  if (date == null) {
+    return formatDatetime(null);
+  }
+  final now = DateTime.now();
+  final differenceInDays = now.difference(date).inDays;
+  if (differenceInDays < 1) {
+    // show HH.mm
+    return formatDatetime(date);
+  } else {
+    // show dMy, so 15. Okt. 2020 f.ex.
+
+    // TODO: get correct locale, not hardcoded de, maybe insert into chatDatastructure?
+
+    return DateFormat('d. MMM. y').format(date);
+  }
+}
+
 void openConversation(
   BuildContext context, {
   required ConversationItem conversationItem,

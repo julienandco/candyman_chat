@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -41,7 +42,8 @@ class GroupConversationTimestampsBloc extends Bloc<
       final currentState = state;
       if (currentState is _$_GroupConversationTimestampsLoaded &&
           _needsToSync) {
-        print('periodically syncing...');
+        log('periodically syncing local group timestamps to firebase...',
+            name: '$runtimeType');
         _lastSyncToFirebase = DateTime.now();
         _hadNewChangesSinceLastSync = false;
         syncTimestampsWithFirebaseUC(

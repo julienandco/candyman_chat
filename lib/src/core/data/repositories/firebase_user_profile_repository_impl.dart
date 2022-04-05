@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -57,7 +56,6 @@ class FirebaseUserProfileRepositoryImpl
             EventSink<Map<String, DateTime>> sink) async {
           final data = snap.data()![firebaseKeys.usersGroupMessageSeenKey];
 
-          print(data);
           Map<String, DateTime> timestamps = {};
           if (data != null) {
             for (var key in data.keys) {
@@ -66,40 +64,14 @@ class FirebaseUserProfileRepositoryImpl
             }
           }
 
-          print('fetched: $timestamps');
+          log('fetched group conversation timestamps for user $userId: $timestamps',
+              name: '$runtimeType');
 
           sink.add(timestamps);
         },
       ),
     );
   }
-
-//TODOCACHE
-  // @override
-  // Future<TimestampMap> initializeFirebaseUserGroupChatTimestamps(
-  //     String userId) async {
-  //   //TODOGROUPSEEN
-  //   try {
-  //     final user = _users.doc(userId);
-
-  //     final lastUpdate = FieldValue.serverTimestamp();
-
-  //     final map = await user.update({
-  //       firebaseKeys.usersGroupMessageSeenKey: {
-  //         TimestampMap.lastUpdateKey: lastUpdate,
-  //         TimestampMap.timestampsKey: {},
-  //       }
-  //     });
-
-  //     return TimestampMap(
-  //       // lastUpdate: DateTime.now(),
-  //       timestamps: {},
-  //     );
-  //   } catch (err) {
-  //     log('$err', name: '$runtimeType');
-  //     rethrow;
-  //   }
-  // }
 
   @override
   void setUserGroupConversationTimestamps(
@@ -108,13 +80,12 @@ class FirebaseUserProfileRepositoryImpl
     try {
       final doc = _users.doc(userId);
 
-      print('newStamps: $timestamps');
-
       await doc.update({
         firebaseKeys.usersGroupMessageSeenKey: timestamps,
       });
 
-      log('user group conversation timestamps updated', name: '$runtimeType');
+      log('user group conversation timestamps updated: $timestamps',
+          name: '$runtimeType');
     } catch (err) {
       log('$err', name: '$runtimeType');
       rethrow;

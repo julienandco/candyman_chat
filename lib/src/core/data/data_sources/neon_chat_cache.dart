@@ -63,9 +63,4 @@
 //     return hive!.putAt(_kGroupMessageTimestampsIndex, timestampMap);
 //     // return hive!.put(_kGroupMessageTimestampsKey, timestampMap);
 //   }
-
-//   //TODOGROUPSEEN: needed?
-//   Future<void> deleteGroupMessageTimestamps() async {
-//     await removeCachedEntry(_kGroupMessageTimestampsKey);
-//   }
 // }

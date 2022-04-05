@@ -36,7 +36,9 @@ class ConversationAppbar extends StatelessWidget
                       .getConversationPartner(me?.uid)
                       ?.lastActivity;
 
-              return timestamp != null ? formatDatetime(timestamp) : null;
+              return timestamp != null
+                  ? formatLastActiveDateTime(timestamp)
+                  : null;
             },
           );
           return SubHeader(

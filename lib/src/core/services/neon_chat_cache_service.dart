@@ -15,7 +15,6 @@
 //     this.userRepo,
 //   );
 
-//   //TODOGROUPSEEN: upload to firebase regularly
 
 //   Future<TimestampMap> _initializeCache() async {
 //     // final _currentUser = FirebaseAuth.instance.currentUser!;

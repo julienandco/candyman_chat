@@ -5,7 +5,4 @@ abstract class FirebaseUserProfileRepository {
   Stream<Map<String, DateTime>> getUserGroupChatTimestamps(String userId);
   void setUserGroupConversationTimestamps(
       {required String userId, required Map<String, DateTime> timestamps});
-
-  //TODOGROUPSEEN: needed?
-  // Future<TimestampMap> initializeFirebaseUserGroupChatTimestamps(String userId);
 }
