@@ -13,7 +13,7 @@ part 'conversations_bloc.freezed.dart';
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   StreamSubscription? _conversationsStream;
   Stream<FirebaseUser>? _me;
-  TimestampMap? _timestampMap;
+  Map<String, DateTime>? _timestampMap;
 
   late final List<StreamSubscription> _conversationItemStreams = [];
 
@@ -73,7 +73,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           final chatStream = initializeConversationItemStreamUC(
             conversation: conversation,
             timestamp: Timestamp.fromDate(
-                _timestampMap!.timestamps[conversation.id] ?? DateTime(1970)),
+                _timestampMap![conversation.id] ?? DateTime(1970)),
             onData: (event) => add(_OnChatItemsData(event)),
             onError: (err) {
               log('fetchChatItems $err', name: '$runtimeType');

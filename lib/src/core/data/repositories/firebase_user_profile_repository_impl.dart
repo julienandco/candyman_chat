@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,42 +32,86 @@ class FirebaseUserProfileRepositoryImpl
     );
   }
 
+  // @override
+  // Future<TimestampMap?> getUserGroupChatTimestamps(String userId) async {
+  //   try {
+  //     final userData = await _users.doc(userId).get()
+  //       ..data();
+  //     final timestampJson = userData[firebaseKeys.usersGroupMessageSeenKey];
+  //     print('TIMESTAMP MAP FETCHED FROM FIREBASE: $timestampJson');
+  //     return timestampJson == null
+  //         ? null
+  //         : TimestampMap.fromJson(timestampJson);
+  //   } catch (e) {
+  //     log('Error when getting timestamps', name: '$runtimeType', error: e);
+  //     rethrow;
+  //   }
+  // }
+
   @override
-  Future<TimestampMap?> getUserGroupChatTimestamps(String userId) async {
-    try {
-      final userData = await _users.doc(userId).get()
-        ..data();
-      final timestampJson = userData[firebaseKeys.usersGroupMessageSeenKey];
-      print('TIMESTAMP MAP FETCHED FROM FIREBASE: $timestampJson');
-      return timestampJson == null
-          ? null
-          : TimestampMap.fromJson(timestampJson);
-    } catch (e) {
-      log('Error when getting timestamps', name: '$runtimeType', error: e);
-      rethrow;
-    }
+  Stream<Map<String, DateTime>> getUserGroupChatTimestamps(String userId) {
+    return _users.doc(userId).snapshots().transform(
+      StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
+          Map<String, DateTime>>.fromHandlers(
+        handleData: (DocumentSnapshot<Map<String, dynamic>> snap,
+            EventSink<Map<String, DateTime>> sink) async {
+          final data = snap.data()![firebaseKeys.usersGroupMessageSeenKey];
+
+          print(data);
+          Map<String, DateTime> timestamps = {};
+          for (var key in data.keys) {
+            final timestamp = data[key] as Timestamp;
+            timestamps[key] = timestamp.toDate();
+          }
+          print('fetched: $timestamps');
+
+          sink.add(timestamps);
+        },
+      ),
+    );
   }
 
+//TODOCACHE
+  // @override
+  // Future<TimestampMap> initializeFirebaseUserGroupChatTimestamps(
+  //     String userId) async {
+  //   //TODOGROUPSEEN
+  //   try {
+  //     final user = _users.doc(userId);
+
+  //     final lastUpdate = FieldValue.serverTimestamp();
+
+  //     final map = await user.update({
+  //       firebaseKeys.usersGroupMessageSeenKey: {
+  //         TimestampMap.lastUpdateKey: lastUpdate,
+  //         TimestampMap.timestampsKey: {},
+  //       }
+  //     });
+
+  //     return TimestampMap(
+  //       // lastUpdate: DateTime.now(),
+  //       timestamps: {},
+  //     );
+  //   } catch (err) {
+  //     log('$err', name: '$runtimeType');
+  //     rethrow;
+  //   }
+  // }
+
   @override
-  Future<TimestampMap> initializeFirebaseUserGroupChatTimestamps(
-      String userId) async {
-    //TODOGROUPSEEN
+  void setUserGroupConversationTimestamps(
+      {required String userId,
+      required Map<String, DateTime> timestamps}) async {
     try {
-      final user = _users.doc(userId);
+      final doc = _users.doc(userId);
 
-      final lastUpdate = FieldValue.serverTimestamp();
+      print('newStamps: $timestamps');
 
-      final map = await user.update({
-        firebaseKeys.usersGroupMessageSeenKey: {
-          TimestampMap.lastUpdateKey: lastUpdate,
-          TimestampMap.timestampsKey: {},
-        }
+      await doc.update({
+        firebaseKeys.usersGroupMessageSeenKey: timestamps,
       });
 
-      return TimestampMap(
-        lastUpdate: DateTime.now(),
-        timestamps: {},
-      );
+      log('user group conversation timestamps updated', name: '$runtimeType');
     } catch (err) {
       log('$err', name: '$runtimeType');
       rethrow;

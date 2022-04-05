@@ -18,8 +18,16 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$GroupConversationTimestampsEventTearOff {
   const _$GroupConversationTimestampsEventTearOff();
 
-  _InitializeTimestamps initialize() {
-    return const _InitializeTimestamps();
+  _InitializeTimestamps initialize(String userID) {
+    return _InitializeTimestamps(
+      userID,
+    );
+  }
+
+  _OnDataReceived onData(Map<String, DateTime> timestamps) {
+    return _OnDataReceived(
+      timestamps,
+    );
   }
 
   _SetNewTimestampForConversation setNewTimestamp(
@@ -39,21 +47,24 @@ const $GroupConversationTimestampsEvent =
 mixin _$GroupConversationTimestampsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialize,
+    required TResult Function(String userID) initialize,
+    required TResult Function(Map<String, DateTime> timestamps) onData,
     required TResult Function(String conversationId, DateTime timestamp)
         setNewTimestamp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
     TResult Function(String conversationId, DateTime timestamp)?
         setNewTimestamp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
     TResult Function(String conversationId, DateTime timestamp)?
         setNewTimestamp,
     required TResult orElse(),
@@ -62,6 +73,7 @@ mixin _$GroupConversationTimestampsEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitializeTimestamps value) initialize,
+    required TResult Function(_OnDataReceived value) onData,
     required TResult Function(_SetNewTimestampForConversation value)
         setNewTimestamp,
   }) =>
@@ -69,12 +81,14 @@ mixin _$GroupConversationTimestampsEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
     TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
     TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
     required TResult orElse(),
   }) =>
@@ -104,6 +118,7 @@ abstract class _$InitializeTimestampsCopyWith<$Res> {
   factory _$InitializeTimestampsCopyWith(_InitializeTimestamps value,
           $Res Function(_InitializeTimestamps) then) =
       __$InitializeTimestampsCopyWithImpl<$Res>;
+  $Res call({String userID});
 }
 
 /// @nodoc
@@ -116,57 +131,84 @@ class __$InitializeTimestampsCopyWithImpl<$Res>
 
   @override
   _InitializeTimestamps get _value => super._value as _InitializeTimestamps;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+  }) {
+    return _then(_InitializeTimestamps(
+      userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_InitializeTimestamps implements _InitializeTimestamps {
-  const _$_InitializeTimestamps();
+  const _$_InitializeTimestamps(this.userID);
+
+  @override
+  final String userID;
 
   @override
   String toString() {
-    return 'GroupConversationTimestampsEvent.initialize()';
+    return 'GroupConversationTimestampsEvent.initialize(userID: $userID)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitializeTimestamps);
+        (other.runtimeType == runtimeType &&
+            other is _InitializeTimestamps &&
+            const DeepCollectionEquality().equals(other.userID, userID));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(userID));
+
+  @JsonKey(ignore: true)
+  @override
+  _$InitializeTimestampsCopyWith<_InitializeTimestamps> get copyWith =>
+      __$InitializeTimestampsCopyWithImpl<_InitializeTimestamps>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialize,
+    required TResult Function(String userID) initialize,
+    required TResult Function(Map<String, DateTime> timestamps) onData,
     required TResult Function(String conversationId, DateTime timestamp)
         setNewTimestamp,
   }) {
-    return initialize();
+    return initialize(userID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
     TResult Function(String conversationId, DateTime timestamp)?
         setNewTimestamp,
   }) {
-    return initialize?.call();
+    return initialize?.call(userID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
     TResult Function(String conversationId, DateTime timestamp)?
         setNewTimestamp,
     required TResult orElse(),
   }) {
     if (initialize != null) {
-      return initialize();
+      return initialize(userID);
     }
     return orElse();
   }
@@ -175,6 +217,7 @@ class _$_InitializeTimestamps implements _InitializeTimestamps {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitializeTimestamps value) initialize,
+    required TResult Function(_OnDataReceived value) onData,
     required TResult Function(_SetNewTimestampForConversation value)
         setNewTimestamp,
   }) {
@@ -185,6 +228,7 @@ class _$_InitializeTimestamps implements _InitializeTimestamps {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
     TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
   }) {
     return initialize?.call(this);
@@ -194,6 +238,7 @@ class _$_InitializeTimestamps implements _InitializeTimestamps {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
     TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
     required TResult orElse(),
   }) {
@@ -206,7 +251,158 @@ class _$_InitializeTimestamps implements _InitializeTimestamps {
 
 abstract class _InitializeTimestamps
     implements GroupConversationTimestampsEvent {
-  const factory _InitializeTimestamps() = _$_InitializeTimestamps;
+  const factory _InitializeTimestamps(String userID) = _$_InitializeTimestamps;
+
+  String get userID;
+  @JsonKey(ignore: true)
+  _$InitializeTimestampsCopyWith<_InitializeTimestamps> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$OnDataReceivedCopyWith<$Res> {
+  factory _$OnDataReceivedCopyWith(
+          _OnDataReceived value, $Res Function(_OnDataReceived) then) =
+      __$OnDataReceivedCopyWithImpl<$Res>;
+  $Res call({Map<String, DateTime> timestamps});
+}
+
+/// @nodoc
+class __$OnDataReceivedCopyWithImpl<$Res>
+    extends _$GroupConversationTimestampsEventCopyWithImpl<$Res>
+    implements _$OnDataReceivedCopyWith<$Res> {
+  __$OnDataReceivedCopyWithImpl(
+      _OnDataReceived _value, $Res Function(_OnDataReceived) _then)
+      : super(_value, (v) => _then(v as _OnDataReceived));
+
+  @override
+  _OnDataReceived get _value => super._value as _OnDataReceived;
+
+  @override
+  $Res call({
+    Object? timestamps = freezed,
+  }) {
+    return _then(_OnDataReceived(
+      timestamps == freezed
+          ? _value.timestamps
+          : timestamps // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_OnDataReceived implements _OnDataReceived {
+  const _$_OnDataReceived(this.timestamps);
+
+  @override
+  final Map<String, DateTime> timestamps;
+
+  @override
+  String toString() {
+    return 'GroupConversationTimestampsEvent.onData(timestamps: $timestamps)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _OnDataReceived &&
+            const DeepCollectionEquality()
+                .equals(other.timestamps, timestamps));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(timestamps));
+
+  @JsonKey(ignore: true)
+  @override
+  _$OnDataReceivedCopyWith<_OnDataReceived> get copyWith =>
+      __$OnDataReceivedCopyWithImpl<_OnDataReceived>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String userID) initialize,
+    required TResult Function(Map<String, DateTime> timestamps) onData,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestamp,
+  }) {
+    return onData(timestamps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestamp,
+  }) {
+    return onData?.call(timestamps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestamp,
+    required TResult orElse(),
+  }) {
+    if (onData != null) {
+      return onData(timestamps);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitializeTimestamps value) initialize,
+    required TResult Function(_OnDataReceived value) onData,
+    required TResult Function(_SetNewTimestampForConversation value)
+        setNewTimestamp,
+  }) {
+    return onData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
+    TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
+  }) {
+    return onData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
+    TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
+    required TResult orElse(),
+  }) {
+    if (onData != null) {
+      return onData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnDataReceived implements GroupConversationTimestampsEvent {
+  const factory _OnDataReceived(Map<String, DateTime> timestamps) =
+      _$_OnDataReceived;
+
+  Map<String, DateTime> get timestamps;
+  @JsonKey(ignore: true)
+  _$OnDataReceivedCopyWith<_OnDataReceived> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -291,7 +487,8 @@ class _$_SetNewTimestampForConversation
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialize,
+    required TResult Function(String userID) initialize,
+    required TResult Function(Map<String, DateTime> timestamps) onData,
     required TResult Function(String conversationId, DateTime timestamp)
         setNewTimestamp,
   }) {
@@ -301,7 +498,8 @@ class _$_SetNewTimestampForConversation
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
     TResult Function(String conversationId, DateTime timestamp)?
         setNewTimestamp,
   }) {
@@ -311,7 +509,8 @@ class _$_SetNewTimestampForConversation
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult Function(String userID)? initialize,
+    TResult Function(Map<String, DateTime> timestamps)? onData,
     TResult Function(String conversationId, DateTime timestamp)?
         setNewTimestamp,
     required TResult orElse(),
@@ -326,6 +525,7 @@ class _$_SetNewTimestampForConversation
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitializeTimestamps value) initialize,
+    required TResult Function(_OnDataReceived value) onData,
     required TResult Function(_SetNewTimestampForConversation value)
         setNewTimestamp,
   }) {
@@ -336,6 +536,7 @@ class _$_SetNewTimestampForConversation
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
     TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
   }) {
     return setNewTimestamp?.call(this);
@@ -345,6 +546,7 @@ class _$_SetNewTimestampForConversation
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitializeTimestamps value)? initialize,
+    TResult Function(_OnDataReceived value)? onData,
     TResult Function(_SetNewTimestampForConversation value)? setNewTimestamp,
     required TResult orElse(),
   }) {
@@ -376,7 +578,8 @@ class _$GroupConversationTimestampsStateTearOff {
     return const _Uninitialized();
   }
 
-  _GroupConversationTimestampsLoaded loaded(TimestampMap timestampMap) {
+  _GroupConversationTimestampsLoaded loaded(
+      Map<String, DateTime> timestampMap) {
     return _GroupConversationTimestampsLoaded(
       timestampMap,
     );
@@ -392,19 +595,19 @@ mixin _$GroupConversationTimestampsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function(TimestampMap timestampMap) loaded,
+    required TResult Function(Map<String, DateTime> timestampMap) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function(TimestampMap timestampMap)? loaded,
+    TResult Function(Map<String, DateTime> timestampMap)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function(TimestampMap timestampMap)? loaded,
+    TResult Function(Map<String, DateTime> timestampMap)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -489,7 +692,7 @@ class _$_Uninitialized implements _Uninitialized {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function(TimestampMap timestampMap) loaded,
+    required TResult Function(Map<String, DateTime> timestampMap) loaded,
   }) {
     return uninitialized();
   }
@@ -498,7 +701,7 @@ class _$_Uninitialized implements _Uninitialized {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function(TimestampMap timestampMap)? loaded,
+    TResult Function(Map<String, DateTime> timestampMap)? loaded,
   }) {
     return uninitialized?.call();
   }
@@ -507,7 +710,7 @@ class _$_Uninitialized implements _Uninitialized {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function(TimestampMap timestampMap)? loaded,
+    TResult Function(Map<String, DateTime> timestampMap)? loaded,
     required TResult orElse(),
   }) {
     if (uninitialized != null) {
@@ -558,9 +761,7 @@ abstract class _$GroupConversationTimestampsLoadedCopyWith<$Res> {
           _GroupConversationTimestampsLoaded value,
           $Res Function(_GroupConversationTimestampsLoaded) then) =
       __$GroupConversationTimestampsLoadedCopyWithImpl<$Res>;
-  $Res call({TimestampMap timestampMap});
-
-  $TimestampMapCopyWith<$Res> get timestampMap;
+  $Res call({Map<String, DateTime> timestampMap});
 }
 
 /// @nodoc
@@ -584,15 +785,8 @@ class __$GroupConversationTimestampsLoadedCopyWithImpl<$Res>
       timestampMap == freezed
           ? _value.timestampMap
           : timestampMap // ignore: cast_nullable_to_non_nullable
-              as TimestampMap,
+              as Map<String, DateTime>,
     ));
-  }
-
-  @override
-  $TimestampMapCopyWith<$Res> get timestampMap {
-    return $TimestampMapCopyWith<$Res>(_value.timestampMap, (value) {
-      return _then(_value.copyWith(timestampMap: value));
-    });
   }
 }
 
@@ -603,7 +797,7 @@ class _$_GroupConversationTimestampsLoaded
   const _$_GroupConversationTimestampsLoaded(this.timestampMap);
 
   @override
-  final TimestampMap timestampMap;
+  final Map<String, DateTime> timestampMap;
 
   @override
   String toString() {
@@ -634,7 +828,7 @@ class _$_GroupConversationTimestampsLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function(TimestampMap timestampMap) loaded,
+    required TResult Function(Map<String, DateTime> timestampMap) loaded,
   }) {
     return loaded(timestampMap);
   }
@@ -643,7 +837,7 @@ class _$_GroupConversationTimestampsLoaded
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function(TimestampMap timestampMap)? loaded,
+    TResult Function(Map<String, DateTime> timestampMap)? loaded,
   }) {
     return loaded?.call(timestampMap);
   }
@@ -652,7 +846,7 @@ class _$_GroupConversationTimestampsLoaded
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function(TimestampMap timestampMap)? loaded,
+    TResult Function(Map<String, DateTime> timestampMap)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -695,10 +889,11 @@ class _$_GroupConversationTimestampsLoaded
 
 abstract class _GroupConversationTimestampsLoaded
     implements GroupConversationTimestampsState {
-  const factory _GroupConversationTimestampsLoaded(TimestampMap timestampMap) =
+  const factory _GroupConversationTimestampsLoaded(
+          Map<String, DateTime> timestampMap) =
       _$_GroupConversationTimestampsLoaded;
 
-  TimestampMap get timestampMap;
+  Map<String, DateTime> get timestampMap;
   @JsonKey(ignore: true)
   _$GroupConversationTimestampsLoadedCopyWith<
           _GroupConversationTimestampsLoaded>

@@ -5,5 +5,5 @@ class GroupConversationTimestampsState with _$GroupConversationTimestampsState {
   const factory GroupConversationTimestampsState.uninitialized() =
       _Uninitialized;
   const factory GroupConversationTimestampsState.loaded(
-      TimestampMap timestampMap) = _GroupConversationTimestampsLoaded;
+      Map<String, DateTime> timestampMap) = _GroupConversationTimestampsLoaded;
 }

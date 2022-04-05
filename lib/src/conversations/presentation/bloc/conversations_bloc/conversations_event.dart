@@ -4,7 +4,7 @@ part of 'conversations_bloc.dart';
 class ConversationsEvent with _$ConversationsEvent {
   const factory ConversationsEvent.initialize({
     required String myId,
-    required TimestampMap timestamps,
+    required Map<String, DateTime> timestamps,
   }) = _InitializeMyFirebaseUser;
 
   const factory ConversationsEvent.fetchChatItems(

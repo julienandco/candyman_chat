@@ -1,11 +1,12 @@
-import 'package:neon_chat/neon_chat.dart';
+// import 'package:neon_chat/neon_chat.dart';
 
-class GetAllGroupTimestampsUC {
-  final NeonChatCacheService cacheService;
+// //TODODELETE not used
+// class GetAllGroupTimestampsUC {
+//   final NeonChatCacheService cacheService;
 
-  GetAllGroupTimestampsUC(this.cacheService);
+//   GetAllGroupTimestampsUC(this.cacheService);
 
-  Future<TimestampMap> call() async {
-    return await cacheService.groupchatsTimestampMap;
-  }
-}
+//   Future<TimestampMap> call() async {
+//     return await cacheService.groupchatsTimestampMap;
+//   }
+// }

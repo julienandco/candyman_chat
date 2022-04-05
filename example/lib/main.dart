@@ -15,8 +15,8 @@ void main() async {
   );
   configureInjection(Env.dev);
 
-  Hive.initFlutter();
-  Hive.registerAdapter(TimestampMapAdapter());
+  // Hive.initFlutter();
+  // Hive.registerAdapter(TimestampMapAdapter());
 
   final creds = await FirebaseAuth.instance.signInWithEmailAndPassword(
     password: 'neon-chat-example!',

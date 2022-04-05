@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
+import 'package:neon_chat/src/core/domain/use_cases/initialize_timestamp_stream_uc.dart';
+import 'package:neon_chat/src/core/domain/use_cases/sync_timestamps_with_firebase_uc.dart';
 
 ///
 /// Instance of the NEON-Chat, that works out-of-the-box. Where I come from, we
@@ -95,11 +95,15 @@ class NeonChat extends StatelessWidget {
 
   GroupConversationTimestampsBloc get _timestampsBloc =>
       GroupConversationTimestampsBloc(
-        getAllTimestampsUC: getItInstance<GetAllGroupTimestampsUC>(),
+        initStreamUC: InitializeTimestampStreamUC(
+            getItInstance<FirebaseUserProfileRepository>()),
+        syncTimestampsWithFirebaseUC: SyncTimestampsWithFirebaseUC(
+          getItInstance<FirebaseUserProfileRepository>(),
+        ),
       );
 
   void _initializeConversationsBloc(BuildContext context,
-          {required TimestampMap timestamps}) =>
+          {required Map<String, DateTime> timestamps}) =>
       context.read<ConversationsBloc>().add(ConversationsEvent.initialize(
           myId: getItInstance<FirebaseAuth>().currentUser!.uid,
           timestamps: timestamps));
@@ -110,7 +114,8 @@ class NeonChat extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (context) => _timestampsBloc
-              ..add(const GroupConversationTimestampsEvent.initialize())),
+              ..add(GroupConversationTimestampsEvent.initialize(
+                  getItInstance<FirebaseAuth>().currentUser!.uid))),
         BlocProvider(
           create: (context) => getItInstance<ConversationsSearchBloc>(),
         ),

@@ -13,6 +13,7 @@ class DefaultConversationsPage extends StatefulWidget {
   final MessageBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
+  final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onOpenUserProfile;
   final Function(Conversation)? onShowGroupInfo;
 
@@ -30,6 +31,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.chatBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
+    required this.updateGroupConversationTimestamp,
     this.onOpenUserProfile,
     this.onShowGroupInfo,
     this.getUserAvatar,
@@ -45,18 +47,30 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     with AutomaticKeepAliveClientMixin {
   final _scrollController = ScrollController();
 
-  void _openConversation(ConversationItem conversationItem) => openConversation(
-        context,
-        conversationItem: conversationItem,
-        fileUploadRepository: widget.fileUploadRepository,
-        generateConversationBloc: widget.generateConversationBloc,
-        generateConversationSearchBloc: widget.generateConversationSearchBloc,
-        searchAppBarStyle: widget.searchAppBarStyle,
-        chatBubbleStyle: widget.chatBubbleStyle,
-        conversationStyle: widget.conversationStyle,
-        bottomBarStyle: widget.bottomBarStyle,
-        onAppbarTap: widget.onShowGroupInfo,
-      );
+  void _openConversation(ConversationItem conversationItem) {
+    DateTime? timestamp;
+    if (conversationItem.conversation.isGroupChat) {}
+    final timestampsState =
+        context.read<GroupConversationTimestampsBloc>().state;
+    timestamp = timestampsState.maybeMap(
+        orElse: () => null,
+        loaded: (loadedState) =>
+            loadedState.timestampMap[conversationItem.conversation.id]);
+    openConversation(
+      context,
+      conversationItem: conversationItem,
+      updateGroupConversationTimestamp: widget.updateGroupConversationTimestamp,
+      groupChatLastSeenTimestamp: timestamp,
+      fileUploadRepository: widget.fileUploadRepository,
+      generateConversationBloc: widget.generateConversationBloc,
+      generateConversationSearchBloc: widget.generateConversationSearchBloc,
+      searchAppBarStyle: widget.searchAppBarStyle,
+      chatBubbleStyle: widget.chatBubbleStyle,
+      conversationStyle: widget.conversationStyle,
+      bottomBarStyle: widget.bottomBarStyle,
+      onAppbarTap: widget.onShowGroupInfo,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +148,18 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                             .conversation.thumbnail),
                                 onOpenConversation: () => openConversation(
                                   context,
+                                  groupChatLastSeenTimestamp: context
+                                      .read<GroupConversationTimestampsBloc>()
+                                      .state
+                                      .maybeMap(
+                                          orElse: () => null,
+                                          loaded: (loadedState) =>
+                                              loadedState.timestampMap[
+                                                  conversationItem
+                                                      .conversation.id]),
                                   conversationItem: conversationItem,
+                                  updateGroupConversationTimestamp:
+                                      widget.updateGroupConversationTimestamp,
                                   fileUploadRepository:
                                       widget.fileUploadRepository,
                                   generateConversationBloc:

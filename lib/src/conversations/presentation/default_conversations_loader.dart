@@ -18,7 +18,7 @@ class DefaultConversationsLoader extends StatelessWidget {
   final Function(Conversation)? onAppbarTap;
   final Widget Function(String?)? getUserAvatar;
 
-  final void Function(BuildContext, {required TimestampMap timestamps})
+  final void Function(BuildContext, {required Map<String, DateTime> timestamps})
       initializeConversationsBloc;
 
   final ConversationCreationData Function()? getConversationCreationData;
@@ -39,6 +39,16 @@ class DefaultConversationsLoader extends StatelessWidget {
     this.getUserAvatar,
     this.getConversationCreationData,
   }) : super(key: key);
+
+  void _updateGroupConversationTimestamp(
+    BuildContext context, {
+    required String conversationId,
+    required DateTime timestamp,
+  }) {
+    context.read<GroupConversationTimestampsBloc>().add(
+        GroupConversationTimestampsEvent.setNewTimestamp(
+            conversationId: conversationId, timestamp: timestamp));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +93,9 @@ class DefaultConversationsLoader extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: DefaultConversationsPage(
                     fileUploadRepository: fileUploadRepository,
+                    updateGroupConversationTimestamp: (id, timestamp) =>
+                        _updateGroupConversationTimestamp(context,
+                            conversationId: id, timestamp: timestamp),
                     generateConversationBloc: generateConversationBloc,
                     generateConversationSearchBloc:
                         generateConversationSearchBloc,
@@ -105,8 +118,21 @@ class DefaultConversationsLoader extends StatelessWidget {
                         return Flexible(
                           child: DefaultConversationLoader(
                             key: Key(state.conversationItem!.conversation.id),
+                            updateGroupConversationTimestamp: (id, timestamp) =>
+                                _updateGroupConversationTimestamp(context,
+                                    conversationId: id, timestamp: timestamp),
                             fileUploadRepository: fileUploadRepository,
                             conversationBloc: generateConversationBloc,
+                            groupConversationLastSeenTimestamp: context
+                                .read<GroupConversationTimestampsBloc>()
+                                .state
+                                .maybeMap(
+                                    orElse: () => null,
+                                    loaded: (loadedState) =>
+                                        loadedState.timestampMap[state
+                                            .conversationItem
+                                            ?.conversation
+                                            .id]),
                             conversationSearchBloc:
                                 generateConversationSearchBloc,
                             chatBubbleStyle: chatBubbleStyle,

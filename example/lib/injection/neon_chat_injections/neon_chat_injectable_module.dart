@@ -113,9 +113,9 @@ abstract class NEONChatInjectableModule {
   CurrentConversationCubit get currentConversationCubit =>
       CurrentConversationCubit();
 
-  @lazySingleton
-  GetAllGroupTimestampsUC get getAllGroupTimestampsUC =>
-      GetAllGroupTimestampsUC(neonChatCacheService);
+  // @lazySingleton
+  // GetAllGroupTimestampsUC get getAllGroupTimestampsUC =>
+  //     GetAllGroupTimestampsUC(neonChatCacheService);
 
   @lazySingleton
   ConversationsBloc get conversationsBloc => ConversationsBloc(
@@ -131,10 +131,10 @@ abstract class NEONChatInjectableModule {
   ConversationsSearchBloc get conversationsSearchBloc =>
       ConversationsSearchBloc();
 
-  @lazySingleton
-  NeonChatCache get neonChatCache => NeonChatCache();
+  // @lazySingleton
+  // NeonChatCache get neonChatCache => NeonChatCache();
 
-  @lazySingleton
-  NeonChatCacheService get neonChatCacheService =>
-      NeonChatCacheService(neonChatCache, firebaseUserProfileRepository);
+  // @lazySingleton
+  // NeonChatCacheService get neonChatCacheService =>
+  //     NeonChatCacheService(neonChatCache, firebaseUserProfileRepository);
 }

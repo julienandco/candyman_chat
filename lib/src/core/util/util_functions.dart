@@ -24,6 +24,8 @@ void openConversation(
   required FileUploadRepository fileUploadRepository,
   required ConversationBloc Function() generateConversationBloc,
   required ConversationSearchBloc Function() generateConversationSearchBloc,
+  required Function(String, DateTime) updateGroupConversationTimestamp,
+  DateTime? groupChatLastSeenTimestamp,
   SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
   MessageBubbleStyle chatBubbleStyle = const MessageBubbleStyle(),
   ConversationStyle conversationStyle = const ConversationStyle(),
@@ -35,6 +37,8 @@ void openConversation(
     context,
     CupertinoPageRoute(
       builder: (context) => DefaultConversationLoader(
+        groupConversationLastSeenTimestamp: groupChatLastSeenTimestamp,
+        updateGroupConversationTimestamp: updateGroupConversationTimestamp,
         fileUploadRepository: fileUploadRepository,
         conversationBloc: generateConversationBloc,
         conversationSearchBloc: generateConversationSearchBloc,

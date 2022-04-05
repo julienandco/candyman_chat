@@ -14,6 +14,8 @@ class DefaultConversationPage extends StatefulWidget {
   final SearchAppBarStyle defaultSearchAppBarStyle;
   final BottomBarStyle defaultBottomBarStyle;
   final GetUploadUrlUC getUploadUrlUC;
+  final DateTime? groupConversationLastSeenTimestamp;
+  final Function(DateTime) updateTimestampForConversation;
   final Function(Conversation)? onAppbarTap;
 
   const DefaultConversationPage({
@@ -24,6 +26,8 @@ class DefaultConversationPage extends StatefulWidget {
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
     required this.getUploadUrlUC,
+    required this.updateTimestampForConversation,
+    this.groupConversationLastSeenTimestamp,
     this.onAppbarTap,
   }) : super(key: key);
 
@@ -56,13 +60,6 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
     }
     _isInit = false;
     super.didChangeDependencies();
-  }
-
-  void _updateTimestampForGroupConversation(
-      String conversationId, DateTime timestamp) {
-    context.read<GroupConversationTimestampsBloc>().add(
-        GroupConversationTimestampsEvent.setNewTimestamp(
-            conversationId: conversationId, timestamp: timestamp));
   }
 
   @override
@@ -109,17 +106,9 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                             widget.defaultConversationStyle.messageListPadding,
                         sliver: MessageList(
                           updateLastSeenTimestampForConversation: (timestamp) =>
-                              _updateTimestampForGroupConversation(
-                                  loadedConversationState.conversation.id,
-                                  timestamp),
-                          conversationLastSeenTimestamp: context
-                              .read<GroupConversationTimestampsBloc>()
-                              .state
-                              .map(
-                                  uninitialized: (_) => null,
-                                  loaded: (loadedState) => loadedState
-                                          .timestampMap.timestamps[
-                                      loadedConversationState.conversation.id]),
+                              widget.updateTimestampForConversation(timestamp),
+                          conversationLastSeenTimestamp:
+                              widget.groupConversationLastSeenTimestamp,
                           getUploadUrlUC: widget.getUploadUrlUC,
                           defaultChatBubbleStyle:
                               widget.defaultMessageBubbleStyle,

@@ -14,10 +14,13 @@ class DefaultConversationLoader extends StatelessWidget {
   final ConversationItem conversationItem;
   final bool showCloseButton;
 
+  final DateTime? groupConversationLastSeenTimestamp;
+
   final ConversationStyle conversationStyle;
   final MessageBubbleStyle chatBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
+  final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onAppbarTap;
 
   const DefaultConversationLoader({
@@ -30,6 +33,8 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.chatBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
+    required this.updateGroupConversationTimestamp,
+    this.groupConversationLastSeenTimestamp,
     this.showCloseButton = true,
     this.onAppbarTap,
   }) : super(key: key);
@@ -50,6 +55,10 @@ class DefaultConversationLoader extends StatelessWidget {
       ],
       child: DefaultConversationPage(
         getUploadUrlUC: GetUploadUrlUC(fileUploadRepository),
+        updateTimestampForConversation: (timestamp) =>
+            updateGroupConversationTimestamp(
+                conversationItem.conversation.id, timestamp),
+        groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
         defaultMessageBubbleStyle: chatBubbleStyle,
         defaultConversationStyle: conversationStyle,
         defaultSearchAppBarStyle: searchAppBarStyle,

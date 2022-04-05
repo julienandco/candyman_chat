@@ -51,8 +51,6 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => nEONChatInjectableModule.firebaseKeys);
   gh.lazySingleton<_i3.FirebaseUserProfileRepository>(
       () => nEONChatInjectableModule.firebaseUserProfileRepository);
-  gh.lazySingleton<_i3.GetAllGroupTimestampsUC>(
-      () => nEONChatInjectableModule.getAllGroupTimestampsUC);
   gh.lazySingleton<_i3.GetFirebaseUserUC>(
       () => nEONChatInjectableModule.getFirebaseUserUC);
   gh.lazySingleton<_i3.HideConversationUC>(
@@ -69,10 +67,6 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => nEONChatInjectableModule.markGroupMessageAsSeenUC);
   gh.lazySingleton<_i3.MarkMessageAsSeenUC>(
       () => nEONChatInjectableModule.markAsSeenUC);
-  gh.lazySingleton<_i3.NeonChatCache>(
-      () => nEONChatInjectableModule.neonChatCache);
-  gh.lazySingleton<_i3.NeonChatCacheService>(
-      () => nEONChatInjectableModule.neonChatCacheService);
   gh.lazySingleton<_i3.RemoteDataSource>(
       () => remoteDataBaseInjectableModule.remoteDataSource);
   gh.lazySingleton<_i3.SendFileMessageUC>(
