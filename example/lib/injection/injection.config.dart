@@ -63,8 +63,6 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => nEONChatInjectableModule.initializeConversationStreamUC);
   gh.lazySingleton<_i3.InitializeConversationsStreamUC>(
       () => nEONChatInjectableModule.initializeConversationsStreamUC);
-  gh.lazySingleton<_i3.MarkGroupMessageAsSeenUC>(
-      () => nEONChatInjectableModule.markGroupMessageAsSeenUC);
   gh.lazySingleton<_i3.MarkMessageAsSeenUC>(
       () => nEONChatInjectableModule.markAsSeenUC);
   gh.lazySingleton<_i3.RemoteDataSource>(
