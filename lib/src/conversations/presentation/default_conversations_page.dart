@@ -50,7 +50,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
   void _openConversation(ConversationItem conversationItem) {
     final timestamp = context
         .read<GroupConversationTimestampsBloc>()
-        .getLastSeenTimestampForConversation(conversationItem.conversation);
+        .getLastSeenTimestampForConversationItem(conversationItem);
     openConversation(
       context,
       conversationItem: conversationItem,
@@ -145,8 +145,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   context,
                                   groupChatLastSeenTimestamp: context
                                       .read<GroupConversationTimestampsBloc>()
-                                      .getLastSeenTimestampForConversation(
-                                          conversationItem.conversation),
+                                      .getLastSeenTimestampForConversationItem(
+                                          conversationItem),
                                   conversationItem: conversationItem,
                                   updateGroupConversationTimestamp:
                                       widget.updateGroupConversationTimestamp,

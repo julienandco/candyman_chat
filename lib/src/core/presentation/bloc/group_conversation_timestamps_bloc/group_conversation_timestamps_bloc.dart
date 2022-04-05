@@ -88,16 +88,18 @@ class GroupConversationTimestampsBloc extends Bloc<
               _firebaseSyncIntervalInSeconds &&
           _hadNewChangesSinceLastSync);
 
-  DateTime getLastSeenTimestampForConversation(Conversation conversation) {
+  DateTime getLastSeenTimestampForConversationItem(
+      ConversationItem conversationItem) {
     DateTime timestamp = DateTime.now();
     final currentState = state;
     if (currentState is _$_GroupConversationTimestampsLoaded &&
-        conversation.isGroupChat) {
+        conversationItem.conversation.isGroupChat) {
       final currentTimestampForConversation =
-          currentState.timestampMap[conversation.id];
+          currentState.timestampMap[conversationItem.conversation.id];
       if (currentTimestampForConversation == null) {
         add(GroupConversationTimestampsEvent.setNewTimestamp(
-            conversationId: conversation.id, timestamp: timestamp));
+            conversationId: conversationItem.conversation.id,
+            timestamp: conversationItem.lastMessage.timestamp ?? timestamp));
       } else {
         return currentTimestampForConversation;
       }
