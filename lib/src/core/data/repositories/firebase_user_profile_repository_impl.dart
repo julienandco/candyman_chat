@@ -59,10 +59,13 @@ class FirebaseUserProfileRepositoryImpl
 
           print(data);
           Map<String, DateTime> timestamps = {};
-          for (var key in data.keys) {
-            final timestamp = data[key] as Timestamp;
-            timestamps[key] = timestamp.toDate();
+          if (data != null) {
+            for (var key in data.keys) {
+              final timestamp = data[key] as Timestamp;
+              timestamps[key] = timestamp.toDate();
+            }
           }
+
           print('fetched: $timestamps');
 
           sink.add(timestamps);
