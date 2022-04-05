@@ -22,13 +22,6 @@ class InitializeConversationItemStreamUC {
     required Timestamp timestamp,
     Function? onError,
   }) {
-    //TODOGROUPSEEN
-    //fetch timestamp from cache and if cache flag is empty, get it from firebase
-    // final timestamp = Timestamp.fromDate(DateTime(2022, 03, 30, 15, 45));
-    if (conversation.isGroupChat)
-      print(
-          'TIMESTAMP FOR CONVO ${conversation.id} is:\n${timestamp.toDate()}');
-
     return CombineLatestStream.combine2(
       conversationRepository.getLastMessages(conversation.id),
       conversation.isGroupChat
@@ -50,6 +43,5 @@ class InitializeConversationItemStreamUC {
       onData,
       onError: onError,
     );
-    // }
   }
 }

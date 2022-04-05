@@ -57,11 +57,9 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           add(const _OnData([]));
         }
       },
-      onError: (err) => add(
-        const _OnError(),
-      ),
+      onError: (err) => add(const _OnError()),
     );
-    emit(const ConversationsState.initialized());
+    emit(const ConversationsState.loadSuccess(conversations: []));
   }
 
   void _onFetchChatItems(_FetchChatItems event, Emitter emit) {
@@ -90,7 +88,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
       emit(
         state.maybeMap(
           loadSuccess: (state) {
-            final conversations = state.conversations;
+            final conversations = [...state.conversations];
             conversations.removeWhere((element) =>
                 element.conversation.id ==
                 event.conversationItem.conversation.id);

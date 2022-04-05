@@ -22,10 +22,6 @@ class _$ConversationsStateTearOff {
     return const _Uninitialized();
   }
 
-  _Initialized initialized() {
-    return const _Initialized();
-  }
-
   _LoadInProgress loadInProgress() {
     return const _LoadInProgress();
   }
@@ -49,7 +45,6 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() initialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -58,7 +53,6 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -67,7 +61,6 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -77,7 +70,6 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -86,7 +78,6 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -95,7 +86,6 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -163,7 +153,6 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() initialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -175,7 +164,6 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -187,7 +175,6 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -203,7 +190,6 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -215,7 +201,6 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -227,7 +212,6 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -243,130 +227,6 @@ class _$_Uninitialized extends _Uninitialized {
 abstract class _Uninitialized extends ConversationsState {
   const factory _Uninitialized() = _$_Uninitialized;
   const _Uninitialized._() : super._();
-}
-
-/// @nodoc
-abstract class _$InitializedCopyWith<$Res> {
-  factory _$InitializedCopyWith(
-          _Initialized value, $Res Function(_Initialized) then) =
-      __$InitializedCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$InitializedCopyWithImpl<$Res>
-    extends _$ConversationsStateCopyWithImpl<$Res>
-    implements _$InitializedCopyWith<$Res> {
-  __$InitializedCopyWithImpl(
-      _Initialized _value, $Res Function(_Initialized) _then)
-      : super(_value, (v) => _then(v as _Initialized));
-
-  @override
-  _Initialized get _value => super._value as _Initialized;
-}
-
-/// @nodoc
-
-class _$_Initialized extends _Initialized {
-  const _$_Initialized() : super._();
-
-  @override
-  String toString() {
-    return 'ConversationsState.initialized()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initialized);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() uninitialized,
-    required TResult Function() initialized,
-    required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationItem> conversations) loadSuccess,
-    required TResult Function() loadFailure,
-  }) {
-    return initialized();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? uninitialized,
-    TResult Function()? initialized,
-    TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
-    TResult Function()? loadFailure,
-  }) {
-    return initialized?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? uninitialized,
-    TResult Function()? initialized,
-    TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
-    TResult Function()? loadFailure,
-    required TResult orElse(),
-  }) {
-    if (initialized != null) {
-      return initialized();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadFailure value) loadFailure,
-  }) {
-    return initialized(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
-  }) {
-    return initialized?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
-    required TResult orElse(),
-  }) {
-    if (initialized != null) {
-      return initialized(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initialized extends ConversationsState {
-  const factory _Initialized() = _$_Initialized;
-  const _Initialized._() : super._();
 }
 
 /// @nodoc
@@ -411,7 +271,6 @@ class _$_LoadInProgress extends _LoadInProgress {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() initialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -423,7 +282,6 @@ class _$_LoadInProgress extends _LoadInProgress {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -435,7 +293,6 @@ class _$_LoadInProgress extends _LoadInProgress {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -451,7 +308,6 @@ class _$_LoadInProgress extends _LoadInProgress {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -463,7 +319,6 @@ class _$_LoadInProgress extends _LoadInProgress {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -475,7 +330,6 @@ class _$_LoadInProgress extends _LoadInProgress {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -560,7 +414,6 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() initialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -572,7 +425,6 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -584,7 +436,6 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -600,7 +451,6 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -612,7 +462,6 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -624,7 +473,6 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -690,7 +538,6 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() initialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -702,7 +549,6 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -714,7 +560,6 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? initialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -730,7 +575,6 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -742,7 +586,6 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -754,7 +597,6 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
