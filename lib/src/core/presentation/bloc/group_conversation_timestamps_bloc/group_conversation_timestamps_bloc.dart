@@ -4,8 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
-import 'package:neon_chat/src/core/domain/use_cases/initialize_timestamp_stream_uc.dart';
-import 'package:neon_chat/src/core/domain/use_cases/sync_timestamps_with_firebase_uc.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 part 'group_conversation_timestamps_event.dart';
 part 'group_conversation_timestamps_state.dart';
@@ -13,7 +12,6 @@ part 'group_conversation_timestamps_bloc.freezed.dart';
 
 class GroupConversationTimestampsBloc extends Bloc<
     GroupConversationTimestampsEvent, GroupConversationTimestampsState> {
-  // final GetAllGroupTimestampsUC getAllTimestampsUC;
   final InitializeTimestampStreamUC initStreamUC;
   final SyncTimestampsWithFirebaseUC syncTimestampsWithFirebaseUC;
   StreamSubscription<Map<String, DateTime>>? _timestampsStream;
@@ -31,11 +29,12 @@ class GroupConversationTimestampsBloc extends Bloc<
   GroupConversationTimestampsBloc({
     required this.initStreamUC,
     required this.syncTimestampsWithFirebaseUC,
-    // required this.getAllTimestampsUC,
   }) : super(const _Uninitialized()) {
     on<_InitializeTimestamps>(_initializeGroupConversationTimestamps);
     on<_OnDataReceived>(_onDataReceived);
-    on<_SetNewTimestampForConversation>(_setNewTimestampForConversation);
+    on<_SetNewTimestampForConversation>(
+      _setNewTimestampForConversation,
+    );
 
     _timer = Timer.periodic(Duration(seconds: _firebaseSyncIntervalInSeconds),
         (Timer t) {
