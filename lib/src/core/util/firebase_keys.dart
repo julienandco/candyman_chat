@@ -36,6 +36,10 @@ class FirebaseKeys {
   final String usersUserNameKey = 'name';
   final String usersGroupMessageSeenKey = 'groupMessageSeenTimestamps';
 
+  // groupMessageLastSeenTimestamps
+  final String groupMessageTimestampsLastUpdatedKey = 'lastUpdated';
+  final String groupMessageTimestampsKey = 'timestamps';
+
   const FirebaseKeys({
     this.environment = FirebaseEnvironment.staging,
     this.stagingCollectionName = 'staging',

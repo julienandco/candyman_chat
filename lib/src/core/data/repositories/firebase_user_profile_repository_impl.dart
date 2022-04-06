@@ -58,8 +58,9 @@ class FirebaseUserProfileRepositoryImpl
 
           Map<String, DateTime> timestamps = {};
           if (data != null) {
-            for (var key in data.keys) {
-              final timestamp = data[key] as Timestamp;
+            final timestampData = data[firebaseKeys.groupMessageTimestampsKey];
+            for (var key in timestampData.keys) {
+              final timestamp = timestampData[key] as Timestamp;
               timestamps[key] = timestamp.toDate();
             }
           }
@@ -80,8 +81,16 @@ class FirebaseUserProfileRepositoryImpl
     try {
       final doc = _users.doc(userId);
 
+      //TODOFIREBASEKEYS
+
+      Map<String, dynamic> timestampsInfo = {
+        firebaseKeys.groupMessageTimestampsLastUpdatedKey:
+            FieldValue.serverTimestamp(),
+        firebaseKeys.groupMessageTimestampsKey: timestamps,
+      };
+
       await doc.update({
-        firebaseKeys.usersGroupMessageSeenKey: timestamps,
+        firebaseKeys.usersGroupMessageSeenKey: timestampsInfo,
       });
 
       log('user group conversation timestamps updated: $timestamps',
