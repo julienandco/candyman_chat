@@ -12,7 +12,7 @@ abstract class FileUploadRepository {
 
   Future<Either<Failure, Success>> deleteFileWithId(String fileId);
   Future<void> uploadFileToMessage({
-    required ChatUploadFile file,
+    required ConversationUploadFile file,
     required String conversationId,
     required String messageId,
   });

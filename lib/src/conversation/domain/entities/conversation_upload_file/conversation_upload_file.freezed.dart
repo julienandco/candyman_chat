@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'chat_upload_file.dart';
+part of 'conversation_upload_file.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,17 +15,17 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$ChatUploadFileTearOff {
-  const _$ChatUploadFileTearOff();
+class _$ConversationUploadFileTearOff {
+  const _$ConversationUploadFileTearOff();
 
-  _ChatUploadFile call(
+  _ConversationUploadFile call(
       {required String messageId,
       required String conversationID,
       required String filePath,
-      required ChatUploadFileStatus status,
+      required ConversationUploadFileStatus status,
       int uploadProgress = 0,
       PlatformFile? platformFile}) {
-    return _ChatUploadFile(
+    return _ConversationUploadFile(
       messageId: messageId,
       conversationID: conversationID,
       filePath: filePath,
@@ -37,44 +37,44 @@ class _$ChatUploadFileTearOff {
 }
 
 /// @nodoc
-const $ChatUploadFile = _$ChatUploadFileTearOff();
+const $ConversationUploadFile = _$ConversationUploadFileTearOff();
 
 /// @nodoc
-mixin _$ChatUploadFile {
+mixin _$ConversationUploadFile {
   String get messageId => throw _privateConstructorUsedError;
   String get conversationID => throw _privateConstructorUsedError;
   String get filePath => throw _privateConstructorUsedError;
-  ChatUploadFileStatus get status => throw _privateConstructorUsedError;
+  ConversationUploadFileStatus get status => throw _privateConstructorUsedError;
   int get uploadProgress => throw _privateConstructorUsedError;
   PlatformFile? get platformFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ChatUploadFileCopyWith<ChatUploadFile> get copyWith =>
+  $ConversationUploadFileCopyWith<ConversationUploadFile> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChatUploadFileCopyWith<$Res> {
-  factory $ChatUploadFileCopyWith(
-          ChatUploadFile value, $Res Function(ChatUploadFile) then) =
-      _$ChatUploadFileCopyWithImpl<$Res>;
+abstract class $ConversationUploadFileCopyWith<$Res> {
+  factory $ConversationUploadFileCopyWith(ConversationUploadFile value,
+          $Res Function(ConversationUploadFile) then) =
+      _$ConversationUploadFileCopyWithImpl<$Res>;
   $Res call(
       {String messageId,
       String conversationID,
       String filePath,
-      ChatUploadFileStatus status,
+      ConversationUploadFileStatus status,
       int uploadProgress,
       PlatformFile? platformFile});
 }
 
 /// @nodoc
-class _$ChatUploadFileCopyWithImpl<$Res>
-    implements $ChatUploadFileCopyWith<$Res> {
-  _$ChatUploadFileCopyWithImpl(this._value, this._then);
+class _$ConversationUploadFileCopyWithImpl<$Res>
+    implements $ConversationUploadFileCopyWith<$Res> {
+  _$ConversationUploadFileCopyWithImpl(this._value, this._then);
 
-  final ChatUploadFile _value;
+  final ConversationUploadFile _value;
   // ignore: unused_field
-  final $Res Function(ChatUploadFile) _then;
+  final $Res Function(ConversationUploadFile) _then;
 
   @override
   $Res call({
@@ -101,7 +101,7 @@ class _$ChatUploadFileCopyWithImpl<$Res>
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as ChatUploadFileStatus,
+              as ConversationUploadFileStatus,
       uploadProgress: uploadProgress == freezed
           ? _value.uploadProgress
           : uploadProgress // ignore: cast_nullable_to_non_nullable
@@ -115,31 +115,31 @@ class _$ChatUploadFileCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ChatUploadFileCopyWith<$Res>
-    implements $ChatUploadFileCopyWith<$Res> {
-  factory _$ChatUploadFileCopyWith(
-          _ChatUploadFile value, $Res Function(_ChatUploadFile) then) =
-      __$ChatUploadFileCopyWithImpl<$Res>;
+abstract class _$ConversationUploadFileCopyWith<$Res>
+    implements $ConversationUploadFileCopyWith<$Res> {
+  factory _$ConversationUploadFileCopyWith(_ConversationUploadFile value,
+          $Res Function(_ConversationUploadFile) then) =
+      __$ConversationUploadFileCopyWithImpl<$Res>;
   @override
   $Res call(
       {String messageId,
       String conversationID,
       String filePath,
-      ChatUploadFileStatus status,
+      ConversationUploadFileStatus status,
       int uploadProgress,
       PlatformFile? platformFile});
 }
 
 /// @nodoc
-class __$ChatUploadFileCopyWithImpl<$Res>
-    extends _$ChatUploadFileCopyWithImpl<$Res>
-    implements _$ChatUploadFileCopyWith<$Res> {
-  __$ChatUploadFileCopyWithImpl(
-      _ChatUploadFile _value, $Res Function(_ChatUploadFile) _then)
-      : super(_value, (v) => _then(v as _ChatUploadFile));
+class __$ConversationUploadFileCopyWithImpl<$Res>
+    extends _$ConversationUploadFileCopyWithImpl<$Res>
+    implements _$ConversationUploadFileCopyWith<$Res> {
+  __$ConversationUploadFileCopyWithImpl(_ConversationUploadFile _value,
+      $Res Function(_ConversationUploadFile) _then)
+      : super(_value, (v) => _then(v as _ConversationUploadFile));
 
   @override
-  _ChatUploadFile get _value => super._value as _ChatUploadFile;
+  _ConversationUploadFile get _value => super._value as _ConversationUploadFile;
 
   @override
   $Res call({
@@ -150,7 +150,7 @@ class __$ChatUploadFileCopyWithImpl<$Res>
     Object? uploadProgress = freezed,
     Object? platformFile = freezed,
   }) {
-    return _then(_ChatUploadFile(
+    return _then(_ConversationUploadFile(
       messageId: messageId == freezed
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
@@ -166,7 +166,7 @@ class __$ChatUploadFileCopyWithImpl<$Res>
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as ChatUploadFileStatus,
+              as ConversationUploadFileStatus,
       uploadProgress: uploadProgress == freezed
           ? _value.uploadProgress
           : uploadProgress // ignore: cast_nullable_to_non_nullable
@@ -181,8 +181,8 @@ class __$ChatUploadFileCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChatUploadFile implements _ChatUploadFile {
-  _$_ChatUploadFile(
+class _$_ConversationUploadFile implements _ConversationUploadFile {
+  _$_ConversationUploadFile(
       {required this.messageId,
       required this.conversationID,
       required this.filePath,
@@ -197,7 +197,7 @@ class _$_ChatUploadFile implements _ChatUploadFile {
   @override
   final String filePath;
   @override
-  final ChatUploadFileStatus status;
+  final ConversationUploadFileStatus status;
   @JsonKey()
   @override
   final int uploadProgress;
@@ -206,14 +206,14 @@ class _$_ChatUploadFile implements _ChatUploadFile {
 
   @override
   String toString() {
-    return 'ChatUploadFile(messageId: $messageId, conversationID: $conversationID, filePath: $filePath, status: $status, uploadProgress: $uploadProgress, platformFile: $platformFile)';
+    return 'ConversationUploadFile(messageId: $messageId, conversationID: $conversationID, filePath: $filePath, status: $status, uploadProgress: $uploadProgress, platformFile: $platformFile)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ChatUploadFile &&
+            other is _ConversationUploadFile &&
             const DeepCollectionEquality().equals(other.messageId, messageId) &&
             const DeepCollectionEquality()
                 .equals(other.conversationID, conversationID) &&
@@ -237,18 +237,19 @@ class _$_ChatUploadFile implements _ChatUploadFile {
 
   @JsonKey(ignore: true)
   @override
-  _$ChatUploadFileCopyWith<_ChatUploadFile> get copyWith =>
-      __$ChatUploadFileCopyWithImpl<_ChatUploadFile>(this, _$identity);
+  _$ConversationUploadFileCopyWith<_ConversationUploadFile> get copyWith =>
+      __$ConversationUploadFileCopyWithImpl<_ConversationUploadFile>(
+          this, _$identity);
 }
 
-abstract class _ChatUploadFile implements ChatUploadFile {
-  factory _ChatUploadFile(
+abstract class _ConversationUploadFile implements ConversationUploadFile {
+  factory _ConversationUploadFile(
       {required String messageId,
       required String conversationID,
       required String filePath,
-      required ChatUploadFileStatus status,
+      required ConversationUploadFileStatus status,
       int uploadProgress,
-      PlatformFile? platformFile}) = _$_ChatUploadFile;
+      PlatformFile? platformFile}) = _$_ConversationUploadFile;
 
   @override
   String get messageId;
@@ -257,13 +258,13 @@ abstract class _ChatUploadFile implements ChatUploadFile {
   @override
   String get filePath;
   @override
-  ChatUploadFileStatus get status;
+  ConversationUploadFileStatus get status;
   @override
   int get uploadProgress;
   @override
   PlatformFile? get platformFile;
   @override
   @JsonKey(ignore: true)
-  _$ChatUploadFileCopyWith<_ChatUploadFile> get copyWith =>
+  _$ConversationUploadFileCopyWith<_ConversationUploadFile> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -28,7 +28,7 @@ class _$ConversationTearOff {
       String? groupPicture,
       @MyFirebaseUserListConverter()
           required List<FirebaseUser> conversationMembers,
-      required bool isGroupChat,
+      required bool isGroupConversation,
       @MyDateTimeConverter()
           DateTime? createdAt,
       List<String> hiddenFrom = const []}) {
@@ -37,7 +37,7 @@ class _$ConversationTearOff {
       groupName: groupName,
       groupPicture: groupPicture,
       conversationMembers: conversationMembers,
-      isGroupChat: isGroupChat,
+      isGroupConversation: isGroupConversation,
       createdAt: createdAt,
       hiddenFrom: hiddenFrom,
     );
@@ -56,22 +56,25 @@ mixin _$Conversation {
   String get id => throw _privateConstructorUsedError;
 
   ///
-  /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+  /// Is null for a 1-on-1 conversation and otherwise the name of the group
+  /// conversation.
   ///
   String? get groupName => throw _privateConstructorUsedError;
 
   ///
-  /// Is null for a 1-on-1 chat and otherwise the picture of the group chat.
+  /// Is null for a 1-on-1 conversation and otherwise the picture of the
+  /// group conversation.
   ///
   String? get groupPicture => throw _privateConstructorUsedError;
 
   ///
-  /// Has two elements for a 1-on-1 chat and n elements for a group chat.
+  /// Has two elements for a 1-on-1 conversation and n elements for a group
+  /// conversation.
   ///
   @MyFirebaseUserListConverter()
   List<FirebaseUser> get conversationMembers =>
       throw _privateConstructorUsedError;
-  bool get isGroupChat => throw _privateConstructorUsedError;
+  bool get isGroupConversation => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   List<String> get hiddenFrom => throw _privateConstructorUsedError;
@@ -92,7 +95,7 @@ abstract class $ConversationCopyWith<$Res> {
       String? groupName,
       String? groupPicture,
       @MyFirebaseUserListConverter() List<FirebaseUser> conversationMembers,
-      bool isGroupChat,
+      bool isGroupConversation,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
@@ -111,7 +114,7 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
     Object? groupName = freezed,
     Object? groupPicture = freezed,
     Object? conversationMembers = freezed,
-    Object? isGroupChat = freezed,
+    Object? isGroupConversation = freezed,
     Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
@@ -132,9 +135,9 @@ class _$ConversationCopyWithImpl<$Res> implements $ConversationCopyWith<$Res> {
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
               as List<FirebaseUser>,
-      isGroupChat: isGroupChat == freezed
-          ? _value.isGroupChat
-          : isGroupChat // ignore: cast_nullable_to_non_nullable
+      isGroupConversation: isGroupConversation == freezed
+          ? _value.isGroupConversation
+          : isGroupConversation // ignore: cast_nullable_to_non_nullable
               as bool,
       createdAt: createdAt == freezed
           ? _value.createdAt
@@ -160,7 +163,7 @@ abstract class _$ConversationCopyWith<$Res>
       String? groupName,
       String? groupPicture,
       @MyFirebaseUserListConverter() List<FirebaseUser> conversationMembers,
-      bool isGroupChat,
+      bool isGroupConversation,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
@@ -181,7 +184,7 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
     Object? groupName = freezed,
     Object? groupPicture = freezed,
     Object? conversationMembers = freezed,
-    Object? isGroupChat = freezed,
+    Object? isGroupConversation = freezed,
     Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
@@ -202,9 +205,9 @@ class __$ConversationCopyWithImpl<$Res> extends _$ConversationCopyWithImpl<$Res>
           ? _value.conversationMembers
           : conversationMembers // ignore: cast_nullable_to_non_nullable
               as List<FirebaseUser>,
-      isGroupChat: isGroupChat == freezed
-          ? _value.isGroupChat
-          : isGroupChat // ignore: cast_nullable_to_non_nullable
+      isGroupConversation: isGroupConversation == freezed
+          ? _value.isGroupConversation
+          : isGroupConversation // ignore: cast_nullable_to_non_nullable
               as bool,
       createdAt: createdAt == freezed
           ? _value.createdAt
@@ -226,7 +229,7 @@ class _$_Conversation extends _Conversation {
       this.groupName,
       this.groupPicture,
       @MyFirebaseUserListConverter() required this.conversationMembers,
-      required this.isGroupChat,
+      required this.isGroupConversation,
       @MyDateTimeConverter() this.createdAt,
       this.hiddenFrom = const []})
       : super._();
@@ -239,24 +242,27 @@ class _$_Conversation extends _Conversation {
   @override
 
   ///
-  /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+  /// Is null for a 1-on-1 conversation and otherwise the name of the group
+  /// conversation.
   ///
   final String? groupName;
   @override
 
   ///
-  /// Is null for a 1-on-1 chat and otherwise the picture of the group chat.
+  /// Is null for a 1-on-1 conversation and otherwise the picture of the
+  /// group conversation.
   ///
   final String? groupPicture;
   @override
 
   ///
-  /// Has two elements for a 1-on-1 chat and n elements for a group chat.
+  /// Has two elements for a 1-on-1 conversation and n elements for a group
+  /// conversation.
   ///
   @MyFirebaseUserListConverter()
   final List<FirebaseUser> conversationMembers;
   @override
-  final bool isGroupChat;
+  final bool isGroupConversation;
   @override
   @MyDateTimeConverter()
   final DateTime? createdAt;
@@ -266,7 +272,7 @@ class _$_Conversation extends _Conversation {
 
   @override
   String toString() {
-    return 'Conversation(id: $id, groupName: $groupName, groupPicture: $groupPicture, conversationMembers: $conversationMembers, isGroupChat: $isGroupChat, createdAt: $createdAt, hiddenFrom: $hiddenFrom)';
+    return 'Conversation(id: $id, groupName: $groupName, groupPicture: $groupPicture, conversationMembers: $conversationMembers, isGroupConversation: $isGroupConversation, createdAt: $createdAt, hiddenFrom: $hiddenFrom)';
   }
 
   @override
@@ -281,7 +287,7 @@ class _$_Conversation extends _Conversation {
             const DeepCollectionEquality()
                 .equals(other.conversationMembers, conversationMembers) &&
             const DeepCollectionEquality()
-                .equals(other.isGroupChat, isGroupChat) &&
+                .equals(other.isGroupConversation, isGroupConversation) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality()
                 .equals(other.hiddenFrom, hiddenFrom));
@@ -294,7 +300,7 @@ class _$_Conversation extends _Conversation {
       const DeepCollectionEquality().hash(groupName),
       const DeepCollectionEquality().hash(groupPicture),
       const DeepCollectionEquality().hash(conversationMembers),
-      const DeepCollectionEquality().hash(isGroupChat),
+      const DeepCollectionEquality().hash(isGroupConversation),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(hiddenFrom));
 
@@ -316,7 +322,7 @@ abstract class _Conversation extends Conversation {
       String? groupPicture,
       @MyFirebaseUserListConverter()
           required List<FirebaseUser> conversationMembers,
-      required bool isGroupChat,
+      required bool isGroupConversation,
       @MyDateTimeConverter()
           DateTime? createdAt,
       List<String> hiddenFrom}) = _$_Conversation;
@@ -330,24 +336,27 @@ abstract class _Conversation extends Conversation {
   @override
 
   ///
-  /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+  /// Is null for a 1-on-1 conversation and otherwise the name of the group
+  /// conversation.
   ///
   String? get groupName;
   @override
 
   ///
-  /// Is null for a 1-on-1 chat and otherwise the picture of the group chat.
+  /// Is null for a 1-on-1 conversation and otherwise the picture of the
+  /// group conversation.
   ///
   String? get groupPicture;
   @override
 
   ///
-  /// Has two elements for a 1-on-1 chat and n elements for a group chat.
+  /// Has two elements for a 1-on-1 conversation and n elements for a group
+  /// conversation.
   ///
   @MyFirebaseUserListConverter()
   List<FirebaseUser> get conversationMembers;
   @override
-  bool get isGroupChat;
+  bool get isGroupConversation;
   @override
   @MyDateTimeConverter()
   DateTime? get createdAt;

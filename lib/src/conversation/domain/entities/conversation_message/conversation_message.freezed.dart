@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'chat_message.dart';
+part of 'conversation_message.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,28 +14,32 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) {
-  return _ChatMessage.fromJson(json);
+ConversationMessage _$ConversationMessageFromJson(Map<String, dynamic> json) {
+  return _ConversationMessage.fromJson(json);
 }
 
 /// @nodoc
-class _$ChatMessageTearOff {
-  const _$ChatMessageTearOff();
+class _$ConversationMessageTearOff {
+  const _$ConversationMessageTearOff();
 
-  _ChatMessage call(
+  _ConversationMessage call(
       {String id = '',
       String? text,
-      @MyLatLngConverter() LatLng? location,
+      @MyLatLngConverter()
+          LatLng? location,
       bool seen = false,
       required String senderId,
-      @MyDateTimeConverter() DateTime? timestamp,
+      @MyDateTimeConverter()
+          DateTime? timestamp,
       Upload? upload,
-      @MyChatMessageTypeConverter() required ChatMessageType type,
+      @MyConversationMessageTypeConverter()
+          required ConversationMessageType type,
       bool doneUpload = false,
       String? filePath,
-      @MyAudioDurationConverter() Duration? audioDuration,
+      @MyAudioDurationConverter()
+          Duration? audioDuration,
       List<String> hiddenFrom = const []}) {
-    return _ChatMessage(
+    return _ConversationMessage(
       id: id,
       text: text,
       location: location,
@@ -51,16 +55,16 @@ class _$ChatMessageTearOff {
     );
   }
 
-  ChatMessage fromJson(Map<String, Object?> json) {
-    return ChatMessage.fromJson(json);
+  ConversationMessage fromJson(Map<String, Object?> json) {
+    return ConversationMessage.fromJson(json);
   }
 }
 
 /// @nodoc
-const $ChatMessage = _$ChatMessageTearOff();
+const $ConversationMessage = _$ConversationMessageTearOff();
 
 /// @nodoc
-mixin _$ChatMessage {
+mixin _$ConversationMessage {
   String get id => throw _privateConstructorUsedError;
   String? get text => throw _privateConstructorUsedError;
   @MyLatLngConverter()
@@ -70,8 +74,8 @@ mixin _$ChatMessage {
   @MyDateTimeConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
   Upload? get upload => throw _privateConstructorUsedError;
-  @MyChatMessageTypeConverter()
-  ChatMessageType get type => throw _privateConstructorUsedError;
+  @MyConversationMessageTypeConverter()
+  ConversationMessageType get type => throw _privateConstructorUsedError;
   bool get doneUpload => throw _privateConstructorUsedError;
   String? get filePath => throw _privateConstructorUsedError;
   @MyAudioDurationConverter()
@@ -80,15 +84,15 @@ mixin _$ChatMessage {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ChatMessageCopyWith<ChatMessage> get copyWith =>
+  $ConversationMessageCopyWith<ConversationMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChatMessageCopyWith<$Res> {
-  factory $ChatMessageCopyWith(
-          ChatMessage value, $Res Function(ChatMessage) then) =
-      _$ChatMessageCopyWithImpl<$Res>;
+abstract class $ConversationMessageCopyWith<$Res> {
+  factory $ConversationMessageCopyWith(
+          ConversationMessage value, $Res Function(ConversationMessage) then) =
+      _$ConversationMessageCopyWithImpl<$Res>;
   $Res call(
       {String id,
       String? text,
@@ -97,7 +101,7 @@ abstract class $ChatMessageCopyWith<$Res> {
       String senderId,
       @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
-      @MyChatMessageTypeConverter() ChatMessageType type,
+      @MyConversationMessageTypeConverter() ConversationMessageType type,
       bool doneUpload,
       String? filePath,
       @MyAudioDurationConverter() Duration? audioDuration,
@@ -107,12 +111,13 @@ abstract class $ChatMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
-  _$ChatMessageCopyWithImpl(this._value, this._then);
+class _$ConversationMessageCopyWithImpl<$Res>
+    implements $ConversationMessageCopyWith<$Res> {
+  _$ConversationMessageCopyWithImpl(this._value, this._then);
 
-  final ChatMessage _value;
+  final ConversationMessage _value;
   // ignore: unused_field
-  final $Res Function(ChatMessage) _then;
+  final $Res Function(ConversationMessage) _then;
 
   @override
   $Res call({
@@ -161,7 +166,7 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as ChatMessageType,
+              as ConversationMessageType,
       doneUpload: doneUpload == freezed
           ? _value.doneUpload
           : doneUpload // ignore: cast_nullable_to_non_nullable
@@ -194,11 +199,11 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ChatMessageCopyWith<$Res>
-    implements $ChatMessageCopyWith<$Res> {
-  factory _$ChatMessageCopyWith(
-          _ChatMessage value, $Res Function(_ChatMessage) then) =
-      __$ChatMessageCopyWithImpl<$Res>;
+abstract class _$ConversationMessageCopyWith<$Res>
+    implements $ConversationMessageCopyWith<$Res> {
+  factory _$ConversationMessageCopyWith(_ConversationMessage value,
+          $Res Function(_ConversationMessage) then) =
+      __$ConversationMessageCopyWithImpl<$Res>;
   @override
   $Res call(
       {String id,
@@ -208,7 +213,7 @@ abstract class _$ChatMessageCopyWith<$Res>
       String senderId,
       @MyDateTimeConverter() DateTime? timestamp,
       Upload? upload,
-      @MyChatMessageTypeConverter() ChatMessageType type,
+      @MyConversationMessageTypeConverter() ConversationMessageType type,
       bool doneUpload,
       String? filePath,
       @MyAudioDurationConverter() Duration? audioDuration,
@@ -219,14 +224,15 @@ abstract class _$ChatMessageCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
-    implements _$ChatMessageCopyWith<$Res> {
-  __$ChatMessageCopyWithImpl(
-      _ChatMessage _value, $Res Function(_ChatMessage) _then)
-      : super(_value, (v) => _then(v as _ChatMessage));
+class __$ConversationMessageCopyWithImpl<$Res>
+    extends _$ConversationMessageCopyWithImpl<$Res>
+    implements _$ConversationMessageCopyWith<$Res> {
+  __$ConversationMessageCopyWithImpl(
+      _ConversationMessage _value, $Res Function(_ConversationMessage) _then)
+      : super(_value, (v) => _then(v as _ConversationMessage));
 
   @override
-  _ChatMessage get _value => super._value as _ChatMessage;
+  _ConversationMessage get _value => super._value as _ConversationMessage;
 
   @override
   $Res call({
@@ -243,7 +249,7 @@ class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
     Object? audioDuration = freezed,
     Object? hiddenFrom = freezed,
   }) {
-    return _then(_ChatMessage(
+    return _then(_ConversationMessage(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -275,7 +281,7 @@ class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as ChatMessageType,
+              as ConversationMessageType,
       doneUpload: doneUpload == freezed
           ? _value.doneUpload
           : doneUpload // ignore: cast_nullable_to_non_nullable
@@ -298,8 +304,8 @@ class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ChatMessage extends _ChatMessage {
-  _$_ChatMessage(
+class _$_ConversationMessage extends _ConversationMessage {
+  _$_ConversationMessage(
       {this.id = '',
       this.text,
       @MyLatLngConverter() this.location,
@@ -307,15 +313,15 @@ class _$_ChatMessage extends _ChatMessage {
       required this.senderId,
       @MyDateTimeConverter() this.timestamp,
       this.upload,
-      @MyChatMessageTypeConverter() required this.type,
+      @MyConversationMessageTypeConverter() required this.type,
       this.doneUpload = false,
       this.filePath,
       @MyAudioDurationConverter() this.audioDuration,
       this.hiddenFrom = const []})
       : super._();
 
-  factory _$_ChatMessage.fromJson(Map<String, dynamic> json) =>
-      _$$_ChatMessageFromJson(json);
+  factory _$_ConversationMessage.fromJson(Map<String, dynamic> json) =>
+      _$$_ConversationMessageFromJson(json);
 
   @JsonKey()
   @override
@@ -336,8 +342,8 @@ class _$_ChatMessage extends _ChatMessage {
   @override
   final Upload? upload;
   @override
-  @MyChatMessageTypeConverter()
-  final ChatMessageType type;
+  @MyConversationMessageTypeConverter()
+  final ConversationMessageType type;
   @JsonKey()
   @override
   final bool doneUpload;
@@ -352,14 +358,14 @@ class _$_ChatMessage extends _ChatMessage {
 
   @override
   String toString() {
-    return 'ChatMessage(id: $id, text: $text, location: $location, seen: $seen, senderId: $senderId, timestamp: $timestamp, upload: $upload, type: $type, doneUpload: $doneUpload, filePath: $filePath, audioDuration: $audioDuration, hiddenFrom: $hiddenFrom)';
+    return 'ConversationMessage(id: $id, text: $text, location: $location, seen: $seen, senderId: $senderId, timestamp: $timestamp, upload: $upload, type: $type, doneUpload: $doneUpload, filePath: $filePath, audioDuration: $audioDuration, hiddenFrom: $hiddenFrom)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ChatMessage &&
+            other is _ConversationMessage &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.text, text) &&
             const DeepCollectionEquality().equals(other.location, location) &&
@@ -395,33 +401,38 @@ class _$_ChatMessage extends _ChatMessage {
 
   @JsonKey(ignore: true)
   @override
-  _$ChatMessageCopyWith<_ChatMessage> get copyWith =>
-      __$ChatMessageCopyWithImpl<_ChatMessage>(this, _$identity);
+  _$ConversationMessageCopyWith<_ConversationMessage> get copyWith =>
+      __$ConversationMessageCopyWithImpl<_ConversationMessage>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChatMessageToJson(this);
+    return _$$_ConversationMessageToJson(this);
   }
 }
 
-abstract class _ChatMessage extends ChatMessage {
-  factory _ChatMessage(
+abstract class _ConversationMessage extends ConversationMessage {
+  factory _ConversationMessage(
       {String id,
       String? text,
-      @MyLatLngConverter() LatLng? location,
+      @MyLatLngConverter()
+          LatLng? location,
       bool seen,
       required String senderId,
-      @MyDateTimeConverter() DateTime? timestamp,
+      @MyDateTimeConverter()
+          DateTime? timestamp,
       Upload? upload,
-      @MyChatMessageTypeConverter() required ChatMessageType type,
+      @MyConversationMessageTypeConverter()
+          required ConversationMessageType type,
       bool doneUpload,
       String? filePath,
-      @MyAudioDurationConverter() Duration? audioDuration,
-      List<String> hiddenFrom}) = _$_ChatMessage;
-  _ChatMessage._() : super._();
+      @MyAudioDurationConverter()
+          Duration? audioDuration,
+      List<String> hiddenFrom}) = _$_ConversationMessage;
+  _ConversationMessage._() : super._();
 
-  factory _ChatMessage.fromJson(Map<String, dynamic> json) =
-      _$_ChatMessage.fromJson;
+  factory _ConversationMessage.fromJson(Map<String, dynamic> json) =
+      _$_ConversationMessage.fromJson;
 
   @override
   String get id;
@@ -440,8 +451,8 @@ abstract class _ChatMessage extends ChatMessage {
   @override
   Upload? get upload;
   @override
-  @MyChatMessageTypeConverter()
-  ChatMessageType get type;
+  @MyConversationMessageTypeConverter()
+  ConversationMessageType get type;
   @override
   bool get doneUpload;
   @override
@@ -453,6 +464,6 @@ abstract class _ChatMessage extends ChatMessage {
   List<String> get hiddenFrom;
   @override
   @JsonKey(ignore: true)
-  _$ChatMessageCopyWith<_ChatMessage> get copyWith =>
+  _$ConversationMessageCopyWith<_ConversationMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }

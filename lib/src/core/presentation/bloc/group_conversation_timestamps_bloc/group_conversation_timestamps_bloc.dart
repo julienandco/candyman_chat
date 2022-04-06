@@ -107,7 +107,7 @@ class GroupConversationTimestampsBloc extends Bloc<
     DateTime timestamp = DateTime.now();
     final currentState = state;
     if (currentState is _$_GroupConversationTimestampsLoaded &&
-        conversationItem.conversation.isGroupChat) {
+        conversationItem.conversation.isGroupConversation) {
       final currentTimestampForConversation =
           currentState.timestampMap[conversationItem.conversation.id];
       if (currentTimestampForConversation == null) {

@@ -113,11 +113,10 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                           conversationLastSeenTimestamp:
                               widget.groupConversationLastSeenTimestamp,
                           getUploadUrlUC: widget.getUploadUrlUC,
-                          defaultChatBubbleStyle:
-                              widget.defaultMessageBubbleStyle,
+                          messageBubbleStyle: widget.defaultMessageBubbleStyle,
                           getAuthorNameForSenderId: (senderId) {
                             if (loadedConversationState
-                                .conversation.isGroupChat) {
+                                .conversation.isGroupConversation) {
                               final author = loadedConversationState
                                   .conversation.conversationMembers
                                   .firstWhere(
@@ -165,8 +164,8 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                                 builder: (context, state) {
                                   return state.maybeMap(
                                     loadSuccess: (state) {
-                                      return ChatBottomBar(
-                                        defaultBottomBarStyle:
+                                      return ConversationBottomBar(
+                                        bottomBarStyle:
                                             widget.defaultBottomBarStyle,
                                       );
                                     },

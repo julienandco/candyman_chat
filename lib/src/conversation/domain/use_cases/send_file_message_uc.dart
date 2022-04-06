@@ -12,14 +12,14 @@ class SendFileMessageUC {
   void call({
     required String conversationId,
     required String senderId,
-    required ChatMessageType type,
+    required ConversationMessageType type,
     required String filePath,
     Duration? duration,
     bool reparseFilePath = false,
   }) {
     //TODO: what do we do in that case?
-    assert(type != ChatMessageType.voice || duration != null);
-    final message = ChatMessage(
+    assert(type != ConversationMessageType.voice || duration != null);
+    final message = ConversationMessage(
       senderId: senderId,
       type: type,
       filePath: filePath,

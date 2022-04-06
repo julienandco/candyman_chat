@@ -11,7 +11,7 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 class ChatVideoPageWeb extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';
 
-  final ChatMessage message;
+  final ConversationMessage message;
   final String? Function(String) getUploadURL;
   final Widget? progressIndicator;
   final TextStyle? labelStyle;

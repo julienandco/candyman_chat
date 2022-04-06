@@ -16,25 +16,25 @@ class SendPlatformFileMessageUC {
     required String senderId,
     required PlatformFile file,
   }) {
-    ChatMessageType type;
+    ConversationMessageType type;
     switch (file.extension) {
       case 'png':
       case 'gif':
       case 'bmp':
       case 'jpeg':
       case 'jpg':
-        type = ChatMessageType.image;
+        type = ConversationMessageType.image;
         break;
       case 'mov':
       case 'mp4':
-        type = ChatMessageType.video;
+        type = ConversationMessageType.video;
         break;
 
       default:
-        type = ChatMessageType.file;
+        type = ConversationMessageType.file;
     }
 
-    final message = ChatMessage(
+    final message = ConversationMessage(
       senderId: senderId,
       type: type,
       filePath: !kIsWeb ? file.path : '',

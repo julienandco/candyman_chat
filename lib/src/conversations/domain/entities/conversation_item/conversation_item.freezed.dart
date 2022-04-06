@@ -20,7 +20,7 @@ class _$ConversationItemTearOff {
 
   _ConversationItem call(
       {required Conversation conversation,
-      required ChatMessage lastMessage,
+      required ConversationMessage lastMessage,
       required int unreadMessagesCount}) {
     return _ConversationItem(
       conversation: conversation,
@@ -36,7 +36,7 @@ const $ConversationItem = _$ConversationItemTearOff();
 /// @nodoc
 mixin _$ConversationItem {
   Conversation get conversation => throw _privateConstructorUsedError;
-  ChatMessage get lastMessage => throw _privateConstructorUsedError;
+  ConversationMessage get lastMessage => throw _privateConstructorUsedError;
   int get unreadMessagesCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -51,11 +51,11 @@ abstract class $ConversationItemCopyWith<$Res> {
       _$ConversationItemCopyWithImpl<$Res>;
   $Res call(
       {Conversation conversation,
-      ChatMessage lastMessage,
+      ConversationMessage lastMessage,
       int unreadMessagesCount});
 
   $ConversationCopyWith<$Res> get conversation;
-  $ChatMessageCopyWith<$Res> get lastMessage;
+  $ConversationMessageCopyWith<$Res> get lastMessage;
 }
 
 /// @nodoc
@@ -81,7 +81,7 @@ class _$ConversationItemCopyWithImpl<$Res>
       lastMessage: lastMessage == freezed
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as ChatMessage,
+              as ConversationMessage,
       unreadMessagesCount: unreadMessagesCount == freezed
           ? _value.unreadMessagesCount
           : unreadMessagesCount // ignore: cast_nullable_to_non_nullable
@@ -97,8 +97,8 @@ class _$ConversationItemCopyWithImpl<$Res>
   }
 
   @override
-  $ChatMessageCopyWith<$Res> get lastMessage {
-    return $ChatMessageCopyWith<$Res>(_value.lastMessage, (value) {
+  $ConversationMessageCopyWith<$Res> get lastMessage {
+    return $ConversationMessageCopyWith<$Res>(_value.lastMessage, (value) {
       return _then(_value.copyWith(lastMessage: value));
     });
   }
@@ -113,13 +113,13 @@ abstract class _$ConversationItemCopyWith<$Res>
   @override
   $Res call(
       {Conversation conversation,
-      ChatMessage lastMessage,
+      ConversationMessage lastMessage,
       int unreadMessagesCount});
 
   @override
   $ConversationCopyWith<$Res> get conversation;
   @override
-  $ChatMessageCopyWith<$Res> get lastMessage;
+  $ConversationMessageCopyWith<$Res> get lastMessage;
 }
 
 /// @nodoc
@@ -147,7 +147,7 @@ class __$ConversationItemCopyWithImpl<$Res>
       lastMessage: lastMessage == freezed
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as ChatMessage,
+              as ConversationMessage,
       unreadMessagesCount: unreadMessagesCount == freezed
           ? _value.unreadMessagesCount
           : unreadMessagesCount // ignore: cast_nullable_to_non_nullable
@@ -167,7 +167,7 @@ class _$_ConversationItem implements _ConversationItem {
   @override
   final Conversation conversation;
   @override
-  final ChatMessage lastMessage;
+  final ConversationMessage lastMessage;
   @override
   final int unreadMessagesCount;
 
@@ -205,13 +205,13 @@ class _$_ConversationItem implements _ConversationItem {
 abstract class _ConversationItem implements ConversationItem {
   factory _ConversationItem(
       {required Conversation conversation,
-      required ChatMessage lastMessage,
+      required ConversationMessage lastMessage,
       required int unreadMessagesCount}) = _$_ConversationItem;
 
   @override
   Conversation get conversation;
   @override
-  ChatMessage get lastMessage;
+  ConversationMessage get lastMessage;
   @override
   int get unreadMessagesCount;
   @override

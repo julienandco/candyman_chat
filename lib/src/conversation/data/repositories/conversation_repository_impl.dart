@@ -21,7 +21,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
             firestore.collection(firebaseKeys.conversationsCollectionKey);
 
   @override
-  Stream<List<ChatMessage>> getMessages(String conversationId) {
+  Stream<List<ConversationMessage>> getMessages(String conversationId) {
     return _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
@@ -29,15 +29,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-          List<ChatMessage>>.fromHandlers(
+          List<ConversationMessage>>.fromHandlers(
         handleData: (QuerySnapshot<Map<String, dynamic>> data,
-            EventSink<List<ChatMessage>> sink) async {
+            EventSink<List<ConversationMessage>> sink) async {
           final snaps = data.docs.map((doc) => doc.data()).toList();
 
-          var messages = List<ChatMessage>.from([]);
+          var messages = List<ConversationMessage>.from([]);
 
           for (var json in snaps) {
-            final message = ChatMessage.fromJson(json);
+            final message = ConversationMessage.fromJson(json);
 
             final userId = firebaseAuth.currentUser?.uid;
 
@@ -51,7 +51,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  void sendMessage(String conversationId, ChatMessage message) async {
+  void sendMessage(String conversationId, ConversationMessage message) async {
     try {
       final doc = _conversations
           .doc(conversationId)
@@ -68,7 +68,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  Stream<ChatMessage> getLastMessages(String conversationId) {
+  Stream<ConversationMessage> getLastMessages(String conversationId) {
     final userId = firebaseAuth.currentUser?.uid;
 
     return _conversations
@@ -80,20 +80,20 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-          ChatMessage>.fromHandlers(
+          ConversationMessage>.fromHandlers(
         handleData: (QuerySnapshot<Map<String, dynamic>> data,
-            EventSink<ChatMessage> sink) async {
+            EventSink<ConversationMessage> sink) async {
           if (data.docs.isNotEmpty) {
             final snap = data.docs.map((doc) => doc.data()).toList().first;
 
-            var message = ChatMessage.fromJson(snap);
+            var message = ConversationMessage.fromJson(snap);
 
             if (message.hiddenFrom.contains(userId)) {
-              message = message.copyWith(type: ChatMessageType.deleted);
+              message = message.copyWith(type: ConversationMessageType.deleted);
             }
             sink.add(message);
           } else {
-            sink.add(ChatMessage.empty());
+            sink.add(ConversationMessage.empty());
           }
         },
       ),
@@ -101,7 +101,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  ChatUploadFile sendFileMessage(String conversationId, ChatMessage message) {
+  ConversationUploadFile sendFileMessage(
+      String conversationId, ConversationMessage message) {
     try {
       final doc = _conversations
           .doc(conversationId)
@@ -110,14 +111,12 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
       doc.set(message.copyWith(doneUpload: false, id: doc.id).toJson());
 
-      //TODO: upload the file somewhere?
-
       log('sent file message', name: '$runtimeType');
-      return ChatUploadFile(
+      return ConversationUploadFile(
         messageId: doc.id,
         conversationID: conversationId,
         filePath: message.filePath!,
-        status: ChatUploadFileStatus.none,
+        status: ConversationUploadFileStatus.none,
       );
     } catch (err) {
       log('$err', name: '$runtimeType');
@@ -126,7 +125,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  void markAsSeen(String conversationId, ChatMessage message) {
+  void markAsSeen(String conversationId, ConversationMessage message) {
     if (!message.isMe && message.doneUpload && !message.seen) {
       _conversations
           .doc(conversationId)
@@ -141,20 +140,21 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  void deleteMessage(String conversationId, ChatMessage message) {
+  void deleteMessage(String conversationId, ConversationMessage message) {
     _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
         .doc(message.id)
         .update(
       {
-        firebaseKeys.messageTypeKey: ChatMessageType.deleted.firebaseKey,
+        firebaseKeys.messageTypeKey:
+            ConversationMessageType.deleted.firebaseKey,
       },
     );
   }
 
   @override
-  void hideMessage(String conversationId, ChatMessage message) {
+  void hideMessage(String conversationId, ConversationMessage message) {
     final userId = firebaseAuth.currentUser?.uid;
 
     _conversations

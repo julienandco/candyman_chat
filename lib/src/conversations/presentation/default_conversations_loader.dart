@@ -11,7 +11,7 @@ class DefaultConversationsLoader extends StatelessWidget {
 
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
-  final MessageBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
   final Function(Conversation)? onOpenUserProfile;
@@ -30,7 +30,7 @@ class DefaultConversationsLoader extends StatelessWidget {
     required this.generateConversationSearchBloc,
     required this.conversationsStyle,
     required this.conversationStyle,
-    required this.chatBubbleStyle,
+    required this.messageBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     required this.initializeConversationsBloc,
@@ -101,7 +101,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                         generateConversationSearchBloc,
                     conversationsStyle: conversationsStyle,
                     conversationStyle: conversationStyle,
-                    chatBubbleStyle: chatBubbleStyle,
+                    messageBubbleStyle: messageBubbleStyle,
                     searchAppBarStyle: searchAppBarStyle,
                     bottomBarStyle: bottomBarStyle,
                     onOpenUserProfile: onOpenUserProfile,
@@ -129,7 +129,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                                     state.conversationItem!),
                             conversationSearchBloc:
                                 generateConversationSearchBloc,
-                            chatBubbleStyle: chatBubbleStyle,
+                            messageBubbleStyle: messageBubbleStyle,
                             conversationStyle: conversationStyle,
                             searchAppBarStyle: searchAppBarStyle,
                             bottomBarStyle: bottomBarStyle,
@@ -141,7 +141,8 @@ class DefaultConversationsLoader extends StatelessWidget {
                       } else {
                         return const Expanded(
                           child: Center(
-                            child: Text('chats'),
+                            child: Text(
+                                'Conversations'), //TODO: get text from outside
                           ),
                         );
                       }

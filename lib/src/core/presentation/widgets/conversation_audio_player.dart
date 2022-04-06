@@ -8,14 +8,14 @@ import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ChatAudioPlayer extends StatefulWidget {
-  final ChatMessage message;
+class ConversationAudioPlayer extends StatefulWidget {
+  final ConversationMessage message;
 
   final AudioPlayerStyle audioPlayerStyle;
 
   final GetUploadUrlUC getUploadUrlUC;
 
-  const ChatAudioPlayer({
+  const ConversationAudioPlayer({
     Key? key,
     required this.message,
     required this.audioPlayerStyle,
@@ -23,10 +23,11 @@ class ChatAudioPlayer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ChatAudioPlayerState createState() => _ChatAudioPlayerState();
+  _ConversationAudioPlayerState createState() =>
+      _ConversationAudioPlayerState();
 }
 
-class _ChatAudioPlayerState extends State<ChatAudioPlayer> {
+class _ConversationAudioPlayerState extends State<ConversationAudioPlayer> {
   final player = AudioPlayer();
 
   @override

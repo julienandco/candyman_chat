@@ -5,23 +5,23 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:neon_chat/src/conversation/data/models/models.dart';
 import 'package:neon_chat/src/core/core.dart';
 
-part 'chat_message.freezed.dart';
-part 'chat_message.g.dart';
+part 'conversation_message.freezed.dart';
+part 'conversation_message.g.dart';
 
-enum ChatMessageType { text, voice, image, video, file, deleted }
+enum ConversationMessageType { text, voice, image, video, file, deleted }
 
-extension ChatMessageTypeStrings on ChatMessageType {
+extension ConversationMessageTypeStrings on ConversationMessageType {
   String get firebaseKey => getFirebaseKey(this);
 
-  // TODO: tranlsate
+  // TODO: translate
   String get displayString => getFirebaseKey(this);
 }
 
 @freezed
-class ChatMessage with _$ChatMessage {
-  const ChatMessage._();
+class ConversationMessage with _$ConversationMessage {
+  const ConversationMessage._();
 
-  factory ChatMessage({
+  factory ConversationMessage({
     @Default('') String id,
     String? text,
     @MyLatLngConverter() LatLng? location,
@@ -29,26 +29,27 @@ class ChatMessage with _$ChatMessage {
     required String senderId,
     @MyDateTimeConverter() DateTime? timestamp,
     Upload? upload,
-    @MyChatMessageTypeConverter() required ChatMessageType type,
+    @MyConversationMessageTypeConverter() required ConversationMessageType type,
     @Default(false) bool doneUpload,
     String? filePath,
     @MyAudioDurationConverter() Duration? audioDuration,
     @Default([]) List<String> hiddenFrom,
-  }) = _ChatMessage;
+  }) = _ConversationMessage;
 
-  factory ChatMessage.empty() => ChatMessage(
+  factory ConversationMessage.empty() => ConversationMessage(
         senderId: '',
         text: '',
         seen: false,
-        type: ChatMessageType.text,
+        type: ConversationMessageType.text,
       );
 
-  factory ChatMessage.fromJson(Map<String, dynamic> json) =>
-      _$ChatMessageFromJson(json);
+  factory ConversationMessage.fromJson(Map<String, dynamic> json) =>
+      _$ConversationMessageFromJson(json);
 
-  bool get isDeleted => type == ChatMessageType.deleted;
+  bool get isDeleted => type == ConversationMessageType.deleted;
 
   String get timestampFormatted => formatDatetime(timestamp);
 
+  //TODO get rid of the instance call
   bool get isMe => FirebaseAuth.instance.currentUser!.uid == senderId;
 }

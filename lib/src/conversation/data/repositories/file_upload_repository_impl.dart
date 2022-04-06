@@ -69,7 +69,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
 
   @override
   Future<void> uploadFileToMessage(
-      {required ChatUploadFile file,
+      {required ConversationUploadFile file,
       required String conversationId,
       required String messageId}) async {
     //TODO: uses presigned urls by default

@@ -6,7 +6,7 @@ class ConversationEvent with _$ConversationEvent {
     required ConversationItem conversationItem,
   }) = _Init;
   const factory ConversationEvent.onData(
-    List<ChatMessage> messages,
+    List<ConversationMessage> messages,
     Conversation conversation,
     String displayName,
   ) = _OnData;
@@ -23,10 +23,11 @@ class ConversationEvent with _$ConversationEvent {
   const factory ConversationEvent.sendFileMessage(PlatformFile file) =
       _SendFileMessage;
 
-  const factory ConversationEvent.markAsSeen(ChatMessage message) = _MarkAsSeen;
+  const factory ConversationEvent.markAsSeen(ConversationMessage message) =
+      _MarkAsSeen;
 
-  const factory ConversationEvent.deleteMessage(ChatMessage message) =
+  const factory ConversationEvent.deleteMessage(ConversationMessage message) =
       _DeleteMessage;
-  const factory ConversationEvent.hideMessage(ChatMessage message) =
+  const factory ConversationEvent.hideMessage(ConversationMessage message) =
       _HideMessage;
 }

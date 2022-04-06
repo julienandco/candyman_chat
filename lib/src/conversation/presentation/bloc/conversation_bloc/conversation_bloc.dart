@@ -18,7 +18,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   String? _conversationId;
 
   final FirebaseAuth firebaseAuth;
-  late final StreamSubscription _chatStream;
+  late final StreamSubscription _conversationStream;
 
   final HideMessageUC hideMessageUC;
   final DeleteMessageUC deleteMessageUC;
@@ -43,10 +43,10 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
         init: (conversationItem) {
           _conversationId = conversationItem.conversation.id;
 
-          _chatStream = initStreamUC(
+          _conversationStream = initStreamUC(
             conversationId: conversationItem.conversation.id,
             combiner: (
-              List<ChatMessage> messages,
+              List<ConversationMessage> messages,
             ) =>
                 _OnData(
               messages,
@@ -69,9 +69,9 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
               if (message.trim().isNotEmpty) {
                 sendTextMessageUC(
                   conversationId: state.conversation.id,
-                  message: ChatMessage(
+                  message: ConversationMessage(
                     senderId: firebaseAuth.currentUser!.uid,
-                    type: ChatMessageType.text,
+                    type: ConversationMessageType.text,
                     text: message,
                   ),
                 );
@@ -86,7 +86,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
               sendFileMessageUC(
                 conversationId: state.conversation.id,
                 senderId: firebaseAuth.currentUser!.uid,
-                type: ChatMessageType.voice,
+                type: ConversationMessageType.voice,
                 filePath: messageString,
                 duration: duration,
                 reparseFilePath: true,
@@ -101,7 +101,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
               sendFileMessageUC(
                 conversationId: state.conversation.id,
                 senderId: firebaseAuth.currentUser!.uid,
-                type: ChatMessageType.image,
+                type: ConversationMessageType.image,
                 filePath: messageString,
               );
             },
@@ -114,7 +114,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
               sendFileMessageUC(
                 conversationId: state.conversation.id,
                 senderId: firebaseAuth.currentUser!.uid,
-                type: ChatMessageType.video,
+                type: ConversationMessageType.video,
                 filePath: messageString,
               );
             },
@@ -124,19 +124,19 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
         sendMultipleFiles: (files) async {
           await state.maybeMap(
             loadSuccess: (state) async {
-              ChatMessageType type;
+              ConversationMessageType type;
 
               for (var asset in files) {
                 final file = await asset.file;
                 switch (asset.type) {
                   case AssetType.image:
-                    type = ChatMessageType.image;
+                    type = ConversationMessageType.image;
                     break;
                   case AssetType.video:
-                    type = ChatMessageType.video;
+                    type = ConversationMessageType.video;
                     break;
                   default:
-                    type = ChatMessageType.file;
+                    type = ConversationMessageType.file;
                 }
 
                 sendFileMessageUC(
@@ -189,7 +189,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
 
   @override
   Future<void> close() {
-    _chatStream.cancel();
+    _conversationStream.cancel();
     return super.close();
   }
 }

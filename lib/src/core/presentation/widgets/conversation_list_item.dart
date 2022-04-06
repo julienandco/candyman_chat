@@ -38,30 +38,31 @@ class _ConversationListItemState extends State<ConversationListItem> {
           widget.conversationListItemStyle.conversationBlockedLabel,
           style: widget.conversationListItemStyle.conversationBlockedLabelStyle,
         );
-      } else if (widget.conversationItem.lastMessage != ChatMessage.empty()) {
+      } else if (widget.conversationItem.lastMessage !=
+          ConversationMessage.empty()) {
         final type = widget.conversationItem.lastMessage.type;
         String text = '';
         switch (type) {
-          case ChatMessageType.text:
+          case ConversationMessageType.text:
             return Text(
               widget.conversationItem.lastMessage.text!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: widget.conversationListItemStyle.subtitleTextStyle,
             );
-          case ChatMessageType.image:
+          case ConversationMessageType.image:
             text += '📷  ';
             break;
-          case ChatMessageType.video:
+          case ConversationMessageType.video:
             text += '📹  ';
             break;
-          case ChatMessageType.voice:
+          case ConversationMessageType.voice:
             text += '🎤  ';
             break;
-          case ChatMessageType.file:
+          case ConversationMessageType.file:
             text += '📁  ';
             break;
-          case ChatMessageType.deleted:
+          case ConversationMessageType.deleted:
             break;
           default:
             return const Text('-');
@@ -75,7 +76,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
       }
     }
 
-    if (widget.conversationItem.lastMessage == ChatMessage.empty()) {
+    if (widget.conversationItem.lastMessage == ConversationMessage.empty()) {
       return const SizedBox();
     } else {
       return FocusedMenuHolder(
@@ -180,7 +181,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
                             ),
                             Text(
                               widget.conversationItem.lastMessage !=
-                                      ChatMessage.empty()
+                                      ConversationMessage.empty()
                                   ? widget.conversationItem.lastMessage
                                       .timestampFormatted
                                   : '',

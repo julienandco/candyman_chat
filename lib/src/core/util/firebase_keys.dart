@@ -77,19 +77,19 @@ class FirebaseKeys {
   }
 }
 
-String getFirebaseKey(ChatMessageType type) {
+String getFirebaseKey(ConversationMessageType type) {
   switch (type) {
-    case ChatMessageType.text:
+    case ConversationMessageType.text:
       return 'text';
-    case ChatMessageType.voice:
+    case ConversationMessageType.voice:
       return 'voice';
-    case ChatMessageType.image:
+    case ConversationMessageType.image:
       return 'image';
-    case ChatMessageType.video:
+    case ConversationMessageType.video:
       return 'video';
-    case ChatMessageType.file:
+    case ConversationMessageType.file:
       return 'file';
-    case ChatMessageType.deleted:
+    case ConversationMessageType.deleted:
       return 'deleted';
   }
 }

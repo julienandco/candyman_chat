@@ -27,7 +27,7 @@ class _$ConversationStateTearOff {
   }
 
   _LoadSuccess loadSuccess(
-      {required List<ChatMessage> messages,
+      {required List<ConversationMessage> messages,
       required Conversation conversation,
       required String displayName}) {
     return _LoadSuccess(
@@ -51,7 +51,7 @@ mixin _$ConversationState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         loadSuccess,
     required TResult Function() loadFailure,
@@ -61,8 +61,8 @@ mixin _$ConversationState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) =>
@@ -71,8 +71,8 @@ mixin _$ConversationState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -168,7 +168,7 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         loadSuccess,
     required TResult Function() loadFailure,
@@ -181,8 +181,8 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
@@ -194,8 +194,8 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -299,7 +299,7 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         loadSuccess,
     required TResult Function() loadFailure,
@@ -312,8 +312,8 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
@@ -325,8 +325,8 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -386,7 +386,7 @@ abstract class _$LoadSuccessCopyWith<$Res> {
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
   $Res call(
-      {List<ChatMessage> messages,
+      {List<ConversationMessage> messages,
       Conversation conversation,
       String displayName});
 
@@ -414,7 +414,7 @@ class __$LoadSuccessCopyWithImpl<$Res>
       messages: messages == freezed
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
-              as List<ChatMessage>,
+              as List<ConversationMessage>,
       conversation: conversation == freezed
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
@@ -444,7 +444,7 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
       : super._();
 
   @override
-  final List<ChatMessage> messages;
+  final List<ConversationMessage> messages;
   @override
   final Conversation conversation;
   @override
@@ -494,7 +494,7 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         loadSuccess,
     required TResult Function() loadFailure,
@@ -507,8 +507,8 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
@@ -520,8 +520,8 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -572,12 +572,12 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
 
 abstract class _LoadSuccess extends ConversationState {
   const factory _LoadSuccess(
-      {required List<ChatMessage> messages,
+      {required List<ConversationMessage> messages,
       required Conversation conversation,
       required String displayName}) = _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
-  List<ChatMessage> get messages;
+  List<ConversationMessage> get messages;
   Conversation get conversation;
   String get displayName;
   @JsonKey(ignore: true)
@@ -635,7 +635,7 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         loadSuccess,
     required TResult Function() loadFailure,
@@ -648,8 +648,8 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
@@ -661,8 +661,8 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -726,7 +726,7 @@ class _$ConversationEventTearOff {
     );
   }
 
-  _OnData onData(List<ChatMessage> messages, Conversation conversation,
+  _OnData onData(List<ConversationMessage> messages, Conversation conversation,
       String displayName) {
     return _OnData(
       messages,
@@ -772,19 +772,19 @@ class _$ConversationEventTearOff {
     );
   }
 
-  _MarkAsSeen markAsSeen(ChatMessage message) {
+  _MarkAsSeen markAsSeen(ConversationMessage message) {
     return _MarkAsSeen(
       message,
     );
   }
 
-  _DeleteMessage deleteMessage(ChatMessage message) {
+  _DeleteMessage deleteMessage(ConversationMessage message) {
     return _DeleteMessage(
       message,
     );
   }
 
-  _HideMessage hideMessage(ChatMessage message) {
+  _HideMessage hideMessage(ConversationMessage message) {
     return _HideMessage(
       message,
     );
@@ -799,7 +799,7 @@ mixin _$ConversationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -809,16 +809,16 @@ mixin _$ConversationEvent {
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -826,16 +826,16 @@ mixin _$ConversationEvent {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -843,9 +843,9 @@ mixin _$ConversationEvent {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -995,7 +995,7 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -1005,9 +1005,9 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return init(conversationItem);
   }
@@ -1016,8 +1016,8 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1025,9 +1025,9 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return init?.call(conversationItem);
   }
@@ -1036,8 +1036,8 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1045,9 +1045,9 @@ class _$_Init with DiagnosticableTreeMixin implements _Init {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -1128,7 +1128,7 @@ abstract class _$OnDataCopyWith<$Res> {
   factory _$OnDataCopyWith(_OnData value, $Res Function(_OnData) then) =
       __$OnDataCopyWithImpl<$Res>;
   $Res call(
-      {List<ChatMessage> messages,
+      {List<ConversationMessage> messages,
       Conversation conversation,
       String displayName});
 
@@ -1154,7 +1154,7 @@ class __$OnDataCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
       messages == freezed
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
-              as List<ChatMessage>,
+              as List<ConversationMessage>,
       conversation == freezed
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
@@ -1180,7 +1180,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   const _$_OnData(this.messages, this.conversation, this.displayName);
 
   @override
-  final List<ChatMessage> messages;
+  final List<ConversationMessage> messages;
   @override
   final Conversation conversation;
   @override
@@ -1229,7 +1229,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -1239,9 +1239,9 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return onData(messages, conversation, displayName);
   }
@@ -1250,8 +1250,8 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1259,9 +1259,9 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return onData?.call(messages, conversation, displayName);
   }
@@ -1270,8 +1270,8 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1279,9 +1279,9 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (onData != null) {
@@ -1350,10 +1350,10 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
 }
 
 abstract class _OnData implements ConversationEvent {
-  const factory _OnData(List<ChatMessage> messages, Conversation conversation,
-      String displayName) = _$_OnData;
+  const factory _OnData(List<ConversationMessage> messages,
+      Conversation conversation, String displayName) = _$_OnData;
 
-  List<ChatMessage> get messages;
+  List<ConversationMessage> get messages;
   Conversation get conversation;
   String get displayName;
   @JsonKey(ignore: true)
@@ -1436,7 +1436,7 @@ class _$_SendTextMessage
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -1446,9 +1446,9 @@ class _$_SendTextMessage
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return sendTextMessage(message);
   }
@@ -1457,8 +1457,8 @@ class _$_SendTextMessage
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1466,9 +1466,9 @@ class _$_SendTextMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return sendTextMessage?.call(message);
   }
@@ -1477,8 +1477,8 @@ class _$_SendTextMessage
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1486,9 +1486,9 @@ class _$_SendTextMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (sendTextMessage != null) {
@@ -1641,7 +1641,7 @@ class _$_SendImageMessage
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -1651,9 +1651,9 @@ class _$_SendImageMessage
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return sendImageMessage(message);
   }
@@ -1662,8 +1662,8 @@ class _$_SendImageMessage
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1671,9 +1671,9 @@ class _$_SendImageMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return sendImageMessage?.call(message);
   }
@@ -1682,8 +1682,8 @@ class _$_SendImageMessage
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1691,9 +1691,9 @@ class _$_SendImageMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (sendImageMessage != null) {
@@ -1857,7 +1857,7 @@ class _$_SendVoiceMessage
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -1867,9 +1867,9 @@ class _$_SendVoiceMessage
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return sendVoiceMessage(message, duration);
   }
@@ -1878,8 +1878,8 @@ class _$_SendVoiceMessage
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1887,9 +1887,9 @@ class _$_SendVoiceMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return sendVoiceMessage?.call(message, duration);
   }
@@ -1898,8 +1898,8 @@ class _$_SendVoiceMessage
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1907,9 +1907,9 @@ class _$_SendVoiceMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (sendVoiceMessage != null) {
@@ -2064,7 +2064,7 @@ class _$_SendVideoMessage
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -2074,9 +2074,9 @@ class _$_SendVideoMessage
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return sendVideoMessage(message);
   }
@@ -2085,8 +2085,8 @@ class _$_SendVideoMessage
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2094,9 +2094,9 @@ class _$_SendVideoMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return sendVideoMessage?.call(message);
   }
@@ -2105,8 +2105,8 @@ class _$_SendVideoMessage
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2114,9 +2114,9 @@ class _$_SendVideoMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (sendVideoMessage != null) {
@@ -2269,7 +2269,7 @@ class _$_SendMultipleFiles
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -2279,9 +2279,9 @@ class _$_SendMultipleFiles
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return sendMultipleFiles(files);
   }
@@ -2290,8 +2290,8 @@ class _$_SendMultipleFiles
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2299,9 +2299,9 @@ class _$_SendMultipleFiles
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return sendMultipleFiles?.call(files);
   }
@@ -2310,8 +2310,8 @@ class _$_SendMultipleFiles
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2319,9 +2319,9 @@ class _$_SendMultipleFiles
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (sendMultipleFiles != null) {
@@ -2475,7 +2475,7 @@ class _$_SendFileMessage
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -2485,9 +2485,9 @@ class _$_SendFileMessage
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return sendFileMessage(file);
   }
@@ -2496,8 +2496,8 @@ class _$_SendFileMessage
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2505,9 +2505,9 @@ class _$_SendFileMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return sendFileMessage?.call(file);
   }
@@ -2516,8 +2516,8 @@ class _$_SendFileMessage
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2525,9 +2525,9 @@ class _$_SendFileMessage
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (sendFileMessage != null) {
@@ -2609,9 +2609,9 @@ abstract class _$MarkAsSeenCopyWith<$Res> {
   factory _$MarkAsSeenCopyWith(
           _MarkAsSeen value, $Res Function(_MarkAsSeen) then) =
       __$MarkAsSeenCopyWithImpl<$Res>;
-  $Res call({ChatMessage message});
+  $Res call({ConversationMessage message});
 
-  $ChatMessageCopyWith<$Res> get message;
+  $ConversationMessageCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -2633,13 +2633,13 @@ class __$MarkAsSeenCopyWithImpl<$Res>
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as ChatMessage,
+              as ConversationMessage,
     ));
   }
 
   @override
-  $ChatMessageCopyWith<$Res> get message {
-    return $ChatMessageCopyWith<$Res>(_value.message, (value) {
+  $ConversationMessageCopyWith<$Res> get message {
+    return $ConversationMessageCopyWith<$Res>(_value.message, (value) {
       return _then(_value.copyWith(message: value));
     });
   }
@@ -2651,7 +2651,7 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   const _$_MarkAsSeen(this.message);
 
   @override
-  final ChatMessage message;
+  final ConversationMessage message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -2687,7 +2687,7 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -2697,9 +2697,9 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return markAsSeen(message);
   }
@@ -2708,8 +2708,8 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2717,9 +2717,9 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return markAsSeen?.call(message);
   }
@@ -2728,8 +2728,8 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2737,9 +2737,9 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (markAsSeen != null) {
@@ -2808,9 +2808,9 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
 }
 
 abstract class _MarkAsSeen implements ConversationEvent {
-  const factory _MarkAsSeen(ChatMessage message) = _$_MarkAsSeen;
+  const factory _MarkAsSeen(ConversationMessage message) = _$_MarkAsSeen;
 
-  ChatMessage get message;
+  ConversationMessage get message;
   @JsonKey(ignore: true)
   _$MarkAsSeenCopyWith<_MarkAsSeen> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2821,9 +2821,9 @@ abstract class _$DeleteMessageCopyWith<$Res> {
   factory _$DeleteMessageCopyWith(
           _DeleteMessage value, $Res Function(_DeleteMessage) then) =
       __$DeleteMessageCopyWithImpl<$Res>;
-  $Res call({ChatMessage message});
+  $Res call({ConversationMessage message});
 
-  $ChatMessageCopyWith<$Res> get message;
+  $ConversationMessageCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -2845,13 +2845,13 @@ class __$DeleteMessageCopyWithImpl<$Res>
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as ChatMessage,
+              as ConversationMessage,
     ));
   }
 
   @override
-  $ChatMessageCopyWith<$Res> get message {
-    return $ChatMessageCopyWith<$Res>(_value.message, (value) {
+  $ConversationMessageCopyWith<$Res> get message {
+    return $ConversationMessageCopyWith<$Res>(_value.message, (value) {
       return _then(_value.copyWith(message: value));
     });
   }
@@ -2863,7 +2863,7 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   const _$_DeleteMessage(this.message);
 
   @override
-  final ChatMessage message;
+  final ConversationMessage message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -2899,7 +2899,7 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -2909,9 +2909,9 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return deleteMessage(message);
   }
@@ -2920,8 +2920,8 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2929,9 +2929,9 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return deleteMessage?.call(message);
   }
@@ -2940,8 +2940,8 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2949,9 +2949,9 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (deleteMessage != null) {
@@ -3020,9 +3020,9 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
 }
 
 abstract class _DeleteMessage implements ConversationEvent {
-  const factory _DeleteMessage(ChatMessage message) = _$_DeleteMessage;
+  const factory _DeleteMessage(ConversationMessage message) = _$_DeleteMessage;
 
-  ChatMessage get message;
+  ConversationMessage get message;
   @JsonKey(ignore: true)
   _$DeleteMessageCopyWith<_DeleteMessage> get copyWith =>
       throw _privateConstructorUsedError;
@@ -3033,9 +3033,9 @@ abstract class _$HideMessageCopyWith<$Res> {
   factory _$HideMessageCopyWith(
           _HideMessage value, $Res Function(_HideMessage) then) =
       __$HideMessageCopyWithImpl<$Res>;
-  $Res call({ChatMessage message});
+  $Res call({ConversationMessage message});
 
-  $ChatMessageCopyWith<$Res> get message;
+  $ConversationMessageCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -3057,13 +3057,13 @@ class __$HideMessageCopyWithImpl<$Res>
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as ChatMessage,
+              as ConversationMessage,
     ));
   }
 
   @override
-  $ChatMessageCopyWith<$Res> get message {
-    return $ChatMessageCopyWith<$Res>(_value.message, (value) {
+  $ConversationMessageCopyWith<$Res> get message {
+    return $ConversationMessageCopyWith<$Res>(_value.message, (value) {
       return _then(_value.copyWith(message: value));
     });
   }
@@ -3075,7 +3075,7 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   const _$_HideMessage(this.message);
 
   @override
-  final ChatMessage message;
+  final ConversationMessage message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -3111,7 +3111,7 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ChatMessage> messages,
+    required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
     required TResult Function(String message) sendTextMessage,
@@ -3121,9 +3121,9 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
     required TResult Function(String message) sendVideoMessage,
     required TResult Function(List<AssetEntity> files) sendMultipleFiles,
     required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ChatMessage message) markAsSeen,
-    required TResult Function(ChatMessage message) deleteMessage,
-    required TResult Function(ChatMessage message) hideMessage,
+    required TResult Function(ConversationMessage message) markAsSeen,
+    required TResult Function(ConversationMessage message) deleteMessage,
+    required TResult Function(ConversationMessage message) hideMessage,
   }) {
     return hideMessage(message);
   }
@@ -3132,8 +3132,8 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -3141,9 +3141,9 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
   }) {
     return hideMessage?.call(message);
   }
@@ -3152,8 +3152,8 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ChatMessage> messages, Conversation conversation,
-            String displayName)?
+    TResult Function(List<ConversationMessage> messages,
+            Conversation conversation, String displayName)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -3161,9 +3161,9 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
     TResult Function(String message)? sendVideoMessage,
     TResult Function(List<AssetEntity> files)? sendMultipleFiles,
     TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ChatMessage message)? markAsSeen,
-    TResult Function(ChatMessage message)? deleteMessage,
-    TResult Function(ChatMessage message)? hideMessage,
+    TResult Function(ConversationMessage message)? markAsSeen,
+    TResult Function(ConversationMessage message)? deleteMessage,
+    TResult Function(ConversationMessage message)? hideMessage,
     required TResult orElse(),
   }) {
     if (hideMessage != null) {
@@ -3232,9 +3232,9 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
 }
 
 abstract class _HideMessage implements ConversationEvent {
-  const factory _HideMessage(ChatMessage message) = _$_HideMessage;
+  const factory _HideMessage(ConversationMessage message) = _$_HideMessage;
 
-  ChatMessage get message;
+  ConversationMessage get message;
   @JsonKey(ignore: true)
   _$HideMessageCopyWith<_HideMessage> get copyWith =>
       throw _privateConstructorUsedError;

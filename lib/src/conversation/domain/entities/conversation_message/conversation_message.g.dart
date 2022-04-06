@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chat_message.dart';
+part of 'conversation_message.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ChatMessage _$$_ChatMessageFromJson(Map<String, dynamic> json) =>
-    _$_ChatMessage(
+_$_ConversationMessage _$$_ConversationMessageFromJson(
+        Map<String, dynamic> json) =>
+    _$_ConversationMessage(
       id: json['id'] as String? ?? '',
       text: json['text'] as String?,
       location:
@@ -18,7 +19,8 @@ _$_ChatMessage _$$_ChatMessageFromJson(Map<String, dynamic> json) =>
       upload: json['upload'] == null
           ? null
           : Upload.fromJson(json['upload'] as Map<String, dynamic>),
-      type: const MyChatMessageTypeConverter().fromJson(json['type'] as String),
+      type: const MyConversationMessageTypeConverter()
+          .fromJson(json['type'] as String),
       doneUpload: json['doneUpload'] as bool? ?? false,
       filePath: json['filePath'] as String?,
       audioDuration: const MyAudioDurationConverter()
@@ -29,7 +31,8 @@ _$_ChatMessage _$$_ChatMessageFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$_ChatMessageToJson(_$_ChatMessage instance) =>
+Map<String, dynamic> _$$_ConversationMessageToJson(
+        _$_ConversationMessage instance) =>
     <String, dynamic>{
       'id': instance.id,
       'text': instance.text,
@@ -38,7 +41,7 @@ Map<String, dynamic> _$$_ChatMessageToJson(_$_ChatMessage instance) =>
       'senderId': instance.senderId,
       'timestamp': const MyDateTimeConverter().toJson(instance.timestamp),
       'upload': instance.upload,
-      'type': const MyChatMessageTypeConverter().toJson(instance.type),
+      'type': const MyConversationMessageTypeConverter().toJson(instance.type),
       'doneUpload': instance.doneUpload,
       'filePath': instance.filePath,
       'audioDuration':

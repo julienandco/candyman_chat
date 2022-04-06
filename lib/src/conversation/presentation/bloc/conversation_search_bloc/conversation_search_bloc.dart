@@ -66,7 +66,7 @@ class ConversationSearchBloc
   }
 
   void _jumpToLastSeenMessage({
-    required List<ChatMessage> messages,
+    required List<ConversationMessage> messages,
     required DateTime lastSeenTimestamp,
   }) {
     final index = messages.lastIndexWhere(

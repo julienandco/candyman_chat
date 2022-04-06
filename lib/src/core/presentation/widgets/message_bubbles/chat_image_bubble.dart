@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 
 class ChatImageBubble extends StatelessWidget {
-  final ChatMessage message;
+  final ConversationMessage message;
   final double height;
   final Widget Function(String url, Widget placeholder)
       getRedirectedCachedNetworkImage;

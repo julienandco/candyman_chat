@@ -11,6 +11,6 @@ class InitializeTimestampStreamUC {
     required String userID,
     required void Function(dynamic)? onData,
   }) {
-    return userRepo.getUserGroupChatTimestamps(userID).listen(onData);
+    return userRepo.getUserGroupConversationTimestamps(userID).listen(onData);
   }
 }

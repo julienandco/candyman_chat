@@ -25,27 +25,27 @@ class NeonChat extends StatelessWidget {
   final BottomBarStyle bottomBarStyle;
 
   ///
-  /// Gets called when a user wants to start a new 1-on-1 or group chat.
+  /// Gets called when a user wants to start a new 1-on-1 or group conversation.
   /// Possible implementation could be: a dialog shows up and lets the user
   /// selected all the wanted conversation partners and returns them as a
   /// [ConversationCreationData] instance.
   ///
   final ConversationCreationData Function()? getConversationCreationData;
 
-  //TODO: function onChatSuccessfully created, default function: opens chat
+  //TODO: function onChatSuccessfully created, default function: opens conversation
 
   ///
-  /// Gets called when a user taps on the AppBar within a 1-on-1 Chat.
+  /// Gets called when a user taps on the AppBar within a 1-on-1 conversation.
   /// Useful functionality would be to open the conversation partner's user
   /// profile.
   ///
   /// Default Functionality is nothing, as the app-internal user profile
   /// informations are not dealt with inside the NEON-Chat-Package.
   ///
-  final Function(Conversation)? onDirectChatAppBarTap;
+  final Function(Conversation)? onDirectConversationAppBarTap;
 
   ///
-  /// Gets called when a user taps on another user within the group chat
+  /// Gets called when a user taps on another user within the group conversation
   /// overview page.
   ///
   /// Default Functionality is nothing.
@@ -53,14 +53,14 @@ class NeonChat extends StatelessWidget {
   final Function(String)? onOpenUserProfile;
 
   ///
-  /// Gets called when a user taps on the AppBar within a Group Chat.
+  /// Gets called when a user taps on the AppBar within a group conversation.
   /// Default functionality is to open an overview screen that shows the
   /// group's thumbnail, name and all the group members.
   ///
-  final Function(Conversation)? onGroupChatAppBarTap;
+  final Function(Conversation)? onGroupConversationAppBarTap;
 
   ///
-  /// Set to true, if no [onGroupChatAppBarTap] is provided and the default
+  /// Set to true, if no [onGroupConversationAppBarTap] is provided and the default
   /// functionality should also not be triggered.
   ///
   final bool disableGroupChatAbbBarTap;
@@ -73,14 +73,14 @@ class NeonChat extends StatelessWidget {
     this.searchAppBarStyle = const SearchAppBarStyle(),
     this.bottomBarStyle = const BottomBarStyle(),
     this.messageBubbleStyle = const MessageBubbleStyle(),
-    this.onGroupChatAppBarTap,
+    this.onGroupConversationAppBarTap,
     this.disableGroupChatAbbBarTap = false,
-    this.onDirectChatAppBarTap,
+    this.onDirectConversationAppBarTap,
     this.getConversationCreationData,
     this.onOpenUserProfile,
   }) : super(key: key);
 
-  ConversationBloc _generateChatBloc() => ConversationBloc(
+  ConversationBloc _generateConversationBloc() => ConversationBloc(
         firebaseAuth: getItInstance<FirebaseAuth>(),
         hideMessageUC: getItInstance<HideMessageUC>(),
         deleteMessageUC: getItInstance<DeleteMessageUC>(),
@@ -127,14 +127,14 @@ class NeonChat extends StatelessWidget {
       child: DefaultConversationsLoader(
         initializeConversationsBloc: _initializeConversationsBloc,
         fileUploadRepository: getItInstance<FileUploadRepository>(),
-        generateConversationBloc: _generateChatBloc,
+        generateConversationBloc: _generateConversationBloc,
         generateConversationSearchBloc: () => ConversationSearchBloc(),
         conversationStyle: conversationStyle,
         conversationsStyle: conversationsStyle,
-        chatBubbleStyle: messageBubbleStyle,
+        messageBubbleStyle: messageBubbleStyle,
         searchAppBarStyle: searchAppBarStyle,
         bottomBarStyle: bottomBarStyle,
-        onAppbarTap: onGroupChatAppBarTap ??
+        onAppbarTap: onGroupConversationAppBarTap ??
             (disableGroupChatAbbBarTap
                 ? null
                 : (conversation) => defaultOnGroupChatAppBarTap(
@@ -145,7 +145,7 @@ class NeonChat extends StatelessWidget {
                       conversation: conversation,
                       onOpenUserProfile: onOpenUserProfile,
                     )),
-        onOpenUserProfile: onDirectChatAppBarTap,
+        onOpenUserProfile: onDirectConversationAppBarTap,
         getConversationCreationData: getConversationCreationData,
       ),
     );

@@ -12,7 +12,7 @@ import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.da
 class ChatVideoPage extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';
 
-  final ChatMessage message;
+  final ConversationMessage message;
   final GetUploadUrlUC getUploadUrlUC;
   final Widget? progressIndicator;
   final BoxDecoration? sliderDecoration;

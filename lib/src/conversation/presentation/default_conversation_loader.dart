@@ -17,7 +17,7 @@ class DefaultConversationLoader extends StatelessWidget {
   final DateTime groupConversationLastSeenTimestamp;
 
   final ConversationStyle conversationStyle;
-  final MessageBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
   final Function(String, DateTime) updateGroupConversationTimestamp;
@@ -30,7 +30,7 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.conversationBloc,
     required this.conversationSearchBloc,
     required this.conversationStyle,
-    required this.chatBubbleStyle,
+    required this.messageBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
@@ -59,7 +59,7 @@ class DefaultConversationLoader extends StatelessWidget {
             updateGroupConversationTimestamp(
                 conversationItem.conversation.id, timestamp),
         groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
-        defaultMessageBubbleStyle: chatBubbleStyle,
+        defaultMessageBubbleStyle: messageBubbleStyle,
         defaultConversationStyle: conversationStyle,
         defaultSearchAppBarStyle: searchAppBarStyle,
         defaultBottomBarStyle: bottomBarStyle,

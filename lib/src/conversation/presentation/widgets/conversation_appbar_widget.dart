@@ -30,7 +30,7 @@ class ConversationAppbar extends StatelessWidget
           final state = conversationBloc.state;
           final lastActiveAt = state.mapOrNull(
             loadSuccess: (state) {
-              final timestamp = state.conversation.isGroupChat
+              final timestamp = state.conversation.isGroupConversation
                   ? null
                   : state.conversation
                       .getConversationPartner(me?.uid)
@@ -103,7 +103,7 @@ class ConversationAppbar extends StatelessWidget
             ),
           );
         } else {
-          return ChatSearchAppBar(
+          return ConversationSearchAppBar(
             defaultSearchAppBarStyle: searchAppBarStyle,
           );
         }

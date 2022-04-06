@@ -9,7 +9,7 @@ part 'conversation_item.freezed.dart';
 class ConversationItem with _$ConversationItem {
   factory ConversationItem({
     required Conversation conversation,
-    required ChatMessage lastMessage,
+    required ConversationMessage lastMessage,
     required int unreadMessagesCount,
   }) = _ConversationItem;
 }

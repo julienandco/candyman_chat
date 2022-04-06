@@ -14,21 +14,24 @@ class Conversation with _$Conversation {
     required String id,
 
     ///
-    /// Is null for a 1-on-1 chat and otherwise the name of the group chat.
+    /// Is null for a 1-on-1 conversation and otherwise the name of the group
+    /// conversation.
     ///
     String? groupName,
 
     ///
-    /// Is null for a 1-on-1 chat and otherwise the picture of the group chat.
+    /// Is null for a 1-on-1 conversation and otherwise the picture of the
+    /// group conversation.
     ///
     String? groupPicture,
 
     ///
-    /// Has two elements for a 1-on-1 chat and n elements for a group chat.
+    /// Has two elements for a 1-on-1 conversation and n elements for a group
+    /// conversation.
     ///
     @MyFirebaseUserListConverter()
         required List<FirebaseUser> conversationMembers,
-    required bool isGroupChat,
+    required bool isGroupConversation,
     @MyDateTimeConverter() DateTime? createdAt,
     @Default([]) List<String> hiddenFrom,
   }) = _Conversation;
@@ -41,12 +44,12 @@ class Conversation with _$Conversation {
         GetIt.instance<FirebaseAuth>().currentUser!.uid,
       );
 
-  /// The name that is shown to the user. Either group name for group chats
-  /// or conversation partner's name for 1-on-1 chats.
+  /// The name that is shown to the user. Either group name for group
+  /// conversations or conversation partner's name for 1-on-1 conversations.
   ///
   String get displayName {
     //TODO: add currentUserUID as Argument, so we can get rid of thie firebase auth call here
-    if (isGroupChat) {
+    if (isGroupConversation) {
       return groupName ?? 'group'; //TODO: what to do?
     } else {
       final otherUser = conversationMembers.firstWhere(
@@ -56,11 +59,11 @@ class Conversation with _$Conversation {
   }
 
   /// The url of the picture that is shown to the user inside the avatar.
-  /// Either group picture for group chats or conversation partner's avatar
-  ///  for 1-on-1 chats.
+  /// Either group picture for group conversations or conversation partner's
+  /// avatar for 1-on-1 conversations.
   ///
   String? get thumbnail {
-    if (isGroupChat) {
+    if (isGroupConversation) {
       return groupPicture;
     } else {
       final otherUser = conversationMembers.firstWhere(
@@ -70,7 +73,7 @@ class Conversation with _$Conversation {
   }
 
   bool get isBlocked {
-    if (isGroupChat) {
+    if (isGroupConversation) {
       //TODO
       return false;
     } else {
@@ -87,9 +90,9 @@ class Conversation with _$Conversation {
     }
   }
 
-  /// Getter for 1-on-1 chats, that returns the direct conversation partner.
+  /// Getter for 1-on-1 conversations, that returns the direct conversation partner.
   FirebaseUser? getConversationPartner(String? myId) {
-    if (isGroupChat || myId == null) return null;
+    if (isGroupConversation || myId == null) return null;
     return conversationMembers.firstWhere((member) => member.id != myId);
   }
 }

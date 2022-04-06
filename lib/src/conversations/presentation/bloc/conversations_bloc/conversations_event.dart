@@ -7,13 +7,13 @@ class ConversationsEvent with _$ConversationsEvent {
     required Map<String, DateTime> timestamps,
   }) = _InitializeMyFirebaseUser;
 
-  const factory ConversationsEvent.fetchChatItems(
+  const factory ConversationsEvent.fetchConversationItems(
     List<Conversation> conversations,
-  ) = _FetchChatItems;
+  ) = _FetchConversationItems;
 
-  const factory ConversationsEvent.onChatItemsData(
+  const factory ConversationsEvent.onConversationItemsData(
     ConversationItem conversationItem,
-  ) = _OnChatItemsData;
+  ) = _OnConversationItemsData;
 
   const factory ConversationsEvent.onData(
     List<ConversationItem> conversations,

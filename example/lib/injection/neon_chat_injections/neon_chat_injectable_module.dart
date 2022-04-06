@@ -54,10 +54,6 @@ abstract class NEONChatInjectableModule {
   MarkMessageAsSeenUC get markAsSeenUC =>
       MarkMessageAsSeenUC(conversationRepository);
 
-  // @lazySingleton
-  // MarkGroupMessageAsSeenUC get markGroupMessageAsSeenUC =>
-  //     MarkGroupMessageAsSeenUC(conversationRepository);
-
   @lazySingleton
   SendPlatformFileMessageUC get sendPlatformFileMessageUC =>
       SendPlatformFileMessageUC(
@@ -113,10 +109,6 @@ abstract class NEONChatInjectableModule {
   CurrentConversationCubit get currentConversationCubit =>
       CurrentConversationCubit();
 
-  // @lazySingleton
-  // GetAllGroupTimestampsUC get getAllGroupTimestampsUC =>
-  //     GetAllGroupTimestampsUC(neonChatCacheService);
-
   @lazySingleton
   ConversationsBloc get conversationsBloc => ConversationsBloc(
         initializeConversationsStreamUC: initializeConversationsStreamUC,
@@ -130,11 +122,4 @@ abstract class NEONChatInjectableModule {
   @lazySingleton
   ConversationsSearchBloc get conversationsSearchBloc =>
       ConversationsSearchBloc();
-
-  // @lazySingleton
-  // NeonChatCache get neonChatCache => NeonChatCache();
-
-  // @lazySingleton
-  // NeonChatCacheService get neonChatCacheService =>
-  //     NeonChatCacheService(neonChatCache, firebaseUserProfileRepository);
 }

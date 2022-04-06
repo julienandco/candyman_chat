@@ -7,7 +7,7 @@ import 'package:neon_chat/neon_chat.dart';
 
 class MessageList extends StatelessWidget {
   final String Function(String)? getAuthorNameForSenderId;
-  final MessageBubbleStyle defaultChatBubbleStyle;
+  final MessageBubbleStyle messageBubbleStyle;
   final GetUploadUrlUC
       getUploadUrlUC; //TODO: ugly, move this in some logic layer
 
@@ -17,7 +17,7 @@ class MessageList extends StatelessWidget {
   const MessageList({
     Key? key,
     required this.getAuthorNameForSenderId,
-    required this.defaultChatBubbleStyle,
+    required this.messageBubbleStyle,
     required this.getUploadUrlUC,
     required this.updateLastSeenTimestampForConversation,
     required this.conversationLastSeenTimestamp,
@@ -29,7 +29,8 @@ class MessageList extends StatelessWidget {
         return state.maybeMap(
           loadSuccess: (state) => _MessageListView(
             messages: state.messages,
-            messageBuilder: (ChatMessage message, int index) => AutoScrollTag(
+            messageBuilder: (ConversationMessage message, int index) =>
+                AutoScrollTag(
               key: ValueKey(message.id),
               index: index,
               controller:
@@ -40,8 +41,8 @@ class MessageList extends StatelessWidget {
                   updateLastSeenTimestampForGroupConvo:
                       updateLastSeenTimestampForConversation,
                   groupChatLastSeenTimestamp: conversationLastSeenTimestamp,
-                  isGroupChat: state.conversation.isGroupChat,
-                  messageBubbleStyle: defaultChatBubbleStyle,
+                  isGroupChat: state.conversation.isGroupConversation,
+                  messageBubbleStyle: messageBubbleStyle,
                   getUploadUrlUC: getUploadUrlUC,
                   message: message,
                   otherUserName:
@@ -59,8 +60,8 @@ class MessageList extends StatelessWidget {
 }
 
 class _MessageListView extends StatefulWidget {
-  final List<ChatMessage> messages;
-  final Widget Function(ChatMessage, int)? messageBuilder;
+  final List<ConversationMessage> messages;
+  final Widget Function(ConversationMessage, int)? messageBuilder;
   final Widget Function(String)? dateBuilder;
   final bool inverted;
   const _MessageListView({

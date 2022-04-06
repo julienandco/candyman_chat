@@ -33,8 +33,8 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     required this.createGroupConversationUC,
   }) : super(const _Uninitialized()) {
     on<_InitializeMyFirebaseUser>(_onInitialize);
-    on<_FetchChatItems>(_onFetchChatItems);
-    on<_OnChatItemsData>(_onReceivedChatItemsData);
+    on<_FetchConversationItems>(_onFetchChatItems);
+    on<_OnConversationItemsData>(_onReceivedChatItemsData);
     on<_OnData>(_onReceivedData);
     on<_HideConversation>(_onHideConversation);
     on<_CreateConversation>(_onCreateConversation);
@@ -52,7 +52,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     _conversationsStream = initializeConversationsStreamUC(
       onData: (event) {
         if (event.isNotEmpty) {
-          add(_FetchChatItems(event));
+          add(_FetchConversationItems(event));
         } else {
           add(const _OnData([]));
         }
@@ -62,7 +62,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     emit(const ConversationsState.loadSuccess(conversations: []));
   }
 
-  void _onFetchChatItems(_FetchChatItems event, Emitter emit) {
+  void _onFetchChatItems(_FetchConversationItems event, Emitter emit) {
     if (_isInit) {
       _conversationItemStreams.map((e) => e.cancel());
 
@@ -72,7 +72,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
             conversation: conversation,
             timestamp: Timestamp.fromDate(
                 _timestampMap![conversation.id] ?? DateTime.now()),
-            onData: (event) => add(_OnChatItemsData(event)),
+            onData: (event) => add(_OnConversationItemsData(event)),
             onError: (err) {
               log('fetchChatItems $err', name: '$runtimeType');
             },
@@ -83,7 +83,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     }
   }
 
-  void _onReceivedChatItemsData(_OnChatItemsData event, Emitter emit) {
+  void _onReceivedChatItemsData(_OnConversationItemsData event, Emitter emit) {
     if (_isInit) {
       emit(
         state.maybeMap(
@@ -205,7 +205,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
       orElse: () {
         final newConvoItem = ConversationItem(
             conversation: conversation,
-            lastMessage: ChatMessage.empty(),
+            lastMessage: ConversationMessage.empty(),
             unreadMessagesCount: 0);
 
         return newConvoItem;

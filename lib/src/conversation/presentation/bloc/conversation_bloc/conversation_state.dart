@@ -7,18 +7,18 @@ class ConversationState with _$ConversationState {
   const factory ConversationState.initial() = _Initial;
   const factory ConversationState.loadInProgress() = _LoadInProgress;
   const factory ConversationState.loadSuccess({
-    required List<ChatMessage> messages,
+    required List<ConversationMessage> messages,
     required Conversation conversation,
     required String displayName,
   }) = _LoadSuccess;
   const factory ConversationState.loadFailure() = _LoadFailure;
 
-  List<ChatMessage> getMediaMessages() => maybeMap(
+  List<ConversationMessage> getMediaMessages() => maybeMap(
         loadSuccess: (state) {
-          return List<ChatMessage>.from(
+          return List<ConversationMessage>.from(
             state.messages.where((element) =>
-                element.type == ChatMessageType.image ||
-                element.type == ChatMessageType.video),
+                element.type == ConversationMessageType.image ||
+                element.type == ConversationMessageType.video),
           );
         },
         orElse: () => [],

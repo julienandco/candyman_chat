@@ -32,7 +32,8 @@ class FirebaseUserProfileRepositoryImpl
   }
 
   @override
-  Stream<Map<String, DateTime>> getUserGroupChatTimestamps(String userId) {
+  Stream<Map<String, DateTime>> getUserGroupConversationTimestamps(
+      String userId) {
     return _users.doc(userId).snapshots().transform(
       StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
           Map<String, DateTime>>.fromHandlers(

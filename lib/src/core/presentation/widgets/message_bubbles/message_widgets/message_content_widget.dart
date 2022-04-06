@@ -10,7 +10,7 @@ class MessageContentWidget extends StatefulWidget {
   final MessageBubbleStyle messageBubbleStyle;
 
   final GetUploadUrlUC getUploadUrlUC;
-  final ChatMessage message;
+  final ConversationMessage message;
   final Widget? header;
   final List<Widget> footer;
 
@@ -54,7 +54,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
       children: widget.footer,
     );
     switch (widget.message.type) {
-      case ChatMessageType.voice:
+      case ConversationMessageType.voice:
         return Container(
           margin: const EdgeInsets.only(
             bottom: 15,
@@ -63,7 +63,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
           ),
           child: Column(
             children: [
-              ChatAudioPlayer(
+              ConversationAudioPlayer(
                 audioPlayerStyle: widget.messageBubbleStyle.audioPlayerStyle,
                 message: widget.message,
                 getUploadUrlUC: widget.getUploadUrlUC,
@@ -72,7 +72,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
             ],
           ),
         );
-      case ChatMessageType.image:
+      case ConversationMessageType.image:
         return Container(
           margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
           width: MediaQuery.of(context).size.width * 0.5,
@@ -97,7 +97,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
             ],
           ),
         );
-      case ChatMessageType.video:
+      case ConversationMessageType.video:
         return Container(
           width: MediaQuery.of(context).size.width * 0.5,
           margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
@@ -125,7 +125,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
           ),
         );
 
-      case ChatMessageType.file:
+      case ConversationMessageType.file:
         return Padding(
           padding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
           child: Column(
@@ -141,7 +141,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
             ],
           ),
         );
-      case ChatMessageType.deleted:
+      case ConversationMessageType.deleted:
         return Padding(
           padding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
           child: Text(
@@ -203,7 +203,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
 }
 
 void _openMediaViewer(
-    BuildContext context, ChatMessage message, GetUploadUrlUC getUrl) {
+    BuildContext context, ConversationMessage message, GetUploadUrlUC getUrl) {
   Navigator.push(
     context,
     MaterialPageRoute(

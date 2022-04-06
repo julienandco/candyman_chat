@@ -43,9 +43,9 @@ void openConversation(
   required ConversationBloc Function() generateConversationBloc,
   required ConversationSearchBloc Function() generateConversationSearchBloc,
   required Function(String, DateTime) updateGroupConversationTimestamp,
-  required DateTime groupChatLastSeenTimestamp,
+  required DateTime groupConversationLastSeenTimestamp,
   SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
-  MessageBubbleStyle chatBubbleStyle = const MessageBubbleStyle(),
+  MessageBubbleStyle messageBubbleStyle = const MessageBubbleStyle(),
   ConversationStyle conversationStyle = const ConversationStyle(),
   BottomBarStyle bottomBarStyle = const BottomBarStyle(),
   Function(Conversation)? onAppbarTap,
@@ -55,13 +55,13 @@ void openConversation(
     context,
     CupertinoPageRoute(
       builder: (context) => DefaultConversationLoader(
-        groupConversationLastSeenTimestamp: groupChatLastSeenTimestamp,
+        groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
         updateGroupConversationTimestamp: updateGroupConversationTimestamp,
         fileUploadRepository: fileUploadRepository,
         conversationBloc: generateConversationBloc,
         conversationSearchBloc: generateConversationSearchBloc,
         searchAppBarStyle: searchAppBarStyle,
-        chatBubbleStyle: chatBubbleStyle,
+        messageBubbleStyle: messageBubbleStyle,
         conversationStyle: conversationStyle,
         bottomBarStyle: bottomBarStyle,
         conversationItem: conversationItem,
@@ -72,7 +72,7 @@ void openConversation(
   );
 }
 
-void defaultOnGroupChatAppBarTap(
+void defaultOnGroupConversationAppBarTap(
   BuildContext context, {
   required GroupChatOverviewStyle style,
   required Conversation conversation,

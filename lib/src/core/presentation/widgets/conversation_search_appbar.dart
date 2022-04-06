@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
-class ChatSearchAppBar extends StatefulWidget {
+class ConversationSearchAppBar extends StatefulWidget {
   final SearchAppBarStyle defaultSearchAppBarStyle;
 
-  const ChatSearchAppBar({
+  const ConversationSearchAppBar({
     Key? key,
     required this.defaultSearchAppBarStyle,
   }) : super(key: key);
 
   @override
-  _ChatSearchAppBarState createState() => _ChatSearchAppBarState();
+  _ConversationSearchAppBarState createState() =>
+      _ConversationSearchAppBarState();
 }
 
-class _ChatSearchAppBarState extends State<ChatSearchAppBar> {
+class _ConversationSearchAppBarState extends State<ConversationSearchAppBar> {
   final _foucsNode = FocusNode();
   @override
   void initState() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class CheckMarkWidget extends StatelessWidget {
-  final ChatMessage message;
+  final ConversationMessage message;
   final Widget? seenIcon;
   final Widget? receivedIcon;
 

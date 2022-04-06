@@ -7,7 +7,7 @@ class SendTextMessageUC {
 
   void call({
     required String conversationId,
-    required ChatMessage message,
+    required ConversationMessage message,
   }) {
     conversationRepository.sendMessage(conversationId, message);
   }

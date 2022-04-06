@@ -13,7 +13,7 @@ import 'message_widgets/message_content_widget.dart';
 class MessageBubble extends StatefulWidget {
   final bool isGroupChat;
   final DateTime groupChatLastSeenTimestamp;
-  final ChatMessage message;
+  final ConversationMessage message;
   final Widget? otherUserAvatar;
   final String otherUserName;
   final MessageBubbleStyle messageBubbleStyle;

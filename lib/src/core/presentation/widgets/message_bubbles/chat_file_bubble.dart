@@ -4,7 +4,7 @@ import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.da
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatFileBubble extends StatefulWidget {
-  final ChatMessage message;
+  final ConversationMessage message;
   final GetUploadUrlUC getUploadUrlUC;
   final FileBubbleStyle defaultFileBubbleStyle;
 

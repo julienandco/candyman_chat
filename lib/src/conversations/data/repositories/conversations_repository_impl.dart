@@ -63,7 +63,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
         id: doc.id,
         conversationMembers: [me, conversationPartner],
         createdAt: DateTime.now(),
-        isGroupChat: false,
+        isGroupConversation: false,
       );
       await doc.set(conversation.toJson());
       return conversation;
@@ -87,11 +87,11 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
 
           final snaps = data.docs.map((doc) => doc.data()).toList();
 
-          final chats = snaps
+          final conversations = snaps
               .map((json) => Conversation.fromJson(json))
               .toList()
             ..removeWhere((element) => element.hiddenFrom.contains(userId));
-          sink.add(chats);
+          sink.add(conversations);
         },
       ),
     );
@@ -202,7 +202,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       createdAt: DateTime.now(),
       groupName: creationData.groupName,
       groupPicture: creationData.groupPhoto,
-      isGroupChat: true,
+      isGroupConversation: true,
     );
     await doc.set(conversation.toJson());
     return conversation;

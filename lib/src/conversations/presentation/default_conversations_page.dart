@@ -10,7 +10,7 @@ class DefaultConversationsPage extends StatefulWidget {
 
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
-  final MessageBubbleStyle chatBubbleStyle;
+  final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
   final Function(String, DateTime) updateGroupConversationTimestamp;
@@ -28,7 +28,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.generateConversationSearchBloc,
     required this.conversationsStyle,
     required this.conversationStyle,
-    required this.chatBubbleStyle,
+    required this.messageBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
@@ -55,12 +55,12 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
       context,
       conversationItem: conversationItem,
       updateGroupConversationTimestamp: widget.updateGroupConversationTimestamp,
-      groupChatLastSeenTimestamp: timestamp,
+      groupConversationLastSeenTimestamp: timestamp,
       fileUploadRepository: widget.fileUploadRepository,
       generateConversationBloc: widget.generateConversationBloc,
       generateConversationSearchBloc: widget.generateConversationSearchBloc,
       searchAppBarStyle: widget.searchAppBarStyle,
-      chatBubbleStyle: widget.chatBubbleStyle,
+      messageBubbleStyle: widget.messageBubbleStyle,
       conversationStyle: widget.conversationStyle,
       bottomBarStyle: widget.bottomBarStyle,
       onAppbarTap: widget.onShowGroupInfo,
@@ -143,7 +143,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                             .conversation.thumbnail),
                                 onOpenConversation: () => openConversation(
                                   context,
-                                  groupChatLastSeenTimestamp: context
+                                  groupConversationLastSeenTimestamp: context
                                       .read<GroupConversationTimestampsBloc>()
                                       .getLastSeenTimestampForConversationItem(
                                           conversationItem),
@@ -157,16 +157,16 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   generateConversationSearchBloc:
                                       widget.generateConversationSearchBloc,
                                   searchAppBarStyle: widget.searchAppBarStyle,
-                                  chatBubbleStyle: widget.chatBubbleStyle,
+                                  messageBubbleStyle: widget.messageBubbleStyle,
                                   conversationStyle: widget.conversationStyle,
                                   bottomBarStyle: widget.bottomBarStyle,
-                                  onAppbarTap:
-                                      conversationItem.conversation.isGroupChat
-                                          ? widget.onShowGroupInfo
-                                          : widget.onOpenUserProfile,
+                                  onAppbarTap: conversationItem
+                                          .conversation.isGroupConversation
+                                      ? widget.onShowGroupInfo
+                                      : widget.onOpenUserProfile,
                                 ),
                                 onOpenConversationInfo: conversationItem
-                                        .conversation.isGroupChat
+                                        .conversation.isGroupConversation
                                     ? () => widget.onShowGroupInfo
                                         ?.call(conversationItem.conversation)
                                     : () => widget.onOpenUserProfile

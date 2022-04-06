@@ -11,11 +11,11 @@ class InitializeConversationStreamUC {
 
   StreamSubscription<dynamic> call({
     required String conversationId,
-    required dynamic Function(List<ChatMessage>) combiner,
+    required dynamic Function(List<ConversationMessage>) combiner,
     required void Function(dynamic)? onData,
   }) {
-    return conversationRepository
-        .getMessages(conversationId)
-        .listen((chatMessageList) => onData?.call(combiner(chatMessageList)));
+    return conversationRepository.getMessages(conversationId).listen(
+        (conversationMessageList) =>
+            onData?.call(combiner(conversationMessageList)));
   }
 }
