@@ -55,85 +55,47 @@ Der Chat hat zwei Use-Cases:
   1. Hirn auf Leerlauf, den Default NEON-Chat nutzen und nur Styling ändern.
   2. Irgendein Special Snowflake ❄ hat die Chat-Welt revolutioniert und das Default-Design reicht nicht aus. Also nur die Logik des NEON-Chats nutzen.
 
-Unabhängig davon, welcher Fall auf dich zutrifft, musst du Stand jetzt (29.03.22) die folgenden Schritte bis zum STOP 🛑🙅🏻‍♀️🙅🏻‍♂️🛑 Signal durchführen, da der Chat im Moment vollständig auf eine Dependency Injection durch [Get_It][get_it_link] vertraut.
+Unabhängig davon, welcher Fall auf dich zutrifft, musst du die ```RemoteDataSource``` implementieren, da sie die File-Uploads (Fotos, Videos, Dateien, Audionachrichten) ermöglicht. Das alles wird nämlich nicht in Firebase (dort liegt nur ein Link), sondern in einem anderen, projektspezifischen Backend gespeichert.
 
-Also ab damit in die pubspec (```cloud_firestore``` jetzt auch, da das im Injection File verwendet wird).
+Ab jetzt wird differenziert!
 
-ACHTUNG: Damit der nächste Absatz für dich funktioniert, muss deine App diese Abhängigkeiten in ihrer ```pubspec.yaml``` haben:
+Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1. 
 
-```yaml
-dependencies:
-  injectable: ^x.y.z
-  get_it: ^a.b.c
 
-dev_dependencies:
-  injectable_generator: ^å.∫.ç
-  build_runner: ^≈.¥.†
-```
+Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und kannst zahlreiche Styles zum customisen und Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben!
 
-Erstelle jetzt mithilfe von [mason][mason_link] das ```NEON-Chat-Injection-Brick```. Was? Du weißt nicht, wie das geht?
+FUNFACT: Solltest du in deinem Projekt [GetIt][get_it_link] verwenden, kannst du jetzt mithilfe von [mason][mason_link] das ```NEON-Chat-Injection-Brick``` generieren, um sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` zu verwalten. Was? Du weißt nicht, wie das geht? 
 Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den [NEON-Bricks][neon_bricks_link] durch. Die [Doku von Mason][mason_link] und [dieses Tutorial][mason_tutorial_link] sind auch sehr hilfreich.
 
 TL;DR:
 In das lib Verzeichnis wechseln und dann diesen Befehl ausführen:
 
-```mason make neon_chat_injection```
+```mason make firebase_injections```
 
 Was? Dir steht das Brick nicht zur Verfügung, weil du diese App nicht mit der [NEON CLI][neon_cli_link] aufgesetzt hast? BigMac, bann den weg!
 
-Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du auch diese zwei Files im ```lib```-Ordner deines Projekts händisch (🤢) kopieren:
+Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du das File auch händisch (🤢) in den ```lib```-Ordner deines Projekts kopieren:
 
-```example/lib/neon_chat_injections/neon_chat_injectable_module.dart```
-
-und
-
-```example/lib/neon_chat_injections/remote_data_source_injectable_module.dart```
-
-Sobald diese beiden Files in deinem ```lib```-Verzeichnis liegen, kannst (sollst, musst) du alle TODOs darin abarbeiten, sprich eventuell anstehende Key-Name-Änderungen in der FirebaseKeys Datenstruktur vermerken und die ```RemoteDataSource``` implementieren. Die ```RemoteDataSource``` ist der springende Punkt für jegliche Art von File-Uploads (Dateien, Fotos, Videos, Audionachrichten), da das alles nicht in Firebase, sondern in einem anderen, projektspezifischen Backend gespeichert wird.
+```example/lib/injection/firebase_injectable_module.dart```
 
 
-ACHTUNG: Dir ist sicher aufgefallen, dass in ```neon_chat_injectable_module.dart``` sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` instanziiert werden. Das passiert aber nicht in diesem File, sondern in ```firebase_injectable_module.dart```. Solltest du dieses File auch nocht nicht generiert haben: auch dafür gibt es ein Mason Brick 🎉 : 
-
-```mason make firebase_injections```
-
-Jetzt noch den build_runner laufen lassen und du bist good to go!
-
-STOP 🛑🙅🏻‍♀️🙅🏻‍♂️🛑 STOP 🛑🙅🏻‍♀️🙅🏻‍♂️🛑 STOP 🛑🙅🏻‍♀️🙅🏻‍♂️🛑 STOP
-
-Ab jetzt wird differenziert!
-
-Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1.  
-
-Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei eine ```GetIt```-Instanz und kannst zahlreiche Styles zum customisen und Methoden für den Appbar-Tap oder für das Öffnen eines Nutzerprofils übergeben! (Komplettes Beispiel siehe ```example/lib/main.dart```)
+(Komplettes Beispiel siehe ```example/lib/main.dart```)
 
 ```dart
 ...
  @override
   Widget build(BuildContext context) {
-    return NeonChat(getItInstance: getIt);
+    return NeonChat(
+        firebaseAuthInstance: getIt<FirebaseAuth>(),
+        firebaseFirestoreInstance: getIt<FirebaseFirestore>(),
+        remoteDataSource: getIt<RemoteDataSource>(),
+    );
   }
 ```
 
 Solltest du dich wider Erwarten in Fall 2 befinden, dann willst du höchstwahrscheinlich die gesamten UI-Komponenten neu bauen, oder die Chat-Logik sogar erweitern 😱 (falls du denkst, dass das auch für andere Projekte Sinn macht, dann hauen wir das mit ins Package)!
 
-Dank der Dependency Injection steht dir die gesamte NEON-Chat-Logik zur Verfügung (gesamtes Beispiel siehe ```example/lib/my_custom_conversations_loader.dart```):
-```dart
-...
-MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => getIt<ConversationsSearchBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<CurrentConversationCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<ConversationsBloc>(),
-        ),
-      ],
-      child: ...,
-);
-```
+Dank der nicht vorhandenen Export-Regeln des Packages steht dir die gesamte NEON-Chat-Logik zur Verfügung 💪🏻 
 
 Nutze sie, doch nutze sie weise 🧙🏻‍♂️ !
 
