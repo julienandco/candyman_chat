@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
@@ -13,10 +13,25 @@ import 'package:neon_chat/src/core/core.dart';
 ///
 class NeonChat extends StatelessWidget {
   ///
-  /// Get It Instance the Chat heavily relies on. Should be structured as
-  /// described in the template shown in README.MD
+  /// The FirebaseAuth Instance of your app.
   ///
-  final GetIt getItInstance;
+  final FirebaseAuth firebaseAuthInstance;
+
+  ///
+  /// The FirebaseFirestore Instance of your app.
+  ///
+  final FirebaseFirestore firebaseFirestoreInstance;
+
+  ///
+  /// The RemoteDataSource you custom-implemented.
+  ///
+  final RemoteDataSource remoteDataSource;
+
+  ///
+  /// Do NOT fuck around with this, there is a reason this is optional.
+  /// If you still feel a massive urge, be VERY aware of what you're doing.
+  ///
+  final FirebaseKeys firebaseKeys;
 
   final ConversationStyle conversationStyle;
   final ConversationsStyle conversationsStyle;
@@ -67,7 +82,10 @@ class NeonChat extends StatelessWidget {
 
   const NeonChat({
     Key? key,
-    required this.getItInstance,
+    required this.firebaseAuthInstance,
+    required this.firebaseFirestoreInstance,
+    required this.remoteDataSource,
+    this.firebaseKeys = const FirebaseKeys(),
     this.conversationStyle = const ConversationStyle(),
     this.conversationsStyle = const ConversationsStyle(),
     this.searchAppBarStyle = const SearchAppBarStyle(),
@@ -80,31 +98,182 @@ class NeonChat extends StatelessWidget {
     this.onOpenUserProfile,
   }) : super(key: key);
 
-  ConversationBloc _generateConversationBloc() => ConversationBloc(
-        firebaseAuth: getItInstance<FirebaseAuth>(),
-        hideMessageUC: getItInstance<HideMessageUC>(),
-        deleteMessageUC: getItInstance<DeleteMessageUC>(),
-        markAsSeenUC: getItInstance<MarkMessageAsSeenUC>(),
-        sendPlatformFileMessageUC: getItInstance<SendPlatformFileMessageUC>(),
-        sendFileMessageUC: getItInstance<SendFileMessageUC>(),
-        sendTextMessageUC: getItInstance<SendTextMessageUC>(),
-        initStreamUC: getItInstance<InitializeConversationStreamUC>(),
-      );
+  @override
+  Widget build(BuildContext context) {
+    return _NeonChatLoader(
+      firebaseAuth: firebaseAuthInstance,
+      firebaseFirestore: firebaseFirestoreInstance,
+      remoteDataSource: remoteDataSource,
+      firebaseKeys: firebaseKeys,
+      onAppBarTap: onGroupConversationAppBarTap ??
+          (disableGroupChatAbbBarTap
+              ? null
+              : (conversation) => defaultOnGroupConversationAppBarTap(
+                    context,
+                    myId: firebaseAuthInstance.currentUser!.uid,
+                    style: GroupChatOverviewStyle(
+                      appBarColor: conversationsStyle.appBarColor,
+                    ),
+                    conversation: conversation,
+                    onOpenUserProfile: onOpenUserProfile,
+                  )),
+      getConversationCreationData: getConversationCreationData,
+      onDirectConversationAppBarTap: onDirectConversationAppBarTap,
+      bottomBarStyle: bottomBarStyle,
+      conversationsStyle: conversationsStyle,
+      conversationStyle: conversationStyle,
+      messageBubbleStyle: messageBubbleStyle,
+      searchAppBarStyle: searchAppBarStyle,
+    );
+  }
+}
 
-  GroupConversationTimestampsBloc get _timestampsBloc =>
-      GroupConversationTimestampsBloc(
-        initStreamUC: InitializeTimestampStreamUC(
-            getItInstance<FirebaseUserProfileRepository>()),
-        syncTimestampsWithFirebaseUC: SyncTimestampsWithFirebaseUC(
-          getItInstance<FirebaseUserProfileRepository>(),
-        ),
-      );
+class _NeonChatLoader extends StatelessWidget {
+  final FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firebaseFirestore;
+  final FirebaseKeys firebaseKeys;
+  final RemoteDataSource remoteDataSource;
+
+  final ConversationStyle conversationStyle;
+  final ConversationsStyle conversationsStyle;
+  final MessageBubbleStyle messageBubbleStyle;
+  final SearchAppBarStyle searchAppBarStyle;
+  final BottomBarStyle bottomBarStyle;
+
+  final Function(Conversation)? onAppBarTap;
+  final ConversationCreationData Function()? getConversationCreationData;
+  final Function(Conversation)? onDirectConversationAppBarTap;
+
+  const _NeonChatLoader({
+    required this.firebaseAuth,
+    required this.firebaseFirestore,
+    required this.firebaseKeys,
+    required this.remoteDataSource,
+    required this.conversationStyle,
+    required this.conversationsStyle,
+    required this.messageBubbleStyle,
+    required this.searchAppBarStyle,
+    required this.bottomBarStyle,
+    this.onAppBarTap,
+    this.getConversationCreationData,
+    this.onDirectConversationAppBarTap,
+  });
 
   void _initializeConversationsBloc(BuildContext context,
           {required Map<String, DateTime> timestamps}) =>
       context.read<ConversationsBloc>().add(ConversationsEvent.initialize(
-          myId: getItInstance<FirebaseAuth>().currentUser!.uid,
-          timestamps: timestamps));
+          myId: firebaseAuth.currentUser!.uid, timestamps: timestamps));
+
+  ConversationRepositoryImpl get conversationRepository =>
+      ConversationRepositoryImpl(
+        firestore: firebaseFirestore,
+        firebaseAuth: firebaseAuth,
+        firebaseKeys: firebaseKeys,
+      );
+
+  ConversationsRepositoryImpl get conversationsRepository =>
+      ConversationsRepositoryImpl(
+        firestore: firebaseFirestore,
+        firebaseAuth: firebaseAuth,
+        firebaseKeys: firebaseKeys,
+      );
+
+  FileUploadRepositoryImpl get fileUploadRepository =>
+      FileUploadRepositoryImpl(remoteDataSource: remoteDataSource);
+
+  UploadManagerRepositoryImpl get uploadManagerRepository =>
+      UploadManagerRepositoryImpl(fileUploadRepository: fileUploadRepository);
+
+  FirebaseUserProfileRepositoryImpl get firebaseUserProfileRepository =>
+      FirebaseUserProfileRepositoryImpl(
+        firestore: firebaseFirestore,
+        firebaseKeys: firebaseKeys,
+      );
+
+  HideMessageUC get hideMessageUC => HideMessageUC(conversationRepository);
+
+  DeleteMessageUC get deleteMessageUC =>
+      DeleteMessageUC(conversationRepository);
+
+  MarkMessageAsSeenUC get markAsSeenUC =>
+      MarkMessageAsSeenUC(conversationRepository);
+
+  SendPlatformFileMessageUC get sendPlatformFileMessageUC =>
+      SendPlatformFileMessageUC(
+          conversationRepository: conversationRepository,
+          uploadManagerRepository: uploadManagerRepository);
+
+  SendFileMessageUC get sendFileMessageUC => SendFileMessageUC(
+      conversationRepository: conversationRepository,
+      uploadManagerRepository: uploadManagerRepository);
+
+  SendTextMessageUC get sendTextMessageUC =>
+      SendTextMessageUC(conversationRepository);
+
+  InitializeConversationStreamUC get initializeConversationStreamUC =>
+      InitializeConversationStreamUC(
+        conversationRepository: conversationRepository,
+      );
+
+  InitializeConversationItemStreamUC get initializeConversationItemStreamUC =>
+      InitializeConversationItemStreamUC(
+        conversationRepository: conversationRepository,
+        conversationsRepository: conversationsRepository,
+      );
+
+  InitializeConversationsStreamUC get initializeConversationsStreamUC =>
+      InitializeConversationsStreamUC(conversationsRepository);
+
+  HideConversationUC get hideConversationUC =>
+      HideConversationUC(conversationsRepository);
+
+  GetFirebaseUserUC get getFirebaseUserUC =>
+      GetFirebaseUserUC(firebaseUserProfileRepository);
+
+  CreateConversationUC get createConversationUC =>
+      CreateConversationUC(conversationsRepository);
+
+  CreateGroupConversationUC get createGroupConversationUC =>
+      CreateGroupConversationUC(conversationsRepository);
+
+  ConversationSearchBloc get conversationSearchBloc => ConversationSearchBloc();
+
+  CurrentConversationCubit get currentConversationCubit =>
+      CurrentConversationCubit();
+
+  SearchConversationsUC get searchConversationsUC =>
+      SearchConversationsUC(firebaseAuth.currentUser?.uid);
+
+  ConversationsBloc get conversationsBloc => ConversationsBloc(
+        initializeConversationsStreamUC: initializeConversationsStreamUC,
+        initializeConversationItemStreamUC: initializeConversationItemStreamUC,
+        hideConversationUC: hideConversationUC,
+        getFirebaseUserUC: getFirebaseUserUC,
+        createConversationUC: createConversationUC,
+        createGroupConversationUC: createGroupConversationUC,
+      );
+
+  ConversationsSearchBloc get conversationsSearchBloc =>
+      ConversationsSearchBloc(searchConversationsUC);
+
+  ConversationBloc _generateConversationBloc() => ConversationBloc(
+        firebaseAuth: firebaseAuth,
+        hideMessageUC: hideMessageUC,
+        deleteMessageUC: deleteMessageUC,
+        markAsSeenUC: markAsSeenUC,
+        sendPlatformFileMessageUC: sendPlatformFileMessageUC,
+        sendFileMessageUC: sendFileMessageUC,
+        sendTextMessageUC: sendTextMessageUC,
+        initStreamUC: initializeConversationStreamUC,
+      );
+
+  GroupConversationTimestampsBloc get _timestampsBloc =>
+      GroupConversationTimestampsBloc(
+        initStreamUC:
+            InitializeTimestampStreamUC(firebaseUserProfileRepository),
+        syncTimestampsWithFirebaseUC:
+            SyncTimestampsWithFirebaseUC(firebaseUserProfileRepository),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -113,20 +282,18 @@ class NeonChat extends StatelessWidget {
         BlocProvider(
             create: (context) => _timestampsBloc
               ..add(GroupConversationTimestampsEvent.initialize(
-                  getItInstance<FirebaseAuth>().currentUser!.uid))),
+                  firebaseAuth.currentUser!.uid))),
         BlocProvider(
-          create: (context) => getItInstance<ConversationsSearchBloc>(),
+          create: (context) => conversationSearchBloc,
         ),
         BlocProvider(
-          create: (context) => getItInstance<CurrentConversationCubit>(),
+          create: (context) => currentConversationCubit,
         ),
-        BlocProvider(
-          create: (context) => getItInstance<ConversationsBloc>(),
-        ),
+        BlocProvider.value(value: conversationsBloc),
       ],
       child: DefaultConversationsLoader(
         initializeConversationsBloc: _initializeConversationsBloc,
-        fileUploadRepository: getItInstance<FileUploadRepository>(),
+        fileUploadRepository: fileUploadRepository,
         generateConversationBloc: _generateConversationBloc,
         generateConversationSearchBloc: () => ConversationSearchBloc(),
         conversationStyle: conversationStyle,
@@ -134,17 +301,7 @@ class NeonChat extends StatelessWidget {
         messageBubbleStyle: messageBubbleStyle,
         searchAppBarStyle: searchAppBarStyle,
         bottomBarStyle: bottomBarStyle,
-        onAppbarTap: onGroupConversationAppBarTap ??
-            (disableGroupChatAbbBarTap
-                ? null
-                : (conversation) => defaultOnGroupChatAppBarTap(
-                      context,
-                      style: GroupChatOverviewStyle(
-                        appBarColor: conversationsStyle.appBarColor,
-                      ),
-                      conversation: conversation,
-                      onOpenUserProfile: onOpenUserProfile,
-                    )),
+        onAppbarTap: onAppBarTap,
         onOpenUserProfile: onDirectConversationAppBarTap,
         getConversationCreationData: getConversationCreationData,
       ),

@@ -41,20 +41,23 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     on<ConversationEvent>((event, emit) {
       event.when(
         init: (conversationItem) {
-          _conversationId = conversationItem.conversation.id;
+          if (firebaseAuth.currentUser != null) {
+            _conversationId = conversationItem.conversation.id;
 
-          _conversationStream = initStreamUC(
-            conversationId: conversationItem.conversation.id,
-            combiner: (
-              List<ConversationMessage> messages,
-            ) =>
-                _OnData(
-              messages,
-              conversationItem.conversation,
-              conversationItem.conversation.displayName,
-            ),
-            onData: (onDataEvent) => add(onDataEvent),
-          );
+            _conversationStream = initStreamUC(
+              conversationId: conversationItem.conversation.id,
+              combiner: (
+                List<ConversationMessage> messages,
+              ) =>
+                  _OnData(
+                messages,
+                conversationItem.conversation,
+                conversationItem.conversation
+                    .getDisplayName(firebaseAuth.currentUser!.uid),
+              ),
+              onData: (onDataEvent) => add(onDataEvent),
+            );
+          }
         },
         onData: (messages, conversation, displayName) => emit(
           ConversationState.loadSuccess(

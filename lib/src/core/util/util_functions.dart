@@ -76,6 +76,7 @@ void defaultOnGroupConversationAppBarTap(
   BuildContext context, {
   required GroupChatOverviewStyle style,
   required Conversation conversation,
+  required String myId,
   Function(String)? onOpenUserProfile,
 }) {
   Navigator.push(
@@ -87,7 +88,7 @@ void defaultOnGroupConversationAppBarTap(
         child: Scaffold(
           appBar: AppBar(
             centerTitle: style.centerAppbarTitle,
-            title: Text(conversation.displayName),
+            title: Text(conversation.getDisplayName(myId)),
             backgroundColor: style.appBarColor,
           ),
           body: Column(

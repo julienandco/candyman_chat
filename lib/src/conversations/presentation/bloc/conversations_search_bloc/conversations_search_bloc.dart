@@ -12,9 +12,9 @@ part 'conversations_search_bloc.freezed.dart';
 class ConversationsSearchBloc
     extends Bloc<ConversationsSearchEvent, ConversationsSearchState> {
   final textController = TextEditingController();
-  final SearchConversationsUC searchUC = SearchConversationsUC();
+  final SearchConversationsUC searchUC;
 
-  ConversationsSearchBloc()
+  ConversationsSearchBloc(this.searchUC)
       : super(const ConversationsSearchState.state(conversations: [])) {
     on<ConversationsSearchEvent>(
       (event, emit) {

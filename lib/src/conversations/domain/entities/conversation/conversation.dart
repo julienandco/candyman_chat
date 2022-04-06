@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get_it/get_it.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 part 'conversation.freezed.dart';
@@ -39,21 +38,16 @@ class Conversation with _$Conversation {
   factory Conversation.fromJson(Map<String, dynamic> json) =>
       _$ConversationFromJson(json);
 
-  /// Returns whether the conversation is hidden from the current user
-  bool get isHidden => hiddenFrom.contains(
-        GetIt.instance<FirebaseAuth>().currentUser!.uid,
-      );
-
   /// The name that is shown to the user. Either group name for group
   /// conversations or conversation partner's name for 1-on-1 conversations.
   ///
-  String get displayName {
-    //TODO: add currentUserUID as Argument, so we can get rid of thie firebase auth call here
+  String getDisplayName(String myId) {
     if (isGroupConversation) {
-      return groupName ?? 'group'; //TODO: what to do?
+      return groupName ??
+          'group'; //TODO: what to do? add second argument to function that is groupdefaultname
     } else {
-      final otherUser = conversationMembers.firstWhere(
-          (userID) => userID.id != FirebaseAuth.instance.currentUser!.uid);
+      final otherUser =
+          conversationMembers.firstWhere((userID) => userID.id != myId);
       return otherUser.name;
     }
   }

@@ -1,5 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:badges/badges.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
@@ -175,7 +176,10 @@ class _ConversationListItemState extends State<ConversationListItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              widget.conversationItem.conversation.displayName,
+                              //TODO: get the uid as argument
+                              widget.conversationItem.conversation
+                                  .getDisplayName(
+                                      FirebaseAuth.instance.currentUser!.uid),
                               style: widget
                                   .conversationListItemStyle.titleTextStyle,
                             ),
