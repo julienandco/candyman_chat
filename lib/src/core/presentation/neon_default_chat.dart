@@ -284,7 +284,7 @@ class _NeonChatLoader extends StatelessWidget {
               ..add(GroupConversationTimestampsEvent.initialize(
                   firebaseAuth.currentUser!.uid))),
         BlocProvider(
-          create: (context) => conversationSearchBloc,
+          create: (context) => conversationsSearchBloc,
         ),
         BlocProvider(
           create: (context) => currentConversationCubit,
