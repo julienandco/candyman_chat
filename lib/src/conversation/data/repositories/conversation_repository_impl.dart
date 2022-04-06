@@ -110,6 +110,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
       doc.set(message.copyWith(doneUpload: false, id: doc.id).toJson());
 
+      //TODO: upload the file somewhere?
+
       log('sent file message', name: '$runtimeType');
       return ChatUploadFile(
         messageId: doc.id,

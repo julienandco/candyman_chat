@@ -19,6 +19,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
 
   @override
   Future<Either<Failure, Success>> deleteFileWithId(String fileId) async {
+    //TODO
     try {
       final response = await remoteDataSource.deleteEndpoint(fileId);
       // final response = await remoteApiDataSource
@@ -32,6 +33,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
   @override
   Future<void> updateUserProfilePhoto(
       {File? photoFile, PlatformFile? platformFile}) async {
+    //TODO: uses presigned urls by default
     try {
       final newPresignedUrl = await getNewPresignedUrl();
       if (newPresignedUrl?.value1 != null) {
@@ -70,6 +72,8 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
       {required ChatUploadFile file,
       required String conversationId,
       required String messageId}) async {
+    //TODO: uses presigned urls by default
+
     try {
       final newPresignedUrl = await getNewPresignedUrl();
       if (newPresignedUrl?.value1 != null) {
