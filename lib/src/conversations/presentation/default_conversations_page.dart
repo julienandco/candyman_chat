@@ -13,6 +13,9 @@ class DefaultConversationsPage extends StatefulWidget {
   final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
+
+  final String myId;
+
   final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onOpenUserProfile;
   final Function(Conversation)? onShowGroupInfo;
@@ -26,6 +29,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.fileUploadRepository,
     required this.generateConversationBloc,
     required this.generateConversationSearchBloc,
+    required this.myId,
     required this.conversationsStyle,
     required this.conversationStyle,
     required this.messageBubbleStyle,
@@ -132,6 +136,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 : chatConversations)
                             .map(
                               (conversationItem) => ConversationListItem(
+                                myId: widget.myId,
                                 conversationListItemStyle:
                                     widget.conversationsStyle.chatListItemStyle,
                                 conversationItem: conversationItem,

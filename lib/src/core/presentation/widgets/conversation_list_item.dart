@@ -14,10 +14,12 @@ class ConversationListItem extends StatefulWidget {
   final Function()? onOpenConversationInfo;
   final Widget conversationThumbnail;
   final ConversationListItemStyle conversationListItemStyle;
+  final String myId;
 
   const ConversationListItem({
     Key? key,
     required this.conversationItem,
+    required this.myId,
     this.onOpenConversation,
     this.onOpenConversationInfo,
     required this.conversationThumbnail,
@@ -176,10 +178,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              //TODO: get the uid as argument
                               widget.conversationItem.conversation
-                                  .getDisplayName(
-                                      FirebaseAuth.instance.currentUser!.uid),
+                                  .getDisplayName(widget.myId),
                               style: widget
                                   .conversationListItemStyle.titleTextStyle,
                             ),

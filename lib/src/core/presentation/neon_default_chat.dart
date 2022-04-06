@@ -292,6 +292,7 @@ class _NeonChatLoader extends StatelessWidget {
         BlocProvider.value(value: conversationsBloc),
       ],
       child: DefaultConversationsLoader(
+        myId: firebaseAuth.currentUser!.uid,
         initializeConversationsBloc: _initializeConversationsBloc,
         fileUploadRepository: fileUploadRepository,
         generateConversationBloc: _generateConversationBloc,

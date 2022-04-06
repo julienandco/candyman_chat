@@ -9,6 +9,8 @@ class DefaultConversationsLoader extends StatelessWidget {
   final ConversationBloc Function() generateConversationBloc;
   final ConversationSearchBloc Function() generateConversationSearchBloc;
 
+  final String myId;
+
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
   final MessageBubbleStyle messageBubbleStyle;
@@ -28,6 +30,7 @@ class DefaultConversationsLoader extends StatelessWidget {
     required this.fileUploadRepository,
     required this.generateConversationBloc,
     required this.generateConversationSearchBloc,
+    required this.myId,
     required this.conversationsStyle,
     required this.conversationStyle,
     required this.messageBubbleStyle,
@@ -92,6 +95,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: DefaultConversationsPage(
+                    myId: myId,
                     fileUploadRepository: fileUploadRepository,
                     updateGroupConversationTimestamp: (id, timestamp) =>
                         _updateGroupConversationTimestamp(context,

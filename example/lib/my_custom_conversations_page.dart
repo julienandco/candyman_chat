@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,6 +35,7 @@ class MyCustomConversationsPage extends StatelessWidget {
                               : chatConversations)
                           .map(
                             (conversation) => ConversationListItem(
+                              myId: FirebaseAuth.instance.currentUser!.uid,
                               conversationListItemStyle:
                                   ConversationListItemStyle(
                                       listTileColor: Colors.grey[200]!),
