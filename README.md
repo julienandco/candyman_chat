@@ -22,18 +22,13 @@ FirebaseApp.configure()
 Die Doku der Firebase Konsole ist noch nicht auf dem Flutter-Standard (Stand 23.02.2022).
 Das komplette Setup (iOS und Android App in Firebase anmelden), geht übrigens sehr entspannt mithilfe der [FlutterFireCLI][flutterfire_cli_link])
 
-2. Die App, in die der Chat integriert werden soll, MUSS von ```firebase_core, firebase_auth``` und ```cloud_firestore``` abhängen, um den Chat initialisieren zu können!
+2. In der neu aufgesetzen Firebase die Authentication und FirebaseFirestore aktivieren.
 
-3. Die App MUSS die abstrakte Klasse ```RemoteDataSource``` implementieren und sie dem Chat zur Verfügung stellen, damit jegliche File-Uploads funktionieren (Bilder, Videos und Sprachnachrichten). Das wird alles nämlich nicht in Firebase gespeichert, sondern in einem anderen Backend.
+3. Suchindizies im Firestore aktivieren. Der erste Request wird vermutlich schiefgehen, dann gibt es eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst.
 
-4. In der neu aufgesetzen Firebase die Authentication und FirebaseFirestore aktivieren.
+4. Die App, in die der Chat integriert werden soll, MUSS von ```firebase_core``` und ```firebase_auth``` abhängen, um sowohl die Firebase App zu initialisieren, als auch das Anmelden in Firebase zu ermöglichen.
 
-5. Es macht mehr Fun, wenn schon Daten vorhanden sind, dafür die Authentication und den Firestore populaten (Coming soon: ein Mörderskript, das das automatisch macht)! Am einfachsten ist es, Nutzername/PW Anmeldung zu aktivieren und dich dann programmatisch wie in ```example/lib/main.dart``` einzuloggen, ohne jegliche UI (nur am Anfang natürlich!)
-Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Naming Conventions in ```lib/core/util/firebase_keys.dart``` beachten bzw. eigene etablieren und dem Chat als ```FirebaseKeys``` Datenstruktur übergeben. Dabei die Staging/Production Logik beachten!!! (Staging Chats in z.B. ```staging-conversations``` speichern)
-
-6. Suchindizies im Firestore aktivieren. Der erste Request wird vermutlich schiefgehen, dann gibt es eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst.
-
-7. Damit die App beim Versuch, ein Foto zu machen oder auf deine Gallerie zuzugreifen, nicht crasht, musst du ein paar Keys ins Info.plist buttern: 
+5. Der Chat ermöglicht out-of-the-box das Teilen von Dateien, Fotos und Videos. Damit die App beim Versuch, ein Foto zu machen oder auf deine Galerie zuzugreifen, nicht crasht, musst du ein paar Keys ins Info.plist buttern: 
 
 ```plist
 <key>NSAppTransportSecurity</key>
@@ -49,235 +44,68 @@ Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Namin
 <string>Mikro bite.</string>
 ```
 
+ZUSATZ:
+Es macht mehr Fun, wenn schon Daten vorhanden sind, dafür die Authentication und den Firestore populaten (Coming soon: ein Mörderskript, das das automatisch macht)! Am einfachsten ist es, Nutzername/PW Anmeldung zu aktivieren und dich dann programmatisch wie in ```example/lib/main.dart``` einzuloggen, ohne jegliche UI (nur am Anfang natürlich!)
+Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Naming Conventions in ```lib/core/util/firebase_keys.dart``` beachten bzw. eigene etablieren und eine Instanz der ```FirebaseKeys``` Datenstruktur erstellen. Diese im ```getIt``` des Projekts registrieren, damit der Chat darauf zugreifen kann. Beim Benennen der FirebaseKeys die Staging/Production Logik beachten!!! (Staging Chats in z.B. ```staging-conversations``` speichern)
 
 ## Nutzung
 
-Keine wahnsinnige UI, sondern Standard? Dann nutze ```DefaultConversationLoader, DefaultConversationPage, DefaultConversationsLoader``` und ```DefaultConversationsPage``` und style sie der App entsprechend! Diese Widgets funktionieren out-of-the-box und ein Anwendungsbeispiel findest du in ```example/lib/main.dart```.
+Der Chat hat zwei Use-Cases: 
 
-Sollte der Chat völlig extravant aussehen und jedes ```ChatItem, MessageBubble``` und die ```MessageList``` den Ansprüchen nicht gerecht werden, kann auch nur auf die Logik des Packages zugegriffen werden. Durch die gesamten Blocs wird alles exportiert, was man für das Implementieren eines Chat-Features benötigt!
+  1. Hirn auf Leerlauf, den Default NEON-Chat nutzen und nur Styling ändern.
+  2. Irgendein Special Snowflake ❄ hat die Chat-Welt revolutioniert und das Default-Design reicht nicht aus. Also nur die Logik des NEON-Chats nutzen.
 
-Dabei bietet es sich natürlich an, Dependency Injection mithilfe von ```getIt``` zu verwenden! 
-So kann der Code innerhalb der App wesentlich schlanker gemacht werden!
+Unabhängig davon, welcher Fall auf dich zutrifft, musst du die ```RemoteDataSource``` implementieren, da sie die File-Uploads (Fotos, Videos, Dateien, Audionachrichten) ermöglicht. Das alles wird nämlich nicht in Firebase (dort liegt nur ein Link), sondern in einem anderen, projektspezifischen Backend gespeichert.
 
-ACHTUNG: Damit der nächste Absatz für dich funktioniert, muss deine App diese Abhängigkeiten in ihrer ```pubspec.yaml``` haben:
+Ab jetzt wird differenziert!
 
-```yaml
-dependencies:
-  injectable: ^x.y.z
-  get_it: ^a.b.c
+Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1. 
 
-dev_dependencies:
-  injectable_generator: ^å.∫.ç
-  build_runner: ^≈.¥.†
-```
 
-Erstelle jetzt mithilfe von [mason][mason_link] das ```NEON-Chat-Injection-Brick```. Was? Du weißt nicht, wie das geht?
+Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und kannst zahlreiche Styles zum customisen und Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben!
+
+FUNFACT: Solltest du in deinem Projekt [GetIt][get_it_link] verwenden, kannst du jetzt mithilfe von [mason][mason_link] das ```NEON-Chat-Injection-Brick``` generieren, um sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` zu verwalten. Was? Du weißt nicht, wie das geht? 
 Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den [NEON-Bricks][neon_bricks_link] durch. Die [Doku von Mason][mason_link] und [dieses Tutorial][mason_tutorial_link] sind auch sehr hilfreich.
+
+TL;DR:
+In das lib Verzeichnis wechseln und dann diesen Befehl ausführen:
+
+```mason make firebase_injections```
 
 Was? Dir steht das Brick nicht zur Verfügung, weil du diese App nicht mit der [NEON CLI][neon_cli_link] aufgesetzt hast? BigMac, bann den weg!
 
-Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du auch diese zwei Files im ```lib```-Ordner deines Projekts händisch (🤢) erstellen:
+Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du das File auch händisch (🤢) in den ```lib```-Ordner deines Projekts kopieren:
 
-```neon_chat_injectable_module.dart```
-```dart
-//TODOINIT: adjust this import to find your project's injection file
-import 'package:example/injection/injection.dart';
+```example/lib/injection/firebase_injectable_module.dart```
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:injectable/injectable.dart';
-import 'package:neon_chat/neon_chat.dart';
 
-@module
-abstract class NEONChatInjectableModule {
-  //TODOINIT: fill the firebase keys with custom ones if needed.
-  //TODOINIT: adjust firebaseKEys environment to the environment used by getIt
-  @lazySingleton
-  FirebaseKeys get firebaseKeys => const FirebaseKeys();
+(Komplettes Beispiel siehe ```example/lib/main.dart```)
 
-  @LazySingleton(as: ConversationRepository)
-  ConversationRepositoryImpl get conversationRepository =>
-      ConversationRepositoryImpl(
-        firestore: getIt<FirebaseFirestore>(),
-        firebaseAuth: getIt<FirebaseAuth>(),
-        firebaseKeys: firebaseKeys,
-      );
-
-  @LazySingleton(as: ConversationsRepository)
-  ConversationsRepositoryImpl get conversationsRepository =>
-      ConversationsRepositoryImpl(
-        firestore: getIt<FirebaseFirestore>(),
-        firebaseAuth: getIt<FirebaseAuth>(),
-        firebaseKeys: firebaseKeys,
-      );
-
-  @LazySingleton(as: FileUploadRepository)
-  FileUploadRepositoryImpl get fileUploadRepository =>
-      FileUploadRepositoryImpl(remoteDataSource: getIt<RemoteDataSource>());
-
-  @LazySingleton(as: UploadManagerRepository)
-  UploadManagerRepositoryImpl get uploadManagerRepository =>
-      UploadManagerRepositoryImpl(fileUploadRepository: fileUploadRepository);
-
-  @LazySingleton(as: FirebaseUserProfileRepository)
-  FirebaseUserProfileRepositoryImpl get firebaseUserProfileRepository =>
-      FirebaseUserProfileRepositoryImpl(
-        firestore: getIt<FirebaseFirestore>(),
-        firebaseKeys: firebaseKeys,
-      );
-
-  @lazySingleton
-  HideMessageUC get hideMessageUC => HideMessageUC(conversationRepository);
-
-  @lazySingleton
-  DeleteMessageUC get deleteMessageUC =>
-      DeleteMessageUC(conversationRepository);
-
-  @lazySingleton
-  MarkMessageAsSeenUC get markAsSeenUC =>
-      MarkMessageAsSeenUC(conversationRepository);
-
-  @lazySingleton
-  SendPlatformFileMessageUC get sendPlatformFileMessageUC =>
-      SendPlatformFileMessageUC(
-          conversationRepository: conversationRepository,
-          uploadManagerRepository: uploadManagerRepository);
-
-  @lazySingleton
-  SendFileMessageUC get sendFileMessageUC => SendFileMessageUC(
-      conversationRepository: conversationRepository,
-      uploadManagerRepository: uploadManagerRepository);
-
-  @lazySingleton
-  SendTextMessageUC get sendTextMessageUC =>
-      SendTextMessageUC(conversationRepository);
-
-  @lazySingleton
-  InitializeConversationStreamUC get initializeConversationStreamUC =>
-      InitializeConversationStreamUC(
-          conversationRepository: conversationRepository,
-          conversationsRepository: conversationsRepository,
-          firebaseUserProfileRepository: firebaseUserProfileRepository);
-
-  @lazySingleton
-  InitializeConversationItemStreamUC get initializeConversationItemStreamUC =>
-      InitializeConversationItemStreamUC(
-          conversationRepository: conversationRepository,
-          conversationsRepository: conversationsRepository,
-          userProfileRepository: firebaseUserProfileRepository);
-
-  @lazySingleton
-  InitializeConversationsStreamUC get initializeConversationsStreamUC =>
-      InitializeConversationsStreamUC(conversationsRepository);
-
-  @lazySingleton
-  HideConversationUC get hideConversationUC =>
-      HideConversationUC(conversationsRepository);
-
-  @lazySingleton
-  ChatBloc get chatBloc => ChatBloc(
-      firebaseAuth: getIt<FirebaseAuth>(),
-      hideMessageUC: hideMessageUC,
-      deleteMessageUC: deleteMessageUC,
-      markAsSeenUC: markAsSeenUC,
-      sendPlatformFileMessageUC: sendPlatformFileMessageUC,
-      sendFileMessageUC: sendFileMessageUC,
-      sendTextMessageUC: sendTextMessageUC,
-      initStreamUC: initializeConversationStreamUC);
-
-  @lazySingleton
-  ChatSearchBloc get chatSearchBloc => ChatSearchBloc();
-
-  @lazySingleton
-  CurrentConversationCubit get currentConversationCubit =>
-      CurrentConversationCubit();
-
-  @lazySingleton
-  ConversationsBloc get conversationsBloc => ConversationsBloc(
-      initializeConversationsStreamUC: initializeConversationsStreamUC,
-      initializeConversationItemStreamUC: initializeConversationItemStreamUC,
-      hideConversationUC: hideConversationUC);
-
-  @lazySingleton
-  ConversationsSearchBloc get conversationsSearchBloc =>
-      ConversationsSearchBloc();
-}
-```
-
-```remote_data_source_injectable_module.dart```
-```dart
-import 'package:dartz/dartz.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:injectable/injectable.dart';
-
-import 'package:neon_chat/neon_chat.dart';
-
-@module
-abstract class RemoteDataBaseInjectableModule {
-  @lazySingleton
-  RemoteDataSource get remoteDataSource => _MyDataSource();
-}
-
-class _MyDataSource implements RemoteDataSource {
-  @override
-  Future<Either<Failure, String>> deleteEndpoint(String fileId) async {
-    // TODO: implement deleteEndpoint
-
-    return right('TODO');
-  }
-
-  @override
-  Future<Either<Failure, String>> getEndpoint(String fileId) async {
-    // TODO: implement getEndpoint
-    return right('TODO');
-  }
-
-  @override
-  Future<Either<Failure, String>> patchEndpoint(
-      String fileId, Map<String, dynamic> body) async {
-    // TODO: implement patchEndpoint
-    return right('TODO');
-  }
-
-  @override
-  Future<Either<Failure, String>> postEndpoint(
-      String fileId, Map<String, dynamic> body) async {
-    // TODO: implement postEndpoint
-    return right('TODO');
-  }
-
-  @override
-  Future<Either<Failure, Success>> uploadFileToPresignedURL(String url,
-      {String? filePath,
-      PlatformFile? platformFile,
-      void Function(int p1, int p2)? onReceiveProgress}) async {
-    // TODO: implement uploadFileToPresignedURL
-    return right(const Success());
-  }
-}
-```
-
-Sobald diese beiden Files in deinem ```lib```-Verzeichnis liegen, kannst (sollst, musst) du alle TODOs darin abarbeiten. Jetzt noch den build_runner laufen lassen und im Anschluss ist die komplette NEON-Chat-Logik innerhalb deiner App mit ```getIt``` verfügbar (gesamtes Beispiel siehe ```example/lib/my_custom_conversations_loader.dart```):
 ```dart
 ...
-MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => getIt<ConversationsSearchBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<CurrentConversationCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<ConversationsBloc>(),
-        ),
-      ],
-      child: ...,
-);
+ @override
+  Widget build(BuildContext context) {
+    return NeonChat(
+        firebaseAuthInstance: getIt<FirebaseAuth>(),
+        firebaseFirestoreInstance: getIt<FirebaseFirestore>(),
+        remoteDataSource: getIt<RemoteDataSource>(),
+    );
+  }
 ```
+
+Solltest du dich wider Erwarten in Fall 2 befinden, dann willst du höchstwahrscheinlich die gesamten UI-Komponenten neu bauen, oder die Chat-Logik sogar erweitern 😱 (falls du denkst, dass das auch für andere Projekte Sinn macht, dann hauen wir das mit ins Package)!
+
+Dank der nicht vorhandenen Export-Regeln des Packages steht dir die gesamte NEON-Chat-Logik zur Verfügung 💪🏻 
+
+Nutze sie, doch nutze sie weise 🧙🏻‍♂️ !
+
+Selbstverständlich stehen dir auch alle Widgets aus dem Chat-Package zur Verfügung, tob dich aus!
+
+Und jetzt: Abfahrt! 🏎
 
 
 [flutterfire_cli_link]: https://firebase.flutter.dev/docs/overview/
+[get_it_link]: https://pub.dev/packages/get_it
 [mason_link]: https://pub.dev/packages/mason_cli
 [template_project_link]: https://github.com/julien-neon/NEON_template_project
 [neon_bricks_link]: https://github.com/julien-neon/NEON_bricks

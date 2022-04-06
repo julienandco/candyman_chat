@@ -7,7 +7,7 @@ class HideMessageUC {
 
   void call({
     required String conversationId,
-    required ChatMessage message,
+    required ConversationMessage message,
   }) {
     return conversationRepository.hideMessage(conversationId, message);
   }

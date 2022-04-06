@@ -1,7 +1,5 @@
-import 'package:injectable/injectable.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 
-@LazySingleton(as: UploadManagerRepository)
 class UploadManagerRepositoryImpl implements UploadManagerRepository {
   final FileUploadRepository fileUploadRepository;
 
@@ -9,10 +7,10 @@ class UploadManagerRepositoryImpl implements UploadManagerRepository {
     required this.fileUploadRepository,
   });
 
-  final List<ChatUploadFile> _fileQueue = [];
+  final List<ConversationUploadFile> _fileQueue = [];
 
   @override
-  Future<void> upload(ChatUploadFile file) async {
+  Future<void> upload(ConversationUploadFile file) async {
     _fileQueue.add(file);
     final fileIndex = _getFileIndexFromQueue(file.messageId);
 
@@ -24,11 +22,11 @@ class UploadManagerRepositoryImpl implements UploadManagerRepository {
       );
 
       _fileQueue[fileIndex] = _fileQueue[fileIndex].copyWith(
-        status: ChatUploadFileStatus.done,
+        status: ConversationUploadFileStatus.done,
       );
     } catch (err) {
-      _fileQueue[fileIndex] =
-          _fileQueue[fileIndex].copyWith(status: ChatUploadFileStatus.failed);
+      _fileQueue[fileIndex] = _fileQueue[fileIndex]
+          .copyWith(status: ConversationUploadFileStatus.failed);
     }
   }
 
@@ -37,7 +35,7 @@ class UploadManagerRepositoryImpl implements UploadManagerRepository {
   }
 
   @override
-  Stream<ChatUploadFile> getFileStatus(String messageId) {
+  Stream<ConversationUploadFile> getFileStatus(String messageId) {
     return Stream.fromIterable(_fileQueue).where(
       (event) => event.messageId == messageId,
     );

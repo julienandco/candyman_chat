@@ -4,18 +4,22 @@ import 'package:neon_chat/src/conversations/conversations.dart';
 /// user has and looks for matches with the query string and the name of the
 /// conversation.
 class SearchConversationsUC {
-  SearchConversationsUC();
+  final String _myId;
+  SearchConversationsUC(String? id) : _myId = id ?? '';
 
-  List<ConversationItem> _conversations = [];
+  List<ConversationItem> _conversationItems = [];
 
-  void initialize(List<ConversationItem> conversations) {
-    _conversations = conversations;
+  void initialize(List<ConversationItem> conversationItems) {
+    _conversationItems = conversationItems;
   }
 
   List<ConversationItem> search(String query) {
+    if (_myId.isEmpty) {
+      return conversations;
+    }
     final results = <ConversationItem>{};
-    for (int i = 0; i < _conversations.length; i++) {
-      String data = _conversations[i].conversationPartner.name;
+    for (int i = 0; i < _conversationItems.length; i++) {
+      String data = _conversationItems[i].conversation.getDisplayName(_myId);
       if (data.toLowerCase().contains(query.toLowerCase())) {
         results.add(conversations[i]);
       }
@@ -23,5 +27,5 @@ class SearchConversationsUC {
     return results.toList();
   }
 
-  List<ConversationItem> get conversations => _conversations;
+  List<ConversationItem> get conversations => _conversationItems;
 }

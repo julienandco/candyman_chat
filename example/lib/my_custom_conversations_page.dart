@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,6 +6,10 @@ import 'package:neon_chat/neon_chat.dart';
 
 class MyCustomConversationsPage extends StatelessWidget {
   const MyCustomConversationsPage({Key? key}) : super(key: key);
+
+  void onOpenUserProfile() {
+    print('i did not implement this :D');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +34,18 @@ class MyCustomConversationsPage extends StatelessWidget {
                               ? conversationsSearchState.conversations
                               : chatConversations)
                           .map(
-                            (conversation) => ChatListItem(
+                            (conversation) => ConversationListItem(
+                              myId: FirebaseAuth.instance.currentUser!.uid,
+                              conversationListItemStyle:
+                                  ConversationListItemStyle(
+                                      listTileColor: Colors.grey[200]!),
                               conversationItem: conversation,
-                              userAvatar: Container(
+                              conversationThumbnail: Container(
                                 height: 30,
                                 width: 30,
                                 color: Colors.green,
                               ),
-                              onOpenChat: () {
+                              onOpenConversation: () {
                                 showDialog(
                                   context: context,
                                   builder: (context) => Center(
@@ -51,6 +60,7 @@ class MyCustomConversationsPage extends StatelessWidget {
                                 Future.delayed(const Duration(seconds: 3),
                                     () => Navigator.of(context).pop());
                               },
+                              onOpenConversationInfo: onOpenUserProfile,
                             ),
                           )
                           .toList();

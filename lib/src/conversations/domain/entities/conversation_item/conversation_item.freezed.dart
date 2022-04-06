@@ -20,13 +20,11 @@ class _$ConversationItemTearOff {
 
   _ConversationItem call(
       {required Conversation conversation,
-      required ChatMessage lastMessage,
-      required FirebaseUser conversationPartner,
+      required ConversationMessage lastMessage,
       required int unreadMessagesCount}) {
     return _ConversationItem(
       conversation: conversation,
       lastMessage: lastMessage,
-      conversationPartner: conversationPartner,
       unreadMessagesCount: unreadMessagesCount,
     );
   }
@@ -38,8 +36,7 @@ const $ConversationItem = _$ConversationItemTearOff();
 /// @nodoc
 mixin _$ConversationItem {
   Conversation get conversation => throw _privateConstructorUsedError;
-  ChatMessage get lastMessage => throw _privateConstructorUsedError;
-  FirebaseUser get conversationPartner => throw _privateConstructorUsedError;
+  ConversationMessage get lastMessage => throw _privateConstructorUsedError;
   int get unreadMessagesCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -54,13 +51,11 @@ abstract class $ConversationItemCopyWith<$Res> {
       _$ConversationItemCopyWithImpl<$Res>;
   $Res call(
       {Conversation conversation,
-      ChatMessage lastMessage,
-      FirebaseUser conversationPartner,
+      ConversationMessage lastMessage,
       int unreadMessagesCount});
 
   $ConversationCopyWith<$Res> get conversation;
-  $ChatMessageCopyWith<$Res> get lastMessage;
-  $FirebaseUserCopyWith<$Res> get conversationPartner;
+  $ConversationMessageCopyWith<$Res> get lastMessage;
 }
 
 /// @nodoc
@@ -76,7 +71,6 @@ class _$ConversationItemCopyWithImpl<$Res>
   $Res call({
     Object? conversation = freezed,
     Object? lastMessage = freezed,
-    Object? conversationPartner = freezed,
     Object? unreadMessagesCount = freezed,
   }) {
     return _then(_value.copyWith(
@@ -87,11 +81,7 @@ class _$ConversationItemCopyWithImpl<$Res>
       lastMessage: lastMessage == freezed
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as ChatMessage,
-      conversationPartner: conversationPartner == freezed
-          ? _value.conversationPartner
-          : conversationPartner // ignore: cast_nullable_to_non_nullable
-              as FirebaseUser,
+              as ConversationMessage,
       unreadMessagesCount: unreadMessagesCount == freezed
           ? _value.unreadMessagesCount
           : unreadMessagesCount // ignore: cast_nullable_to_non_nullable
@@ -107,16 +97,9 @@ class _$ConversationItemCopyWithImpl<$Res>
   }
 
   @override
-  $ChatMessageCopyWith<$Res> get lastMessage {
-    return $ChatMessageCopyWith<$Res>(_value.lastMessage, (value) {
+  $ConversationMessageCopyWith<$Res> get lastMessage {
+    return $ConversationMessageCopyWith<$Res>(_value.lastMessage, (value) {
       return _then(_value.copyWith(lastMessage: value));
-    });
-  }
-
-  @override
-  $FirebaseUserCopyWith<$Res> get conversationPartner {
-    return $FirebaseUserCopyWith<$Res>(_value.conversationPartner, (value) {
-      return _then(_value.copyWith(conversationPartner: value));
     });
   }
 }
@@ -130,16 +113,13 @@ abstract class _$ConversationItemCopyWith<$Res>
   @override
   $Res call(
       {Conversation conversation,
-      ChatMessage lastMessage,
-      FirebaseUser conversationPartner,
+      ConversationMessage lastMessage,
       int unreadMessagesCount});
 
   @override
   $ConversationCopyWith<$Res> get conversation;
   @override
-  $ChatMessageCopyWith<$Res> get lastMessage;
-  @override
-  $FirebaseUserCopyWith<$Res> get conversationPartner;
+  $ConversationMessageCopyWith<$Res> get lastMessage;
 }
 
 /// @nodoc
@@ -157,7 +137,6 @@ class __$ConversationItemCopyWithImpl<$Res>
   $Res call({
     Object? conversation = freezed,
     Object? lastMessage = freezed,
-    Object? conversationPartner = freezed,
     Object? unreadMessagesCount = freezed,
   }) {
     return _then(_ConversationItem(
@@ -168,11 +147,7 @@ class __$ConversationItemCopyWithImpl<$Res>
       lastMessage: lastMessage == freezed
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as ChatMessage,
-      conversationPartner: conversationPartner == freezed
-          ? _value.conversationPartner
-          : conversationPartner // ignore: cast_nullable_to_non_nullable
-              as FirebaseUser,
+              as ConversationMessage,
       unreadMessagesCount: unreadMessagesCount == freezed
           ? _value.unreadMessagesCount
           : unreadMessagesCount // ignore: cast_nullable_to_non_nullable
@@ -187,21 +162,18 @@ class _$_ConversationItem implements _ConversationItem {
   _$_ConversationItem(
       {required this.conversation,
       required this.lastMessage,
-      required this.conversationPartner,
       required this.unreadMessagesCount});
 
   @override
   final Conversation conversation;
   @override
-  final ChatMessage lastMessage;
-  @override
-  final FirebaseUser conversationPartner;
+  final ConversationMessage lastMessage;
   @override
   final int unreadMessagesCount;
 
   @override
   String toString() {
-    return 'ConversationItem(conversation: $conversation, lastMessage: $lastMessage, conversationPartner: $conversationPartner, unreadMessagesCount: $unreadMessagesCount)';
+    return 'ConversationItem(conversation: $conversation, lastMessage: $lastMessage, unreadMessagesCount: $unreadMessagesCount)';
   }
 
   @override
@@ -214,8 +186,6 @@ class _$_ConversationItem implements _ConversationItem {
             const DeepCollectionEquality()
                 .equals(other.lastMessage, lastMessage) &&
             const DeepCollectionEquality()
-                .equals(other.conversationPartner, conversationPartner) &&
-            const DeepCollectionEquality()
                 .equals(other.unreadMessagesCount, unreadMessagesCount));
   }
 
@@ -224,7 +194,6 @@ class _$_ConversationItem implements _ConversationItem {
       runtimeType,
       const DeepCollectionEquality().hash(conversation),
       const DeepCollectionEquality().hash(lastMessage),
-      const DeepCollectionEquality().hash(conversationPartner),
       const DeepCollectionEquality().hash(unreadMessagesCount));
 
   @JsonKey(ignore: true)
@@ -236,16 +205,13 @@ class _$_ConversationItem implements _ConversationItem {
 abstract class _ConversationItem implements ConversationItem {
   factory _ConversationItem(
       {required Conversation conversation,
-      required ChatMessage lastMessage,
-      required FirebaseUser conversationPartner,
+      required ConversationMessage lastMessage,
       required int unreadMessagesCount}) = _$_ConversationItem;
 
   @override
   Conversation get conversation;
   @override
-  ChatMessage get lastMessage;
-  @override
-  FirebaseUser get conversationPartner;
+  ConversationMessage get lastMessage;
   @override
   int get unreadMessagesCount;
   @override

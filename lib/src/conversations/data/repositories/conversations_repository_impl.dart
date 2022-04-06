@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class ConversationsRepositoryImpl implements ConversationsRepository {
@@ -17,20 +18,42 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }) : _collection =
             firestore.collection(firebaseKeys.conversationsCollectionKey);
 
-  String get _userId => firebaseAuth.currentUser!.uid;
+  User get _currentUser => firebaseAuth.currentUser!;
 
   @override
-  Future<Conversation> createConversations(String chatPersonId) async {
-    final query = await _collection.where(firebaseKeys.conversationMembersKey,
-        arrayContainsAny: [_userId]).get();
+  Future<Conversation> createConversation({
+    required FirebaseUser me,
+    required DirectConversationCreationData creationData,
+  }) async {
+    final conversationPartner = creationData.conversationPartner;
+
+    // This query checks whether a 1-on-1 conversation between [_userId]
+    // and [conversationPartnerID] already exists to make sure chat rooms are
+    // not duplicated.
+    final query = await _collection
+        .where(
+            '${firebaseKeys.conversationMembersKey}.${conversationPartner.id}',
+            isNull: false)
+        .get();
+
+    List<String> _members;
+    _members = [conversationPartner.id];
+    _members.add(_currentUser.uid);
+
     final conversations = query.docs
         .map((e) => Conversation.fromJson(e.data() as Map<String, dynamic>))
         .toList();
-    final list = conversations
-        .where((element) => element.conversationMembers.contains(chatPersonId));
+
+    final list = conversations.where((element) {
+      return listEquals(
+          List<String>.from(element.conversationMembers.map((user) => user.id)),
+          _members);
+    });
+
     if (list.isNotEmpty) {
+      // There is already a conversation between the two users.
       final conversation = list.first;
-      if (conversation.hiddenFrom.contains(_userId)) {
+      if (conversation.hiddenFrom.contains(_currentUser.uid)) {
         _unhideConversations(conversation.id);
       }
       return list.first;
@@ -38,12 +61,11 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       final doc = _collection.doc();
       final conversation = Conversation(
         id: doc.id,
-        conversationMembers: [chatPersonId, _userId],
-        timestamp: DateTime.now(),
+        conversationMembers: [me, conversationPartner],
+        createdAt: DateTime.now(),
+        isGroupConversation: false,
       );
-      await doc.set(
-        conversation.toJson(),
-      );
+      await doc.set(conversation.toJson());
       return conversation;
     }
   }
@@ -51,30 +73,28 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   @override
   Stream<List<Conversation>> getAllConversations() {
     return _collection
-        .where(firebaseKeys.conversationMembersKey, arrayContainsAny: [_userId])
+        .where('${firebaseKeys.conversationMembersKey}.${_currentUser.uid}',
+            isNull: false)
         .snapshots()
         .transform(
-          StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-              List<Conversation>>.fromHandlers(
-            handleData: (
-              QuerySnapshot<Map<String, dynamic>> data,
-              EventSink<List<Conversation>> sink,
-            ) async {
-              final userId = firebaseAuth.currentUser?.uid;
+      StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
+          List<Conversation>>.fromHandlers(
+        handleData: (
+          QuerySnapshot<Map<String, dynamic>> data,
+          EventSink<List<Conversation>> sink,
+        ) async {
+          final userId = firebaseAuth.currentUser?.uid;
 
-              final snaps = data.docs
-                  .map(
-                    (doc) => doc.data(),
-                  )
-                  .toList();
-              final chats = snaps
-                  .map((json) => Conversation.fromJson(json))
-                  .toList()
-                ..removeWhere((element) => element.hiddenFrom.contains(userId));
-              sink.add(chats);
-            },
-          ),
-        );
+          final snaps = data.docs.map((doc) => doc.data()).toList();
+
+          final conversations = snaps
+              .map((json) => Conversation.fromJson(json))
+              .toList()
+            ..removeWhere((element) => element.hiddenFrom.contains(userId));
+          sink.add(conversations);
+        },
+      ),
+    );
   }
 
   @override
@@ -82,7 +102,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     return _collection
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
-        .where(firebaseKeys.messageSenderIdKey, isNotEqualTo: _userId)
+        .where(firebaseKeys.messageSenderIdKey, isNotEqualTo: _currentUser.uid)
         .where(firebaseKeys.messageSeenKey, isEqualTo: false)
         .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
         .snapshots()
@@ -91,6 +111,38 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
         handleData: (QuerySnapshot<Map<String, dynamic>> data,
             EventSink<int> sink) async {
           sink.add(data.docs.length);
+        },
+      ),
+    );
+  }
+
+  @override
+  Stream<int> getUnreadGroupMessagesCount({
+    required String conversationId,
+    required Timestamp lastSeenTimestamp,
+  }) {
+    return _collection
+        .doc(conversationId)
+        .collection(firebaseKeys.messagesInConversationKey)
+        .where(firebaseKeys.messageTimestampKey,
+            isGreaterThan: lastSeenTimestamp)
+        .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
+        .snapshots()
+        .transform(
+      StreamTransformer.fromHandlers(
+        handleData: (QuerySnapshot<Map<String, dynamic>> data,
+            EventSink<int> sink) async {
+          // comment for future me: as of today (01.04.2022), lazy-ass firebase
+          // only allows queries with inequality operators on just one field,
+          // so you cannot check for uid != currentUid AND
+          // timestamp < lastSeenTimestamp.
+          //
+          // So we query for the timestamp argument (more gets filtered out)
+          // and then filter out our own messages locally. wtf google.
+          final unreadMessagesNotFromMe = data.docs.where((doc) =>
+              doc.data()[firebaseKeys.messageSenderIdKey] != _currentUser.uid);
+
+          sink.add(unreadMessagesNotFromMe.length);
         },
       ),
     );
@@ -134,5 +186,25 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
         ),
       },
     );
+  }
+
+  @override
+  Future<Conversation> createGroupConversation({
+    required FirebaseUser me,
+    required GroupConversationCreationData creationData,
+  }) async {
+    //TODO: thumbnail should be uploaded somewhere
+
+    final doc = _collection.doc();
+    final conversation = Conversation(
+      id: doc.id,
+      conversationMembers: [...creationData.conversationMembers, me],
+      createdAt: DateTime.now(),
+      groupName: creationData.groupName,
+      groupPicture: creationData.groupPhoto,
+      isGroupConversation: true,
+    );
+    await doc.set(conversation.toJson());
+    return conversation;
   }
 }

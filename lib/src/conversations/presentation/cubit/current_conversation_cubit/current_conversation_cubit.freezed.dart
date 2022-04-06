@@ -18,10 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$CurrentConversationStateTearOff {
   const _$CurrentConversationStateTearOff();
 
-  _State current({String? userProfileId, String? conversationId}) {
+  _State current({ConversationItem? conversationItem}) {
     return _State(
-      userProfileId: userProfileId,
-      conversationId: conversationId,
+      conversationItem: conversationItem,
     );
   }
 }
@@ -31,23 +30,21 @@ const $CurrentConversationState = _$CurrentConversationStateTearOff();
 
 /// @nodoc
 mixin _$CurrentConversationState {
-  String? get userProfileId => throw _privateConstructorUsedError;
-  String? get conversationId => throw _privateConstructorUsedError;
+  ConversationItem? get conversationItem => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? userProfileId, String? conversationId)
-        current,
+    required TResult Function(ConversationItem? conversationItem) current,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String? userProfileId, String? conversationId)? current,
+    TResult Function(ConversationItem? conversationItem)? current,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? userProfileId, String? conversationId)? current,
+    TResult Function(ConversationItem? conversationItem)? current,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,7 +75,9 @@ abstract class $CurrentConversationStateCopyWith<$Res> {
   factory $CurrentConversationStateCopyWith(CurrentConversationState value,
           $Res Function(CurrentConversationState) then) =
       _$CurrentConversationStateCopyWithImpl<$Res>;
-  $Res call({String? userProfileId, String? conversationId});
+  $Res call({ConversationItem? conversationItem});
+
+  $ConversationItemCopyWith<$Res>? get conversationItem;
 }
 
 /// @nodoc
@@ -92,19 +91,25 @@ class _$CurrentConversationStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? userProfileId = freezed,
-    Object? conversationId = freezed,
+    Object? conversationItem = freezed,
   }) {
     return _then(_value.copyWith(
-      userProfileId: userProfileId == freezed
-          ? _value.userProfileId
-          : userProfileId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      conversationId: conversationId == freezed
-          ? _value.conversationId
-          : conversationId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      conversationItem: conversationItem == freezed
+          ? _value.conversationItem
+          : conversationItem // ignore: cast_nullable_to_non_nullable
+              as ConversationItem?,
     ));
+  }
+
+  @override
+  $ConversationItemCopyWith<$Res>? get conversationItem {
+    if (_value.conversationItem == null) {
+      return null;
+    }
+
+    return $ConversationItemCopyWith<$Res>(_value.conversationItem!, (value) {
+      return _then(_value.copyWith(conversationItem: value));
+    });
   }
 }
 
@@ -114,7 +119,10 @@ abstract class _$StateCopyWith<$Res>
   factory _$StateCopyWith(_State value, $Res Function(_State) then) =
       __$StateCopyWithImpl<$Res>;
   @override
-  $Res call({String? userProfileId, String? conversationId});
+  $Res call({ConversationItem? conversationItem});
+
+  @override
+  $ConversationItemCopyWith<$Res>? get conversationItem;
 }
 
 /// @nodoc
@@ -129,18 +137,13 @@ class __$StateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? userProfileId = freezed,
-    Object? conversationId = freezed,
+    Object? conversationItem = freezed,
   }) {
     return _then(_State(
-      userProfileId: userProfileId == freezed
-          ? _value.userProfileId
-          : userProfileId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      conversationId: conversationId == freezed
-          ? _value.conversationId
-          : conversationId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      conversationItem: conversationItem == freezed
+          ? _value.conversationItem
+          : conversationItem // ignore: cast_nullable_to_non_nullable
+              as ConversationItem?,
     ));
   }
 }
@@ -148,16 +151,14 @@ class __$StateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_State implements _State {
-  const _$_State({this.userProfileId, this.conversationId});
+  const _$_State({this.conversationItem});
 
   @override
-  final String? userProfileId;
-  @override
-  final String? conversationId;
+  final ConversationItem? conversationItem;
 
   @override
   String toString() {
-    return 'CurrentConversationState.current(userProfileId: $userProfileId, conversationId: $conversationId)';
+    return 'CurrentConversationState.current(conversationItem: $conversationItem)';
   }
 
   @override
@@ -166,16 +167,12 @@ class _$_State implements _State {
         (other.runtimeType == runtimeType &&
             other is _State &&
             const DeepCollectionEquality()
-                .equals(other.userProfileId, userProfileId) &&
-            const DeepCollectionEquality()
-                .equals(other.conversationId, conversationId));
+                .equals(other.conversationItem, conversationItem));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(userProfileId),
-      const DeepCollectionEquality().hash(conversationId));
+      runtimeType, const DeepCollectionEquality().hash(conversationItem));
 
   @JsonKey(ignore: true)
   @override
@@ -185,28 +182,27 @@ class _$_State implements _State {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? userProfileId, String? conversationId)
-        current,
+    required TResult Function(ConversationItem? conversationItem) current,
   }) {
-    return current(userProfileId, conversationId);
+    return current(conversationItem);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String? userProfileId, String? conversationId)? current,
+    TResult Function(ConversationItem? conversationItem)? current,
   }) {
-    return current?.call(userProfileId, conversationId);
+    return current?.call(conversationItem);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? userProfileId, String? conversationId)? current,
+    TResult Function(ConversationItem? conversationItem)? current,
     required TResult orElse(),
   }) {
     if (current != null) {
-      return current(userProfileId, conversationId);
+      return current(conversationItem);
     }
     return orElse();
   }
@@ -241,13 +237,10 @@ class _$_State implements _State {
 }
 
 abstract class _State implements CurrentConversationState {
-  const factory _State({String? userProfileId, String? conversationId}) =
-      _$_State;
+  const factory _State({ConversationItem? conversationItem}) = _$_State;
 
   @override
-  String? get userProfileId;
-  @override
-  String? get conversationId;
+  ConversationItem? get conversationItem;
   @override
   @JsonKey(ignore: true)
   _$StateCopyWith<_State> get copyWith => throw _privateConstructorUsedError;

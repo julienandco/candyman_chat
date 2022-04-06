@@ -13,8 +13,10 @@ class FirebaseKeys {
   //Nur anfassen, wenn sich in [Conversation] etwas ändert!!! Wegen JSONSerializable!!!
   final String conversationMembersKey = 'conversationMembers';
   final String conversationHiddenFromKey = 'hiddenFrom';
-  final String conversationTimestampKey = 'timestamp';
+  final String conversationTimestampKey = 'createdAt';
   final String conversationDoneUploadKey = 'doneUpload';
+  final String conversationGroupNameKey = 'groupName';
+  final String conversationGroupPictureKey = 'groupPicture';
 
   final String messagesInConversationKey;
 
@@ -24,11 +26,19 @@ class FirebaseKeys {
   final String messageDoneUploadKey = 'doneUpload';
   final String messageTypeKey = 'type';
   final String messageHiddenFromKey = 'hiddenFrom';
+  final String messageTimestampKey = 'timestamp';
 
   final String _usersCollectionKey;
 
   //Nur anfassen, wenn sich in [FirebaseUser] etwas ändert!!! Wegen JSONSerializable!!!
   final String usersIdKey = 'id';
+  final String usersProfilePictureKey = 'profilePictureURL';
+  final String usersUserNameKey = 'name';
+  final String usersGroupMessageSeenKey = 'groupMessageSeenTimestamps';
+
+  // groupMessageLastSeenTimestamps
+  final String groupMessageTimestampsLastUpdatedKey = 'lastUpdated';
+  final String groupMessageTimestampsKey = 'timestamps';
 
   const FirebaseKeys({
     this.environment = FirebaseEnvironment.staging,
@@ -67,19 +77,19 @@ class FirebaseKeys {
   }
 }
 
-String getFirebaseKey(ChatMessageType type) {
+String getFirebaseKey(ConversationMessageType type) {
   switch (type) {
-    case ChatMessageType.text:
+    case ConversationMessageType.text:
       return 'text';
-    case ChatMessageType.voice:
+    case ConversationMessageType.voice:
       return 'voice';
-    case ChatMessageType.image:
+    case ConversationMessageType.image:
       return 'image';
-    case ChatMessageType.video:
+    case ConversationMessageType.video:
       return 'video';
-    case ChatMessageType.file:
+    case ConversationMessageType.file:
       return 'file';
-    case ChatMessageType.deleted:
+    case ConversationMessageType.deleted:
       return 'deleted';
   }
 }

@@ -1,84 +1,71 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
+import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:neon_chat/src/core/core.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 
 class DefaultConversationLoader extends StatelessWidget {
-  final String conversationId;
-  final String userProfileId;
+  final FileUploadRepository fileUploadRepository;
+  final ConversationBloc Function() conversationBloc;
+  final ConversationSearchBloc Function() conversationSearchBloc;
+
+  final ConversationItem conversationItem;
   final bool showCloseButton;
-  final FirebaseFirestore firestore;
-  final FirebaseAuth firebaseAuth;
-  final RemoteDataSource remoteDataSource;
-  final FirebaseKeys firebaseKeys;
+
+  final DateTime groupConversationLastSeenTimestamp;
+
+  final ConversationStyle conversationStyle;
+  final MessageBubbleStyle messageBubbleStyle;
+  final SearchAppBarStyle searchAppBarStyle;
+  final BottomBarStyle bottomBarStyle;
+  final Function(String, DateTime) updateGroupConversationTimestamp;
+  final Function(Conversation)? onAppbarTap;
+
   const DefaultConversationLoader({
     Key? key,
-    required this.userProfileId,
-    required this.conversationId,
-    required this.firestore,
-    required this.firebaseAuth,
-    required this.remoteDataSource,
+    required this.conversationItem,
+    required this.fileUploadRepository,
+    required this.conversationBloc,
+    required this.conversationSearchBloc,
+    required this.conversationStyle,
+    required this.messageBubbleStyle,
+    required this.searchAppBarStyle,
+    required this.bottomBarStyle,
+    required this.updateGroupConversationTimestamp,
+    required this.groupConversationLastSeenTimestamp,
     this.showCloseButton = true,
-    this.firebaseKeys = const FirebaseKeys(),
+    this.onAppbarTap,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    //TODO: get those out of context somehow?
-    final conversationRepository = ConversationRepositoryImpl(
-      firestore: firestore,
-      firebaseAuth: firebaseAuth,
-      firebaseKeys: firebaseKeys,
-    );
-    final conversationsRepository = ConversationsRepositoryImpl(
-      firestore: firestore,
-      firebaseAuth: firebaseAuth,
-      firebaseKeys: firebaseKeys,
-    );
-    final firebaseUserProfileRepository = FirebaseUserProfileRepositoryImpl(
-      firestore: firestore,
-      firebaseKeys: firebaseKeys,
-    );
-    final fileUploadRepository = FileUploadRepositoryImpl(
-      remoteDataSource: remoteDataSource,
-    );
-    final uploadManagerRepository = UploadManagerRepositoryImpl(
-      fileUploadRepository: fileUploadRepository,
-    );
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ChatSearchBloc>(
-          create: (context) => ChatSearchBloc(),
+        BlocProvider<ConversationBloc>(
+          create: (context) => conversationBloc()
+            ..add(ConversationEvent.init(
+              conversationItem: conversationItem,
+            )),
         ),
-        BlocProvider<ChatBloc>(
-          create: (context) => ChatBloc(
-            firebaseAuth: firebaseAuth,
-            hideMessageUC: HideMessageUC(conversationRepository),
-            deleteMessageUC: DeleteMessageUC(conversationRepository),
-            markAsSeenUC: MarkMessageAsSeenUC(conversationRepository),
-            sendPlatformFileMessageUC: SendPlatformFileMessageUC(
-                conversationRepository: conversationRepository,
-                uploadManagerRepository: uploadManagerRepository),
-            sendFileMessageUC: SendFileMessageUC(
-                conversationRepository: conversationRepository,
-                uploadManagerRepository: uploadManagerRepository),
-            sendTextMessageUC: SendTextMessageUC(conversationRepository),
-            initStreamUC: InitializeConversationStreamUC(
-                conversationRepository: conversationRepository,
-                conversationsRepository: conversationsRepository,
-                firebaseUserProfileRepository: firebaseUserProfileRepository),
-          )..add(
-              ChatEvent.init(
-                  conversationId: conversationId, otherUserId: userProfileId),
-            ),
+        BlocProvider<ConversationSearchBloc>(
+          create: (context) => conversationSearchBloc(),
         ),
       ],
-      child: DefaultConversationPage(showCloseButton: showCloseButton),
+      child: DefaultConversationPage(
+        getUploadUrlUC: GetUploadUrlUC(fileUploadRepository),
+        updateTimestampForConversation: (timestamp) =>
+            updateGroupConversationTimestamp(
+                conversationItem.conversation.id, timestamp),
+        groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
+        defaultMessageBubbleStyle: messageBubbleStyle,
+        defaultConversationStyle: conversationStyle,
+        defaultSearchAppBarStyle: searchAppBarStyle,
+        defaultBottomBarStyle: bottomBarStyle,
+        showCloseButton: showCloseButton,
+        onAppbarTap: onAppbarTap,
+      ),
     );
   }
 }

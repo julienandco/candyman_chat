@@ -9,12 +9,12 @@ part of 'conversation.dart';
 _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
     _$_Conversation(
       id: json['id'] as String,
-      displayName: json['displayName'] as String?,
-      conversationMembers: (json['conversationMembers'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      thumbnail: json['thumbnail'] as String?,
-      timestamp: const MyDateTimeConverter().fromJson(json['timestamp']),
+      groupName: json['groupName'] as String?,
+      groupPicture: json['groupPicture'] as String?,
+      conversationMembers: const MyFirebaseUserListConverter()
+          .fromJson(json['conversationMembers']),
+      isGroupConversation: json['isGroupConversation'] as bool,
+      createdAt: const MyDateTimeConverter().fromJson(json['createdAt']),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -24,9 +24,11 @@ _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_ConversationToJson(_$_Conversation instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'displayName': instance.displayName,
-      'conversationMembers': instance.conversationMembers,
-      'thumbnail': instance.thumbnail,
-      'timestamp': const MyDateTimeConverter().toJson(instance.timestamp),
+      'groupName': instance.groupName,
+      'groupPicture': instance.groupPicture,
+      'conversationMembers': const MyFirebaseUserListConverter()
+          .toJson(instance.conversationMembers),
+      'isGroupConversation': instance.isGroupConversation,
+      'createdAt': const MyDateTimeConverter().toJson(instance.createdAt),
       'hiddenFrom': instance.hiddenFrom,
     };

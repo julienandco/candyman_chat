@@ -3,13 +3,11 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:injectable/injectable.dart';
 import 'dart:io';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/core/core.dart';
 
-@LazySingleton(as: FileUploadRepository)
 class FileUploadRepositoryImpl implements FileUploadRepository {
   final RemoteDataSource remoteDataSource;
 
@@ -19,6 +17,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
 
   @override
   Future<Either<Failure, Success>> deleteFileWithId(String fileId) async {
+    //TODO
     try {
       final response = await remoteDataSource.deleteEndpoint(fileId);
       // final response = await remoteApiDataSource
@@ -32,6 +31,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
   @override
   Future<void> updateUserProfilePhoto(
       {File? photoFile, PlatformFile? platformFile}) async {
+    //TODO: uses presigned urls by default
     try {
       final newPresignedUrl = await getNewPresignedUrl();
       if (newPresignedUrl?.value1 != null) {
@@ -67,9 +67,11 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
 
   @override
   Future<void> uploadFileToMessage(
-      {required ChatUploadFile file,
+      {required ConversationUploadFile file,
       required String conversationId,
       required String messageId}) async {
+    //TODO: uses presigned urls by default
+
     try {
       final newPresignedUrl = await getNewPresignedUrl();
       if (newPresignedUrl?.value1 != null) {
@@ -123,6 +125,16 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
       );
     } catch (e) {
       log('ERROR: _getNewPresignedUrl $e', name: '$runtimeType');
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> getUploadUrl(String id) async {
+    try {
+      final response = await remoteDataSource.getUploadUrl(id);
+      return response.fold((l) => null, (r) => r);
+    } catch (obj) {
       return null;
     }
   }

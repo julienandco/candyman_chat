@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 part 'firebase_user.freezed.dart';
 part 'firebase_user.g.dart';
@@ -8,6 +9,13 @@ class FirebaseUser with _$FirebaseUser {
   factory FirebaseUser({
     required String id,
     required String name,
+    String? profilePictureURL,
+    @MyDateTimeConverter() DateTime? lastActivity,
+    @Default([]) List<String> blockedUsers,
+    @Default([]) List<String> blockedByUsers,
+    @Default({})
+    @JsonKey(ignore: true)
+        Map<String, DateTime> groupMessageSeenTimestamps,
   }) = _FirebaseUser;
 
   factory FirebaseUser.fromJson(Map<String, dynamic> json) =>

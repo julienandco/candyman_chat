@@ -3,11 +3,9 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:injectable/injectable.dart';
 
 import 'package:neon_chat/neon_chat.dart';
 
-@LazySingleton(as: ConversationRepository)
 class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth firebaseAuth;
@@ -21,26 +19,26 @@ class ConversationRepositoryImpl implements ConversationRepository {
             firestore.collection(firebaseKeys.conversationsCollectionKey);
 
   @override
-  Stream<List<ChatMessage>> getMessages(String conversationId) {
+  Stream<List<ConversationMessage>> getMessages(String conversationId) {
     return _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
-        .orderBy(firebaseKeys.conversationTimestampKey, descending: true)
+        .orderBy(firebaseKeys.messageTimestampKey, descending: true)
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-          List<ChatMessage>>.fromHandlers(
+          List<ConversationMessage>>.fromHandlers(
         handleData: (QuerySnapshot<Map<String, dynamic>> data,
-            EventSink<List<ChatMessage>> sink) async {
-          final snaps = data.docs
-              .map(
-                (doc) => doc.data(),
-              )
-              .toList();
-          var messages = List<ChatMessage>.from([]);
+            EventSink<List<ConversationMessage>> sink) async {
+          final snaps = data.docs.map((doc) => doc.data()).toList();
+
+          var messages = List<ConversationMessage>.from([]);
+
           for (var json in snaps) {
-            final message = ChatMessage.fromJson(json);
+            final message = ConversationMessage.fromJson(json);
+
             final userId = firebaseAuth.currentUser?.uid;
+
             if (!message.hiddenFrom.contains(userId)) messages.add(message);
           }
 
@@ -51,20 +49,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  void sendMessage(String conversationId, ChatMessage message) async {
+  void sendMessage(String conversationId, ConversationMessage message) async {
     try {
       final doc = _conversations
           .doc(conversationId)
           .collection(firebaseKeys.messagesInConversationKey)
           .doc();
-      doc.set(
-        message
-            .copyWith(
-              doneUpload: true,
-              id: doc.id,
-            )
-            .toJson(),
-      );
+
+      doc.set(message.copyWith(doneUpload: true, id: doc.id).toJson());
+
       log('sent message', name: '$runtimeType');
     } catch (err) {
       log('$err', name: '$runtimeType');
@@ -73,35 +66,32 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  Stream<ChatMessage> getLastMessages(String conversationId) {
+  Stream<ConversationMessage> getLastMessages(String conversationId) {
     final userId = firebaseAuth.currentUser?.uid;
 
     return _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
         .where(firebaseKeys.messageDoneUploadKey, isEqualTo: true)
-        .orderBy(firebaseKeys.conversationTimestampKey, descending: true)
+        .orderBy(firebaseKeys.messageTimestampKey, descending: true)
         .limit(1)
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-          ChatMessage>.fromHandlers(
+          ConversationMessage>.fromHandlers(
         handleData: (QuerySnapshot<Map<String, dynamic>> data,
-            EventSink<ChatMessage> sink) async {
+            EventSink<ConversationMessage> sink) async {
           if (data.docs.isNotEmpty) {
-            final snap = data.docs
-                .map(
-                  (doc) => doc.data(),
-                )
-                .toList()
-                .first;
-            var message = ChatMessage.fromJson(snap);
+            final snap = data.docs.map((doc) => doc.data()).toList().first;
+
+            var message = ConversationMessage.fromJson(snap);
+
             if (message.hiddenFrom.contains(userId)) {
-              message = message.copyWith(type: ChatMessageType.deleted);
+              message = message.copyWith(type: ConversationMessageType.deleted);
             }
             sink.add(message);
           } else {
-            sink.add(ChatMessage.empty());
+            sink.add(ConversationMessage.empty());
           }
         },
       ),
@@ -109,26 +99,22 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  ChatUploadFile sendFileMessage(String conversationId, ChatMessage message) {
+  ConversationUploadFile sendFileMessage(
+      String conversationId, ConversationMessage message) {
     try {
       final doc = _conversations
           .doc(conversationId)
           .collection(firebaseKeys.messagesInConversationKey)
           .doc();
-      doc.set(
-        message
-            .copyWith(
-              doneUpload: false,
-              id: doc.id,
-            )
-            .toJson(),
-      );
+
+      doc.set(message.copyWith(doneUpload: false, id: doc.id).toJson());
+
       log('sent file message', name: '$runtimeType');
-      return ChatUploadFile(
+      return ConversationUploadFile(
         messageId: doc.id,
         conversationID: conversationId,
         filePath: message.filePath!,
-        status: ChatUploadFileStatus.none,
+        status: ConversationUploadFileStatus.none,
       );
     } catch (err) {
       log('$err', name: '$runtimeType');
@@ -137,7 +123,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  void markAsSeen(String conversationId, ChatMessage message) {
+  void markAsSeen(String conversationId, ConversationMessage message) {
     if (!message.isMe && message.doneUpload && !message.seen) {
       _conversations
           .doc(conversationId)
@@ -152,18 +138,21 @@ class ConversationRepositoryImpl implements ConversationRepository {
   }
 
   @override
-  void deleteMessage(String conversationId, ChatMessage message) {
+  void deleteMessage(String conversationId, ConversationMessage message) {
     _conversations
         .doc(conversationId)
         .collection(firebaseKeys.messagesInConversationKey)
         .doc(message.id)
         .update(
-      {firebaseKeys.messageTypeKey: ChatMessageType.deleted.firebaseKey},
+      {
+        firebaseKeys.messageTypeKey:
+            ConversationMessageType.deleted.firebaseKey,
+      },
     );
   }
 
   @override
-  void hideMessage(String conversationId, ChatMessage message) {
+  void hideMessage(String conversationId, ConversationMessage message) {
     final userId = firebaseAuth.currentUser?.uid;
 
     _conversations
@@ -172,10 +161,49 @@ class ConversationRepositoryImpl implements ConversationRepository {
         .doc(message.id)
         .update(
       {
-        firebaseKeys.messageHiddenFromKey: FieldValue.arrayUnion(
-          [userId],
-        ),
+        firebaseKeys.messageHiddenFromKey: FieldValue.arrayUnion([userId]),
       },
+    );
+  }
+
+  @override
+  Stream<String> getDisplayName(String conversationId) {
+    return _conversations.doc(conversationId).snapshots().transform(
+      StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
+          String>.fromHandlers(
+        handleData: (DocumentSnapshot<Map<String, dynamic>> doc,
+            EventSink<String> sink) async {
+          final data = doc.data();
+          if (data != null &&
+              data.containsKey(firebaseKeys.conversationGroupNameKey)) {
+            final displayName = data[firebaseKeys.conversationGroupNameKey];
+
+            sink.add(displayName);
+          } else {
+            sink.add('PROBLEM'); //TODO
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  Stream<String?> getThumbnail(String conversationId) {
+    return _conversations.doc(conversationId).snapshots().transform(
+      StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
+          String?>.fromHandlers(
+        handleData: (DocumentSnapshot<Map<String, dynamic>> doc,
+            EventSink<String?> sink) async {
+          final data = doc.data();
+          if (data != null &&
+              data.containsKey(firebaseKeys.conversationGroupPictureKey)) {
+            final thumbnailString =
+                data[firebaseKeys.conversationGroupPictureKey];
+
+            sink.add(thumbnailString);
+          }
+        },
+      ),
     );
   }
 }

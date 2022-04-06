@@ -7,7 +7,7 @@ class DeleteMessageUC {
 
   void call({
     required String conversationId,
-    required ChatMessage message,
+    required ConversationMessage message,
   }) {
     return conversationRepository.deleteMessage(conversationId, message);
   }

@@ -1,3 +1,3 @@
-export 'chat_message/chat_message.dart';
-export 'chat_upload_file/chat_upload_file.dart';
+export 'conversation_message/conversation_message.dart';
+export 'conversation_upload_file/conversation_upload_file.dart';
 export 'remote_data_source.dart';

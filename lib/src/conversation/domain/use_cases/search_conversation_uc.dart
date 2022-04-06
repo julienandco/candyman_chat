@@ -6,10 +6,10 @@ class SearchConversationUC {
 
   final _woozy = Woozy();
 
-  void initialize(List<ChatMessage> messages) {
+  void initialize(List<ConversationMessage> messages) {
     _woozy.setEntries([]);
     for (int index = 0; index < messages.length; index++) {
-      if (messages[index].type == ChatMessageType.text) {
+      if (messages[index].type == ConversationMessageType.text) {
         _woozy.addEntry(
           messages[index].text!,
           value: {

@@ -45,4 +45,10 @@ class _MyDataSource implements RemoteDataSource {
     // TODO: implement uploadFileToPresignedURL
     return right(const Success());
   }
+
+  @override
+  Future<Either<Failure, String>> getUploadUrl(String id) async {
+    // TODO: implement getUploadUrl
+    return right('null');
+  }
 }

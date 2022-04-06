@@ -16,4 +16,5 @@ abstract class RemoteDataSource {
     PlatformFile? platformFile,
     void Function(int, int)? onReceiveProgress,
   });
+  Future<Either<Failure, String>> getUploadUrl(String id);
 }

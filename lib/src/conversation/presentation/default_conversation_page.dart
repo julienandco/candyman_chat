@@ -1,19 +1,36 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:neon_chat/neon_chat.dart';
-// import 'package:timeago/timeago.dart' as timeago;
+import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 
-//TODO: style
+import 'widgets/conversation_appbar_widget.dart';
 
 class DefaultConversationPage extends StatefulWidget {
+  final bool showCloseButton;
+  final ConversationStyle defaultConversationStyle;
+  final MessageBubbleStyle defaultMessageBubbleStyle;
+  final SearchAppBarStyle defaultSearchAppBarStyle;
+  final BottomBarStyle defaultBottomBarStyle;
+  final GetUploadUrlUC getUploadUrlUC;
+  final DateTime groupConversationLastSeenTimestamp;
+  final Function(DateTime) updateTimestampForConversation;
+  final Function(Conversation)? onAppbarTap;
+
   const DefaultConversationPage({
     Key? key,
     required this.showCloseButton,
+    required this.defaultConversationStyle,
+    required this.defaultMessageBubbleStyle,
+    required this.defaultSearchAppBarStyle,
+    required this.defaultBottomBarStyle,
+    required this.getUploadUrlUC,
+    required this.updateTimestampForConversation,
+    required this.groupConversationLastSeenTimestamp,
+    this.onAppbarTap,
   }) : super(key: key);
-  final bool showCloseButton;
+
   @override
   _DefaultConversationPageState createState() =>
       _DefaultConversationPageState();
@@ -21,7 +38,8 @@ class DefaultConversationPage extends StatefulWidget {
 
 class _DefaultConversationPageState extends State<DefaultConversationPage> {
   bool _isInit = true;
-  //TODO: push notifications services
+  // setup push notifications
+  // TODO: push notifications services
   // @override
   // void initState() {
   //   super.initState();
@@ -46,215 +64,128 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ChatBloc, ChatState>(
+    return BlocConsumer<ConversationBloc, ConversationState>(
       listener: (context, state) {
         state.maybeMap(
           loadSuccess: (state) {
             if (state.messages.isNotEmpty) {
-              context.read<ChatSearchBloc>().add(
-                    ChatSearchEvent.initialize(state.messages),
+              context.read<ConversationSearchBloc>().add(
+                    ConversationSearchEvent.initialize(
+                        messages: state.messages,
+                        lastSeenMessageTimestamp:
+                            widget.groupConversationLastSeenTimestamp),
                   );
             }
           },
           orElse: () {},
         );
       },
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
-        child: KeyboardDismisser(
-          child: Scaffold(
-            //TODO style extrahieren
-            // backgroundColor: kColorPrimaryLighter,
-            appBar: _Appbar(showCloseButton: !widget.showCloseButton),
-            body: Stack(
-              children: [
-                // Positioned.fill(
-                //     child: SvgPicture.asset(
-                //   'assets/vectors/chatBG.svg',
-                //   fit: BoxFit.cover,
-                // )),
-                CustomScrollView(
-                  reverse: true,
-                  controller:
-                      context.read<ChatSearchBloc>().messageListController,
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.only(
-                        top: 20,
-                        right: 20,
-                        left: 20,
-                        bottom: isWidthOverLimit(context) ? 200 : 100,
-                      ),
-                      sliver: MessageList(
-                        otherUser: context.watch<ChatBloc>().state.maybeMap(
-                              orElse: () => null,
-                              loadSuccess: (state) => state.userProfile,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                IgnorePointer(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [
-                          //TODO
-                          Colors.black.withOpacity(0.4),
-                          Colors.transparent
-                        ],
-                            stops: const [
-                          0,
-                          0.15
-                        ])),
-                  ),
-                ),
-                Positioned(
-                  bottom: 10,
-                  left: 10,
-                  right: 10,
-                  child: SafeArea(
-                    child: BlocBuilder<ChatSearchBloc, ChatSearchState>(
-                      builder: (context, state) {
-                        if (state.isSearchActive) {
-                          return const SizedBox.shrink();
-                        } else {
-                          return Padding(
-                            padding: isWidthOverLimit(context)
-                                ? const EdgeInsets.only(bottom: 100)
-                                : EdgeInsets.zero,
-                            child: BlocBuilder<ChatBloc, ChatState>(
-                              builder: (context, state) {
-                                return state.maybeMap(
-                                  loadSuccess: (state) {
-                                    return const ChatBottomBar();
-                                  },
-                                  orElse: () => const SizedBox.shrink(),
-                                );
-                              },
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ),
-                // The buttons will be visable when the search is active and
-                // the results aren't empty
-                const ChatSearchUpDown()
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Appbar extends StatelessWidget implements PreferredSizeWidget {
-  const _Appbar({Key? key, required this.showCloseButton}) : super(key: key);
-  final bool showCloseButton;
-  @override
-  Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        final chatBloc = context.watch<ChatBloc>();
-        final chatSearchBloc = context.watch<ChatSearchBloc>();
-
-        if (!chatSearchBloc.state.isSearchActive) {
-          final state = chatBloc.state;
-          final lastActiveAt = state.mapOrNull(
-            loadSuccess: (state) {
-              //TODO:
-              // final timestamp = state.userProfile.lastActiveAt;
-              // return timestamp != null
-              //     ? timeago.format(
-              //         timestamp,
-              //         locale:
-              //             EasyLocalization.of(context)?.locale.languageCode ??
-              //                 'en',
-              //       )
-              //     : null;
-            },
-          );
-          return SubHeader(
-            //TODO
-            leading: showCloseButton
-                ? const Padding(padding: EdgeInsets.symmetric(horizontal: 20))
-                : null, //Padding(padding: kPadLeftMedium) : null,
-            title: GestureDetector(
-              key: const Key('Conversation_Page_Header'),
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                state.maybeMap(
-                  orElse: () {},
-                  loadSuccess: (state) {
-                    //TODO
-                    // openUserProfile(
-                    //   context,
-                    //   state.userProfile.id,
-                    //   user: state.userProfile,
-                    // );
-                  },
-                );
-              },
-              child: Row(
+      builder: (context, conversationState) => conversationState.maybeMap(
+        loadSuccess: (loadedConversationState) =>
+            AnnotatedRegion<SystemUiOverlayStyle>(
+          value:
+              const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+          child: KeyboardDismisser(
+            child: Scaffold(
+              backgroundColor: widget.defaultConversationStyle.backgroundColor,
+              appBar: ConversationAppbar(
+                onAvertaTap: widget.onAppbarTap,
+                searchAppBarStyle: widget.defaultSearchAppBarStyle,
+                showCloseButton: !widget.showCloseButton,
+                barDecoration:
+                    const BoxDecoration(color: Color.fromARGB(255, 25, 5, 55)),
+              ),
+              body: Stack(
                 children: [
-                  state.maybeMap(
-                    //TODO
-                    loadSuccess: (state) =>
-                        Container(height: 20, width: 20, color: Colors.green),
-                    // UserAvatar(
-                    //   user: state.userProfile.isBlocked
-                    //       ? null
-                    //       : state.userProfile,
-                    // ),
-                    orElse: () => const SizedBox.shrink(),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        state.maybeMap(
-                          loadSuccess: (state) => state.userProfile.name,
-                          orElse: () => '',
+                  CustomScrollView(
+                    reverse: true,
+                    controller: context
+                        .read<ConversationSearchBloc>()
+                        .messageListController,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverPadding(
+                        padding:
+                            widget.defaultConversationStyle.messageListPadding,
+                        sliver: MessageList(
+                          updateLastSeenTimestampForConversation: (timestamp) =>
+                              widget.updateTimestampForConversation(timestamp),
+                          conversationLastSeenTimestamp:
+                              widget.groupConversationLastSeenTimestamp,
+                          getUploadUrlUC: widget.getUploadUrlUC,
+                          messageBubbleStyle: widget.defaultMessageBubbleStyle,
+                          getAuthorNameForSenderId: (senderId) {
+                            if (loadedConversationState
+                                .conversation.isGroupConversation) {
+                              final author = loadedConversationState
+                                  .conversation.conversationMembers
+                                  .firstWhere(
+                                (member) => member.id == senderId,
+                                orElse: () => FirebaseUser(
+                                    id: 'dummy', name: 'unknown'), //TODO
+                              );
+                              return author.name;
+                            } else {
+                              return loadedConversationState.displayName;
+                            }
+                          },
                         ),
-                        // style: kTextH1,
                       ),
-                      if (lastActiveAt != null)
-                        Text(
-                          lastActiveAt,
-                          // style: kTextLabelDisabled,
-                        )
                     ],
+                  ),
+                  IgnorePointer(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: widget.defaultConversationStyle
+                                  .ignorePointersColors,
+                              stops: const [0, 0.15])),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    right: 10,
+                    child: SafeArea(
+                      child: BlocBuilder<ConversationSearchBloc,
+                          ConversationSearchState>(
+                        builder: (context, state) {
+                          if (state.isSearchActive) {
+                            return const SizedBox.shrink();
+                          } else {
+                            return Padding(
+                              padding: isWidthOverLimit(context)
+                                  ? const EdgeInsets.only(bottom: 100)
+                                  : EdgeInsets.zero,
+                              child: BlocBuilder<ConversationBloc,
+                                  ConversationState>(
+                                builder: (context, state) {
+                                  return state.maybeMap(
+                                    loadSuccess: (state) {
+                                      return ConversationBottomBar(
+                                        bottomBarStyle:
+                                            widget.defaultBottomBarStyle,
+                                      );
+                                    },
+                                    orElse: () => const SizedBox.shrink(),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            action: IconButton(
-              onPressed: () => context
-                  .read<ChatSearchBloc>()
-                  .add(const ChatSearchEvent.toggleSearch()),
-              icon: const Icon(
-                CupertinoIcons.search,
-                // color: kColorWhite,
-              ),
-            ),
-          );
-        } else {
-          return const ChatSearchAppBar();
-        }
-      },
+          ),
+        ),
+        orElse: () => const CircularProgressIndicator(), //TODO
+      ),
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(86);
 }

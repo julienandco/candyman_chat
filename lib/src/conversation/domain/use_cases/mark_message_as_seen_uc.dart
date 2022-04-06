@@ -7,7 +7,7 @@ class MarkMessageAsSeenUC {
 
   void call({
     required String conversationId,
-    required ChatMessage message,
+    required ConversationMessage message,
   }) {
     return conversationRepository.markAsSeen(conversationId, message);
   }

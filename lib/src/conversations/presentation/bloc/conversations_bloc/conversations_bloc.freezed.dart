@@ -18,17 +18,17 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ConversationsStateTearOff {
   const _$ConversationsStateTearOff();
 
-  _Initial initial() {
-    return const _Initial();
+  _Uninitialized uninitialized() {
+    return const _Uninitialized();
   }
 
   _LoadInProgress loadInProgress() {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<ConversationItem> conversations) {
+  _LoadSuccess loadSuccess({required List<ConversationItem> conversations}) {
     return _LoadSuccess(
-      conversations,
+      conversations: conversations,
     );
   }
 
@@ -44,7 +44,7 @@ const $ConversationsState = _$ConversationsStateTearOff();
 mixin _$ConversationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -52,7 +52,7 @@ mixin _$ConversationsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -60,7 +60,7 @@ mixin _$ConversationsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -69,7 +69,7 @@ mixin _$ConversationsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -77,7 +77,7 @@ mixin _$ConversationsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -85,7 +85,7 @@ mixin _$ConversationsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -112,36 +112,38 @@ class _$ConversationsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$UninitializedCopyWith<$Res> {
+  factory _$UninitializedCopyWith(
+          _Uninitialized value, $Res Function(_Uninitialized) then) =
+      __$UninitializedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$UninitializedCopyWithImpl<$Res>
     extends _$ConversationsStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$UninitializedCopyWith<$Res> {
+  __$UninitializedCopyWithImpl(
+      _Uninitialized _value, $Res Function(_Uninitialized) _then)
+      : super(_value, (v) => _then(v as _Uninitialized));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _Uninitialized get _value => super._value as _Uninitialized;
 }
 
 /// @nodoc
 
-class _$_Initial extends _Initial {
-  const _$_Initial() : super._();
+class _$_Uninitialized extends _Uninitialized {
+  const _$_Uninitialized() : super._();
 
   @override
   String toString() {
-    return 'ConversationsState.initial()';
+    return 'ConversationsState.uninitialized()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _Uninitialized);
   }
 
   @override
@@ -150,36 +152,36 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
   }) {
-    return initial();
+    return uninitialized();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
   }) {
-    return initial?.call();
+    return uninitialized?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial();
+    if (uninitialized != null) {
+      return uninitialized();
     }
     return orElse();
   }
@@ -187,44 +189,44 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
   }) {
-    return initial(this);
+    return uninitialized(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
   }) {
-    return initial?.call(this);
+    return uninitialized?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(this);
+    if (uninitialized != null) {
+      return uninitialized(this);
     }
     return orElse();
   }
 }
 
-abstract class _Initial extends ConversationsState {
-  const factory _Initial() = _$_Initial;
-  const _Initial._() : super._();
+abstract class _Uninitialized extends ConversationsState {
+  const factory _Uninitialized() = _$_Uninitialized;
+  const _Uninitialized._() : super._();
 }
 
 /// @nodoc
@@ -268,7 +270,7 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -279,7 +281,7 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -290,7 +292,7 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -305,7 +307,7 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -316,7 +318,7 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -327,7 +329,7 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -369,7 +371,7 @@ class __$LoadSuccessCopyWithImpl<$Res>
     Object? conversations = freezed,
   }) {
     return _then(_LoadSuccess(
-      conversations == freezed
+      conversations: conversations == freezed
           ? _value.conversations
           : conversations // ignore: cast_nullable_to_non_nullable
               as List<ConversationItem>,
@@ -380,7 +382,7 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess(this.conversations) : super._();
+  const _$_LoadSuccess({required this.conversations}) : super._();
 
   @override
   final List<ConversationItem> conversations;
@@ -411,7 +413,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -422,7 +424,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -433,7 +435,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -448,7 +450,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -459,7 +461,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -470,7 +472,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -484,7 +486,7 @@ class _$_LoadSuccess extends _LoadSuccess {
 }
 
 abstract class _LoadSuccess extends ConversationsState {
-  const factory _LoadSuccess(List<ConversationItem> conversations) =
+  const factory _LoadSuccess({required List<ConversationItem> conversations}) =
       _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
@@ -535,7 +537,7 @@ class _$_LoadFailure extends _LoadFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
     required TResult Function(List<ConversationItem> conversations) loadSuccess,
     required TResult Function() loadFailure,
@@ -546,7 +548,7 @@ class _$_LoadFailure extends _LoadFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -557,7 +559,7 @@ class _$_LoadFailure extends _LoadFailure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
     TResult Function(List<ConversationItem> conversations)? loadSuccess,
     TResult Function()? loadFailure,
@@ -572,7 +574,7 @@ class _$_LoadFailure extends _LoadFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadFailure value) loadFailure,
@@ -583,7 +585,7 @@ class _$_LoadFailure extends _LoadFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -594,7 +596,7 @@ class _$_LoadFailure extends _LoadFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadFailure value)? loadFailure,
@@ -616,14 +618,24 @@ abstract class _LoadFailure extends ConversationsState {
 class _$ConversationsEventTearOff {
   const _$ConversationsEventTearOff();
 
-  _FetchChatItems fetchChatItems(List<Conversation> conversations) {
-    return _FetchChatItems(
+  _InitializeMyFirebaseUser initialize(
+      {required String myId, required Map<String, DateTime> timestamps}) {
+    return _InitializeMyFirebaseUser(
+      myId: myId,
+      timestamps: timestamps,
+    );
+  }
+
+  _FetchConversationItems fetchConversationItems(
+      List<Conversation> conversations) {
+    return _FetchConversationItems(
       conversations,
     );
   }
 
-  _OnChatItemsData onChatItemsData(ConversationItem conversationItem) {
-    return _OnChatItemsData(
+  _OnConversationItemsData onConversationItemsData(
+      ConversationItem conversationItem) {
+    return _OnConversationItemsData(
       conversationItem,
     );
   }
@@ -637,6 +649,26 @@ class _$ConversationsEventTearOff {
   _HideConversation hideConversation(String conversationId) {
     return _HideConversation(
       conversationId,
+    );
+  }
+
+  _CreateConversation createConversation(
+      {required DirectConversationCreationData creationData,
+      dynamic Function(ConversationItem)? onSuccessfullyCreatedConversation}) {
+    return _CreateConversation(
+      creationData: creationData,
+      onSuccessfullyCreatedConversation: onSuccessfullyCreatedConversation,
+    );
+  }
+
+  _CreateGroupConversation createGroupConversation(
+      {required GroupConversationCreationData creationData,
+      dynamic Function(ConversationItem)?
+          onSuccessfullyCreatedGroupConversation}) {
+    return _CreateGroupConversation(
+      creationData: creationData,
+      onSuccessfullyCreatedGroupConversation:
+          onSuccessfullyCreatedGroupConversation,
     );
   }
 
@@ -656,31 +688,68 @@ const $ConversationsEvent = _$ConversationsEventTearOff();
 mixin _$ConversationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Conversation> conversations) fetchChatItems,
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
-        onChatItemsData,
+        onConversationItemsData,
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -688,30 +757,42 @@ mixin _$ConversationsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FetchChatItems value) fetchChatItems,
-    required TResult Function(_OnChatItemsData value) onChatItemsData,
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
     required TResult Function(_OnData value) onData,
     required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -737,29 +818,254 @@ class _$ConversationsEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$FetchChatItemsCopyWith<$Res> {
-  factory _$FetchChatItemsCopyWith(
-          _FetchChatItems value, $Res Function(_FetchChatItems) then) =
-      __$FetchChatItemsCopyWithImpl<$Res>;
+abstract class _$InitializeMyFirebaseUserCopyWith<$Res> {
+  factory _$InitializeMyFirebaseUserCopyWith(_InitializeMyFirebaseUser value,
+          $Res Function(_InitializeMyFirebaseUser) then) =
+      __$InitializeMyFirebaseUserCopyWithImpl<$Res>;
+  $Res call({String myId, Map<String, DateTime> timestamps});
+}
+
+/// @nodoc
+class __$InitializeMyFirebaseUserCopyWithImpl<$Res>
+    extends _$ConversationsEventCopyWithImpl<$Res>
+    implements _$InitializeMyFirebaseUserCopyWith<$Res> {
+  __$InitializeMyFirebaseUserCopyWithImpl(_InitializeMyFirebaseUser _value,
+      $Res Function(_InitializeMyFirebaseUser) _then)
+      : super(_value, (v) => _then(v as _InitializeMyFirebaseUser));
+
+  @override
+  _InitializeMyFirebaseUser get _value =>
+      super._value as _InitializeMyFirebaseUser;
+
+  @override
+  $Res call({
+    Object? myId = freezed,
+    Object? timestamps = freezed,
+  }) {
+    return _then(_InitializeMyFirebaseUser(
+      myId: myId == freezed
+          ? _value.myId
+          : myId // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamps: timestamps == freezed
+          ? _value.timestamps
+          : timestamps // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
+  const _$_InitializeMyFirebaseUser(
+      {required this.myId, required this.timestamps});
+
+  @override
+  final String myId;
+  @override
+  final Map<String, DateTime> timestamps;
+
+  @override
+  String toString() {
+    return 'ConversationsEvent.initialize(myId: $myId, timestamps: $timestamps)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _InitializeMyFirebaseUser &&
+            const DeepCollectionEquality().equals(other.myId, myId) &&
+            const DeepCollectionEquality()
+                .equals(other.timestamps, timestamps));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(myId),
+      const DeepCollectionEquality().hash(timestamps));
+
+  @JsonKey(ignore: true)
+  @override
+  _$InitializeMyFirebaseUserCopyWith<_InitializeMyFirebaseUser> get copyWith =>
+      __$InitializeMyFirebaseUserCopyWithImpl<_InitializeMyFirebaseUser>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
+    required TResult Function(ConversationItem conversationItem)
+        onConversationItemsData,
+    required TResult Function(List<ConversationItem> conversations) onData,
+    required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
+    required TResult Function() onError,
+    required TResult Function() dispose,
+  }) {
+    return initialize(myId, timestamps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+  }) {
+    return initialize?.call(myId, timestamps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+    required TResult orElse(),
+  }) {
+    if (initialize != null) {
+      return initialize(myId, timestamps);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
+    required TResult Function(_OnData value) onData,
+    required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
+    required TResult Function(_OnError value) onError,
+    required TResult Function(_Dispose value) dispose,
+  }) {
+    return initialize(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+  }) {
+    return initialize?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+    required TResult orElse(),
+  }) {
+    if (initialize != null) {
+      return initialize(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InitializeMyFirebaseUser implements ConversationsEvent {
+  const factory _InitializeMyFirebaseUser(
+      {required String myId,
+      required Map<String, DateTime> timestamps}) = _$_InitializeMyFirebaseUser;
+
+  String get myId;
+  Map<String, DateTime> get timestamps;
+  @JsonKey(ignore: true)
+  _$InitializeMyFirebaseUserCopyWith<_InitializeMyFirebaseUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$FetchConversationItemsCopyWith<$Res> {
+  factory _$FetchConversationItemsCopyWith(_FetchConversationItems value,
+          $Res Function(_FetchConversationItems) then) =
+      __$FetchConversationItemsCopyWithImpl<$Res>;
   $Res call({List<Conversation> conversations});
 }
 
 /// @nodoc
-class __$FetchChatItemsCopyWithImpl<$Res>
+class __$FetchConversationItemsCopyWithImpl<$Res>
     extends _$ConversationsEventCopyWithImpl<$Res>
-    implements _$FetchChatItemsCopyWith<$Res> {
-  __$FetchChatItemsCopyWithImpl(
-      _FetchChatItems _value, $Res Function(_FetchChatItems) _then)
-      : super(_value, (v) => _then(v as _FetchChatItems));
+    implements _$FetchConversationItemsCopyWith<$Res> {
+  __$FetchConversationItemsCopyWithImpl(_FetchConversationItems _value,
+      $Res Function(_FetchConversationItems) _then)
+      : super(_value, (v) => _then(v as _FetchConversationItems));
 
   @override
-  _FetchChatItems get _value => super._value as _FetchChatItems;
+  _FetchConversationItems get _value => super._value as _FetchConversationItems;
 
   @override
   $Res call({
     Object? conversations = freezed,
   }) {
-    return _then(_FetchChatItems(
+    return _then(_FetchConversationItems(
       conversations == freezed
           ? _value.conversations
           : conversations // ignore: cast_nullable_to_non_nullable
@@ -770,22 +1076,22 @@ class __$FetchChatItemsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FetchChatItems implements _FetchChatItems {
-  const _$_FetchChatItems(this.conversations);
+class _$_FetchConversationItems implements _FetchConversationItems {
+  const _$_FetchConversationItems(this.conversations);
 
   @override
   final List<Conversation> conversations;
 
   @override
   String toString() {
-    return 'ConversationsEvent.fetchChatItems(conversations: $conversations)';
+    return 'ConversationsEvent.fetchConversationItems(conversations: $conversations)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _FetchChatItems &&
+            other is _FetchConversationItems &&
             const DeepCollectionEquality()
                 .equals(other.conversations, conversations));
   }
@@ -796,49 +1102,87 @@ class _$_FetchChatItems implements _FetchChatItems {
 
   @JsonKey(ignore: true)
   @override
-  _$FetchChatItemsCopyWith<_FetchChatItems> get copyWith =>
-      __$FetchChatItemsCopyWithImpl<_FetchChatItems>(this, _$identity);
+  _$FetchConversationItemsCopyWith<_FetchConversationItems> get copyWith =>
+      __$FetchConversationItemsCopyWithImpl<_FetchConversationItems>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Conversation> conversations) fetchChatItems,
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
-        onChatItemsData,
+        onConversationItemsData,
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
-    return fetchChatItems(conversations);
+    return fetchConversationItems(conversations);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
-    return fetchChatItems?.call(conversations);
+    return fetchConversationItems?.call(conversations);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
   }) {
-    if (fetchChatItems != null) {
-      return fetchChatItems(conversations);
+    if (fetchConversationItems != null) {
+      return fetchConversationItems(conversations);
     }
     return orElse();
   }
@@ -846,83 +1190,96 @@ class _$_FetchChatItems implements _FetchChatItems {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FetchChatItems value) fetchChatItems,
-    required TResult Function(_OnChatItemsData value) onChatItemsData,
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
     required TResult Function(_OnData value) onData,
     required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
-    return fetchChatItems(this);
+    return fetchConversationItems(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
-    return fetchChatItems?.call(this);
+    return fetchConversationItems?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
   }) {
-    if (fetchChatItems != null) {
-      return fetchChatItems(this);
+    if (fetchConversationItems != null) {
+      return fetchConversationItems(this);
     }
     return orElse();
   }
 }
 
-abstract class _FetchChatItems implements ConversationsEvent {
-  const factory _FetchChatItems(List<Conversation> conversations) =
-      _$_FetchChatItems;
+abstract class _FetchConversationItems implements ConversationsEvent {
+  const factory _FetchConversationItems(List<Conversation> conversations) =
+      _$_FetchConversationItems;
 
   List<Conversation> get conversations;
   @JsonKey(ignore: true)
-  _$FetchChatItemsCopyWith<_FetchChatItems> get copyWith =>
+  _$FetchConversationItemsCopyWith<_FetchConversationItems> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$OnChatItemsDataCopyWith<$Res> {
-  factory _$OnChatItemsDataCopyWith(
-          _OnChatItemsData value, $Res Function(_OnChatItemsData) then) =
-      __$OnChatItemsDataCopyWithImpl<$Res>;
+abstract class _$OnConversationItemsDataCopyWith<$Res> {
+  factory _$OnConversationItemsDataCopyWith(_OnConversationItemsData value,
+          $Res Function(_OnConversationItemsData) then) =
+      __$OnConversationItemsDataCopyWithImpl<$Res>;
   $Res call({ConversationItem conversationItem});
 
   $ConversationItemCopyWith<$Res> get conversationItem;
 }
 
 /// @nodoc
-class __$OnChatItemsDataCopyWithImpl<$Res>
+class __$OnConversationItemsDataCopyWithImpl<$Res>
     extends _$ConversationsEventCopyWithImpl<$Res>
-    implements _$OnChatItemsDataCopyWith<$Res> {
-  __$OnChatItemsDataCopyWithImpl(
-      _OnChatItemsData _value, $Res Function(_OnChatItemsData) _then)
-      : super(_value, (v) => _then(v as _OnChatItemsData));
+    implements _$OnConversationItemsDataCopyWith<$Res> {
+  __$OnConversationItemsDataCopyWithImpl(_OnConversationItemsData _value,
+      $Res Function(_OnConversationItemsData) _then)
+      : super(_value, (v) => _then(v as _OnConversationItemsData));
 
   @override
-  _OnChatItemsData get _value => super._value as _OnChatItemsData;
+  _OnConversationItemsData get _value =>
+      super._value as _OnConversationItemsData;
 
   @override
   $Res call({
     Object? conversationItem = freezed,
   }) {
-    return _then(_OnChatItemsData(
+    return _then(_OnConversationItemsData(
       conversationItem == freezed
           ? _value.conversationItem
           : conversationItem // ignore: cast_nullable_to_non_nullable
@@ -940,22 +1297,22 @@ class __$OnChatItemsDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OnChatItemsData implements _OnChatItemsData {
-  const _$_OnChatItemsData(this.conversationItem);
+class _$_OnConversationItemsData implements _OnConversationItemsData {
+  const _$_OnConversationItemsData(this.conversationItem);
 
   @override
   final ConversationItem conversationItem;
 
   @override
   String toString() {
-    return 'ConversationsEvent.onChatItemsData(conversationItem: $conversationItem)';
+    return 'ConversationsEvent.onConversationItemsData(conversationItem: $conversationItem)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _OnChatItemsData &&
+            other is _OnConversationItemsData &&
             const DeepCollectionEquality()
                 .equals(other.conversationItem, conversationItem));
   }
@@ -966,49 +1323,87 @@ class _$_OnChatItemsData implements _OnChatItemsData {
 
   @JsonKey(ignore: true)
   @override
-  _$OnChatItemsDataCopyWith<_OnChatItemsData> get copyWith =>
-      __$OnChatItemsDataCopyWithImpl<_OnChatItemsData>(this, _$identity);
+  _$OnConversationItemsDataCopyWith<_OnConversationItemsData> get copyWith =>
+      __$OnConversationItemsDataCopyWithImpl<_OnConversationItemsData>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Conversation> conversations) fetchChatItems,
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
-        onChatItemsData,
+        onConversationItemsData,
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
-    return onChatItemsData(conversationItem);
+    return onConversationItemsData(conversationItem);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
-    return onChatItemsData?.call(conversationItem);
+    return onConversationItemsData?.call(conversationItem);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
   }) {
-    if (onChatItemsData != null) {
-      return onChatItemsData(conversationItem);
+    if (onConversationItemsData != null) {
+      return onConversationItemsData(conversationItem);
     }
     return orElse();
   }
@@ -1016,54 +1411,66 @@ class _$_OnChatItemsData implements _OnChatItemsData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FetchChatItems value) fetchChatItems,
-    required TResult Function(_OnChatItemsData value) onChatItemsData,
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
     required TResult Function(_OnData value) onData,
     required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
-    return onChatItemsData(this);
+    return onConversationItemsData(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
-    return onChatItemsData?.call(this);
+    return onConversationItemsData?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
   }) {
-    if (onChatItemsData != null) {
-      return onChatItemsData(this);
+    if (onConversationItemsData != null) {
+      return onConversationItemsData(this);
     }
     return orElse();
   }
 }
 
-abstract class _OnChatItemsData implements ConversationsEvent {
-  const factory _OnChatItemsData(ConversationItem conversationItem) =
-      _$_OnChatItemsData;
+abstract class _OnConversationItemsData implements ConversationsEvent {
+  const factory _OnConversationItemsData(ConversationItem conversationItem) =
+      _$_OnConversationItemsData;
 
   ConversationItem get conversationItem;
   @JsonKey(ignore: true)
-  _$OnChatItemsDataCopyWith<_OnChatItemsData> get copyWith =>
+  _$OnConversationItemsDataCopyWith<_OnConversationItemsData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1130,11 +1537,24 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Conversation> conversations) fetchChatItems,
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
-        onChatItemsData,
+        onConversationItemsData,
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1144,10 +1564,22 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1157,10 +1589,22 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1174,10 +1618,16 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FetchChatItems value) fetchChatItems,
-    required TResult Function(_OnChatItemsData value) onChatItemsData,
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
     required TResult Function(_OnData value) onData,
     required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1187,10 +1637,13 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1200,10 +1653,13 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1289,11 +1745,24 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Conversation> conversations) fetchChatItems,
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
-        onChatItemsData,
+        onConversationItemsData,
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1303,10 +1772,22 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1316,10 +1797,22 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1333,10 +1826,16 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FetchChatItems value) fetchChatItems,
-    required TResult Function(_OnChatItemsData value) onChatItemsData,
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
     required TResult Function(_OnData value) onData,
     required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1346,10 +1845,13 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1359,10 +1861,13 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1380,6 +1885,477 @@ abstract class _HideConversation implements ConversationsEvent {
   String get conversationId;
   @JsonKey(ignore: true)
   _$HideConversationCopyWith<_HideConversation> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$CreateConversationCopyWith<$Res> {
+  factory _$CreateConversationCopyWith(
+          _CreateConversation value, $Res Function(_CreateConversation) then) =
+      __$CreateConversationCopyWithImpl<$Res>;
+  $Res call(
+      {DirectConversationCreationData creationData,
+      dynamic Function(ConversationItem)? onSuccessfullyCreatedConversation});
+}
+
+/// @nodoc
+class __$CreateConversationCopyWithImpl<$Res>
+    extends _$ConversationsEventCopyWithImpl<$Res>
+    implements _$CreateConversationCopyWith<$Res> {
+  __$CreateConversationCopyWithImpl(
+      _CreateConversation _value, $Res Function(_CreateConversation) _then)
+      : super(_value, (v) => _then(v as _CreateConversation));
+
+  @override
+  _CreateConversation get _value => super._value as _CreateConversation;
+
+  @override
+  $Res call({
+    Object? creationData = freezed,
+    Object? onSuccessfullyCreatedConversation = freezed,
+  }) {
+    return _then(_CreateConversation(
+      creationData: creationData == freezed
+          ? _value.creationData
+          : creationData // ignore: cast_nullable_to_non_nullable
+              as DirectConversationCreationData,
+      onSuccessfullyCreatedConversation: onSuccessfullyCreatedConversation ==
+              freezed
+          ? _value.onSuccessfullyCreatedConversation
+          : onSuccessfullyCreatedConversation // ignore: cast_nullable_to_non_nullable
+              as dynamic Function(ConversationItem)?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateConversation implements _CreateConversation {
+  const _$_CreateConversation(
+      {required this.creationData, this.onSuccessfullyCreatedConversation});
+
+  @override
+  final DirectConversationCreationData creationData;
+  @override
+  final dynamic Function(ConversationItem)? onSuccessfullyCreatedConversation;
+
+  @override
+  String toString() {
+    return 'ConversationsEvent.createConversation(creationData: $creationData, onSuccessfullyCreatedConversation: $onSuccessfullyCreatedConversation)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _CreateConversation &&
+            const DeepCollectionEquality()
+                .equals(other.creationData, creationData) &&
+            (identical(other.onSuccessfullyCreatedConversation,
+                    onSuccessfullyCreatedConversation) ||
+                other.onSuccessfullyCreatedConversation ==
+                    onSuccessfullyCreatedConversation));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(creationData),
+      onSuccessfullyCreatedConversation);
+
+  @JsonKey(ignore: true)
+  @override
+  _$CreateConversationCopyWith<_CreateConversation> get copyWith =>
+      __$CreateConversationCopyWithImpl<_CreateConversation>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
+    required TResult Function(ConversationItem conversationItem)
+        onConversationItemsData,
+    required TResult Function(List<ConversationItem> conversations) onData,
+    required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
+    required TResult Function() onError,
+    required TResult Function() dispose,
+  }) {
+    return createConversation(creationData, onSuccessfullyCreatedConversation);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+  }) {
+    return createConversation?.call(
+        creationData, onSuccessfullyCreatedConversation);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+    required TResult orElse(),
+  }) {
+    if (createConversation != null) {
+      return createConversation(
+          creationData, onSuccessfullyCreatedConversation);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
+    required TResult Function(_OnData value) onData,
+    required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
+    required TResult Function(_OnError value) onError,
+    required TResult Function(_Dispose value) dispose,
+  }) {
+    return createConversation(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+  }) {
+    return createConversation?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+    required TResult orElse(),
+  }) {
+    if (createConversation != null) {
+      return createConversation(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CreateConversation implements ConversationsEvent {
+  const factory _CreateConversation(
+      {required DirectConversationCreationData creationData,
+      dynamic Function(ConversationItem)?
+          onSuccessfullyCreatedConversation}) = _$_CreateConversation;
+
+  DirectConversationCreationData get creationData;
+  dynamic Function(ConversationItem)? get onSuccessfullyCreatedConversation;
+  @JsonKey(ignore: true)
+  _$CreateConversationCopyWith<_CreateConversation> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$CreateGroupConversationCopyWith<$Res> {
+  factory _$CreateGroupConversationCopyWith(_CreateGroupConversation value,
+          $Res Function(_CreateGroupConversation) then) =
+      __$CreateGroupConversationCopyWithImpl<$Res>;
+  $Res call(
+      {GroupConversationCreationData creationData,
+      dynamic Function(ConversationItem)?
+          onSuccessfullyCreatedGroupConversation});
+}
+
+/// @nodoc
+class __$CreateGroupConversationCopyWithImpl<$Res>
+    extends _$ConversationsEventCopyWithImpl<$Res>
+    implements _$CreateGroupConversationCopyWith<$Res> {
+  __$CreateGroupConversationCopyWithImpl(_CreateGroupConversation _value,
+      $Res Function(_CreateGroupConversation) _then)
+      : super(_value, (v) => _then(v as _CreateGroupConversation));
+
+  @override
+  _CreateGroupConversation get _value =>
+      super._value as _CreateGroupConversation;
+
+  @override
+  $Res call({
+    Object? creationData = freezed,
+    Object? onSuccessfullyCreatedGroupConversation = freezed,
+  }) {
+    return _then(_CreateGroupConversation(
+      creationData: creationData == freezed
+          ? _value.creationData
+          : creationData // ignore: cast_nullable_to_non_nullable
+              as GroupConversationCreationData,
+      onSuccessfullyCreatedGroupConversation:
+          onSuccessfullyCreatedGroupConversation == freezed
+              ? _value.onSuccessfullyCreatedGroupConversation
+              : onSuccessfullyCreatedGroupConversation // ignore: cast_nullable_to_non_nullable
+                  as dynamic Function(ConversationItem)?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CreateGroupConversation implements _CreateGroupConversation {
+  const _$_CreateGroupConversation(
+      {required this.creationData,
+      this.onSuccessfullyCreatedGroupConversation});
+
+  @override
+  final GroupConversationCreationData creationData;
+  @override
+  final dynamic Function(ConversationItem)?
+      onSuccessfullyCreatedGroupConversation;
+
+  @override
+  String toString() {
+    return 'ConversationsEvent.createGroupConversation(creationData: $creationData, onSuccessfullyCreatedGroupConversation: $onSuccessfullyCreatedGroupConversation)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _CreateGroupConversation &&
+            const DeepCollectionEquality()
+                .equals(other.creationData, creationData) &&
+            (identical(other.onSuccessfullyCreatedGroupConversation,
+                    onSuccessfullyCreatedGroupConversation) ||
+                other.onSuccessfullyCreatedGroupConversation ==
+                    onSuccessfullyCreatedGroupConversation));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(creationData),
+      onSuccessfullyCreatedGroupConversation);
+
+  @JsonKey(ignore: true)
+  @override
+  _$CreateGroupConversationCopyWith<_CreateGroupConversation> get copyWith =>
+      __$CreateGroupConversationCopyWithImpl<_CreateGroupConversation>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
+    required TResult Function(ConversationItem conversationItem)
+        onConversationItemsData,
+    required TResult Function(List<ConversationItem> conversations) onData,
+    required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
+    required TResult Function() onError,
+    required TResult Function() dispose,
+  }) {
+    return createGroupConversation(
+        creationData, onSuccessfullyCreatedGroupConversation);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+  }) {
+    return createGroupConversation?.call(
+        creationData, onSuccessfullyCreatedGroupConversation);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+    required TResult orElse(),
+  }) {
+    if (createGroupConversation != null) {
+      return createGroupConversation(
+          creationData, onSuccessfullyCreatedGroupConversation);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
+    required TResult Function(_OnData value) onData,
+    required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
+    required TResult Function(_OnError value) onError,
+    required TResult Function(_Dispose value) dispose,
+  }) {
+    return createGroupConversation(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+  }) {
+    return createGroupConversation?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+    required TResult orElse(),
+  }) {
+    if (createGroupConversation != null) {
+      return createGroupConversation(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CreateGroupConversation implements ConversationsEvent {
+  const factory _CreateGroupConversation(
+      {required GroupConversationCreationData creationData,
+      dynamic Function(ConversationItem)?
+          onSuccessfullyCreatedGroupConversation}) = _$_CreateGroupConversation;
+
+  GroupConversationCreationData get creationData;
+  dynamic Function(ConversationItem)?
+      get onSuccessfullyCreatedGroupConversation;
+  @JsonKey(ignore: true)
+  _$CreateGroupConversationCopyWith<_CreateGroupConversation> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1422,11 +2398,24 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Conversation> conversations) fetchChatItems,
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
-        onChatItemsData,
+        onConversationItemsData,
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1436,10 +2425,22 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1449,10 +2450,22 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1466,10 +2479,16 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FetchChatItems value) fetchChatItems,
-    required TResult Function(_OnChatItemsData value) onChatItemsData,
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
     required TResult Function(_OnData value) onData,
     required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1479,10 +2498,13 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1492,10 +2514,13 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1550,11 +2575,24 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Conversation> conversations) fetchChatItems,
+    required TResult Function(String myId, Map<String, DateTime> timestamps)
+        initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
-        onChatItemsData,
+        onConversationItemsData,
     required TResult Function(List<ConversationItem> conversations) onData,
     required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1564,10 +2602,22 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1577,10 +2627,22 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Conversation> conversations)? fetchChatItems,
-    TResult Function(ConversationItem conversationItem)? onChatItemsData,
+    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
     TResult Function(List<ConversationItem> conversations)? onData,
     TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1594,10 +2656,16 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FetchChatItems value) fetchChatItems,
-    required TResult Function(_OnChatItemsData value) onChatItemsData,
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
     required TResult Function(_OnData value) onData,
     required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1607,10 +2675,13 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1620,10 +2691,13 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FetchChatItems value)? fetchChatItems,
-    TResult Function(_OnChatItemsData value)? onChatItemsData,
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
     TResult Function(_OnData value)? onData,
     TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
