@@ -38,6 +38,7 @@ class MessageBubble extends StatefulWidget {
 
 class _MessageBubbleState extends State<MessageBubble> {
   bool _showAvatar = false;
+  bool _hasUpdatedTimestampAlready = false;
 
   @override
   void initState() {
@@ -154,9 +155,11 @@ class _MessageBubbleState extends State<MessageBubble> {
                   .add(ConversationEvent.markAsSeen(widget.message));
             } else if (widget.isGroupChat &&
                 value.visibleFraction > 0.5 &&
-                (widget.message.timestamp == null ||
-                    widget.groupChatLastSeenTimestamp
-                        .isBefore(widget.message.timestamp!))) {
+                !_hasUpdatedTimestampAlready &&
+                widget.message.timestamp != null &&
+                widget.groupChatLastSeenTimestamp
+                    .isBefore(widget.message.timestamp!)) {
+              _hasUpdatedTimestampAlready = true;
               widget.updateLastSeenTimestampForGroupConvo(
                   widget.message.timestamp!);
             }

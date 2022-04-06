@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'group_conversation_timestamps_event.dart';
 part 'group_conversation_timestamps_state.dart';
@@ -18,6 +20,8 @@ class GroupConversationTimestampsBloc extends Bloc<
   String? _userID;
 
   final _firebaseSyncIntervalInSeconds = 60;
+
+  final _timestampUpdateDebounceInSeconds = 3;
 
   DateTime? _lastSyncToFirebase;
 
@@ -34,6 +38,8 @@ class GroupConversationTimestampsBloc extends Bloc<
     on<_OnDataReceived>(_onDataReceived);
     on<_SetNewTimestampForConversation>(
       _setNewTimestampForConversation,
+      transformer: debounceRestartable(
+          Duration(seconds: _timestampUpdateDebounceInSeconds)),
     );
 
     _timer = Timer.periodic(Duration(seconds: _firebaseSyncIntervalInSeconds),
@@ -70,8 +76,17 @@ class GroupConversationTimestampsBloc extends Bloc<
       final currentMap = currentState.timestampMap;
       Map<String, DateTime> newTimestamps = currentMap;
 
-      newTimestamps[event.conversationId] = event.timestamp;
-      _hadNewChangesSinceLastSync = true;
+      //check whether there is a change
+      if (!currentMap.containsKey(event.conversationId) ||
+          (currentMap.containsKey(event.conversationId) &&
+              event.timestamp
+                      .difference(currentMap[event.conversationId]!)
+                      .inSeconds >=
+                  1)) {
+        _hadNewChangesSinceLastSync = true;
+        newTimestamps[event.conversationId] = event.timestamp;
+      }
+
       if (_needsToSync) {
         _lastSyncToFirebase = DateTime.now();
         _hadNewChangesSinceLastSync = false;
@@ -112,5 +127,15 @@ class GroupConversationTimestampsBloc extends Bloc<
     _timer?.cancel();
     _userID = null;
     return super.close();
+  }
+
+  EventTransformer<GroupConversationTimestampsEvent>
+      debounceRestartable<GroupConversationTimestampsEvent>(
+    Duration duration,
+  ) {
+    // This feeds the debounced event stream to restartable() and returns that
+    // as a transformer.
+    return (events, mapper) => restartable<GroupConversationTimestampsEvent>()
+        .call(events.debounceTime(duration), mapper);
   }
 }

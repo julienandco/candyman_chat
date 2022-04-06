@@ -70,7 +70,10 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
           loadSuccess: (state) {
             if (state.messages.isNotEmpty) {
               context.read<ConversationSearchBloc>().add(
-                    ConversationSearchEvent.initialize(state.messages),
+                    ConversationSearchEvent.initialize(
+                        messages: state.messages,
+                        lastSeenMessageTimestamp:
+                            widget.groupConversationLastSeenTimestamp),
                   );
             }
           },

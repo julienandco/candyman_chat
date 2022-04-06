@@ -22,8 +22,10 @@ class ConversationSearchBloc
       : super(const _State(messageIndices: [])) {
     on<ConversationSearchEvent>((event, emit) {
       event.when(
-        initialize: (messages) {
+        initialize: (messages, timestamp) {
           searchUC.initialize(messages);
+          _jumpToLastSeenMessage(
+              messages: messages, lastSeenTimestamp: timestamp);
         },
         toggleSearch: () => emit(
           state.copyWith(
@@ -61,6 +63,20 @@ class ConversationSearchBloc
         },
       );
     });
+  }
+
+  void _jumpToLastSeenMessage({
+    required List<ChatMessage> messages,
+    required DateTime lastSeenTimestamp,
+  }) {
+    final index = messages.lastIndexWhere(
+        (message) => message.timestamp?.isAfter(lastSeenTimestamp) ?? false);
+    if (index >= 0) {
+      messageListController.scrollToIndex(
+        index,
+        preferPosition: AutoScrollPosition.end,
+      );
+    }
   }
 
   void _jumpToResult() {
