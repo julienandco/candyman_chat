@@ -20,11 +20,6 @@ _$_FirebaseUser _$$_FirebaseUserFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      groupMessageSeenTimestamps:
-          (json['groupMessageSeenTimestamps'] as Map<String, dynamic>?)?.map(
-                (k, e) => MapEntry(k, DateTime.parse(e as String)),
-              ) ??
-              const {},
     );
 
 Map<String, dynamic> _$$_FirebaseUserToJson(_$_FirebaseUser instance) =>
@@ -35,6 +30,4 @@ Map<String, dynamic> _$$_FirebaseUserToJson(_$_FirebaseUser instance) =>
       'lastActivity': const MyDateTimeConverter().toJson(instance.lastActivity),
       'blockedUsers': instance.blockedUsers,
       'blockedByUsers': instance.blockedByUsers,
-      'groupMessageSeenTimestamps': instance.groupMessageSeenTimestamps
-          .map((k, e) => MapEntry(k, e.toIso8601String())),
     };

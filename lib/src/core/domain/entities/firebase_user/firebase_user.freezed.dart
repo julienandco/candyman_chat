@@ -26,10 +26,12 @@ class _$FirebaseUserTearOff {
       {required String id,
       required String name,
       String? profilePictureURL,
-      @MyDateTimeConverter() DateTime? lastActivity,
+      @MyDateTimeConverter()
+          DateTime? lastActivity,
       List<String> blockedUsers = const [],
       List<String> blockedByUsers = const [],
-      Map<String, DateTime> groupMessageSeenTimestamps = const {}}) {
+      @JsonKey(ignore: true)
+          Map<String, DateTime> groupMessageSeenTimestamps = const {}}) {
     return _FirebaseUser(
       id: id,
       name: name,
@@ -58,6 +60,7 @@ mixin _$FirebaseUser {
   DateTime? get lastActivity => throw _privateConstructorUsedError;
   List<String> get blockedUsers => throw _privateConstructorUsedError;
   List<String> get blockedByUsers => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
   Map<String, DateTime> get groupMessageSeenTimestamps =>
       throw _privateConstructorUsedError;
 
@@ -79,7 +82,7 @@ abstract class $FirebaseUserCopyWith<$Res> {
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers,
       List<String> blockedByUsers,
-      Map<String, DateTime> groupMessageSeenTimestamps});
+      @JsonKey(ignore: true) Map<String, DateTime> groupMessageSeenTimestamps});
 }
 
 /// @nodoc
@@ -147,7 +150,7 @@ abstract class _$FirebaseUserCopyWith<$Res>
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers,
       List<String> blockedByUsers,
-      Map<String, DateTime> groupMessageSeenTimestamps});
+      @JsonKey(ignore: true) Map<String, DateTime> groupMessageSeenTimestamps});
 }
 
 /// @nodoc
@@ -213,7 +216,7 @@ class _$_FirebaseUser implements _FirebaseUser {
       @MyDateTimeConverter() this.lastActivity,
       this.blockedUsers = const [],
       this.blockedByUsers = const [],
-      this.groupMessageSeenTimestamps = const {}});
+      @JsonKey(ignore: true) this.groupMessageSeenTimestamps = const {}});
 
   factory _$_FirebaseUser.fromJson(Map<String, dynamic> json) =>
       _$$_FirebaseUserFromJson(json);
@@ -233,8 +236,8 @@ class _$_FirebaseUser implements _FirebaseUser {
   @JsonKey()
   @override
   final List<String> blockedByUsers;
-  @JsonKey()
   @override
+  @JsonKey(ignore: true)
   final Map<String, DateTime> groupMessageSeenTimestamps;
 
   @override
@@ -288,10 +291,12 @@ abstract class _FirebaseUser implements FirebaseUser {
       {required String id,
       required String name,
       String? profilePictureURL,
-      @MyDateTimeConverter() DateTime? lastActivity,
+      @MyDateTimeConverter()
+          DateTime? lastActivity,
       List<String> blockedUsers,
       List<String> blockedByUsers,
-      Map<String, DateTime> groupMessageSeenTimestamps}) = _$_FirebaseUser;
+      @JsonKey(ignore: true)
+          Map<String, DateTime> groupMessageSeenTimestamps}) = _$_FirebaseUser;
 
   factory _FirebaseUser.fromJson(Map<String, dynamic> json) =
       _$_FirebaseUser.fromJson;
@@ -310,6 +315,7 @@ abstract class _FirebaseUser implements FirebaseUser {
   @override
   List<String> get blockedByUsers;
   @override
+  @JsonKey(ignore: true)
   Map<String, DateTime> get groupMessageSeenTimestamps;
   @override
   @JsonKey(ignore: true)

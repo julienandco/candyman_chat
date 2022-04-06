@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get_it/get_it.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class MyFirebaseUserListConverter
@@ -24,7 +23,6 @@ class MyFirebaseUserListConverter
     Map<String, dynamic> map = {};
     for (var user in users) {
       final userMap = user.toJson();
-      userMap.remove(GetIt.instance<FirebaseKeys>().usersGroupMessageSeenKey);
       map[user.id] = userMap;
     }
     return map;

@@ -13,7 +13,9 @@ class FirebaseUser with _$FirebaseUser {
     @MyDateTimeConverter() DateTime? lastActivity,
     @Default([]) List<String> blockedUsers,
     @Default([]) List<String> blockedByUsers,
-    @Default({}) Map<String, DateTime> groupMessageSeenTimestamps,
+    @Default({})
+    @JsonKey(ignore: true)
+        Map<String, DateTime> groupMessageSeenTimestamps,
   }) = _FirebaseUser;
 
   factory FirebaseUser.fromJson(Map<String, dynamic> json) =>

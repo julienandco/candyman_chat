@@ -6,8 +6,6 @@ import 'package:get_it/get_it.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
-import 'package:neon_chat/src/core/domain/use_cases/initialize_timestamp_stream_uc.dart';
-import 'package:neon_chat/src/core/domain/use_cases/sync_timestamps_with_firebase_uc.dart';
 
 ///
 /// Instance of the NEON-Chat, that works out-of-the-box. Where I come from, we

@@ -31,22 +31,6 @@ class FirebaseUserProfileRepositoryImpl
     );
   }
 
-  // @override
-  // Future<TimestampMap?> getUserGroupChatTimestamps(String userId) async {
-  //   try {
-  //     final userData = await _users.doc(userId).get()
-  //       ..data();
-  //     final timestampJson = userData[firebaseKeys.usersGroupMessageSeenKey];
-  //     print('TIMESTAMP MAP FETCHED FROM FIREBASE: $timestampJson');
-  //     return timestampJson == null
-  //         ? null
-  //         : TimestampMap.fromJson(timestampJson);
-  //   } catch (e) {
-  //     log('Error when getting timestamps', name: '$runtimeType', error: e);
-  //     rethrow;
-  //   }
-  // }
-
   @override
   Stream<Map<String, DateTime>> getUserGroupChatTimestamps(String userId) {
     return _users.doc(userId).snapshots().transform(
@@ -82,8 +66,6 @@ class FirebaseUserProfileRepositoryImpl
       required Map<String, DateTime> timestamps}) async {
     try {
       final doc = _users.doc(userId);
-
-      //TODOFIREBASEKEYS
 
       Map<String, dynamic> timestampsInfo = {
         firebaseKeys.groupMessageTimestampsLastUpdatedKey:
