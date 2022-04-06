@@ -59,9 +59,11 @@ class FirebaseUserProfileRepositoryImpl
           Map<String, DateTime> timestamps = {};
           if (data != null) {
             final timestampData = data[firebaseKeys.groupMessageTimestampsKey];
-            for (var key in timestampData.keys) {
-              final timestamp = timestampData[key] as Timestamp;
-              timestamps[key] = timestamp.toDate();
+            if (timestampData != null) {
+              for (var key in timestampData.keys) {
+                final timestamp = timestampData[key] as Timestamp;
+                timestamps[key] = timestamp.toDate();
+              }
             }
           }
 
