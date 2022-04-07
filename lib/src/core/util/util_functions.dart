@@ -41,10 +41,6 @@ void openConversation(
   required ConversationItem conversationItem,
   required Function(String, DateTime) updateGroupConversationTimestamp,
   required DateTime groupConversationLastSeenTimestamp,
-  SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
-  MessageBubbleStyle messageBubbleStyle = const MessageBubbleStyle(),
-  ConversationStyle conversationStyle = const ConversationStyle(),
-  BottomBarStyle bottomBarStyle = const BottomBarStyle(),
   Function(Conversation)? onAppbarTap,
   bool showCloseButton = true,
 }) {
@@ -54,10 +50,6 @@ void openConversation(
       builder: (context) => DefaultConversationLoader(
         groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
         updateGroupConversationTimestamp: updateGroupConversationTimestamp,
-        searchAppBarStyle: searchAppBarStyle,
-        messageBubbleStyle: messageBubbleStyle,
-        conversationStyle: conversationStyle,
-        bottomBarStyle: bottomBarStyle,
         conversationItem: conversationItem,
         onAppbarTap: onAppbarTap,
         showCloseButton: showCloseButton,

@@ -82,6 +82,20 @@ class NeonChat extends StatelessWidget {
   ///
   final bool disableGroupChatAbbBarTap;
 
+  ///
+  /// Returns whether the current user is authenticated or not. This information
+  /// is used to determine whether the commands received via Data Messages
+  /// should be handled (user is authenticated) or not (user not authenticated).
+  /// Defaults to always be true.
+  ///
+  final bool Function()? isAuthenticated;
+
+  ///
+  /// The URL where all the uploads (especially the photos) are stored. Defaults
+  /// to be null, so no user photos will be displayed.
+  ///
+  final String? remoteUploadsURL;
+
   const NeonChat({
     Key? key,
     required this.firebaseAuthInstance,
@@ -99,11 +113,13 @@ class NeonChat extends StatelessWidget {
     this.onDirectConversationAppBarTap,
     this.getConversationCreationData,
     this.onOpenUserProfile,
+    this.isAuthenticated,
+    this.remoteUploadsURL,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return NeonChatLoader(
+    return _NeonChatLoader(
       firebaseAuth: firebaseAuthInstance,
       firebaseFirestore: firebaseFirestoreInstance,
       remoteDataSource: remoteDataSource,
@@ -128,15 +144,13 @@ class NeonChat extends StatelessWidget {
       messageBubbleStyle: messageBubbleStyle,
       searchAppBarStyle: searchAppBarStyle,
       pushNotificationToastStyle: pushNotificationToastStyle,
-      //TODO:
-      isAuthenticated: () => true,
-      remoteUploadsURL: 'foo',
+      isAuthenticated: isAuthenticated ?? () => true,
+      remoteUploadsURL: remoteUploadsURL,
     );
   }
 }
 
-//TODO: make sure NEON Chat Loader is excluded of the export statements of the library
-class NeonChatLoader extends StatefulWidget {
+class _NeonChatLoader extends StatefulWidget {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firebaseFirestore;
   final FirebaseKeys firebaseKeys;
@@ -154,9 +168,10 @@ class NeonChatLoader extends StatefulWidget {
   final Function(Conversation)? onDirectConversationAppBarTap;
   final bool Function() isAuthenticated;
 
-  final String remoteUploadsURL;
+  final String? remoteUploadsURL;
 
-  const NeonChatLoader({
+  const _NeonChatLoader({
+    Key? key,
     required this.firebaseAuth,
     required this.firebaseFirestore,
     required this.firebaseKeys,
@@ -175,17 +190,26 @@ class NeonChatLoader extends StatefulWidget {
   });
 
   @override
-  State<NeonChatLoader> createState() => _NeonChatLoaderState();
+  State<_NeonChatLoader> createState() => _NeonChatLoaderState();
 }
 
-class _NeonChatLoaderState extends State<NeonChatLoader> {
+class _NeonChatLoaderState extends State<_NeonChatLoader> {
   @override
   void initState() {
     init(
-        firebaseAuth: widget.firebaseAuth,
-        firebaseFirestore: widget.firebaseFirestore,
-        firebaseKeys: widget.firebaseKeys,
-        remoteDataSource: widget.remoteDataSource);
+      firebaseAuth: widget.firebaseAuth,
+      firebaseFirestore: widget.firebaseFirestore,
+      firebaseKeys: widget.firebaseKeys,
+      remoteDataSource: widget.remoteDataSource,
+      remoteUploadsURL: widget.remoteUploadsURL,
+      isAuthenticated: widget.isAuthenticated,
+      bottomBarStyle: widget.bottomBarStyle,
+      conversationsStyle: widget.conversationsStyle,
+      conversationStyle: widget.conversationStyle,
+      messageBubbleStyle: widget.messageBubbleStyle,
+      searchAppBarStyle: widget.searchAppBarStyle,
+      pushNotificationToastStyle: widget.pushNotificationToastStyle,
+    );
     super.initState();
   }
 
@@ -208,11 +232,6 @@ class _NeonChatLoaderState extends State<NeonChatLoader> {
         ),
       ],
       child: DefaultConversationsLoader(
-        conversationStyle: widget.conversationStyle,
-        conversationsStyle: widget.conversationsStyle,
-        messageBubbleStyle: widget.messageBubbleStyle,
-        searchAppBarStyle: widget.searchAppBarStyle,
-        bottomBarStyle: widget.bottomBarStyle,
         onAppbarTap: widget.onAppBarTap,
         onOpenUserProfile: widget.onDirectConversationAppBarTap,
         getConversationCreationData: widget.getConversationCreationData,

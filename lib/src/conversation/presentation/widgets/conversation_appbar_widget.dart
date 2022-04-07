@@ -7,14 +7,12 @@ class ConversationAppbar extends StatelessWidget
     implements PreferredSizeWidget {
   final SearchAppBarStyle searchAppBarStyle;
   final bool showCloseButton;
-  final BoxDecoration barDecoration;
   final Function(Conversation)? onAvertaTap;
 
   const ConversationAppbar({
     Key? key,
     required this.searchAppBarStyle,
     required this.showCloseButton,
-    required this.barDecoration,
     this.onAvertaTap,
   }) : super(key: key);
 
@@ -42,7 +40,7 @@ class ConversationAppbar extends StatelessWidget
             },
           );
           return SubHeader(
-            decoration: barDecoration,
+            decoration: searchAppBarStyle.searchBarDecoration,
             leading: showCloseButton
                 ? const Padding(padding: EdgeInsets.symmetric(horizontal: 20))
                 : null,

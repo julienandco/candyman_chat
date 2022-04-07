@@ -11,8 +11,18 @@ init({
   required FirebaseFirestore firebaseFirestore,
   required FirebaseKeys firebaseKeys,
   required RemoteDataSource remoteDataSource,
+  required bool Function() isAuthenticated,
+  required ConversationStyle conversationStyle,
+  required ConversationsStyle conversationsStyle,
+  required MessageBubbleStyle messageBubbleStyle,
+  required SearchAppBarStyle searchAppBarStyle,
+  required BottomBarStyle bottomBarStyle,
+  required PushNotificationToastStyle pushNotificationToastStyle,
+  String? remoteUploadsURL,
 }) {
   final _currentUserUID = firebaseAuth.currentUser?.uid;
+
+  //Firebase
   if (!chatGetIt.isRegistered<FirebaseAuth>()) {
     chatGetIt.registerLazySingleton<FirebaseAuth>(() => firebaseAuth);
   }
@@ -20,6 +30,17 @@ init({
     chatGetIt.registerLazySingleton<FirebaseFirestore>(() => firebaseFirestore);
   }
   chatGetIt.registerLazySingleton<FirebaseKeys>(() => firebaseKeys);
+
+  //Styles
+  chatGetIt.registerLazySingleton<ConversationStyle>(() => conversationStyle);
+  chatGetIt.registerLazySingleton<ConversationsStyle>(() => conversationsStyle);
+  chatGetIt.registerLazySingleton<MessageBubbleStyle>(() => messageBubbleStyle);
+  chatGetIt.registerLazySingleton<SearchAppBarStyle>(() => searchAppBarStyle);
+  chatGetIt.registerLazySingleton<BottomBarStyle>(() => bottomBarStyle);
+  chatGetIt.registerLazySingleton<PushNotificationToastStyle>(
+      () => pushNotificationToastStyle);
+
+  //Logic
   chatGetIt.registerLazySingleton<ConversationRepository>(
     () => ConversationRepositoryImpl(
         firestore: firebaseFirestore, firebaseAuth: firebaseAuth),
@@ -102,9 +123,9 @@ init({
   //TODOPUSH
   chatGetIt.registerLazySingleton<PushNotificationService>(() =>
       PushNotificationService(
-          isAuthenticated: () => true,
+          isAuthenticated: isAuthenticated,
           openConversation: (_, __) {},
-          remoteUploadsURL: 'foo',
+          remoteUploadsURL: remoteUploadsURL,
           toastStyle: const PushNotificationToastStyle()));
 }
 // }

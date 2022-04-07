@@ -10,7 +10,7 @@ class PushNotificationService {
   String _openedConversationId = '';
   final bool Function() isAuthenticated;
   final void Function(BuildContext, String) openConversation;
-  final String remoteUploadsURL;
+  final String? remoteUploadsURL;
   final PushNotificationToastStyle toastStyle;
 
   PushNotificationService({
@@ -97,7 +97,7 @@ class PushNotificationService {
         return Container(
           margin: const EdgeInsets.only(right: 20),
           child: AvatarWidget(
-            imgUrl: uploadId != null
+            imgUrl: uploadId != null && remoteUploadsURL != null
                 ? '$remoteUploadsURL/$uploadId?preferThumbnail=true'
                 : null,
           ),

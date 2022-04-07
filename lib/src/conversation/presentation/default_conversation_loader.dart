@@ -13,20 +13,12 @@ class DefaultConversationLoader extends StatelessWidget {
 
   final DateTime groupConversationLastSeenTimestamp;
 
-  final ConversationStyle conversationStyle;
-  final MessageBubbleStyle messageBubbleStyle;
-  final SearchAppBarStyle searchAppBarStyle;
-  final BottomBarStyle bottomBarStyle;
   final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onAppbarTap;
 
   const DefaultConversationLoader({
     Key? key,
     required this.conversationItem,
-    required this.conversationStyle,
-    required this.messageBubbleStyle,
-    required this.searchAppBarStyle,
-    required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
     required this.groupConversationLastSeenTimestamp,
     this.showCloseButton = true,
@@ -59,10 +51,6 @@ class DefaultConversationLoader extends StatelessWidget {
             updateGroupConversationTimestamp(
                 conversationItem.conversation.id, timestamp),
         groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
-        defaultMessageBubbleStyle: messageBubbleStyle,
-        defaultConversationStyle: conversationStyle,
-        defaultSearchAppBarStyle: searchAppBarStyle,
-        defaultBottomBarStyle: bottomBarStyle,
         showCloseButton: showCloseButton,
         onAppbarTap: onAppbarTap,
       ),

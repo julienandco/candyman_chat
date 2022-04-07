@@ -6,12 +6,6 @@ import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
-  final ConversationsStyle conversationsStyle;
-  final ConversationStyle conversationStyle;
-  final MessageBubbleStyle messageBubbleStyle;
-  final SearchAppBarStyle searchAppBarStyle;
-  final BottomBarStyle bottomBarStyle;
-
   final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onOpenUserProfile;
   final Function(Conversation)? onShowGroupInfo;
@@ -22,11 +16,6 @@ class DefaultConversationsPage extends StatefulWidget {
 
   const DefaultConversationsPage({
     Key? key,
-    required this.conversationsStyle,
-    required this.conversationStyle,
-    required this.messageBubbleStyle,
-    required this.searchAppBarStyle,
-    required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
     this.onOpenUserProfile,
     this.onShowGroupInfo,
@@ -52,10 +41,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
       conversationItem: conversationItem,
       updateGroupConversationTimestamp: widget.updateGroupConversationTimestamp,
       groupConversationLastSeenTimestamp: timestamp,
-      searchAppBarStyle: widget.searchAppBarStyle,
-      messageBubbleStyle: widget.messageBubbleStyle,
-      conversationStyle: widget.conversationStyle,
-      bottomBarStyle: widget.bottomBarStyle,
       onAppbarTap: widget.onShowGroupInfo,
     );
   }
@@ -63,19 +48,20 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
   @override
   Widget build(BuildContext context) {
     final _myId = chatGetIt<FirebaseAuth>().currentUser!.uid;
+    final style = chatGetIt<ConversationsStyle>();
     super.build(context);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: widget.conversationsStyle.appBarCenterTitle,
-          title: widget.conversationsStyle.appBarTitle,
-          backgroundColor: widget.conversationsStyle.appBarColor,
+          centerTitle: style.appBarCenterTitle,
+          title: style.appBarTitle,
+          backgroundColor: style.appBarColor,
         ),
-        floatingActionButton: widget.conversationsStyle.showFab
+        floatingActionButton: style.showFab
             ? FloatingActionButton(
-                onPressed: widget.conversationsStyle.fabAction ??
+                onPressed: style.fabAction ??
                     () async {
                       final convoCreationData =
                           widget.getConversationCreationData?.call();
@@ -102,8 +88,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                         }
                       }
                     },
-                backgroundColor: widget.conversationsStyle.fabColor,
-                child: widget.conversationsStyle.fabIcon)
+                backgroundColor: style.fabColor,
+                child: style.fabIcon)
             : null,
         body: SafeArea(
           child: BlocBuilder<ConversationsSearchBloc, ConversationsSearchState>(
@@ -119,7 +105,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                     children: conversationsState.maybeWhen(
                       loadSuccess: (chatConversations) {
                         if (loadedConversationsState.conversations.isEmpty) {
-                          return [widget.conversationsStyle.emtpyConversation];
+                          return [style.emtpyConversation];
                         }
                         return (conversationsSearchState.isSearchActive
                                 ? conversationsSearchState.conversations
@@ -128,7 +114,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                               (conversationItem) => ConversationListItem(
                                 myId: _myId,
                                 conversationListItemStyle:
-                                    widget.conversationsStyle.chatListItemStyle,
+                                    style.chatListItemStyle,
                                 conversationItem: conversationItem,
                                 conversationThumbnail: widget.getUserAvatar
                                         ?.call(conversationItem
@@ -145,10 +131,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   conversationItem: conversationItem,
                                   updateGroupConversationTimestamp:
                                       widget.updateGroupConversationTimestamp,
-                                  searchAppBarStyle: widget.searchAppBarStyle,
-                                  messageBubbleStyle: widget.messageBubbleStyle,
-                                  conversationStyle: widget.conversationStyle,
-                                  bottomBarStyle: widget.bottomBarStyle,
                                   onAppbarTap: conversationItem
                                           .conversation.isGroupConversation
                                       ? widget.onShowGroupInfo
@@ -164,13 +146,11 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                             )
                             .toList();
                       },
-                      orElse: () => [widget.conversationsStyle.loadingWidget],
+                      orElse: () => [style.loadingWidget],
                     ),
                   ),
-                  loadInProgress: (l) =>
-                      widget.conversationsStyle.loadingWidget,
-                  orElse: () =>
-                      widget.conversationsStyle.emptyConversationsWidget,
+                  loadInProgress: (l) => style.loadingWidget,
+                  orElse: () => style.emptyConversationsWidget,
                 ),
               );
             },

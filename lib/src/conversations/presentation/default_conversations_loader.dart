@@ -7,11 +7,6 @@ import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationsLoader extends StatelessWidget {
-  final ConversationsStyle conversationsStyle;
-  final ConversationStyle conversationStyle;
-  final MessageBubbleStyle messageBubbleStyle;
-  final SearchAppBarStyle searchAppBarStyle;
-  final BottomBarStyle bottomBarStyle;
   final Function(Conversation)? onOpenUserProfile;
   final Function(Conversation)? onAppbarTap;
 
@@ -21,11 +16,6 @@ class DefaultConversationsLoader extends StatelessWidget {
 
   const DefaultConversationsLoader({
     Key? key,
-    required this.conversationsStyle,
-    required this.conversationStyle,
-    required this.messageBubbleStyle,
-    required this.searchAppBarStyle,
-    required this.bottomBarStyle,
     this.onOpenUserProfile,
     this.onAppbarTap,
     this.getUserAvatar,
@@ -90,11 +80,6 @@ class DefaultConversationsLoader extends StatelessWidget {
                     updateGroupConversationTimestamp: (id, timestamp) =>
                         _updateGroupConversationTimestamp(context,
                             conversationId: id, timestamp: timestamp),
-                    conversationsStyle: conversationsStyle,
-                    conversationStyle: conversationStyle,
-                    messageBubbleStyle: messageBubbleStyle,
-                    searchAppBarStyle: searchAppBarStyle,
-                    bottomBarStyle: bottomBarStyle,
                     onOpenUserProfile: onOpenUserProfile,
                     onShowGroupInfo: onAppbarTap,
                     getUserAvatar: getUserAvatar,
@@ -116,10 +101,6 @@ class DefaultConversationsLoader extends StatelessWidget {
                                 .read<GroupConversationTimestampsBloc>()
                                 .getLastSeenTimestampForConversationItem(
                                     state.conversationItem!),
-                            messageBubbleStyle: messageBubbleStyle,
-                            conversationStyle: conversationStyle,
-                            searchAppBarStyle: searchAppBarStyle,
-                            bottomBarStyle: bottomBarStyle,
                             conversationItem: state.conversationItem!,
                             showCloseButton: false,
                             onAppbarTap: onAppbarTap,

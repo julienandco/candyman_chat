@@ -9,10 +9,7 @@ import 'widgets/conversation_appbar_widget.dart';
 
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
-  final ConversationStyle defaultConversationStyle;
-  final MessageBubbleStyle defaultMessageBubbleStyle;
-  final SearchAppBarStyle defaultSearchAppBarStyle;
-  final BottomBarStyle defaultBottomBarStyle;
+
   final DateTime groupConversationLastSeenTimestamp;
   final Function(DateTime) updateTimestampForConversation;
   final Function(Conversation)? onAppbarTap;
@@ -20,10 +17,6 @@ class DefaultConversationPage extends StatefulWidget {
   const DefaultConversationPage({
     Key? key,
     required this.showCloseButton,
-    required this.defaultConversationStyle,
-    required this.defaultMessageBubbleStyle,
-    required this.defaultSearchAppBarStyle,
-    required this.defaultBottomBarStyle,
     required this.updateTimestampForConversation,
     required this.groupConversationLastSeenTimestamp,
     this.onAppbarTap,
@@ -85,13 +78,11 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
               const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
           child: KeyboardDismisser(
             child: Scaffold(
-              backgroundColor: widget.defaultConversationStyle.backgroundColor,
+              backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
               appBar: ConversationAppbar(
                 onAvertaTap: widget.onAppbarTap,
-                searchAppBarStyle: widget.defaultSearchAppBarStyle,
+                searchAppBarStyle: chatGetIt<SearchAppBarStyle>(),
                 showCloseButton: !widget.showCloseButton,
-                barDecoration:
-                    const BoxDecoration(color: Color.fromARGB(255, 25, 5, 55)),
               ),
               body: Stack(
                 children: [
@@ -104,13 +95,13 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                     slivers: [
                       SliverPadding(
                         padding:
-                            widget.defaultConversationStyle.messageListPadding,
+                            chatGetIt<ConversationStyle>().messageListPadding,
                         sliver: MessageList(
                           updateLastSeenTimestampForConversation: (timestamp) =>
                               widget.updateTimestampForConversation(timestamp),
                           conversationLastSeenTimestamp:
                               widget.groupConversationLastSeenTimestamp,
-                          messageBubbleStyle: widget.defaultMessageBubbleStyle,
+                          messageBubbleStyle: chatGetIt<MessageBubbleStyle>(),
                           getAuthorNameForSenderId: (senderId) {
                             if (loadedConversationState
                                 .conversation.isGroupConversation) {
@@ -136,7 +127,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                           gradient: LinearGradient(
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
-                              colors: widget.defaultConversationStyle
+                              colors: chatGetIt<ConversationStyle>()
                                   .ignorePointersColors,
                               stops: const [0, 0.15])),
                     ),
@@ -162,9 +153,8 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                                   return state.maybeMap(
                                     loadSuccess: (state) {
                                       return ConversationBottomBar(
-                                        bottomBarStyle:
-                                            widget.defaultBottomBarStyle,
-                                      );
+                                          bottomBarStyle:
+                                              chatGetIt<BottomBarStyle>());
                                     },
                                     orElse: () => const SizedBox.shrink(),
                                   );
