@@ -3,6 +3,7 @@ import 'package:neon_chat/neon_chat.dart';
 enum FirebaseEnvironment { production, staging }
 
 class FirebaseKeys {
+  final bool usePrefix;
   final FirebaseEnvironment environment;
 
   final String stagingCollectionName;
@@ -41,6 +42,7 @@ class FirebaseKeys {
   final String groupMessageTimestampsKey = 'timestamps';
 
   const FirebaseKeys({
+    this.usePrefix = false,
     this.environment = FirebaseEnvironment.staging,
     this.stagingCollectionName = 'staging',
     this.productionCollectionName = 'production',
@@ -60,7 +62,9 @@ class FirebaseKeys {
         prefix = stagingCollectionName;
         break;
     }
-    return '$prefix-$_conversationsCollectionKey';
+    return usePrefix
+        ? '$prefix-$_conversationsCollectionKey'
+        : _conversationsCollectionKey;
   }
 
   String get usersCollectionKey {
@@ -73,7 +77,7 @@ class FirebaseKeys {
         prefix = stagingCollectionName;
         break;
     }
-    return '$prefix-$_usersCollectionKey';
+    return usePrefix ? '$prefix-$_usersCollectionKey' : _usersCollectionKey;
   }
 }
 
