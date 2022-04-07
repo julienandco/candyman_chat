@@ -10,7 +10,7 @@ initNEONChat({
   required FirebaseAuth firebaseAuth,
   required FirebaseFirestore firebaseFirestore,
   required FirebaseKeys firebaseKeys,
-  required RemoteDataSource remoteDataSource,
+  required NeonChatRemoteDataSource remoteDataSource,
   required bool Function() isAuthenticated,
   required ConversationStyle conversationStyle,
   required ConversationsStyle conversationsStyle,

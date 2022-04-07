@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 
 import 'package:neon_chat/src/core/core.dart';
 
-abstract class RemoteDataSource {
+abstract class NeonChatRemoteDataSource {
   Future<Either<Failure, String>> deleteEndpoint(String fileId);
   Future<Either<Failure, String>> getEndpoint(String fileId);
   Future<Either<Failure, String>> patchEndpoint(

@@ -6,10 +6,10 @@ import 'package:neon_chat/neon_chat.dart';
 @module
 abstract class RemoteDataBaseInjectableModule {
   @lazySingleton
-  RemoteDataSource get remoteDataSource => _MyDataSource();
+  NeonChatRemoteDataSource get remoteDataSource => _MyDataSource();
 }
 
-class _MyDataSource implements RemoteDataSource {
+class _MyDataSource implements NeonChatRemoteDataSource {
   @override
   Future<Either<Failure, String>> deleteEndpoint(String fileId) async {
     // TODO: implement deleteEndpoint

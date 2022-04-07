@@ -26,7 +26,7 @@ class NeonChat extends StatefulWidget {
   ///
   /// The RemoteDataSource you custom-implemented.
   ///
-  final RemoteDataSource remoteDataSource;
+  final NeonChatRemoteDataSource remoteDataSource;
 
   ///
   /// Do NOT fuck around with this, there is a reason this is optional.

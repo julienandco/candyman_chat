@@ -25,7 +25,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<_i4.FirebaseFirestore>(
       () => firebaseInjectableModule.firebaseFirestore);
-  gh.lazySingleton<_i5.RemoteDataSource>(
+  gh.lazySingleton<_i5.NeonChatRemoteDataSource>(
       () => remoteDataBaseInjectableModule.remoteDataSource);
   return get;
 }

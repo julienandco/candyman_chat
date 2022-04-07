@@ -9,7 +9,7 @@ import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class FileUploadRepositoryImpl implements FileUploadRepository {
-  final RemoteDataSource remoteDataSource;
+  final NeonChatRemoteDataSource remoteDataSource;
 
   FileUploadRepositoryImpl({
     required this.remoteDataSource,

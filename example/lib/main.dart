@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
           NeonChat(
         firebaseAuthInstance: getIt<FirebaseAuth>(),
         firebaseFirestoreInstance: getIt<FirebaseFirestore>(),
-        remoteDataSource: getIt<RemoteDataSource>(),
+        remoteDataSource: getIt<NeonChatRemoteDataSource>(),
         getConversationCreationData: () => _getMockGroupConvoCreationData,
       ),
     );
