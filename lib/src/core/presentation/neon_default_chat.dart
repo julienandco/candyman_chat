@@ -131,7 +131,7 @@ class NeonChat extends StatefulWidget {
 class _NeonChatState extends State<NeonChat> {
   @override
   void initState() {
-    init(
+    initNEONChat(
       firebaseAuth: widget.firebaseAuthInstance,
       firebaseFirestore: widget.firebaseFirestoreInstance,
       firebaseKeys: widget.firebaseKeys,

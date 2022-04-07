@@ -6,7 +6,7 @@ import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.da
 
 GetIt chatGetIt = GetIt.instance;
 
-init({
+initNEONChat({
   required FirebaseAuth firebaseAuth,
   required FirebaseFirestore firebaseFirestore,
   required FirebaseKeys firebaseKeys,
