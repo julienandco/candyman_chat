@@ -29,7 +29,9 @@ initNEONChat({
   if (!chatGetIt.isRegistered<FirebaseFirestore>()) {
     chatGetIt.registerLazySingleton<FirebaseFirestore>(() => firebaseFirestore);
   }
-  chatGetIt.registerLazySingleton<FirebaseKeys>(() => firebaseKeys);
+  if (!chatGetIt.isRegistered<FirebaseKeys>()) {
+    chatGetIt.registerLazySingleton<FirebaseKeys>(() => firebaseKeys);
+  }
 
   //Styles
   chatGetIt.registerLazySingleton<ConversationStyle>(() => conversationStyle);
