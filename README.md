@@ -13,20 +13,32 @@ neon-chat:
 ```
 
 ## Setup
-1. App in der Firebase Konsole registrieren und die GoogleService-Info.plist bzw. .json in die korrekten Verzeichnisse unter ```android``` und ```ios``` packen. Bei iOS das plist File über XCode einfügen! Wenn man über das Fileverzeichnis geht, rallt Flutter das nicht! 
-Außerdem beim Setup von ```AppDelegate.swift``` diese Zeile NICHT!!! einfügen:
+1. App in Firebase registrieren, am besten mithilfe der [FlutterFireCLI][flutterfire_cli_link] und im Anschluss die automatisch generierten ```DefaultFirebaseOptions``` zum initialisieren nutzen (kein GoogleServiceInfo.plist bzw. .json Rumgebumse mehr!):
+
+```dart
+...
+await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+...
+```
+
+Alternativ den alten Weg über die Firebase Konsole gehen, da gibt es aber ein paar Dinge zu beachten:
+  a. Bei iOS das plist File über XCode einfügen! Wenn man über das Fileverzeichnis geht, rallt Flutter das nicht! 
+  b. Beim Setup von ```AppDelegate.swift``` diese Zeile NICHT!!! einfügen:
 
 ```swift
 FirebaseApp.configure()
 ```
 Die Doku der Firebase Konsole ist noch nicht auf dem Flutter-Standard (Stand 23.02.2022).
-Das komplette Setup (iOS und Android App in Firebase anmelden), geht übrigens sehr entspannt mithilfe der [FlutterFireCLI][flutterfire_cli_link])
 
-2. In der neu aufgesetzen Firebase die Authentication und FirebaseFirestore aktivieren.
 
-3. Suchindizies im Firestore aktivieren. Der erste Request wird vermutlich schiefgehen, dann gibt es eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst.
+2. In der neu aufgesetzen Firebase die Authentication und FirebaseFirestore aktivieren (wenn das durch das Backend noch nicht passiert ist).
 
-4. Die App, in die der Chat integriert werden soll, MUSS von ```firebase_core``` und ```firebase_auth``` abhängen, um sowohl die Firebase App zu initialisieren, als auch das Anmelden in Firebase zu ermöglichen.
+3. Die App, in die der Chat integriert werden soll, MUSS von ```firebase_core``` und ```firebase_auth``` abhängen, um sowohl die Firebase App zu initialisieren, als auch das Anmelden in Firebase zu ermöglichen.
+
+4. Anmeldung in ```FirebaseAuth``` implementieren, im Example Projekt hier ist das über ```signInWithEmailAndPassword``` gelöst, in deinem aktuellen Projekt höchstwahrscheinlich NICHT! NEON-Standard ist, dass du beim SignUp vom Backend den Custom-Firebase-Token zurückbekommst, den du am besten auf dem Device cachest. Diesen dann in Zukunft immer zum 
+Anmelden verwenden: ```FirebaseAuth.signInWithCustomToken(myToken)```.
 
 5. Der Chat ermöglicht out-of-the-box das Teilen von Dateien, Fotos und Videos. Damit die App beim Versuch, ein Foto zu machen oder auf deine Galerie zuzugreifen, nicht crasht, musst du ein paar Keys ins Info.plist buttern: 
 
@@ -44,9 +56,7 @@ Das komplette Setup (iOS und Android App in Firebase anmelden), geht übrigens s
 <string>Mikro bite.</string>
 ```
 
-ZUSATZ:
-Es macht mehr Fun, wenn schon Daten vorhanden sind, dafür die Authentication und den Firestore populaten (Coming soon: ein Mörderskript, das das automatisch macht)! Am einfachsten ist es, Nutzername/PW Anmeldung zu aktivieren und dich dann programmatisch wie in ```example/lib/main.dart``` einzuloggen, ohne jegliche UI (nur am Anfang natürlich!)
-Falls die Daten im Firestore von Hand aufgesetzt werden sollten, bitte die Naming Conventions in ```lib/core/util/firebase_keys.dart``` beachten bzw. eigene etablieren und eine Instanz der ```FirebaseKeys``` Datenstruktur dem Chat übergeben. Beim Benennen der FirebaseKeys die Staging/Production Logik beachten!!! (Staging Chats in z.B. ```staging-conversations``` speichern)
+6. Einige dich mit dem Backend auf Naming Conventions(!!!) bei den Daten in FireStore, die sowohl Front- als auch Backend schreiben. Nutze dazu die ```FirebaseKeys``` Datenstruktur. Im Idealfall nutzt ihr die Default-Werte, dann muss dem Chat beim Initialisieren gar nichts übergeben werden.
 
 ## Nutzung
 
@@ -62,7 +72,7 @@ Ab jetzt wird differenziert!
 Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1. 
 
 
-Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und kannst zahlreiche Styles zum customisen und Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben!
+Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und kannst zahlreiche Styles selbst customizen und das alles der ```NeonChat.initNeonChat()```-Methode übergeben. Diese soll nur einmal! pro App-Life-Cycle aufgerufen werden (wie ```Firebase.initializeApp```, pack sie also am besten in die main von deinem Projekt). Weiter unten im Widget Tree kannst du dann den ```NeonChat``` instanzieeren und eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben!
 
 FUNFACT: Solltest du in deinem Projekt [GetIt][get_it_link] verwenden, kannst du jetzt mithilfe von [mason][mason_link] das ```NEON-Chat-Injection-Brick``` generieren, um sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` zu verwalten. Was? Du weißt nicht, wie das geht? 
 Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den [NEON-Bricks][neon_bricks_link] durch. Die [Doku von Mason][mason_link] und [dieses Tutorial][mason_tutorial_link] sind auch sehr hilfreich.
@@ -82,16 +92,25 @@ Wenn dir das mit den Bricks zu anstrengend ist (🤨) kannst du das File auch h�
 (Komplettes Beispiel siehe ```example/lib/main.dart```)
 
 ```dart
+void main() {
+  ...
+
+  NeonChat.initNeonChat(
+    firebaseAuth: getIt<FirebaseAuth>(),
+    firebaseFirestore: getIt<FirebaseFirestore>(),
+    remoteDataSource: getIt<NeonChatRemoteDataSource>(),
+  );
+
+  ...
+}
 ...
  @override
   Widget build(BuildContext context) {
-    return NeonChat(
-        firebaseAuthInstance: getIt<FirebaseAuth>(),
-        firebaseFirestoreInstance: getIt<FirebaseFirestore>(),
-        remoteDataSource: getIt<RemoteDataSource>(),
-    );
+    return const NeonChat();
   }
 ```
+
+Das klingt zu einfach? Stimmt! 🥴
 
 Solltest du dich wider Erwarten in Fall 2 befinden, dann willst du höchstwahrscheinlich die gesamten UI-Komponenten neu bauen, oder die Chat-Logik sogar erweitern 😱 (falls du denkst, dass das auch für andere Projekte Sinn macht, dann hauen wir das mit ins Package)!
 
@@ -100,6 +119,8 @@ Dank der nicht vorhandenen Export-Regeln des Packages steht dir die gesamte NEON
 Nutze sie, doch nutze sie weise 🧙🏻‍♂️ !
 
 Selbstverständlich stehen dir auch alle Widgets aus dem Chat-Package zur Verfügung, tob dich aus!
+
+Als letzer Hinweis: die erste Nutzung wird höchstwahrscheinlich schiefgehen, weil du noch Suchindizies im Firestore aktivieren musst. Dazu kommt dann eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst.
 
 Und jetzt: Abfahrt! 🏎
 
