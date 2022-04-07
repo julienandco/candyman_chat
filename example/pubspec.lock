@@ -69,8 +69,8 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "4a719c32cfd294c4b4a7d12e15bd44f0de855762"
-      url: "https://github.com/julien-neon/betterplayer"
+      resolved-ref: "20d401c3e9774e35d9ad3ceb0c35f0f3e57f8943"
+      url: "https://github.com/NEON-Software-Solutions/betterplayer.git"
     source: git
     version: "0.0.81"
   bloc:
