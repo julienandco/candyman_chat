@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 import 'widgets/conversation_appbar_widget.dart';
 
@@ -13,11 +13,9 @@ class DefaultConversationPage extends StatefulWidget {
   final MessageBubbleStyle defaultMessageBubbleStyle;
   final SearchAppBarStyle defaultSearchAppBarStyle;
   final BottomBarStyle defaultBottomBarStyle;
-  final GetUploadUrlUC getUploadUrlUC;
   final DateTime groupConversationLastSeenTimestamp;
   final Function(DateTime) updateTimestampForConversation;
   final Function(Conversation)? onAppbarTap;
-  final PushNotificationService pushNotificationService;
 
   const DefaultConversationPage({
     Key? key,
@@ -26,10 +24,8 @@ class DefaultConversationPage extends StatefulWidget {
     required this.defaultMessageBubbleStyle,
     required this.defaultSearchAppBarStyle,
     required this.defaultBottomBarStyle,
-    required this.getUploadUrlUC,
     required this.updateTimestampForConversation,
     required this.groupConversationLastSeenTimestamp,
-    required this.pushNotificationService,
     this.onAppbarTap,
   }) : super(key: key);
 
@@ -48,15 +44,16 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
 
   @override
   void dispose() {
-    widget.pushNotificationService.enableChatNotifications();
+    chatGetIt<PushNotificationService>().enableChatNotifications();
     super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final id = context.read<ConversationBloc>().conversationId;
-      widget.pushNotificationService
+      final id =
+          context.read<ConversationBloc>().conversationItem.conversation.id;
+      chatGetIt<PushNotificationService>()
           .disableChatNotificationsForConversationId(id);
     }
     _isInit = false;
@@ -113,7 +110,6 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                               widget.updateTimestampForConversation(timestamp),
                           conversationLastSeenTimestamp:
                               widget.groupConversationLastSeenTimestamp,
-                          getUploadUrlUC: widget.getUploadUrlUC,
                           messageBubbleStyle: widget.defaultMessageBubbleStyle,
                           getAuthorNameForSenderId: (senderId) {
                             if (loadedConversationState

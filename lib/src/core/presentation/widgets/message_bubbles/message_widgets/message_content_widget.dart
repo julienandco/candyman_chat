@@ -1,15 +1,17 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
+import 'package:neon_chat/src/chat_init.dart';
+
+//TODO: provide uploadURLCubit
 
 class MessageContentWidget extends StatefulWidget {
   final MessageBubbleStyle messageBubbleStyle;
 
-  final GetUploadUrlUC getUploadUrlUC;
   final ConversationMessage message;
   final Widget? header;
   final List<Widget> footer;
@@ -20,7 +22,6 @@ class MessageContentWidget extends StatefulWidget {
     required this.header,
     required this.footer,
     required this.messageBubbleStyle,
-    required this.getUploadUrlUC,
   }) : super(key: key);
 
   @override
@@ -32,17 +33,18 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.header != null) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          widget.header!,
-          _getMessageContent(context),
-        ],
-      );
-    } else {
-      return _getMessageContent(context);
-    }
+    return BlocProvider(
+      create: (context) => chatGetIt<UploadUrlCubit>(),
+      child: widget.header != null
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                widget.header!,
+                _getMessageContent(context),
+              ],
+            )
+          : _getMessageContent(context),
+    );
   }
 
   Widget _getMessageContent(BuildContext context) {
@@ -53,6 +55,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
           : MainAxisAlignment.end,
       children: widget.footer,
     );
+
     switch (widget.message.type) {
       case ConversationMessageType.voice:
         return Container(
@@ -66,7 +69,6 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
               ConversationAudioPlayer(
                 audioPlayerStyle: widget.messageBubbleStyle.audioPlayerStyle,
                 message: widget.message,
-                getUploadUrlUC: widget.getUploadUrlUC,
               ),
               footerWidget,
             ],
@@ -81,8 +83,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
               (!widget.message.doneUpload && kIsWeb)
                   ? Text(widget.messageBubbleStyle.messageIsUploadingLabel)
                   : ChatImageBubble(
-                      onTap: () => _openMediaViewer(
-                          context, widget.message, widget.getUploadUrlUC),
+                      onTap: () => _openMediaViewer(context, widget.message),
                       message: widget.message,
                       // TODO:
                       getRedirectedCachedNetworkImage: (u, p) => Container(),
@@ -109,10 +110,8 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
                 ChatVideoBubble(
                   defaultVideoPlayerStyle:
                       widget.messageBubbleStyle.videoPlayerStyle,
-                  onTap: () => _openMediaViewer(
-                      context, widget.message, widget.getUploadUrlUC),
+                  onTap: () => _openMediaViewer(context, widget.message),
                   message: widget.message,
-                  getUploadUrlUC: widget.getUploadUrlUC,
                 ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -135,7 +134,6 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
                 defaultFileBubbleStyle:
                     widget.messageBubbleStyle.fileBubbleStyle,
                 message: widget.message,
-                getUploadUrlUC: widget.getUploadUrlUC,
               ),
               footerWidget,
             ],
@@ -202,12 +200,12 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
   }
 }
 
-void _openMediaViewer(
-    BuildContext context, ConversationMessage message, GetUploadUrlUC getUrl) {
+void _openMediaViewer(BuildContext context, ConversationMessage message) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) =>
-            ChatVideoPage(message: message, getUploadUrlUC: getUrl)),
+        builder: (context) => BlocProvider(
+            create: (context) => chatGetIt<UploadUrlCubit>(),
+            child: ChatVideoPage(message: message))),
   );
 }

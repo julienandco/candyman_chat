@@ -15,7 +15,7 @@ part 'conversation_event.dart';
 part 'conversation_bloc.freezed.dart';
 
 class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
-  String conversationId;
+  ConversationItem conversationItem;
 
   final FirebaseAuth firebaseAuth;
   late final StreamSubscription _conversationStream;
@@ -29,7 +29,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   final InitializeConversationStreamUC initStreamUC;
 
   ConversationBloc({
-    required this.conversationId,
+    required this.conversationItem,
     required this.firebaseAuth,
     required this.hideMessageUC,
     required this.deleteMessageUC,
@@ -39,27 +39,27 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     required this.sendTextMessageUC,
     required this.initStreamUC,
   }) : super(const _Initial()) {
+    _conversationStream = initStreamUC(
+      conversationId: conversationItem.conversation.id,
+      combiner: (
+        List<ConversationMessage> messages,
+      ) =>
+          _OnData(
+        messages,
+        conversationItem.conversation,
+        conversationItem.conversation
+            .getDisplayName(firebaseAuth.currentUser!.uid),
+      ),
+      onData: (onDataEvent) => add(onDataEvent),
+    );
     on<ConversationEvent>((event, emit) {
       event.when(
-        init: (conversationItem) {
-          if (firebaseAuth.currentUser != null) {
-            // _conversationId = conversationItem.conversation.id;
+        // init: (conversationItem) {
+        //   if (firebaseAuth.currentUser != null) {
+        //     // _conversationId = conversationItem.conversation.id;
 
-            _conversationStream = initStreamUC(
-              conversationId: conversationItem.conversation.id,
-              combiner: (
-                List<ConversationMessage> messages,
-              ) =>
-                  _OnData(
-                messages,
-                conversationItem.conversation,
-                conversationItem.conversation
-                    .getDisplayName(firebaseAuth.currentUser!.uid),
-              ),
-              onData: (onDataEvent) => add(onDataEvent),
-            );
-          }
-        },
+        //   }
+        // },
         onData: (messages, conversation, displayName) => emit(
           ConversationState.loadSuccess(
             messages: messages,
@@ -176,21 +176,18 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
           );
         },
         deleteMessage: (message) {
-          if (_isInit) {
-            deleteMessageUC(conversationId: conversationId, message: message);
-          }
+          deleteMessageUC(
+              conversationId: conversationItem.conversation.id,
+              message: message);
         },
         hideMessage: (message) {
-          if (_isInit) {
-            hideMessageUC(conversationId: conversationId, message: message);
-          }
+          hideMessageUC(
+              conversationId: conversationItem.conversation.id,
+              message: message);
         },
       );
     });
   }
-
-  //TODO: remove
-  bool get _isInit => true; //_conversationId != null;
 
   @override
   Future<void> close() {

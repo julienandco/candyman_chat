@@ -5,6 +5,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:another_xlider/another_xlider.dart';
 import 'package:better_player/better_player.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neon_chat/neon_chat.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
@@ -13,7 +15,6 @@ class ChatVideoPage extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';
 
   final ConversationMessage message;
-  final GetUploadUrlUC getUploadUrlUC;
   final Widget? progressIndicator;
   final BoxDecoration? sliderDecoration;
   final BoxDecoration? trackbarDecoration;
@@ -24,7 +25,6 @@ class ChatVideoPage extends StatefulWidget {
   const ChatVideoPage({
     Key? key,
     required this.message,
-    required this.getUploadUrlUC,
     this.progressIndicator,
     this.sliderDecoration,
     this.trackbarDecoration,
@@ -53,8 +53,9 @@ class _ChatVideoPageState extends State<ChatVideoPage> {
 
   void _initPlayer() async {
     if (widget.message.doneUpload) {
-      final _url =
-          await widget.getUploadUrlUC.call(id: widget.message.upload!.fileId);
+      final _url = await context
+          .read<UploadUrlCubit>()
+          .getUploadURL(widget.message.upload!.fileId);
       // final _url = await getIt<GetUploadRedirectUrlForUrlUC>()
       //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
       if (_url == null) return;

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class MessageList extends StatelessWidget {
   final String Function(String)? getAuthorNameForSenderId;
   final MessageBubbleStyle messageBubbleStyle;
-  final GetUploadUrlUC
-      getUploadUrlUC; //TODO: ugly, move this in some logic layer
 
   final DateTime conversationLastSeenTimestamp;
   final void Function(DateTime) updateLastSeenTimestampForConversation;
@@ -18,7 +15,6 @@ class MessageList extends StatelessWidget {
     Key? key,
     required this.getAuthorNameForSenderId,
     required this.messageBubbleStyle,
-    required this.getUploadUrlUC,
     required this.updateLastSeenTimestampForConversation,
     required this.conversationLastSeenTimestamp,
   }) : super(key: key);
@@ -43,7 +39,6 @@ class MessageList extends StatelessWidget {
                   groupChatLastSeenTimestamp: conversationLastSeenTimestamp,
                   isGroupChat: state.conversation.isGroupConversation,
                   messageBubbleStyle: messageBubbleStyle,
-                  getUploadUrlUC: getUploadUrlUC,
                   message: message,
                   otherUserName:
                       getAuthorNameForSenderId?.call(message.senderId) ??

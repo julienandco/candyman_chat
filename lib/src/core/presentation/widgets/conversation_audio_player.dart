@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -13,13 +15,10 @@ class ConversationAudioPlayer extends StatefulWidget {
 
   final AudioPlayerStyle audioPlayerStyle;
 
-  final GetUploadUrlUC getUploadUrlUC;
-
   const ConversationAudioPlayer({
     Key? key,
     required this.message,
     required this.audioPlayerStyle,
-    required this.getUploadUrlUC,
   }) : super(key: key);
 
   @override
@@ -62,8 +61,9 @@ class _ConversationAudioPlayerState extends State<ConversationAudioPlayer> {
         await player.setAudioSource(
             AudioSource.uri(Uri.parse(widget.message.filePath!)));
       } else if (widget.message.doneUpload) {
-        final url = await widget.getUploadUrlUC
-                .call(id: widget.message.upload!.fileId) ??
+        final url = await context
+                .read<UploadUrlCubit>()
+                .getUploadURL(widget.message.upload!.fileId) ??
             '';
         await player.setUrl(url);
       }

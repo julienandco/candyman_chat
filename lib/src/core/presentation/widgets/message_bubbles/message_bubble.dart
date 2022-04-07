@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'message_widgets/check_mark_widget.dart';
 import 'message_widgets/message_content_widget.dart';
@@ -18,7 +17,6 @@ class MessageBubble extends StatefulWidget {
   final String otherUserName;
   final MessageBubbleStyle messageBubbleStyle;
   final void Function(DateTime) updateLastSeenTimestampForGroupConvo;
-  final GetUploadUrlUC getUploadUrlUC;
 
   const MessageBubble({
     Key? key,
@@ -28,7 +26,6 @@ class MessageBubble extends StatefulWidget {
     required this.groupChatLastSeenTimestamp,
     required this.otherUserName,
     required this.messageBubbleStyle,
-    required this.getUploadUrlUC,
     required this.updateLastSeenTimestampForGroupConvo,
   }) : super(key: key);
 
@@ -257,7 +254,6 @@ class _MessageBubbleState extends State<MessageBubble> {
                             : widget.messageBubbleStyle.bubbleRadius),
                       ),
                       child: MessageContentWidget(
-                        getUploadUrlUC: widget.getUploadUrlUC,
                         messageBubbleStyle: widget.messageBubbleStyle,
                         message: widget.message,
                         footer: footer,

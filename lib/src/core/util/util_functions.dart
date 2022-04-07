@@ -39,12 +39,8 @@ String formatLastActiveDateTime(DateTime? date) {
 void openConversation(
   BuildContext context, {
   required ConversationItem conversationItem,
-  required FileUploadRepository fileUploadRepository,
-  required ConversationBloc Function(String) generateConversationBloc,
-  required ConversationSearchBloc Function() generateConversationSearchBloc,
   required Function(String, DateTime) updateGroupConversationTimestamp,
   required DateTime groupConversationLastSeenTimestamp,
-  required PushNotificationService pushNotificationService,
   SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
   MessageBubbleStyle messageBubbleStyle = const MessageBubbleStyle(),
   ConversationStyle conversationStyle = const ConversationStyle(),
@@ -56,12 +52,8 @@ void openConversation(
     context,
     CupertinoPageRoute(
       builder: (context) => DefaultConversationLoader(
-        pushNotificationService: pushNotificationService,
         groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
         updateGroupConversationTimestamp: updateGroupConversationTimestamp,
-        fileUploadRepository: fileUploadRepository,
-        conversationBloc: generateConversationBloc,
-        conversationSearchBloc: generateConversationSearchBloc,
         searchAppBarStyle: searchAppBarStyle,
         messageBubbleStyle: messageBubbleStyle,
         conversationStyle: conversationStyle,

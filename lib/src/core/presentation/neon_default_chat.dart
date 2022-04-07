@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
@@ -102,7 +103,7 @@ class NeonChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _NeonChatLoader(
+    return NeonChatLoader(
       firebaseAuth: firebaseAuthInstance,
       firebaseFirestore: firebaseFirestoreInstance,
       remoteDataSource: remoteDataSource,
@@ -134,7 +135,8 @@ class NeonChat extends StatelessWidget {
   }
 }
 
-class _NeonChatLoader extends StatelessWidget {
+//TODO: make sure NEON Chat Loader is excluded of the export statements of the library
+class NeonChatLoader extends StatefulWidget {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firebaseFirestore;
   final FirebaseKeys firebaseKeys;
@@ -154,7 +156,7 @@ class _NeonChatLoader extends StatelessWidget {
 
   final String remoteUploadsURL;
 
-  const _NeonChatLoader({
+  const NeonChatLoader({
     required this.firebaseAuth,
     required this.firebaseFirestore,
     required this.firebaseKeys,
@@ -172,163 +174,49 @@ class _NeonChatLoader extends StatelessWidget {
     this.onDirectConversationAppBarTap,
   });
 
-  void _initializeConversationsBloc(BuildContext context,
-          {required Map<String, DateTime> timestamps}) =>
-      context.read<ConversationsBloc>().add(ConversationsEvent.initialize(
-          myId: firebaseAuth.currentUser!.uid, timestamps: timestamps));
+  @override
+  State<NeonChatLoader> createState() => _NeonChatLoaderState();
+}
 
-  ConversationRepositoryImpl get conversationRepository =>
-      ConversationRepositoryImpl(
-        firestore: firebaseFirestore,
-        firebaseAuth: firebaseAuth,
-        firebaseKeys: firebaseKeys,
-      );
-
-  ConversationsRepositoryImpl get conversationsRepository =>
-      ConversationsRepositoryImpl(
-        firestore: firebaseFirestore,
-        firebaseAuth: firebaseAuth,
-        firebaseKeys: firebaseKeys,
-      );
-
-  FileUploadRepositoryImpl get fileUploadRepository =>
-      FileUploadRepositoryImpl(remoteDataSource: remoteDataSource);
-
-  UploadManagerRepositoryImpl get uploadManagerRepository =>
-      UploadManagerRepositoryImpl(fileUploadRepository: fileUploadRepository);
-
-  FirebaseUserProfileRepositoryImpl get firebaseUserProfileRepository =>
-      FirebaseUserProfileRepositoryImpl(
-        firestore: firebaseFirestore,
-        firebaseKeys: firebaseKeys,
-      );
-
-  HideMessageUC get hideMessageUC => HideMessageUC(conversationRepository);
-
-  DeleteMessageUC get deleteMessageUC =>
-      DeleteMessageUC(conversationRepository);
-
-  MarkMessageAsSeenUC get markAsSeenUC =>
-      MarkMessageAsSeenUC(conversationRepository);
-
-  SendPlatformFileMessageUC get sendPlatformFileMessageUC =>
-      SendPlatformFileMessageUC(
-          conversationRepository: conversationRepository,
-          uploadManagerRepository: uploadManagerRepository);
-
-  SendFileMessageUC get sendFileMessageUC => SendFileMessageUC(
-      conversationRepository: conversationRepository,
-      uploadManagerRepository: uploadManagerRepository);
-
-  SendTextMessageUC get sendTextMessageUC =>
-      SendTextMessageUC(conversationRepository);
-
-  InitializeConversationStreamUC get initializeConversationStreamUC =>
-      InitializeConversationStreamUC(
-        conversationRepository: conversationRepository,
-      );
-
-  InitializeConversationItemStreamUC get initializeConversationItemStreamUC =>
-      InitializeConversationItemStreamUC(
-        conversationRepository: conversationRepository,
-        conversationsRepository: conversationsRepository,
-      );
-
-  InitializeConversationsStreamUC get initializeConversationsStreamUC =>
-      InitializeConversationsStreamUC(conversationsRepository);
-
-  HideConversationUC get hideConversationUC =>
-      HideConversationUC(conversationsRepository);
-
-  GetFirebaseUserUC get getFirebaseUserUC =>
-      GetFirebaseUserUC(firebaseUserProfileRepository);
-
-  CreateConversationUC get createConversationUC =>
-      CreateConversationUC(conversationsRepository);
-
-  CreateGroupConversationUC get createGroupConversationUC =>
-      CreateGroupConversationUC(conversationsRepository);
-
-  ConversationSearchBloc get conversationSearchBloc => ConversationSearchBloc();
-
-  CurrentConversationCubit get currentConversationCubit =>
-      CurrentConversationCubit();
-
-  SearchConversationsUC get searchConversationsUC =>
-      SearchConversationsUC(firebaseAuth.currentUser?.uid);
-
-  ConversationsBloc get conversationsBloc => ConversationsBloc(
-        initializeConversationsStreamUC: initializeConversationsStreamUC,
-        initializeConversationItemStreamUC: initializeConversationItemStreamUC,
-        hideConversationUC: hideConversationUC,
-        getFirebaseUserUC: getFirebaseUserUC,
-        createConversationUC: createConversationUC,
-        createGroupConversationUC: createGroupConversationUC,
-      );
-
-  ConversationsSearchBloc get conversationsSearchBloc =>
-      ConversationsSearchBloc(searchConversationsUC);
-
-  ConversationBloc _generateConversationBloc(String conversationId) =>
-      ConversationBloc(
-        conversationId: conversationId,
-        firebaseAuth: firebaseAuth,
-        hideMessageUC: hideMessageUC,
-        deleteMessageUC: deleteMessageUC,
-        markAsSeenUC: markAsSeenUC,
-        sendPlatformFileMessageUC: sendPlatformFileMessageUC,
-        sendFileMessageUC: sendFileMessageUC,
-        sendTextMessageUC: sendTextMessageUC,
-        initStreamUC: initializeConversationStreamUC,
-      );
-
-  GroupConversationTimestampsBloc get _timestampsBloc =>
-      GroupConversationTimestampsBloc(
-        initStreamUC:
-            InitializeTimestampStreamUC(firebaseUserProfileRepository),
-        syncTimestampsWithFirebaseUC:
-            SyncTimestampsWithFirebaseUC(firebaseUserProfileRepository),
-      );
-
-  PushNotificationService get _pushNotificationService =>
-      PushNotificationService(
-        isAuthenticated: isAuthenticated,
-        openConversation: (ctx, id) => print('TODO'),
-        remoteUploadsURL: remoteUploadsURL,
-        toastStyle: pushNotificationToastStyle,
-      );
+class _NeonChatLoaderState extends State<NeonChatLoader> {
+  @override
+  void initState() {
+    init(
+        firebaseAuth: widget.firebaseAuth,
+        firebaseFirestore: widget.firebaseFirestore,
+        firebaseKeys: widget.firebaseKeys,
+        remoteDataSource: widget.remoteDataSource);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => _timestampsBloc
+            create: (context) => chatGetIt<GroupConversationTimestampsBloc>()
               ..add(GroupConversationTimestampsEvent.initialize(
-                  firebaseAuth.currentUser!.uid))),
+                  widget.firebaseAuth.currentUser!.uid))),
         BlocProvider(
-          create: (context) => conversationsSearchBloc,
+          create: (context) => chatGetIt<ConversationsSearchBloc>(),
         ),
         BlocProvider(
-          create: (context) => currentConversationCubit,
+          create: (context) => chatGetIt<CurrentConversationCubit>(),
         ),
-        BlocProvider.value(value: conversationsBloc),
+        BlocProvider(
+          create: (context) => chatGetIt<ConversationsBloc>(),
+        ),
       ],
       child: DefaultConversationsLoader(
-        myId: firebaseAuth.currentUser!.uid,
-        pushNotificationService: _pushNotificationService,
-        initializeConversationsBloc: _initializeConversationsBloc,
-        fileUploadRepository: fileUploadRepository,
-        generateConversationBloc: (id) => _generateConversationBloc(id),
-        generateConversationSearchBloc: () => ConversationSearchBloc(),
-        conversationStyle: conversationStyle,
-        conversationsStyle: conversationsStyle,
-        messageBubbleStyle: messageBubbleStyle,
-        searchAppBarStyle: searchAppBarStyle,
-        bottomBarStyle: bottomBarStyle,
-        onAppbarTap: onAppBarTap,
-        onOpenUserProfile: onDirectConversationAppBarTap,
-        getConversationCreationData: getConversationCreationData,
+        conversationStyle: widget.conversationStyle,
+        conversationsStyle: widget.conversationsStyle,
+        messageBubbleStyle: widget.messageBubbleStyle,
+        searchAppBarStyle: widget.searchAppBarStyle,
+        bottomBarStyle: widget.bottomBarStyle,
+        onAppbarTap: widget.onAppBarTap,
+        onOpenUserProfile: widget.onDirectConversationAppBarTap,
+        getConversationCreationData: widget.getConversationCreationData,
+        //TODO: getUserAvatar
       ),
     );
   }

@@ -720,12 +720,6 @@ abstract class _LoadFailure extends ConversationState {
 class _$ConversationEventTearOff {
   const _$ConversationEventTearOff();
 
-  _Init init({required ConversationItem conversationItem}) {
-    return _Init(
-      conversationItem: conversationItem,
-    );
-  }
-
   _OnData onData(List<ConversationMessage> messages, Conversation conversation,
       String displayName) {
     return _OnData(
@@ -798,7 +792,6 @@ const $ConversationEvent = _$ConversationEventTearOff();
 mixin _$ConversationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -816,7 +809,6 @@ mixin _$ConversationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -833,7 +825,6 @@ mixin _$ConversationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -851,7 +842,6 @@ mixin _$ConversationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -866,7 +856,6 @@ mixin _$ConversationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -881,7 +870,6 @@ mixin _$ConversationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -912,215 +900,6 @@ class _$ConversationEventCopyWithImpl<$Res>
   final ConversationEvent _value;
   // ignore: unused_field
   final $Res Function(ConversationEvent) _then;
-}
-
-/// @nodoc
-abstract class _$InitCopyWith<$Res> {
-  factory _$InitCopyWith(_Init value, $Res Function(_Init) then) =
-      __$InitCopyWithImpl<$Res>;
-  $Res call({ConversationItem conversationItem});
-
-  $ConversationItemCopyWith<$Res> get conversationItem;
-}
-
-/// @nodoc
-class __$InitCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
-    implements _$InitCopyWith<$Res> {
-  __$InitCopyWithImpl(_Init _value, $Res Function(_Init) _then)
-      : super(_value, (v) => _then(v as _Init));
-
-  @override
-  _Init get _value => super._value as _Init;
-
-  @override
-  $Res call({
-    Object? conversationItem = freezed,
-  }) {
-    return _then(_Init(
-      conversationItem: conversationItem == freezed
-          ? _value.conversationItem
-          : conversationItem // ignore: cast_nullable_to_non_nullable
-              as ConversationItem,
-    ));
-  }
-
-  @override
-  $ConversationItemCopyWith<$Res> get conversationItem {
-    return $ConversationItemCopyWith<$Res>(_value.conversationItem, (value) {
-      return _then(_value.copyWith(conversationItem: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_Init with DiagnosticableTreeMixin implements _Init {
-  const _$_Init({required this.conversationItem});
-
-  @override
-  final ConversationItem conversationItem;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ConversationEvent.init(conversationItem: $conversationItem)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ConversationEvent.init'))
-      ..add(DiagnosticsProperty('conversationItem', conversationItem));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Init &&
-            const DeepCollectionEquality()
-                .equals(other.conversationItem, conversationItem));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(conversationItem));
-
-  @JsonKey(ignore: true)
-  @override
-  _$InitCopyWith<_Init> get copyWith =>
-      __$InitCopyWithImpl<_Init>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
-        onData,
-    required TResult Function(String message) sendTextMessage,
-    required TResult Function(String message) sendImageMessage,
-    required TResult Function(String message, Duration duration)
-        sendVoiceMessage,
-    required TResult Function(String message) sendVideoMessage,
-    required TResult Function(List<AssetEntity> files) sendMultipleFiles,
-    required TResult Function(PlatformFile file) sendFileMessage,
-    required TResult Function(ConversationMessage message) markAsSeen,
-    required TResult Function(ConversationMessage message) deleteMessage,
-    required TResult Function(ConversationMessage message) hideMessage,
-  }) {
-    return init(conversationItem);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
-        onData,
-    TResult Function(String message)? sendTextMessage,
-    TResult Function(String message)? sendImageMessage,
-    TResult Function(String message, Duration duration)? sendVoiceMessage,
-    TResult Function(String message)? sendVideoMessage,
-    TResult Function(List<AssetEntity> files)? sendMultipleFiles,
-    TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ConversationMessage message)? markAsSeen,
-    TResult Function(ConversationMessage message)? deleteMessage,
-    TResult Function(ConversationMessage message)? hideMessage,
-  }) {
-    return init?.call(conversationItem);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
-        onData,
-    TResult Function(String message)? sendTextMessage,
-    TResult Function(String message)? sendImageMessage,
-    TResult Function(String message, Duration duration)? sendVoiceMessage,
-    TResult Function(String message)? sendVideoMessage,
-    TResult Function(List<AssetEntity> files)? sendMultipleFiles,
-    TResult Function(PlatformFile file)? sendFileMessage,
-    TResult Function(ConversationMessage message)? markAsSeen,
-    TResult Function(ConversationMessage message)? deleteMessage,
-    TResult Function(ConversationMessage message)? hideMessage,
-    required TResult orElse(),
-  }) {
-    if (init != null) {
-      return init(conversationItem);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
-    required TResult Function(_OnData value) onData,
-    required TResult Function(_SendTextMessage value) sendTextMessage,
-    required TResult Function(_SendImageMessage value) sendImageMessage,
-    required TResult Function(_SendVoiceMessage value) sendVoiceMessage,
-    required TResult Function(_SendVideoMessage value) sendVideoMessage,
-    required TResult Function(_SendMultipleFiles value) sendMultipleFiles,
-    required TResult Function(_SendFileMessage value) sendFileMessage,
-    required TResult Function(_MarkAsSeen value) markAsSeen,
-    required TResult Function(_DeleteMessage value) deleteMessage,
-    required TResult Function(_HideMessage value) hideMessage,
-  }) {
-    return init(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
-    TResult Function(_OnData value)? onData,
-    TResult Function(_SendTextMessage value)? sendTextMessage,
-    TResult Function(_SendImageMessage value)? sendImageMessage,
-    TResult Function(_SendVoiceMessage value)? sendVoiceMessage,
-    TResult Function(_SendVideoMessage value)? sendVideoMessage,
-    TResult Function(_SendMultipleFiles value)? sendMultipleFiles,
-    TResult Function(_SendFileMessage value)? sendFileMessage,
-    TResult Function(_MarkAsSeen value)? markAsSeen,
-    TResult Function(_DeleteMessage value)? deleteMessage,
-    TResult Function(_HideMessage value)? hideMessage,
-  }) {
-    return init?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
-    TResult Function(_OnData value)? onData,
-    TResult Function(_SendTextMessage value)? sendTextMessage,
-    TResult Function(_SendImageMessage value)? sendImageMessage,
-    TResult Function(_SendVoiceMessage value)? sendVoiceMessage,
-    TResult Function(_SendVideoMessage value)? sendVideoMessage,
-    TResult Function(_SendMultipleFiles value)? sendMultipleFiles,
-    TResult Function(_SendFileMessage value)? sendFileMessage,
-    TResult Function(_MarkAsSeen value)? markAsSeen,
-    TResult Function(_DeleteMessage value)? deleteMessage,
-    TResult Function(_HideMessage value)? hideMessage,
-    required TResult orElse(),
-  }) {
-    if (init != null) {
-      return init(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Init implements ConversationEvent {
-  const factory _Init({required ConversationItem conversationItem}) = _$_Init;
-
-  ConversationItem get conversationItem;
-  @JsonKey(ignore: true)
-  _$InitCopyWith<_Init> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1228,7 +1007,6 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -1249,7 +1027,6 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1269,7 +1046,6 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1293,7 +1069,6 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -1311,7 +1086,6 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -1329,7 +1103,6 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -1435,7 +1208,6 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -1456,7 +1228,6 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1476,7 +1247,6 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1500,7 +1270,6 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -1518,7 +1287,6 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -1536,7 +1304,6 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -1640,7 +1407,6 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -1661,7 +1427,6 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1681,7 +1446,6 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1705,7 +1469,6 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -1723,7 +1486,6 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -1741,7 +1503,6 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -1856,7 +1617,6 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -1877,7 +1637,6 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1897,7 +1656,6 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -1921,7 +1679,6 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -1939,7 +1696,6 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -1957,7 +1713,6 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2063,7 +1818,6 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -2084,7 +1838,6 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2104,7 +1857,6 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2128,7 +1880,6 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -2146,7 +1897,6 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2164,7 +1914,6 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2268,7 +2017,6 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -2289,7 +2037,6 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2309,7 +2056,6 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2333,7 +2079,6 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -2351,7 +2096,6 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2369,7 +2113,6 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2474,7 +2217,6 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -2495,7 +2237,6 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2515,7 +2256,6 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2539,7 +2279,6 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -2557,7 +2296,6 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2575,7 +2313,6 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2686,7 +2423,6 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -2707,7 +2443,6 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2727,7 +2462,6 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2751,7 +2485,6 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -2769,7 +2502,6 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2787,7 +2519,6 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2898,7 +2629,6 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -2919,7 +2649,6 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2939,7 +2668,6 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -2963,7 +2691,6 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -2981,7 +2708,6 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -2999,7 +2725,6 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -3110,7 +2835,6 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ConversationItem conversationItem) init,
     required TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)
         onData,
@@ -3131,7 +2855,6 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -3151,7 +2874,6 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ConversationItem conversationItem)? init,
     TResult Function(List<ConversationMessage> messages,
             Conversation conversation, String displayName)?
         onData,
@@ -3175,7 +2897,6 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
     required TResult Function(_OnData value) onData,
     required TResult Function(_SendTextMessage value) sendTextMessage,
     required TResult Function(_SendImageMessage value) sendImageMessage,
@@ -3193,7 +2914,6 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,
@@ -3211,7 +2931,6 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
     TResult Function(_OnData value)? onData,
     TResult Function(_SendTextMessage value)? sendTextMessage,
     TResult Function(_SendImageMessage value)? sendImageMessage,

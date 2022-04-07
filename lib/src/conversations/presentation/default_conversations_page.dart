@@ -1,20 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
-  final FileUploadRepository fileUploadRepository;
-  final ConversationBloc Function(String) generateConversationBloc;
-  final ConversationSearchBloc Function() generateConversationSearchBloc;
-
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
   final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
-
-  final String myId;
 
   final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onOpenUserProfile;
@@ -24,21 +20,14 @@ class DefaultConversationsPage extends StatefulWidget {
 
   final ConversationCreationData Function()? getConversationCreationData;
 
-  final PushNotificationService pushNotificationService;
-
   const DefaultConversationsPage({
     Key? key,
-    required this.fileUploadRepository,
-    required this.generateConversationBloc,
-    required this.generateConversationSearchBloc,
-    required this.myId,
     required this.conversationsStyle,
     required this.conversationStyle,
     required this.messageBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
-    required this.pushNotificationService,
     this.onOpenUserProfile,
     this.onShowGroupInfo,
     this.getUserAvatar,
@@ -60,13 +49,9 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
         .getLastSeenTimestampForConversationItem(conversationItem);
     openConversation(
       context,
-      pushNotificationService: widget.pushNotificationService,
       conversationItem: conversationItem,
       updateGroupConversationTimestamp: widget.updateGroupConversationTimestamp,
       groupConversationLastSeenTimestamp: timestamp,
-      fileUploadRepository: widget.fileUploadRepository,
-      generateConversationBloc: widget.generateConversationBloc,
-      generateConversationSearchBloc: widget.generateConversationSearchBloc,
       searchAppBarStyle: widget.searchAppBarStyle,
       messageBubbleStyle: widget.messageBubbleStyle,
       conversationStyle: widget.conversationStyle,
@@ -77,6 +62,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
 
   @override
   Widget build(BuildContext context) {
+    final _myId = chatGetIt<FirebaseAuth>().currentUser!.uid;
     super.build(context);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -140,7 +126,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 : chatConversations)
                             .map(
                               (conversationItem) => ConversationListItem(
-                                myId: widget.myId,
+                                myId: _myId,
                                 conversationListItemStyle:
                                     widget.conversationsStyle.chatListItemStyle,
                                 conversationItem: conversationItem,
@@ -152,8 +138,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                             .conversation.thumbnail),
                                 onOpenConversation: () => openConversation(
                                   context,
-                                  pushNotificationService:
-                                      widget.pushNotificationService,
                                   groupConversationLastSeenTimestamp: context
                                       .read<GroupConversationTimestampsBloc>()
                                       .getLastSeenTimestampForConversationItem(
@@ -161,12 +145,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   conversationItem: conversationItem,
                                   updateGroupConversationTimestamp:
                                       widget.updateGroupConversationTimestamp,
-                                  fileUploadRepository:
-                                      widget.fileUploadRepository,
-                                  generateConversationBloc:
-                                      widget.generateConversationBloc,
-                                  generateConversationSearchBloc:
-                                      widget.generateConversationSearchBloc,
                                   searchAppBarStyle: widget.searchAppBarStyle,
                                   messageBubbleStyle: widget.messageBubbleStyle,
                                   conversationStyle: widget.conversationStyle,

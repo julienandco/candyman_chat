@@ -1,16 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neon_chat/src/chat_init.dart';
 import 'package:neon_chat/src/conversation/conversation.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationsLoader extends StatelessWidget {
-  final FileUploadRepository fileUploadRepository;
-  final ConversationBloc Function(String) generateConversationBloc;
-  final ConversationSearchBloc Function() generateConversationSearchBloc;
-
-  final String myId;
-
   final ConversationsStyle conversationsStyle;
   final ConversationStyle conversationStyle;
   final MessageBubbleStyle messageBubbleStyle;
@@ -18,34 +14,25 @@ class DefaultConversationsLoader extends StatelessWidget {
   final BottomBarStyle bottomBarStyle;
   final Function(Conversation)? onOpenUserProfile;
   final Function(Conversation)? onAppbarTap;
-  final Widget Function(String?)? getUserAvatar;
 
-  final void Function(BuildContext, {required Map<String, DateTime> timestamps})
-      initializeConversationsBloc;
+  final Widget Function(String?)? getUserAvatar;
 
   final ConversationCreationData Function()? getConversationCreationData;
 
-  final PushNotificationService pushNotificationService;
-
   const DefaultConversationsLoader({
     Key? key,
-    required this.fileUploadRepository,
-    required this.generateConversationBloc,
-    required this.generateConversationSearchBloc,
-    required this.myId,
     required this.conversationsStyle,
     required this.conversationStyle,
     required this.messageBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
-    required this.initializeConversationsBloc,
-    required this.pushNotificationService,
     this.onOpenUserProfile,
     this.onAppbarTap,
     this.getUserAvatar,
     this.getConversationCreationData,
   }) : super(key: key);
 
+  //TODO: remove
   void _updateGroupConversationTimestamp(
     BuildContext context, {
     required String conversationId,
@@ -58,6 +45,7 @@ class DefaultConversationsLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _myId = chatGetIt<FirebaseAuth>().currentUser!.uid;
     return Builder(
       builder: (context) {
         return MultiBlocListener(
@@ -65,8 +53,9 @@ class DefaultConversationsLoader extends StatelessWidget {
             BlocListener<GroupConversationTimestampsBloc,
                 GroupConversationTimestampsState>(listener: (context, state) {
               state.maybeWhen(
-                loaded: ((timestampMap) => initializeConversationsBloc(context,
-                    timestamps: timestampMap)),
+                loaded: ((timestampMap) => context.read<ConversationsBloc>()
+                  ..add(ConversationsEvent.initialize(
+                      myId: _myId, timestamps: timestampMap))),
                 orElse: () {},
               );
             }),
@@ -98,15 +87,9 @@ class DefaultConversationsLoader extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: DefaultConversationsPage(
-                    myId: myId,
-                    pushNotificationService: pushNotificationService,
-                    fileUploadRepository: fileUploadRepository,
                     updateGroupConversationTimestamp: (id, timestamp) =>
                         _updateGroupConversationTimestamp(context,
                             conversationId: id, timestamp: timestamp),
-                    generateConversationBloc: generateConversationBloc,
-                    generateConversationSearchBloc:
-                        generateConversationSearchBloc,
                     conversationsStyle: conversationsStyle,
                     conversationStyle: conversationStyle,
                     messageBubbleStyle: messageBubbleStyle,
@@ -126,18 +109,13 @@ class DefaultConversationsLoader extends StatelessWidget {
                         return Flexible(
                           child: DefaultConversationLoader(
                             key: Key(state.conversationItem!.conversation.id),
-                            pushNotificationService: pushNotificationService,
                             updateGroupConversationTimestamp: (id, timestamp) =>
                                 _updateGroupConversationTimestamp(context,
                                     conversationId: id, timestamp: timestamp),
-                            fileUploadRepository: fileUploadRepository,
-                            conversationBloc: generateConversationBloc,
                             groupConversationLastSeenTimestamp: context
                                 .read<GroupConversationTimestampsBloc>()
                                 .getLastSeenTimestampForConversationItem(
                                     state.conversationItem!),
-                            conversationSearchBloc:
-                                generateConversationSearchBloc,
                             messageBubbleStyle: messageBubbleStyle,
                             conversationStyle: conversationStyle,
                             searchAppBarStyle: searchAppBarStyle,
