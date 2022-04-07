@@ -18,9 +18,29 @@ class NeonChat extends StatelessWidget {
     /// The FirebaseAuth Instance of your app.
     ///
     required FirebaseAuth firebaseAuth,
+
+    ///
+    /// The FirebaseFirestore Instance of your app.
+    ///
     required FirebaseFirestore firebaseFirestore,
+
+    ///
+    /// The [NeonChatRemoteDataSource] you custom-implemented.
+    ///
     required NeonChatRemoteDataSource remoteDataSource,
+
+    ///
+    /// Do NOT fuck around with this, there is a reason this is optional.
+    /// If you still feel a massive urge, be VERY aware of what you're doing.
+    ///
     FirebaseKeys firebaseKeys = const FirebaseKeys(),
+
+    ///
+    /// Method to determine whether the current user is authenticated. Used
+    /// to handle received data messages from firebase (user is authenticated)
+    /// or ignore them (user is not authenticated).
+    /// defaults to always be true.
+    ///
     bool Function()? isAuthenticated,
     ConversationStyle conversationStyle = const ConversationStyle(),
     ConversationsStyle conversationsStyle = const ConversationsStyle(),
@@ -46,35 +66,6 @@ class NeonChat extends StatelessWidget {
       pushNotificationToastStyle: pushNotificationToastStyle,
     );
   }
-
-  // //StatefulWidget {
-  // ///
-  // /// The FirebaseAuth Instance of your app.
-  // ///
-  // final FirebaseAuth firebaseAuthInstance;
-
-  // ///
-  // /// The FirebaseFirestore Instance of your app.
-  // ///
-  // final FirebaseFirestore firebaseFirestoreInstance;
-
-  // ///
-  // /// The RemoteDataSource you custom-implemented.
-  // ///
-  // final NeonChatRemoteDataSource remoteDataSource;
-
-  ///
-  /// Do NOT fuck around with this, there is a reason this is optional.
-  /// If you still feel a massive urge, be VERY aware of what you're doing.
-  ///
-  // final FirebaseKeys firebaseKeys;
-
-  // final ConversationStyle conversationStyle;
-  // final ConversationsStyle conversationsStyle;
-  // final MessageBubbleStyle messageBubbleStyle;
-  // final SearchAppBarStyle searchAppBarStyle;
-  // final BottomBarStyle bottomBarStyle;
-  // final PushNotificationToastStyle pushNotificationToastStyle;
 
   ///
   /// Gets called when a user wants to start a new 1-on-1 or group conversation.
@@ -139,16 +130,6 @@ class NeonChat extends StatelessWidget {
 
   const NeonChat({
     Key? key,
-    // required this.firebaseAuthInstance,
-    // required this.firebaseFirestoreInstance,
-    // required this.remoteDataSource,
-    // this.firebaseKeys = const FirebaseKeys(),
-    // this.conversationStyle = const ConversationStyle(),
-    // this.conversationsStyle = const ConversationsStyle(),
-    // this.searchAppBarStyle = const SearchAppBarStyle(),
-    // this.bottomBarStyle = const BottomBarStyle(),
-    // this.messageBubbleStyle = const MessageBubbleStyle(),
-    // this.pushNotificationToastStyle = const PushNotificationToastStyle(),
     this.onGroupConversationAppBarTap,
     this.disableGroupChatAbbBarTap = false,
     this.onDirectConversationAppBarTap,
@@ -158,30 +139,6 @@ class NeonChat extends StatelessWidget {
     this.remoteUploadsURL,
     this.getUserAvatar,
   }) : super(key: key);
-
-//   @override
-//   State<NeonChat> createState() => _NeonChatState();
-// }
-
-// class _NeonChatState extends State<NeonChat> {
-//   @override
-//   void initState() {
-//     // initNEONChat(
-//     //   firebaseAuth: widget.firebaseAuthInstance,
-//     //   firebaseFirestore: widget.firebaseFirestoreInstance,
-//     //   firebaseKeys: widget.firebaseKeys,
-//     //   remoteDataSource: widget.remoteDataSource,
-//     //   remoteUploadsURL: widget.remoteUploadsURL,
-//     //   isAuthenticated: widget.isAuthenticated ?? () => true,
-//     //   bottomBarStyle: widget.bottomBarStyle,
-//     //   conversationsStyle: widget.conversationsStyle,
-//     //   conversationStyle: widget.conversationStyle,
-//     //   messageBubbleStyle: widget.messageBubbleStyle,
-//     //   searchAppBarStyle: widget.searchAppBarStyle,
-//     //   pushNotificationToastStyle: widget.pushNotificationToastStyle,
-//     // );
-//     super.initState();
-//   }
 
   @override
   Widget build(BuildContext context) {
