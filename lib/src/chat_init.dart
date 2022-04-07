@@ -6,13 +6,6 @@ import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.da
 
 GetIt chatGetIt = GetIt.instance;
 
-// class NeonChatInit {
-// NeonChatInit._({
-//   required this.firebaseAuth,
-//   required this.firebaseFirestore,
-//   required this.firebaseKeys,
-//   required this.remoteDataSource,
-// });
 init({
   required FirebaseAuth firebaseAuth,
   required FirebaseFirestore firebaseFirestore,
@@ -106,7 +99,7 @@ init({
           syncTimestampsWithFirebaseUC:
               chatGetIt<SyncTimestampsWithFirebaseUC>()));
 
-  //TODOGETIT
+  //TODOPUSH
   chatGetIt.registerLazySingleton<PushNotificationService>(() =>
       PushNotificationService(
           isAuthenticated: () => true,

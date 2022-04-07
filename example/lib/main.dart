@@ -37,6 +37,7 @@ void main() async {
 
   BlocOverrides.runZoned(
     () => runApp(const MyApp()),
+    // the bloc observer is for dev purposes only
     blocObserver: _MyAppBlocObserver(),
   );
 }
