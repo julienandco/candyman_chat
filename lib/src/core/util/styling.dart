@@ -5,6 +5,7 @@ import 'package:neon_chat/src/core/util/util.dart';
 
 /// Style data structure for the Conversations page
 class ConversationsStyle {
+  final bool showAppBarAboveConversations;
   final Text appBarTitle;
   final Widget emptyConversationsWidget;
   final Color appBarColor;
@@ -18,6 +19,7 @@ class ConversationsStyle {
   final ConversationListItemStyle chatListItemStyle;
 
   const ConversationsStyle({
+    this.showAppBarAboveConversations = false,
     this.appBarTitle = const Text('NEON CHAT'),
     this.appBarCenterTitle = true,
     this.emptyConversationsWidget = const Center(

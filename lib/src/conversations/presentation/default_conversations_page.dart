@@ -54,11 +54,13 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: style.appBarCenterTitle,
-          title: style.appBarTitle,
-          backgroundColor: style.appBarColor,
-        ),
+        appBar: style.showAppBarAboveConversations
+            ? AppBar(
+                centerTitle: style.appBarCenterTitle,
+                title: style.appBarTitle,
+                backgroundColor: style.appBarColor,
+              )
+            : null,
         floatingActionButton: style.showFab
             ? FloatingActionButton(
                 onPressed: style.fabAction ??
