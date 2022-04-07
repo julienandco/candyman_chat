@@ -13,9 +13,14 @@ import 'injection/injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } else {
+    Firebase.app(); // if already initialized, use that one
+  }
+
   configureInjection(Env.dev);
 
   // Hive.initFlutter();
@@ -25,6 +30,15 @@ void main() async {
     password: 'neon-chat-example!',
     email: 'julien@neon.dev',
   );
+
+  NeonChat.initNeonChat(
+    firebaseAuth: getIt<FirebaseAuth>(),
+    firebaseFirestore: getIt<FirebaseFirestore>(),
+    remoteDataSource: getIt<NeonChatRemoteDataSource>(),
+    conversationsStyle:
+        const ConversationsStyle(showAppBarAboveConversations: true),
+  );
+
   print(creds.user?.uid);
   // await FirebaseAuth.instance.signInWithEmailAndPassword(
   //   password: 'neon-chat-example1!',
@@ -68,12 +82,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
       ),
       home: // const MyCustomConversationsLoader()
-          NeonChat(
-        firebaseAuthInstance: getIt<FirebaseAuth>(),
-        firebaseFirestoreInstance: getIt<FirebaseFirestore>(),
-        remoteDataSource: getIt<NeonChatRemoteDataSource>(),
-        getConversationCreationData: () => _getMockGroupConvoCreationData,
-      ),
+          const NeonChat(
+              // firebaseAuthInstance: getIt<FirebaseAuth>(),
+              // firebaseFirestoreInstance: getIt<FirebaseFirestore>(),
+              // remoteDataSource: getIt<NeonChatRemoteDataSource>(),
+              // getConversationCreationData: () => _getMockGroupConvoCreationData,
+              ),
     );
   }
 }

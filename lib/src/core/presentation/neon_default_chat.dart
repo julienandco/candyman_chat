@@ -12,34 +12,69 @@ import 'package:neon_chat/src/core/core.dart';
 /// Instance of the NEON-Chat, that works out-of-the-box. Where I come from, we
 /// call such things MDMAzing.
 ///
-class NeonChat extends StatefulWidget {
-  ///
-  /// The FirebaseAuth Instance of your app.
-  ///
-  final FirebaseAuth firebaseAuthInstance;
+class NeonChat extends StatelessWidget {
+  static initNeonChat({
+    ///
+    /// The FirebaseAuth Instance of your app.
+    ///
+    required FirebaseAuth firebaseAuth,
+    required FirebaseFirestore firebaseFirestore,
+    required NeonChatRemoteDataSource remoteDataSource,
+    FirebaseKeys firebaseKeys = const FirebaseKeys(),
+    bool Function()? isAuthenticated,
+    ConversationStyle conversationStyle = const ConversationStyle(),
+    ConversationsStyle conversationsStyle = const ConversationsStyle(),
+    MessageBubbleStyle messageBubbleStyle = const MessageBubbleStyle(),
+    SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
+    BottomBarStyle bottomBarStyle = const BottomBarStyle(),
+    PushNotificationToastStyle pushNotificationToastStyle =
+        const PushNotificationToastStyle(),
+    String? remoteUploadsURL,
+  }) {
+    initNEONChat(
+      firebaseAuth: firebaseAuth,
+      firebaseFirestore: firebaseFirestore,
+      firebaseKeys: firebaseKeys,
+      remoteDataSource: remoteDataSource,
+      remoteUploadsURL: remoteUploadsURL,
+      isAuthenticated: isAuthenticated ?? () => true,
+      bottomBarStyle: bottomBarStyle,
+      conversationsStyle: conversationsStyle,
+      conversationStyle: conversationStyle,
+      messageBubbleStyle: messageBubbleStyle,
+      searchAppBarStyle: searchAppBarStyle,
+      pushNotificationToastStyle: pushNotificationToastStyle,
+    );
+  }
 
-  ///
-  /// The FirebaseFirestore Instance of your app.
-  ///
-  final FirebaseFirestore firebaseFirestoreInstance;
+  // //StatefulWidget {
+  // ///
+  // /// The FirebaseAuth Instance of your app.
+  // ///
+  // final FirebaseAuth firebaseAuthInstance;
 
-  ///
-  /// The RemoteDataSource you custom-implemented.
-  ///
-  final NeonChatRemoteDataSource remoteDataSource;
+  // ///
+  // /// The FirebaseFirestore Instance of your app.
+  // ///
+  // final FirebaseFirestore firebaseFirestoreInstance;
+
+  // ///
+  // /// The RemoteDataSource you custom-implemented.
+  // ///
+  // final NeonChatRemoteDataSource remoteDataSource;
 
   ///
   /// Do NOT fuck around with this, there is a reason this is optional.
   /// If you still feel a massive urge, be VERY aware of what you're doing.
   ///
-  final FirebaseKeys firebaseKeys;
+  // final FirebaseKeys firebaseKeys;
 
-  final ConversationStyle conversationStyle;
-  final ConversationsStyle conversationsStyle;
-  final MessageBubbleStyle messageBubbleStyle;
-  final SearchAppBarStyle searchAppBarStyle;
-  final BottomBarStyle bottomBarStyle;
-  final PushNotificationToastStyle pushNotificationToastStyle;
+  // final ConversationStyle conversationStyle;
+  // final ConversationsStyle conversationsStyle;
+  // final MessageBubbleStyle messageBubbleStyle;
+  // final SearchAppBarStyle searchAppBarStyle;
+  // final BottomBarStyle bottomBarStyle;
+  // final PushNotificationToastStyle pushNotificationToastStyle;
 
   ///
   /// Gets called when a user wants to start a new 1-on-1 or group conversation.
@@ -104,16 +139,16 @@ class NeonChat extends StatefulWidget {
 
   const NeonChat({
     Key? key,
-    required this.firebaseAuthInstance,
-    required this.firebaseFirestoreInstance,
-    required this.remoteDataSource,
-    this.firebaseKeys = const FirebaseKeys(),
-    this.conversationStyle = const ConversationStyle(),
-    this.conversationsStyle = const ConversationsStyle(),
-    this.searchAppBarStyle = const SearchAppBarStyle(),
-    this.bottomBarStyle = const BottomBarStyle(),
-    this.messageBubbleStyle = const MessageBubbleStyle(),
-    this.pushNotificationToastStyle = const PushNotificationToastStyle(),
+    // required this.firebaseAuthInstance,
+    // required this.firebaseFirestoreInstance,
+    // required this.remoteDataSource,
+    // this.firebaseKeys = const FirebaseKeys(),
+    // this.conversationStyle = const ConversationStyle(),
+    // this.conversationsStyle = const ConversationsStyle(),
+    // this.searchAppBarStyle = const SearchAppBarStyle(),
+    // this.bottomBarStyle = const BottomBarStyle(),
+    // this.messageBubbleStyle = const MessageBubbleStyle(),
+    // this.pushNotificationToastStyle = const PushNotificationToastStyle(),
     this.onGroupConversationAppBarTap,
     this.disableGroupChatAbbBarTap = false,
     this.onDirectConversationAppBarTap,
@@ -124,29 +159,29 @@ class NeonChat extends StatefulWidget {
     this.getUserAvatar,
   }) : super(key: key);
 
-  @override
-  State<NeonChat> createState() => _NeonChatState();
-}
+//   @override
+//   State<NeonChat> createState() => _NeonChatState();
+// }
 
-class _NeonChatState extends State<NeonChat> {
-  @override
-  void initState() {
-    initNEONChat(
-      firebaseAuth: widget.firebaseAuthInstance,
-      firebaseFirestore: widget.firebaseFirestoreInstance,
-      firebaseKeys: widget.firebaseKeys,
-      remoteDataSource: widget.remoteDataSource,
-      remoteUploadsURL: widget.remoteUploadsURL,
-      isAuthenticated: widget.isAuthenticated ?? () => true,
-      bottomBarStyle: widget.bottomBarStyle,
-      conversationsStyle: widget.conversationsStyle,
-      conversationStyle: widget.conversationStyle,
-      messageBubbleStyle: widget.messageBubbleStyle,
-      searchAppBarStyle: widget.searchAppBarStyle,
-      pushNotificationToastStyle: widget.pushNotificationToastStyle,
-    );
-    super.initState();
-  }
+// class _NeonChatState extends State<NeonChat> {
+//   @override
+//   void initState() {
+//     // initNEONChat(
+//     //   firebaseAuth: widget.firebaseAuthInstance,
+//     //   firebaseFirestore: widget.firebaseFirestoreInstance,
+//     //   firebaseKeys: widget.firebaseKeys,
+//     //   remoteDataSource: widget.remoteDataSource,
+//     //   remoteUploadsURL: widget.remoteUploadsURL,
+//     //   isAuthenticated: widget.isAuthenticated ?? () => true,
+//     //   bottomBarStyle: widget.bottomBarStyle,
+//     //   conversationsStyle: widget.conversationsStyle,
+//     //   conversationStyle: widget.conversationStyle,
+//     //   messageBubbleStyle: widget.messageBubbleStyle,
+//     //   searchAppBarStyle: widget.searchAppBarStyle,
+//     //   pushNotificationToastStyle: widget.pushNotificationToastStyle,
+//     // );
+//     super.initState();
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +190,7 @@ class _NeonChatState extends State<NeonChat> {
         BlocProvider(
             create: (context) => chatGetIt<GroupConversationTimestampsBloc>()
               ..add(GroupConversationTimestampsEvent.initialize(
-                  widget.firebaseAuthInstance.currentUser!.uid))),
+                  chatGetIt<FirebaseAuth>().currentUser!.uid))),
         BlocProvider(
           create: (context) => chatGetIt<ConversationsSearchBloc>(),
         ),
@@ -167,21 +202,22 @@ class _NeonChatState extends State<NeonChat> {
         ),
       ],
       child: DefaultConversationsLoader(
-        onAppbarTap: widget.onGroupConversationAppBarTap ??
-            (widget.disableGroupChatAbbBarTap
+        onAppbarTap: onGroupConversationAppBarTap ??
+            (disableGroupChatAbbBarTap
                 ? null
                 : (conversation) => defaultOnGroupConversationAppBarTap(
                       context,
-                      myId: widget.firebaseAuthInstance.currentUser!.uid,
+                      myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
                       style: GroupChatOverviewStyle(
-                        appBarColor: widget.conversationsStyle.appBarColor,
+                        appBarColor:
+                            chatGetIt<ConversationsStyle>().appBarColor,
                       ),
                       conversation: conversation,
-                      onOpenUserProfile: widget.onOpenUserProfile,
+                      onOpenUserProfile: onOpenUserProfile,
                     )),
-        onOpenUserProfile: widget.onDirectConversationAppBarTap,
-        getConversationCreationData: widget.getConversationCreationData,
-        getUserAvatar: widget.getUserAvatar,
+        onOpenUserProfile: onDirectConversationAppBarTap,
+        getConversationCreationData: getConversationCreationData,
+        getUserAvatar: getUserAvatar,
       ),
     );
   }

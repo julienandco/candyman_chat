@@ -39,15 +39,21 @@ class FirebaseUserProfileRepositoryImpl
           Map<String, DateTime>>.fromHandlers(
         handleData: (DocumentSnapshot<Map<String, dynamic>> snap,
             EventSink<Map<String, DateTime>> sink) async {
-          final data = snap.data()![firebaseKeys.usersGroupMessageSeenKey];
-
+          final data = snap.data();
           Map<String, DateTime> timestamps = {};
+
           if (data != null) {
-            final timestampData = data[firebaseKeys.groupMessageTimestampsKey];
-            if (timestampData != null) {
-              for (var key in timestampData.keys) {
-                final timestamp = timestampData[key] as Timestamp;
-                timestamps[key] = timestamp.toDate();
+            final timestampGeneralData =
+                snap.data()![firebaseKeys.usersGroupMessageSeenKey];
+
+            if (timestampGeneralData != null) {
+              final timestampData =
+                  data[firebaseKeys.groupMessageTimestampsKey];
+              if (timestampData != null) {
+                for (var key in timestampData.keys) {
+                  final timestamp = timestampData[key] as Timestamp;
+                  timestamps[key] = timestamp.toDate();
+                }
               }
             }
           }
