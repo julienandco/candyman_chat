@@ -11,7 +11,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:neon_chat/neon_chat.dart' as _i5;
 
 import 'firebase_injectable_module.dart' as _i6;
-import 'neon_chat_injections/remote_data_source_injectable_module.dart'
+import 'remote_data_source_injectable_module.dart'
     as _i7; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars

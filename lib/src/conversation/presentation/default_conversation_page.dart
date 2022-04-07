@@ -17,6 +17,7 @@ class DefaultConversationPage extends StatefulWidget {
   final DateTime groupConversationLastSeenTimestamp;
   final Function(DateTime) updateTimestampForConversation;
   final Function(Conversation)? onAppbarTap;
+  final PushNotificationService pushNotificationService;
 
   const DefaultConversationPage({
     Key? key,
@@ -28,6 +29,7 @@ class DefaultConversationPage extends StatefulWidget {
     required this.getUploadUrlUC,
     required this.updateTimestampForConversation,
     required this.groupConversationLastSeenTimestamp,
+    required this.pushNotificationService,
     this.onAppbarTap,
   }) : super(key: key);
 
@@ -39,24 +41,23 @@ class DefaultConversationPage extends StatefulWidget {
 class _DefaultConversationPageState extends State<DefaultConversationPage> {
   bool _isInit = true;
   // setup push notifications
-  // TODO: push notifications services
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  // @override
-  // void dispose() {
-  //   getIt<PushNotificationService>().enableChatNotifications();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    widget.pushNotificationService.enableChatNotifications();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      // final id = context.read<ChatBloc>().conversationId;
-      // getIt<PushNotificationService>()
-      //     .disableChatNotificationsForConversationId(id);
+      final id = context.read<ConversationBloc>().conversationId;
+      widget.pushNotificationService
+          .disableChatNotificationsForConversationId(id);
     }
     _isInit = false;
     super.didChangeDependencies();

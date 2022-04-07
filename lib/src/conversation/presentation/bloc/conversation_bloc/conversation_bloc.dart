@@ -15,7 +15,7 @@ part 'conversation_event.dart';
 part 'conversation_bloc.freezed.dart';
 
 class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
-  String? _conversationId;
+  String conversationId;
 
   final FirebaseAuth firebaseAuth;
   late final StreamSubscription _conversationStream;
@@ -29,6 +29,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   final InitializeConversationStreamUC initStreamUC;
 
   ConversationBloc({
+    required this.conversationId,
     required this.firebaseAuth,
     required this.hideMessageUC,
     required this.deleteMessageUC,
@@ -42,7 +43,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
       event.when(
         init: (conversationItem) {
           if (firebaseAuth.currentUser != null) {
-            _conversationId = conversationItem.conversation.id;
+            // _conversationId = conversationItem.conversation.id;
 
             _conversationStream = initStreamUC(
               conversationId: conversationItem.conversation.id,
@@ -176,19 +177,20 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
         },
         deleteMessage: (message) {
           if (_isInit) {
-            deleteMessageUC(conversationId: _conversationId!, message: message);
+            deleteMessageUC(conversationId: conversationId, message: message);
           }
         },
         hideMessage: (message) {
           if (_isInit) {
-            hideMessageUC(conversationId: _conversationId!, message: message);
+            hideMessageUC(conversationId: conversationId, message: message);
           }
         },
       );
     });
   }
 
-  bool get _isInit => _conversationId != null;
+  //TODO: remove
+  bool get _isInit => true; //_conversationId != null;
 
   @override
   Future<void> close() {

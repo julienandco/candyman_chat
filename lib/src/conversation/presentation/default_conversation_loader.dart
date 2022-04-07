@@ -8,7 +8,7 @@ import 'package:neon_chat/src/conversations/conversations.dart';
 
 class DefaultConversationLoader extends StatelessWidget {
   final FileUploadRepository fileUploadRepository;
-  final ConversationBloc Function() conversationBloc;
+  final ConversationBloc Function(String) conversationBloc;
   final ConversationSearchBloc Function() conversationSearchBloc;
 
   final ConversationItem conversationItem;
@@ -23,6 +23,8 @@ class DefaultConversationLoader extends StatelessWidget {
   final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onAppbarTap;
 
+  final PushNotificationService pushNotificationService;
+
   const DefaultConversationLoader({
     Key? key,
     required this.conversationItem,
@@ -35,6 +37,7 @@ class DefaultConversationLoader extends StatelessWidget {
     required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
     required this.groupConversationLastSeenTimestamp,
+    required this.pushNotificationService,
     this.showCloseButton = true,
     this.onAppbarTap,
   }) : super(key: key);
@@ -44,16 +47,18 @@ class DefaultConversationLoader extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ConversationBloc>(
-          create: (context) => conversationBloc()
-            ..add(ConversationEvent.init(
-              conversationItem: conversationItem,
-            )),
+          create: (context) =>
+              conversationBloc(conversationItem.conversation.id)
+                ..add(ConversationEvent.init(
+                  conversationItem: conversationItem,
+                )),
         ),
         BlocProvider<ConversationSearchBloc>(
           create: (context) => conversationSearchBloc(),
         ),
       ],
       child: DefaultConversationPage(
+        pushNotificationService: pushNotificationService,
         getUploadUrlUC: GetUploadUrlUC(fileUploadRepository),
         updateTimestampForConversation: (timestamp) =>
             updateGroupConversationTimestamp(

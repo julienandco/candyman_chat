@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neon_chat/src/core/util/util.dart';
 
 /// Style data structure for the Conversations page
@@ -340,5 +342,48 @@ class FileBubbleStyle {
     this.progressIndicator = const CircularProgressIndicator(),
     this.fileTypeNotSupportedLabel = 'Not supported',
     this.labelStyle,
+  });
+}
+
+/// Style data structure for the flutter toast that gets displayed when
+/// receiving a push notification.
+class PushNotificationToastStyle {
+  final EdgeInsetsGeometry padding;
+  final double toastHeight;
+  final Decoration decoration;
+  final TextStyle notificationTitleStyle;
+  final TextStyle notificationBodyStyle;
+  final Widget dismissIcon;
+
+  final Duration toastVisibilityDuration;
+  final Duration toastDisappearAnimationDuration;
+  final StyledToastPosition toastPosition;
+
+  const PushNotificationToastStyle({
+    this.padding = const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+    this.toastHeight = 100,
+    this.decoration = const BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      color: Color.fromARGB(100, 25, 5, 55),
+      boxShadow: [
+        BoxShadow(
+          blurRadius: 10,
+          spreadRadius: 5,
+          offset: Offset(0, 3),
+          color: Colors.black38,
+        )
+      ],
+    ),
+    this.notificationTitleStyle =
+        const TextStyle(color: Colors.black, fontSize: 16),
+    this.notificationBodyStyle =
+        const TextStyle(color: Colors.white, fontSize: 12),
+    this.dismissIcon = const Icon(
+      CupertinoIcons.xmark,
+      color: Colors.white,
+    ),
+    this.toastVisibilityDuration = const Duration(seconds: 8),
+    this.toastDisappearAnimationDuration = const Duration(seconds: 1),
+    this.toastPosition = StyledToastPosition.top,
   });
 }

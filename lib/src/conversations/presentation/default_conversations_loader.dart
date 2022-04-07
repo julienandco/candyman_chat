@@ -6,7 +6,7 @@ import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationsLoader extends StatelessWidget {
   final FileUploadRepository fileUploadRepository;
-  final ConversationBloc Function() generateConversationBloc;
+  final ConversationBloc Function(String) generateConversationBloc;
   final ConversationSearchBloc Function() generateConversationSearchBloc;
 
   final String myId;
@@ -25,6 +25,8 @@ class DefaultConversationsLoader extends StatelessWidget {
 
   final ConversationCreationData Function()? getConversationCreationData;
 
+  final PushNotificationService pushNotificationService;
+
   const DefaultConversationsLoader({
     Key? key,
     required this.fileUploadRepository,
@@ -37,6 +39,7 @@ class DefaultConversationsLoader extends StatelessWidget {
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     required this.initializeConversationsBloc,
+    required this.pushNotificationService,
     this.onOpenUserProfile,
     this.onAppbarTap,
     this.getUserAvatar,
@@ -96,6 +99,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: DefaultConversationsPage(
                     myId: myId,
+                    pushNotificationService: pushNotificationService,
                     fileUploadRepository: fileUploadRepository,
                     updateGroupConversationTimestamp: (id, timestamp) =>
                         _updateGroupConversationTimestamp(context,
@@ -122,6 +126,7 @@ class DefaultConversationsLoader extends StatelessWidget {
                         return Flexible(
                           child: DefaultConversationLoader(
                             key: Key(state.conversationItem!.conversation.id),
+                            pushNotificationService: pushNotificationService,
                             updateGroupConversationTimestamp: (id, timestamp) =>
                                 _updateGroupConversationTimestamp(context,
                                     conversationId: id, timestamp: timestamp),

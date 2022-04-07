@@ -38,6 +38,7 @@ class NeonChat extends StatelessWidget {
   final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
+  final PushNotificationToastStyle pushNotificationToastStyle;
 
   ///
   /// Gets called when a user wants to start a new 1-on-1 or group conversation.
@@ -91,6 +92,7 @@ class NeonChat extends StatelessWidget {
     this.searchAppBarStyle = const SearchAppBarStyle(),
     this.bottomBarStyle = const BottomBarStyle(),
     this.messageBubbleStyle = const MessageBubbleStyle(),
+    this.pushNotificationToastStyle = const PushNotificationToastStyle(),
     this.onGroupConversationAppBarTap,
     this.disableGroupChatAbbBarTap = false,
     this.onDirectConversationAppBarTap,
@@ -124,6 +126,10 @@ class NeonChat extends StatelessWidget {
       conversationStyle: conversationStyle,
       messageBubbleStyle: messageBubbleStyle,
       searchAppBarStyle: searchAppBarStyle,
+      pushNotificationToastStyle: pushNotificationToastStyle,
+      //TODO:
+      isAuthenticated: () => true,
+      remoteUploadsURL: 'foo',
     );
   }
 }
@@ -139,10 +145,14 @@ class _NeonChatLoader extends StatelessWidget {
   final MessageBubbleStyle messageBubbleStyle;
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
+  final PushNotificationToastStyle pushNotificationToastStyle;
 
   final Function(Conversation)? onAppBarTap;
   final ConversationCreationData Function()? getConversationCreationData;
   final Function(Conversation)? onDirectConversationAppBarTap;
+  final bool Function() isAuthenticated;
+
+  final String remoteUploadsURL;
 
   const _NeonChatLoader({
     required this.firebaseAuth,
@@ -154,6 +164,9 @@ class _NeonChatLoader extends StatelessWidget {
     required this.messageBubbleStyle,
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
+    required this.pushNotificationToastStyle,
+    required this.remoteUploadsURL,
+    required this.isAuthenticated,
     this.onAppBarTap,
     this.getConversationCreationData,
     this.onDirectConversationAppBarTap,
@@ -256,7 +269,9 @@ class _NeonChatLoader extends StatelessWidget {
   ConversationsSearchBloc get conversationsSearchBloc =>
       ConversationsSearchBloc(searchConversationsUC);
 
-  ConversationBloc _generateConversationBloc() => ConversationBloc(
+  ConversationBloc _generateConversationBloc(String conversationId) =>
+      ConversationBloc(
+        conversationId: conversationId,
         firebaseAuth: firebaseAuth,
         hideMessageUC: hideMessageUC,
         deleteMessageUC: deleteMessageUC,
@@ -273,6 +288,14 @@ class _NeonChatLoader extends StatelessWidget {
             InitializeTimestampStreamUC(firebaseUserProfileRepository),
         syncTimestampsWithFirebaseUC:
             SyncTimestampsWithFirebaseUC(firebaseUserProfileRepository),
+      );
+
+  PushNotificationService get _pushNotificationService =>
+      PushNotificationService(
+        isAuthenticated: isAuthenticated,
+        openConversation: (ctx, id) => print('TODO'),
+        remoteUploadsURL: remoteUploadsURL,
+        toastStyle: pushNotificationToastStyle,
       );
 
   @override
@@ -293,9 +316,10 @@ class _NeonChatLoader extends StatelessWidget {
       ],
       child: DefaultConversationsLoader(
         myId: firebaseAuth.currentUser!.uid,
+        pushNotificationService: _pushNotificationService,
         initializeConversationsBloc: _initializeConversationsBloc,
         fileUploadRepository: fileUploadRepository,
-        generateConversationBloc: _generateConversationBloc,
+        generateConversationBloc: (id) => _generateConversationBloc(id),
         generateConversationSearchBloc: () => ConversationSearchBloc(),
         conversationStyle: conversationStyle,
         conversationsStyle: conversationsStyle,

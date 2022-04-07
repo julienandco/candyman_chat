@@ -5,7 +5,7 @@ import 'package:neon_chat/neon_chat.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
   final FileUploadRepository fileUploadRepository;
-  final ConversationBloc Function() generateConversationBloc;
+  final ConversationBloc Function(String) generateConversationBloc;
   final ConversationSearchBloc Function() generateConversationSearchBloc;
 
   final ConversationsStyle conversationsStyle;
@@ -24,6 +24,8 @@ class DefaultConversationsPage extends StatefulWidget {
 
   final ConversationCreationData Function()? getConversationCreationData;
 
+  final PushNotificationService pushNotificationService;
+
   const DefaultConversationsPage({
     Key? key,
     required this.fileUploadRepository,
@@ -36,6 +38,7 @@ class DefaultConversationsPage extends StatefulWidget {
     required this.searchAppBarStyle,
     required this.bottomBarStyle,
     required this.updateGroupConversationTimestamp,
+    required this.pushNotificationService,
     this.onOpenUserProfile,
     this.onShowGroupInfo,
     this.getUserAvatar,
@@ -57,6 +60,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
         .getLastSeenTimestampForConversationItem(conversationItem);
     openConversation(
       context,
+      pushNotificationService: widget.pushNotificationService,
       conversationItem: conversationItem,
       updateGroupConversationTimestamp: widget.updateGroupConversationTimestamp,
       groupConversationLastSeenTimestamp: timestamp,
@@ -148,6 +152,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                             .conversation.thumbnail),
                                 onOpenConversation: () => openConversation(
                                   context,
+                                  pushNotificationService:
+                                      widget.pushNotificationService,
                                   groupConversationLastSeenTimestamp: context
                                       .read<GroupConversationTimestampsBloc>()
                                       .getLastSeenTimestampForConversationItem(
