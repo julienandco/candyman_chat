@@ -121,12 +121,6 @@ class NeonChat extends StatelessWidget {
   final bool disableGroupChatAbbBarTap;
 
   ///
-  /// The URL where all the uploads (especially the photos) are stored. Defaults
-  /// to be null, so no user photos will be displayed.
-  ///
-  final String? remoteUploadsURL;
-
-  ///
   /// Returns a Widget that is to be displayed as a user avatar, given a
   /// nullable user id String. Default is to show an empty [AvatarWidget].
   ///
@@ -139,7 +133,6 @@ class NeonChat extends StatelessWidget {
     this.onDirectConversationAppBarTap,
     this.getConversationCreationData,
     this.onOpenUserProfile,
-    this.remoteUploadsURL,
     this.getUserAvatar,
   }) : super(key: key);
 
