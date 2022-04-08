@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/core/core.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationLoader extends StatelessWidget {
   final ConversationItem conversationItem;
@@ -13,13 +13,11 @@ class DefaultConversationLoader extends StatelessWidget {
 
   final DateTime groupConversationLastSeenTimestamp;
 
-  final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onAppbarTap;
 
   const DefaultConversationLoader({
     Key? key,
     required this.conversationItem,
-    required this.updateGroupConversationTimestamp,
     required this.groupConversationLastSeenTimestamp,
     this.showCloseButton = true,
     this.onAppbarTap,
@@ -47,9 +45,11 @@ class DefaultConversationLoader extends StatelessWidget {
         ),
       ],
       child: DefaultConversationPage(
-        updateTimestampForConversation: (timestamp) =>
-            updateGroupConversationTimestamp(
-                conversationItem.conversation.id, timestamp),
+        updateTimestampForConversation: (timestamp) => context
+            .read<GroupConversationTimestampsBloc>()
+            .add(GroupConversationTimestampsEvent.setNewTimestamp(
+                conversationId: conversationItem.conversation.id,
+                timestamp: timestamp)),
         groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
         showCloseButton: showCloseButton,
         onAppbarTap: onAppbarTap,

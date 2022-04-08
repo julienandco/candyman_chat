@@ -6,7 +6,6 @@ import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
-  final Function(String, DateTime) updateGroupConversationTimestamp;
   final Function(Conversation)? onOpenUserProfile;
   final Function(Conversation)? onShowGroupInfo;
 
@@ -16,7 +15,6 @@ class DefaultConversationsPage extends StatefulWidget {
 
   const DefaultConversationsPage({
     Key? key,
-    required this.updateGroupConversationTimestamp,
     this.onOpenUserProfile,
     this.onShowGroupInfo,
     this.getUserAvatar,
@@ -39,7 +37,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     openConversation(
       context,
       conversationItem: conversationItem,
-      updateGroupConversationTimestamp: widget.updateGroupConversationTimestamp,
       groupConversationLastSeenTimestamp: timestamp,
       onAppbarTap: widget.onShowGroupInfo,
     );
@@ -131,8 +128,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                       .getLastSeenTimestampForConversationItem(
                                           conversationItem),
                                   conversationItem: conversationItem,
-                                  updateGroupConversationTimestamp:
-                                      widget.updateGroupConversationTimestamp,
                                   onAppbarTap: conversationItem
                                           .conversation.isGroupConversation
                                       ? widget.onShowGroupInfo

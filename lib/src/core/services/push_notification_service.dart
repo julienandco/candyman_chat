@@ -2,20 +2,22 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 class PushNotificationService {
   BuildContext? _cachedContext;
   String _openedConversationId = '';
   final bool Function() isAuthenticated;
-  final void Function(BuildContext, String) openConversation;
+  // final void Function(BuildContext, String) openConversation;
   final String? remoteUploadsURL;
   final PushNotificationToastStyle toastStyle;
 
   PushNotificationService({
     required this.isAuthenticated,
-    required this.openConversation,
+    // required this.openConversation,
     required this.remoteUploadsURL,
     required this.toastStyle,
   });
@@ -121,7 +123,39 @@ class PushNotificationService {
           }
         }
         if (_cachedContext != null) {
-          openConversation(_cachedContext!, data['contentId']);
+          final conversationsState = chatGetIt<ConversationsBloc>().state;
+
+          conversationsState.maybeWhen(
+            loadSuccess: (conversationItems) {
+              final String conversationId = data['contentId'];
+
+              final convoItemList =
+                  List<ConversationItem>.from(conversationItems.where(
+                (element) => element.conversation.id == conversationId,
+              ));
+
+              if (convoItemList.length == 1) {
+                final timestampState =
+                    chatGetIt<GroupConversationTimestampsBloc>().state;
+                final groupChatLastSeenTimestamp = timestampState.maybeMap(
+                    loaded: (loadedTimestampState) =>
+                        loadedTimestampState.timestampMap[conversationId] ??
+                        DateTime.now(),
+                    orElse: () => DateTime.now());
+
+                openConversation(_cachedContext!,
+                    conversationItem: convoItemList.first,
+                    groupConversationLastSeenTimestamp:
+                        groupChatLastSeenTimestamp);
+              } else {
+                print('sory');
+              }
+            },
+            orElse: () {
+              print('sory');
+            },
+          );
+          // openConversation(_cachedContext!, data['contentId']);
           // getIt<NavigatorService>().navigateTo(
           //   _cachedContext!,
           //   command,

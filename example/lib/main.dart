@@ -37,7 +37,7 @@ void main() async {
       firebaseFirestore: getIt<FirebaseFirestore>(),
       remoteDataSource: getIt<NeonChatRemoteDataSource>(),
       conversationsStyle: const ConversationsStyle(
-          emptyConversationsWidget: Text('oh man alter')));
+          noConversationsWidget: Text('oh man alter')));
 
   print(creds.user?.uid);
   // await FirebaseAuth.instance.signInWithEmailAndPassword(

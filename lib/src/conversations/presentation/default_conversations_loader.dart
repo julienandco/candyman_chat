@@ -22,17 +22,6 @@ class DefaultConversationsLoader extends StatelessWidget {
     this.getConversationCreationData,
   }) : super(key: key);
 
-  //TODO: remove
-  void _updateGroupConversationTimestamp(
-    BuildContext context, {
-    required String conversationId,
-    required DateTime timestamp,
-  }) {
-    context.read<GroupConversationTimestampsBloc>().add(
-        GroupConversationTimestampsEvent.setNewTimestamp(
-            conversationId: conversationId, timestamp: timestamp));
-  }
-
   @override
   Widget build(BuildContext context) {
     final _myId = chatGetIt<FirebaseAuth>().currentUser!.uid;
@@ -77,9 +66,6 @@ class DefaultConversationsLoader extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: DefaultConversationsPage(
-                    updateGroupConversationTimestamp: (id, timestamp) =>
-                        _updateGroupConversationTimestamp(context,
-                            conversationId: id, timestamp: timestamp),
                     onOpenUserProfile: onOpenUserProfile,
                     onShowGroupInfo: onAppbarTap,
                     getUserAvatar: getUserAvatar,
@@ -94,9 +80,6 @@ class DefaultConversationsLoader extends StatelessWidget {
                         return Flexible(
                           child: DefaultConversationLoader(
                             key: Key(state.conversationItem!.conversation.id),
-                            updateGroupConversationTimestamp: (id, timestamp) =>
-                                _updateGroupConversationTimestamp(context,
-                                    conversationId: id, timestamp: timestamp),
                             groupConversationLastSeenTimestamp: context
                                 .read<GroupConversationTimestampsBloc>()
                                 .getLastSeenTimestampForConversationItem(

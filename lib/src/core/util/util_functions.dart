@@ -39,7 +39,6 @@ String formatLastActiveDateTime(DateTime? date) {
 void openConversation(
   BuildContext context, {
   required ConversationItem conversationItem,
-  required Function(String, DateTime) updateGroupConversationTimestamp,
   required DateTime groupConversationLastSeenTimestamp,
   Function(Conversation)? onAppbarTap,
   bool showCloseButton = true,
@@ -49,7 +48,6 @@ void openConversation(
     CupertinoPageRoute(
       builder: (context) => DefaultConversationLoader(
         groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
-        updateGroupConversationTimestamp: updateGroupConversationTimestamp,
         conversationItem: conversationItem,
         onAppbarTap: onAppbarTap,
         showCloseButton: showCloseButton,

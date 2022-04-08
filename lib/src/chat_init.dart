@@ -105,13 +105,9 @@ initNEONChat({
     chatGetIt.registerLazySingleton<SyncTimestampsWithFirebaseUC>(() =>
         SyncTimestampsWithFirebaseUC(
             chatGetIt<FirebaseUserProfileRepository>()));
-    chatGetIt.registerLazySingleton<PushNotificationService>(
-        () => PushNotificationService(
+    chatGetIt.registerLazySingleton<PushNotificationService>(() =>
+        PushNotificationService(
             isAuthenticated: isAuthenticated,
-            openConversation: (_, __) {
-              print('TODO');
-            }, //TODOPUSH
-
             remoteUploadsURL: remoteUploadsURL,
             toastStyle: pushNotificationToastStyle));
 
