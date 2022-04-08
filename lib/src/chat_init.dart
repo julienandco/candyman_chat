@@ -48,7 +48,7 @@ initNEONChat({
     chatGetIt.registerLazySingleton<PushNotificationToastStyle>(
         () => pushNotificationToastStyle);
 
-    //Logic
+    //Singletons (Repos, UCs, Services)
     chatGetIt.registerLazySingleton<ConversationRepository>(
       () => ConversationRepositoryImpl(
           firestore: firebaseFirestore, firebaseAuth: firebaseAuth),
@@ -69,8 +69,6 @@ initNEONChat({
         () => DeleteMessageUC(chatGetIt<ConversationRepository>()));
     chatGetIt.registerLazySingleton<GetUploadUrlUC>(
         () => GetUploadUrlUC(chatGetIt<FileUploadRepository>()));
-    chatGetIt.registerLazySingleton<UploadUrlCubit>(
-        () => UploadUrlCubit(chatGetIt<GetUploadUrlUC>()));
     chatGetIt.registerLazySingleton<MarkMessageAsSeenUC>(
         () => MarkMessageAsSeenUC(chatGetIt<ConversationRepository>()));
     chatGetIt.registerLazySingleton<SearchConversationsUC>(
@@ -101,10 +99,27 @@ initNEONChat({
         () => CreateConversationUC(chatGetIt<ConversationsRepository>()));
     chatGetIt.registerLazySingleton<CreateGroupConversationUC>(
         () => CreateGroupConversationUC(chatGetIt<ConversationsRepository>()));
+    chatGetIt.registerLazySingleton<InitializeTimestampStreamUC>(() =>
+        InitializeTimestampStreamUC(
+            chatGetIt<FirebaseUserProfileRepository>()));
+    chatGetIt.registerLazySingleton<SyncTimestampsWithFirebaseUC>(() =>
+        SyncTimestampsWithFirebaseUC(
+            chatGetIt<FirebaseUserProfileRepository>()));
+    chatGetIt.registerLazySingleton<PushNotificationService>(
+        () => PushNotificationService(
+            isAuthenticated: isAuthenticated,
+            openConversation: (_, __) {}, //TODOPUSH
 
-    chatGetIt.registerLazySingleton<CurrentConversationCubit>(
+            remoteUploadsURL: remoteUploadsURL,
+            toastStyle: pushNotificationToastStyle));
+
+    //Factories (Blocs, Cubits)
+    chatGetIt.registerFactory<UploadUrlCubit>(
+        () => UploadUrlCubit(chatGetIt<GetUploadUrlUC>()));
+
+    chatGetIt.registerFactory<CurrentConversationCubit>(
         () => CurrentConversationCubit());
-    chatGetIt.registerLazySingleton<ConversationsBloc>(
+    chatGetIt.registerFactory<ConversationsBloc>(
       () => ConversationsBloc(
         initializeConversationsStreamUC:
             chatGetIt<InitializeConversationsStreamUC>(),
@@ -116,27 +131,13 @@ initNEONChat({
         createGroupConversationUC: chatGetIt<CreateGroupConversationUC>(),
       ),
     );
-    chatGetIt.registerLazySingleton<ConversationsSearchBloc>(
+    chatGetIt.registerFactory<ConversationsSearchBloc>(
         () => ConversationsSearchBloc(chatGetIt<SearchConversationsUC>()));
-    chatGetIt.registerLazySingleton<InitializeTimestampStreamUC>(() =>
-        InitializeTimestampStreamUC(
-            chatGetIt<FirebaseUserProfileRepository>()));
-    chatGetIt.registerLazySingleton<SyncTimestampsWithFirebaseUC>(() =>
-        SyncTimestampsWithFirebaseUC(
-            chatGetIt<FirebaseUserProfileRepository>()));
-    chatGetIt.registerLazySingleton<GroupConversationTimestampsBloc>(() =>
+    chatGetIt.registerFactory<GroupConversationTimestampsBloc>(() =>
         GroupConversationTimestampsBloc(
             initStreamUC: chatGetIt<InitializeTimestampStreamUC>(),
             syncTimestampsWithFirebaseUC:
                 chatGetIt<SyncTimestampsWithFirebaseUC>()));
-
-    chatGetIt.registerLazySingleton<PushNotificationService>(
-        () => PushNotificationService(
-            isAuthenticated: isAuthenticated,
-            openConversation: (_, __) {}, //TODOPUSH
-
-            remoteUploadsURL: remoteUploadsURL,
-            toastStyle: pushNotificationToastStyle));
 
     log('NEONChat successfully initialized!');
   } catch (e) {
