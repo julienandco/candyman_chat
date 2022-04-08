@@ -7,22 +7,23 @@ import 'package:neon_chat/src/core/util/util.dart';
 class ConversationsStyle {
   final bool showAppBarAboveConversations;
   final Text appBarTitle;
-  final Widget emptyConversationsWidget;
+  final Widget noConversationsWidget;
+  final String noConversationsPlaceholderStringWeb;
   final Color appBarColor;
   final bool appBarCenterTitle;
   final Color fabColor;
   final Widget fabIcon;
   final bool showFab;
   final Function()? fabAction;
-  final Widget emtpyConversation;
   final Widget loadingWidget;
   final ConversationListItemStyle chatListItemStyle;
 
   const ConversationsStyle({
     this.showAppBarAboveConversations = false,
     this.appBarTitle = const Text('NEON CHAT'),
+    this.noConversationsPlaceholderStringWeb = 'Conversations',
     this.appBarCenterTitle = true,
-    this.emptyConversationsWidget = const Center(
+    this.noConversationsWidget = const Center(
       child: Text('No Conversations found!'),
     ),
     this.appBarColor = const Color.fromARGB(255, 25, 5, 55),
@@ -30,7 +31,6 @@ class ConversationsStyle {
     this.fabIcon = const Icon(Icons.message),
     this.showFab = false,
     this.fabAction,
-    this.emtpyConversation = const Center(child: Text('no conversations')),
     this.loadingWidget = const Center(
       child: CircularProgressIndicator(color: Color.fromARGB(255, 25, 5, 55)),
     ),

@@ -108,7 +108,9 @@ initNEONChat({
     chatGetIt.registerLazySingleton<PushNotificationService>(
         () => PushNotificationService(
             isAuthenticated: isAuthenticated,
-            openConversation: (_, __) {}, //TODOPUSH
+            openConversation: (_, __) {
+              print('TODO');
+            }, //TODOPUSH
 
             remoteUploadsURL: remoteUploadsURL,
             toastStyle: pushNotificationToastStyle));

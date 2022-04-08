@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
@@ -32,12 +33,11 @@ void main() async {
   );
 
   NeonChat.initNeonChat(
-    firebaseAuth: getIt<FirebaseAuth>(),
-    firebaseFirestore: getIt<FirebaseFirestore>(),
-    remoteDataSource: getIt<NeonChatRemoteDataSource>(),
-    conversationsStyle:
-        const ConversationsStyle(showAppBarAboveConversations: true),
-  );
+      firebaseAuth: getIt<FirebaseAuth>(),
+      firebaseFirestore: getIt<FirebaseFirestore>(),
+      remoteDataSource: getIt<NeonChatRemoteDataSource>(),
+      conversationsStyle: const ConversationsStyle(
+          emptyConversationsWidget: Text('oh man alter')));
 
   print(creds.user?.uid);
   // await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -81,13 +81,49 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: // const MyCustomConversationsLoader()
-          const NeonChat(
-              // firebaseAuthInstance: getIt<FirebaseAuth>(),
-              // firebaseFirestoreInstance: getIt<FirebaseFirestore>(),
-              // remoteDataSource: getIt<NeonChatRemoteDataSource>(),
-              // getConversationCreationData: () => _getMockGroupConvoCreationData,
+      home: _MyApp(),
+    );
+  }
+}
+
+class _MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'HOME!',
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              child: const Text('Chat'),
+              onPressed: () => Navigator.of(context).push(
+                CupertinoPageRoute(
+                  builder: (context) => Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: Colors.red,
+                      automaticallyImplyLeading: true,
+                      title: const Text('Chat'),
+                      actions: [
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(CupertinoIcons.person),
+                        ),
+                      ],
+                    ),
+                    body: const NeonChat(),
+                  ),
+                ),
               ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

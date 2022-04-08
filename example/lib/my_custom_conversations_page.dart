@@ -28,7 +28,9 @@ class MyCustomConversationsPage extends StatelessWidget {
                   children: conversationsState.maybeWhen(
                     loadSuccess: (chatConversations) {
                       if (loadedConversationsState.conversations.isEmpty) {
-                        return [const Center(child: Text('no conversations'))];
+                        return [
+                          const Center(child: Text('no conversations here'))
+                        ];
                       }
                       return (conversationsSearchState.isSearchActive
                               ? conversationsSearchState.conversations

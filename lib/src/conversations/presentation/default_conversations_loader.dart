@@ -107,10 +107,10 @@ class DefaultConversationsLoader extends StatelessWidget {
                           ),
                         );
                       } else {
-                        return const Expanded(
+                        return Expanded(
                           child: Center(
-                            child: Text(
-                                'Conversations'), //TODO: get text from outside
+                            child: Text(chatGetIt<ConversationsStyle>()
+                                .noConversationsPlaceholderStringWeb),
                           ),
                         );
                       }

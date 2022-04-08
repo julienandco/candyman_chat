@@ -107,7 +107,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                     children: conversationsState.maybeWhen(
                       loadSuccess: (chatConversations) {
                         if (loadedConversationsState.conversations.isEmpty) {
-                          return [style.emtpyConversation];
+                          return [style.emptyConversationsWidget];
                         }
                         return (conversationsSearchState.isSearchActive
                                 ? conversationsSearchState.conversations
