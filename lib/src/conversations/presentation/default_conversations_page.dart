@@ -107,7 +107,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                     children: conversationsState.maybeWhen(
                       loadSuccess: (chatConversations) {
                         if (loadedConversationsState.conversations.isEmpty) {
-                          return [style.emptyConversationsWidget];
+                          return [style.noConversationsWidget];
                         }
                         return (conversationsSearchState.isSearchActive
                                 ? conversationsSearchState.conversations
@@ -152,7 +152,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                     ),
                   ),
                   loadInProgress: (l) => style.loadingWidget,
-                  orElse: () => style.emptyConversationsWidget,
+                  orElse: () => style.noConversationsWidget,
                 ),
               );
             },
