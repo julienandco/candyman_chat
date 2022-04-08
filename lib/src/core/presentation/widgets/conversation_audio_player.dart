@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/chat_init.dart';
-import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
+
 import 'package:rxdart/rxdart.dart';
 
 class ConversationAudioPlayer extends StatefulWidget {

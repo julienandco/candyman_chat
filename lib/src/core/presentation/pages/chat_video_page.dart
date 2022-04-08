@@ -8,9 +8,6 @@ import 'package:better_player/better_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
-import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
-
 class ChatVideoPage extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';
 

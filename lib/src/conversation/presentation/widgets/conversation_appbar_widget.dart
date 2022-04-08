@@ -102,7 +102,7 @@ class ConversationAppbar extends StatelessWidget
           );
         } else {
           return ConversationSearchAppBar(
-            defaultSearchAppBarStyle: searchAppBarStyle,
+            searchAppBarStyle: searchAppBarStyle,
           );
         }
       },

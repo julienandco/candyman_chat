@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:neon_chat/src/chat_init.dart';
 import 'package:neon_chat/src/conversation/data/models/models.dart';
 import 'package:neon_chat/src/core/core.dart';
 
@@ -13,8 +14,8 @@ enum ConversationMessageType { text, voice, image, video, file, deleted }
 extension ConversationMessageTypeStrings on ConversationMessageType {
   String get firebaseKey => getFirebaseKey(this);
 
-  // TODO: translate
-  String get displayString => getFirebaseKey(this);
+  String get displayString => chatGetIt<FunctionInitData>()
+      .getConversationMessageTypeDisplayString(this);
 }
 
 @freezed
@@ -50,6 +51,5 @@ class ConversationMessage with _$ConversationMessage {
 
   String get timestampFormatted => formatDatetime(timestamp);
 
-  //TODO get rid of the instance call
-  bool get isMe => FirebaseAuth.instance.currentUser!.uid == senderId;
+  bool get isMe => chatGetIt<FirebaseAuth>().currentUser!.uid == senderId;
 }

@@ -8,19 +8,29 @@ import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.da
 
 GetIt chatGetIt = GetIt.instance;
 
+class FunctionInitData {
+  final bool Function() isAuthenticated;
+  final String Function(ConversationMessageType)
+      getConversationMessageTypeDisplayString;
+
+  FunctionInitData({
+    required this.isAuthenticated,
+    required this.getConversationMessageTypeDisplayString,
+  });
+}
+
 initNEONChat({
   required FirebaseAuth firebaseAuth,
   required FirebaseFirestore firebaseFirestore,
   required FirebaseKeys firebaseKeys,
   required NeonChatRemoteDataSource remoteDataSource,
-  required bool Function() isAuthenticated,
+  required FunctionInitData functionInitData,
   required ConversationStyle conversationStyle,
   required ConversationsStyle conversationsStyle,
   required MessageBubbleStyle messageBubbleStyle,
   required SearchAppBarStyle searchAppBarStyle,
   required BottomBarStyle bottomBarStyle,
   required PushNotificationToastStyle pushNotificationToastStyle,
-  String? remoteUploadsURL,
 }) {
   try {
     final _currentUserUID = firebaseAuth.currentUser?.uid;
@@ -36,6 +46,9 @@ initNEONChat({
     if (!chatGetIt.isRegistered<FirebaseKeys>()) {
       chatGetIt.registerLazySingleton<FirebaseKeys>(() => firebaseKeys);
     }
+
+    // Functions
+    chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInitData);
 
     //Styles
     chatGetIt.registerLazySingleton<ConversationStyle>(() => conversationStyle);
@@ -116,8 +129,8 @@ initNEONChat({
             chatGetIt<FirebaseUserProfileRepository>()));
     chatGetIt.registerLazySingleton<PushNotificationService>(() =>
         PushNotificationService(
-            isAuthenticated: isAuthenticated,
-            remoteUploadsURL: remoteUploadsURL,
+            isAuthenticated: functionInitData.isAuthenticated,
+            remoteUploadsURL: remoteDataSource.remoteUploadsURL,
             toastStyle: pushNotificationToastStyle));
 
     //Factories (Blocs, Cubits)

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
@@ -11,13 +10,11 @@ class PushNotificationService {
   BuildContext? _cachedContext;
   String _openedConversationId = '';
   final bool Function() isAuthenticated;
-  // final void Function(BuildContext, String) openConversation;
   final String? remoteUploadsURL;
   final PushNotificationToastStyle toastStyle;
 
   PushNotificationService({
     required this.isAuthenticated,
-    // required this.openConversation,
     required this.remoteUploadsURL,
     required this.toastStyle,
   });
@@ -36,8 +33,7 @@ class PushNotificationService {
   }) async {
     log('CONFIGURED PUSH NOTIFICATIONS', name: '$runtimeType');
     _cachedContext = context;
-    // final token = await FirebaseMessaging.instance.getToken();
-    // print('TOKEN: $token');
+
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     try {
@@ -93,7 +89,7 @@ class PushNotificationService {
     if (message.data.containsKey('command') &&
         message.data['command'] == 'openChat') {
       if (message.data.containsKey('senderId')) {
-        final String userId = message.data['senderId'];
+        // final String userId = message.data['senderId'];
         final String? uploadId = message.data['senderProfilePicture'];
 
         return Container(
@@ -173,7 +169,7 @@ class PushNotificationService {
   void _showPushAlert({
     required RemoteMessage message,
   }) {
-    //TODOPUSH: contendId abstract enough?
+    //TODOPUSH: contentId abstract enough?
     if (message.data.containsKey('command') &&
         message.data.containsKey('contentId')) {
       if (message.data['command'] == 'openConversation' &&

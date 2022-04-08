@@ -34,16 +34,16 @@ class MessageBubble extends StatefulWidget {
 }
 
 class _MessageBubbleState extends State<MessageBubble> {
-  bool _showAvatar = false;
+  // bool _showAvatar = false;
   bool _hasUpdatedTimestampAlready = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _showAvatar = widget.messageBubbleStyle.showAvatar &&
-        widget.otherUserAvatar != null &&
-        !widget.message.isMe;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _showAvatar = widget.messageBubbleStyle.showAvatar &&
+  //       widget.otherUserAvatar != null &&
+  //       !widget.message.isMe;
+  // }
 
   void showDeleteMessageDialog() {
     bool canDeleteMessage = !widget.message.isDeleted && widget.message.isMe;

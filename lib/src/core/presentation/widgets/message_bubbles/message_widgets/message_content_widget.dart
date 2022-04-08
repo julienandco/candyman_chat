@@ -7,8 +7,6 @@ import 'package:linkwell/linkwell.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
-//TODO: provide uploadURLCubit
-
 class MessageContentWidget extends StatefulWidget {
   final MessageBubbleStyle messageBubbleStyle;
 
@@ -161,7 +159,6 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // LinkWell(
               if (isURL)
                 LinkPreview(
                   width: MediaQuery.of(context).size.width,

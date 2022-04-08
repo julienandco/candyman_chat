@@ -42,6 +42,14 @@ class NeonChat extends StatelessWidget {
     /// Defaults to always be true.
     ///
     bool Function()? isAuthenticated,
+
+    ///
+    /// Returns the display string to be shown next to the emoji of a given
+    /// message type (for ex. an audio message preview would show up in the conversations
+    /// screen as: 🎤 + return value of this method).
+    ///
+    String Function(ConversationMessageType)?
+        getConversationMessageTypeDisplayString,
     ConversationStyle conversationStyle = const ConversationStyle(),
     ConversationsStyle conversationsStyle = const ConversationsStyle(),
     MessageBubbleStyle messageBubbleStyle = const MessageBubbleStyle(),
@@ -51,13 +59,17 @@ class NeonChat extends StatelessWidget {
         const PushNotificationToastStyle(),
     String? remoteUploadsURL,
   }) {
+    final functionInit = FunctionInitData(
+        isAuthenticated: isAuthenticated ?? () => true,
+        getConversationMessageTypeDisplayString:
+            getConversationMessageTypeDisplayString ??
+                (type) => type.firebaseKey);
     initNEONChat(
       firebaseAuth: firebaseAuth,
       firebaseFirestore: firebaseFirestore,
       firebaseKeys: firebaseKeys,
       remoteDataSource: remoteDataSource,
-      remoteUploadsURL: remoteUploadsURL,
-      isAuthenticated: isAuthenticated ?? () => true,
+      functionInitData: functionInit,
       bottomBarStyle: bottomBarStyle,
       conversationsStyle: conversationsStyle,
       conversationStyle: conversationStyle,

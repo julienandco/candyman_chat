@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class ConversationSearchAppBar extends StatefulWidget {
-  final SearchAppBarStyle defaultSearchAppBarStyle;
+  final SearchAppBarStyle searchAppBarStyle;
 
   const ConversationSearchAppBar({
     Key? key,
-    required this.defaultSearchAppBarStyle,
+    required this.searchAppBarStyle,
   }) : super(key: key);
 
   @override
@@ -26,11 +26,11 @@ class _ConversationSearchAppBarState extends State<ConversationSearchAppBar> {
   @override
   Widget build(BuildContext context) {
     return SubHeader(
-      iconColor: widget.defaultSearchAppBarStyle.iconColor,
-      decoration: widget.defaultSearchAppBarStyle.searchBarDecoration,
+      iconColor: widget.searchAppBarStyle.iconColor,
+      decoration: widget.searchAppBarStyle.searchBarDecoration,
       // show nav Icons for search results
       action: const ChatSearchUpDown(),
-      leading: widget.defaultSearchAppBarStyle.leading ??
+      leading: widget.searchAppBarStyle.leading ??
           IconButton(
             onPressed: () => context
                 .read<ConversationSearchBloc>()
@@ -38,13 +38,13 @@ class _ConversationSearchAppBarState extends State<ConversationSearchAppBar> {
             icon: const Icon(
               Icons.close,
             ),
-            color: widget.defaultSearchAppBarStyle.iconColor,
+            color: widget.searchAppBarStyle.iconColor,
           ),
       title: Expanded(
         child: TextField(
-          style: widget.defaultSearchAppBarStyle.searchTextInput,
-          cursorColor: widget.defaultSearchAppBarStyle.searchTextCursorColor,
-          decoration: widget.defaultSearchAppBarStyle.textFieldDecoration,
+          style: widget.searchAppBarStyle.searchTextInput,
+          cursorColor: widget.searchAppBarStyle.searchTextCursorColor,
+          decoration: widget.searchAppBarStyle.textFieldDecoration,
           focusNode: _foucsNode,
           onSubmitted: (value) {
             _foucsNode.unfocus();
