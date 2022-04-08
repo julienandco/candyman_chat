@@ -36,7 +36,9 @@ void main() async {
       firebaseAuth: getIt<FirebaseAuth>(),
       firebaseFirestore: getIt<FirebaseFirestore>(),
       remoteDataSource: getIt<NeonChatRemoteDataSource>(),
+      firebaseKeys: const FirebaseKeys(usePrefix: true),
       conversationsStyle: const ConversationsStyle(
+          showAppBarAboveConversations: true,
           noConversationsWidget: Text('oh man alter')));
 
   print(creds.user?.uid);
@@ -104,19 +106,8 @@ class _MyApp extends StatelessWidget {
               child: const Text('Chat'),
               onPressed: () => Navigator.of(context).push(
                 CupertinoPageRoute(
-                  builder: (context) => Scaffold(
-                    appBar: AppBar(
-                      backgroundColor: Colors.red,
-                      automaticallyImplyLeading: true,
-                      title: const Text('Chat'),
-                      actions: [
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          icon: const Icon(CupertinoIcons.person),
-                        ),
-                      ],
-                    ),
-                    body: const NeonChat(),
+                  builder: (context) => const Scaffold(
+                    body: NeonChat(),
                   ),
                 ),
               ),

@@ -8,7 +8,7 @@ class FirebaseUserProfileRepositoryImpl
     implements FirebaseUserProfileRepository {
   FirebaseUserProfileRepositoryImpl({
     required this.firestore,
-    this.firebaseKeys = const FirebaseKeys(),
+    required this.firebaseKeys,
   }) : _users = firestore.collection(firebaseKeys.usersCollectionKey);
   final FirebaseFirestore firestore;
   final FirebaseKeys firebaseKeys;

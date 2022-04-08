@@ -36,10 +36,10 @@ class NeonChat extends StatelessWidget {
     FirebaseKeys firebaseKeys = const FirebaseKeys(),
 
     ///
-    /// Method to determine whether the current user is authenticated. Used
-    /// to handle received data messages from firebase (user is authenticated)
-    /// or ignore them (user is not authenticated).
-    /// defaults to always be true.
+    /// Returns whether the current user is authenticated or not. This information
+    /// is used to determine whether the commands received via Data Messages
+    /// should be handled (user is authenticated) or not (user not authenticated).
+    /// Defaults to always be true.
     ///
     bool Function()? isAuthenticated,
     ConversationStyle conversationStyle = const ConversationStyle(),
@@ -109,14 +109,6 @@ class NeonChat extends StatelessWidget {
   final bool disableGroupChatAbbBarTap;
 
   ///
-  /// Returns whether the current user is authenticated or not. This information
-  /// is used to determine whether the commands received via Data Messages
-  /// should be handled (user is authenticated) or not (user not authenticated).
-  /// Defaults to always be true.
-  ///
-  final bool Function()? isAuthenticated;
-
-  ///
   /// The URL where all the uploads (especially the photos) are stored. Defaults
   /// to be null, so no user photos will be displayed.
   ///
@@ -135,7 +127,6 @@ class NeonChat extends StatelessWidget {
     this.onDirectConversationAppBarTap,
     this.getConversationCreationData,
     this.onOpenUserProfile,
-    this.isAuthenticated,
     this.remoteUploadsURL,
     this.getUserAvatar,
   }) : super(key: key);

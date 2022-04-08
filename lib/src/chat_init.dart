@@ -51,18 +51,27 @@ initNEONChat({
     //Singletons (Repos, UCs, Services)
     chatGetIt.registerLazySingleton<ConversationRepository>(
       () => ConversationRepositoryImpl(
-          firestore: firebaseFirestore, firebaseAuth: firebaseAuth),
+        firestore: firebaseFirestore,
+        firebaseAuth: firebaseAuth,
+        firebaseKeys: firebaseKeys,
+      ),
     );
-    chatGetIt.registerLazySingleton<ConversationsRepository>(() =>
-        ConversationsRepositoryImpl(
-            firestore: firebaseFirestore, firebaseAuth: firebaseAuth));
+    chatGetIt.registerLazySingleton<ConversationsRepository>(
+        () => ConversationsRepositoryImpl(
+              firestore: firebaseFirestore,
+              firebaseAuth: firebaseAuth,
+              firebaseKeys: firebaseKeys,
+            ));
     chatGetIt.registerLazySingleton<FileUploadRepository>(
         () => FileUploadRepositoryImpl(remoteDataSource: remoteDataSource));
     chatGetIt.registerLazySingleton<UploadManagerRepository>(() =>
         UploadManagerRepositoryImpl(
             fileUploadRepository: chatGetIt<FileUploadRepository>()));
     chatGetIt.registerLazySingleton<FirebaseUserProfileRepository>(
-        () => FirebaseUserProfileRepositoryImpl(firestore: firebaseFirestore));
+        () => FirebaseUserProfileRepositoryImpl(
+              firestore: firebaseFirestore,
+              firebaseKeys: firebaseKeys,
+            ));
     chatGetIt.registerLazySingleton<HideMessageUC>(
         () => HideMessageUC(chatGetIt<ConversationRepository>()));
     chatGetIt.registerLazySingleton<DeleteMessageUC>(

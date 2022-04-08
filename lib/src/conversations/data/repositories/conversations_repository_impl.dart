@@ -14,7 +14,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   ConversationsRepositoryImpl({
     required this.firestore,
     required this.firebaseAuth,
-    this.firebaseKeys = const FirebaseKeys(),
+    required this.firebaseKeys,
   }) : _collection =
             firestore.collection(firebaseKeys.conversationsCollectionKey);
 
