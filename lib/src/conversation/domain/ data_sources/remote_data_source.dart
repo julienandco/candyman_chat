@@ -1,21 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:file_picker/file_picker.dart';
-
-import 'package:neon_chat/src/core/core.dart';
+import 'package:neon_chat/neon_chat.dart';
 
 abstract class NeonChatRemoteDataSource {
   String get remoteUploadsURL;
   Future<Either<Failure, String>> deleteEndpoint(String fileId);
   Future<Either<Failure, String>> getEndpoint(String fileId);
-  Future<Either<Failure, String>> patchEndpoint(
-      String fileId, Map<String, dynamic> body);
-  Future<Either<Failure, String>> postEndpoint(
-      String fileId, Map<String, dynamic> body);
-  Future<Either<Failure, Success>> uploadFileToPresignedURL(
-    String url, {
-    String? filePath,
-    PlatformFile? platformFile,
-    void Function(int, int)? onReceiveProgress,
+
+  Future<Either<Failure, String>> uploadEndpoint({
+    required ConversationUploadFile fileToUpload,
+    required String conversationId,
+    required String messageId,
   });
-  Future<Either<Failure, String>> getUploadUrl(String id);
 }

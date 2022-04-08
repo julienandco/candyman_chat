@@ -24,31 +24,15 @@ class _MyDataSource implements NeonChatRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, String>> patchEndpoint(
-      String fileId, Map<String, dynamic> body) async {
-    // TODO: implement patchEndpoint
-    return right('TODO');
-  }
+  // TODO: implement remoteUploadsURL
+  String get remoteUploadsURL => throw UnimplementedError();
 
   @override
-  Future<Either<Failure, String>> postEndpoint(
-      String fileId, Map<String, dynamic> body) async {
-    // TODO: implement postEndpoint
-    return right('TODO');
-  }
-
-  @override
-  Future<Either<Failure, Success>> uploadFileToPresignedURL(String url,
-      {String? filePath,
-      PlatformFile? platformFile,
-      void Function(int p1, int p2)? onReceiveProgress}) async {
-    // TODO: implement uploadFileToPresignedURL
-    return right(const Success());
-  }
-
-  @override
-  Future<Either<Failure, String>> getUploadUrl(String id) async {
-    // TODO: implement getUploadUrl
-    return right('null');
+  Future<Either<Failure, String>> uploadEndpoint(
+      {required ConversationUploadFile fileToUpload,
+      required String conversationId,
+      required String messageId}) {
+    // TODO: implement uploadEndpoint
+    throw UnimplementedError();
   }
 }
