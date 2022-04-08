@@ -44,6 +44,9 @@ class SendPlatformFileMessageUC {
     final uploadFile =
         conversationRepository.sendFileMessage(conversationId, message);
 
-    uploadManagerRepository.upload(uploadFile.copyWith(platformFile: file));
+    uploadManagerRepository.upload(
+      file: uploadFile.copyWith(platformFile: file),
+      typeOfFile: ConversationMessageType.file,
+    );
   }
 }

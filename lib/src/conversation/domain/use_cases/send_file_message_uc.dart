@@ -29,10 +29,15 @@ class SendFileMessageUC {
         conversationRepository.sendFileMessage(conversationId, message);
     if (reparseFilePath) {
       final newFilePath = Uri.parse(filePath).path;
-      uploadManagerRepository
-          .upload(uploadFile.copyWith(filePath: newFilePath));
+      uploadManagerRepository.upload(
+        file: uploadFile.copyWith(filePath: newFilePath),
+        typeOfFile: type,
+      );
     } else {
-      uploadManagerRepository.upload(uploadFile);
+      uploadManagerRepository.upload(
+        file: uploadFile,
+        typeOfFile: type,
+      );
     }
   }
 }

@@ -10,15 +10,17 @@ class UploadManagerRepositoryImpl implements UploadManagerRepository {
   final List<ConversationUploadFile> _fileQueue = [];
 
   @override
-  Future<void> upload(ConversationUploadFile file) async {
+  Future<void> upload({
+    required ConversationUploadFile file,
+    required ConversationMessageType typeOfFile,
+  }) async {
     _fileQueue.add(file);
     final fileIndex = _getFileIndexFromQueue(file.messageId);
 
     try {
       await fileUploadRepository.uploadFileToMessage(
         file: file,
-        conversationId: file.conversationID,
-        messageId: file.messageId,
+        typeOfFile: typeOfFile,
       );
 
       _fileQueue[fileIndex] = _fileQueue[fileIndex].copyWith(

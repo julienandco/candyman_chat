@@ -7,8 +7,7 @@ abstract class FileUploadRepository {
   Future<Either<Failure, Success>> deleteFileWithId(String fileId);
   Future<void> uploadFileToMessage({
     required ConversationUploadFile file,
-    required String conversationId,
-    required String messageId,
+    required ConversationMessageType typeOfFile,
   });
   Future<String?> getUploadUrl(String id);
 }

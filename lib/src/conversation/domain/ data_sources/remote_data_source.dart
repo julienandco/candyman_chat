@@ -8,7 +8,6 @@ abstract class NeonChatRemoteDataSource {
 
   Future<Either<Failure, String>> uploadEndpoint({
     required ConversationUploadFile fileToUpload,
-    required String conversationId,
-    required String messageId,
+    required ConversationMessageType typeToUpload,
   });
 }
