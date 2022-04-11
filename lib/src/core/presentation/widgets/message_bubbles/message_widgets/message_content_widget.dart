@@ -6,6 +6,7 @@ import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
+import 'package:neon_chat/src/core/presentation/pages/chat_media_viewer_page.dart';
 
 class MessageContentWidget extends StatefulWidget {
   final MessageBubbleStyle messageBubbleStyle;
@@ -83,8 +84,6 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
                   : ChatImageBubble(
                       onTap: () => _openMediaViewer(context, widget.message),
                       message: widget.message,
-                      // TODO:
-                      getRedirectedCachedNetworkImage: (u, p) => Container(),
                     ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -201,8 +200,11 @@ void _openMediaViewer(BuildContext context, ConversationMessage message) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => BlocProvider(
-            create: (context) => chatGetIt<UploadUrlCubit>(),
-            child: ChatVideoPage(message: message))),
+        builder: (context) => ChatMediaViewerPage(currentMediaMessage: message)
+        // BlocProvider(
+        //   create: (context) => chatGetIt<UploadUrlCubit>(),
+        //   child: ChatVideoPage(message: message),
+        // ),
+        ),
   );
 }
