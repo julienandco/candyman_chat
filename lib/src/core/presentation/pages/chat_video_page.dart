@@ -50,9 +50,13 @@ class _ChatVideoPageState extends State<ChatVideoPage> {
 
   void _initPlayer() async {
     if (widget.message.doneUpload) {
+      print('INIT VIDEO PLAYER');
+      print('UPLOAD: ${widget.message.upload}');
       final _url = await context
           .read<UploadUrlCubit>()
           .getUploadURL(widget.message.upload!.fileId);
+      print('URL: $_url');
+
       // final _url = await getIt<GetUploadRedirectUrlForUrlUC>()
       //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
       if (_url == null) return;
