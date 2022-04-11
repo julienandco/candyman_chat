@@ -62,6 +62,7 @@ class PushNotificationService {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       log('received data message: ${message.data}', name: '$runtimeType');
+      log('cached context: $_cachedContext', name: '$runtimeType');
 
       _showPushAlert(
         message: message,
