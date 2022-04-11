@@ -44,6 +44,11 @@ class NeonChat extends StatelessWidget {
     bool Function()? isAuthenticated,
 
     ///
+    /// The http headers that are required for calls to your backend to succeed.
+    ///
+    Map<String, String>? httpHeaders,
+
+    ///
     /// Returns the display string to be shown next to the emoji of a given
     /// message type (for ex. an audio message preview would show up in the conversations
     /// screen as: 🎤 + return value of this method).
@@ -57,7 +62,6 @@ class NeonChat extends StatelessWidget {
     BottomBarStyle bottomBarStyle = const BottomBarStyle(),
     PushNotificationToastStyle pushNotificationToastStyle =
         const PushNotificationToastStyle(),
-    String? remoteUploadsURL,
   }) {
     final functionInit = FunctionInitData(
         isAuthenticated: isAuthenticated ?? () => true,
@@ -68,6 +72,7 @@ class NeonChat extends StatelessWidget {
       firebaseAuth: firebaseAuth,
       firebaseFirestore: firebaseFirestore,
       firebaseKeys: firebaseKeys,
+      httpHeaders: httpHeaders ?? {},
       remoteDataSource: remoteDataSource,
       functionInitData: functionInit,
       bottomBarStyle: bottomBarStyle,

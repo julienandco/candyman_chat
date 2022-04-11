@@ -112,7 +112,9 @@ class _RedirectedCachedNetworkImageState
         errorWidget: (context, url, error) => widget.placeholder,
         progressIndicatorBuilder:
             widget.withFadeIn ? widget.progressIndicatorBuilder : null,
-        // httpHeaders: jwt != null ? {'Authorization': jwt!} : null,
+        httpHeaders: chatGetIt.get(
+            instanceName:
+                'httpHeaders'), //jwt != null ? {'Authorization': jwt!} : null,
         fadeOutDuration:
             widget.withFadeIn ? Duration(milliseconds: 2) : Duration.zero,
         fit: widget.fit,

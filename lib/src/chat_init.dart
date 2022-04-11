@@ -23,6 +23,7 @@ initNEONChat({
   required FirebaseAuth firebaseAuth,
   required FirebaseFirestore firebaseFirestore,
   required FirebaseKeys firebaseKeys,
+  required Map<String, String> httpHeaders,
   required NeonChatRemoteDataSource remoteDataSource,
   required FunctionInitData functionInitData,
   required ConversationStyle conversationStyle,
@@ -46,6 +47,9 @@ initNEONChat({
     if (!chatGetIt.isRegistered<FirebaseKeys>()) {
       chatGetIt.registerLazySingleton<FirebaseKeys>(() => firebaseKeys);
     }
+
+    chatGetIt.registerLazySingleton<Map<String, String>>(() => httpHeaders,
+        instanceName: 'httpHeaders');
 
     // Functions
     chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInitData);
