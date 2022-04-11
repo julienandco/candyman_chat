@@ -23,7 +23,9 @@ class _$UploadTearOff {
   const _$UploadTearOff();
 
   _Upload call(
-      {required String fileId, String? thumbnailId, String? thumnailMimeType}) {
+      {@JsonKey(name: 'original') required String fileId,
+      @JsonKey(name: 'thumbnail') String? thumbnailId,
+      String? thumnailMimeType}) {
     return _Upload(
       fileId: fileId,
       thumbnailId: thumbnailId,
@@ -41,7 +43,9 @@ const $Upload = _$UploadTearOff();
 
 /// @nodoc
 mixin _$Upload {
+  @JsonKey(name: 'original')
   String get fileId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'thumbnail')
   String? get thumbnailId => throw _privateConstructorUsedError;
   String? get thumnailMimeType => throw _privateConstructorUsedError;
 
@@ -54,7 +58,10 @@ mixin _$Upload {
 abstract class $UploadCopyWith<$Res> {
   factory $UploadCopyWith(Upload value, $Res Function(Upload) then) =
       _$UploadCopyWithImpl<$Res>;
-  $Res call({String fileId, String? thumbnailId, String? thumnailMimeType});
+  $Res call(
+      {@JsonKey(name: 'original') String fileId,
+      @JsonKey(name: 'thumbnail') String? thumbnailId,
+      String? thumnailMimeType});
 }
 
 /// @nodoc
@@ -93,7 +100,10 @@ abstract class _$UploadCopyWith<$Res> implements $UploadCopyWith<$Res> {
   factory _$UploadCopyWith(_Upload value, $Res Function(_Upload) then) =
       __$UploadCopyWithImpl<$Res>;
   @override
-  $Res call({String fileId, String? thumbnailId, String? thumnailMimeType});
+  $Res call(
+      {@JsonKey(name: 'original') String fileId,
+      @JsonKey(name: 'thumbnail') String? thumbnailId,
+      String? thumnailMimeType});
 }
 
 /// @nodoc
@@ -131,14 +141,19 @@ class __$UploadCopyWithImpl<$Res> extends _$UploadCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Upload implements _Upload {
-  _$_Upload({required this.fileId, this.thumbnailId, this.thumnailMimeType});
+  _$_Upload(
+      {@JsonKey(name: 'original') required this.fileId,
+      @JsonKey(name: 'thumbnail') this.thumbnailId,
+      this.thumnailMimeType});
 
   factory _$_Upload.fromJson(Map<String, dynamic> json) =>
       _$$_UploadFromJson(json);
 
   @override
+  @JsonKey(name: 'original')
   final String fileId;
   @override
+  @JsonKey(name: 'thumbnail')
   final String? thumbnailId;
   @override
   final String? thumnailMimeType;
@@ -180,15 +195,17 @@ class _$_Upload implements _Upload {
 
 abstract class _Upload implements Upload {
   factory _Upload(
-      {required String fileId,
-      String? thumbnailId,
+      {@JsonKey(name: 'original') required String fileId,
+      @JsonKey(name: 'thumbnail') String? thumbnailId,
       String? thumnailMimeType}) = _$_Upload;
 
   factory _Upload.fromJson(Map<String, dynamic> json) = _$_Upload.fromJson;
 
   @override
+  @JsonKey(name: 'original')
   String get fileId;
   @override
+  @JsonKey(name: 'thumbnail')
   String? get thumbnailId;
   @override
   String? get thumnailMimeType;
