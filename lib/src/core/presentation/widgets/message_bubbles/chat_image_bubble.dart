@@ -99,6 +99,8 @@ class _RedirectedCachedNetworkImageState
 
   @override
   Widget build(BuildContext context) {
+    print('REDIRECTED URL:');
+    print(_redirectedUrl);
     if (_redirectedUrl != null) {
       return CachedNetworkImage(
         imageUrl: _redirectedUrl!,
