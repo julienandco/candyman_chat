@@ -26,12 +26,14 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
   @override
   Future<void> uploadFileToMessage({
     required ConversationUploadFile file,
-    required ConversationMessageType typeOfFile,
+    ConversationMessageType? typeOfFile,
+    Function(int, int)? onUploadProgress,
   }) async {
     try {
       final response = await remoteDataSource.uploadEndpoint(
         fileToUpload: file,
         typeToUpload: typeOfFile,
+        onUploadProgress: onUploadProgress,
       );
 
       if (response.isRight()) {

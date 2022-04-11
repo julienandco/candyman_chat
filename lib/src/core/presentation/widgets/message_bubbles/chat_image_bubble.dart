@@ -95,6 +95,7 @@ class _RedirectedCachedNetworkImageState
     //     ? widget.url.replaceAll('?', '/redirect?')
     //     : '${widget.url}/redirect';
     // jwt = context.read<AuthenticationBloc>().jwt;
+    _redirectedUrl = widget.url;
     super.initState();
   }
 
