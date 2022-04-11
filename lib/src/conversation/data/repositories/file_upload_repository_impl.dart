@@ -53,7 +53,10 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
 
   @override
   Future<String?> getUploadUrl(String id) async {
-    final baseUploadsUrl = remoteDataSource.remoteUploadsURL;
-    return '$baseUploadsUrl/$id';
+    final result = await remoteDataSource.getEndpoint(id);
+    return result.fold((l) {
+      log('ERROR: ${l.errorMessage}', name: '$runtimeType');
+      return null;
+    }, (r) => r);
   }
 }
