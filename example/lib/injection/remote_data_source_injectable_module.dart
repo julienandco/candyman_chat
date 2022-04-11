@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:neon_chat/neon_chat.dart';
 
@@ -30,8 +29,8 @@ class _MyDataSource implements NeonChatRemoteDataSource {
   @override
   Future<Either<Failure, String>> uploadEndpoint(
       {required ConversationUploadFile fileToUpload,
-      required String conversationId,
-      required String messageId}) {
+      ConversationMessageType? typeToUpload,
+      void Function(int p1, int p2)? onUploadProgress}) {
     // TODO: implement uploadEndpoint
     throw UnimplementedError();
   }
