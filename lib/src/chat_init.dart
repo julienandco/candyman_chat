@@ -9,13 +9,14 @@ import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.da
 GetIt chatGetIt = GetIt.instance;
 
 class FunctionInitData {
-  final bool Function() isAuthenticated;
   final String Function(ConversationMessageType)
       getConversationMessageTypeDisplayString;
 
+  final ConversationCreationData Function()? getConversationCreationData;
+
   FunctionInitData({
-    required this.isAuthenticated,
     required this.getConversationMessageTypeDisplayString,
+    this.getConversationCreationData,
   });
 }
 
@@ -25,12 +26,7 @@ initNEONChat({
   required FirebaseKeys firebaseKeys,
   required Map<String, String> httpHeaders,
   required NeonChatRemoteDataSource remoteDataSource,
-  required FunctionInitData functionInitData,
-  required ConversationStyle conversationStyle,
-  required ConversationsStyle conversationsStyle,
-  required MessageBubbleStyle messageBubbleStyle,
-  required SearchAppBarStyle searchAppBarStyle,
-  required BottomBarStyle bottomBarStyle,
+  required bool Function() isAuthenticated,
   required PushNotificationToastStyle pushNotificationToastStyle,
 }) {
   try {
@@ -51,17 +47,7 @@ initNEONChat({
     chatGetIt.registerLazySingleton<Map<String, String>>(() => httpHeaders,
         instanceName: 'httpHeaders');
 
-    // Functions
-    chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInitData);
-
-    //Styles
-    chatGetIt.registerLazySingleton<ConversationStyle>(() => conversationStyle);
-    chatGetIt
-        .registerLazySingleton<ConversationsStyle>(() => conversationsStyle);
-    chatGetIt
-        .registerLazySingleton<MessageBubbleStyle>(() => messageBubbleStyle);
-    chatGetIt.registerLazySingleton<SearchAppBarStyle>(() => searchAppBarStyle);
-    chatGetIt.registerLazySingleton<BottomBarStyle>(() => bottomBarStyle);
+    //Push Notification Style
     chatGetIt.registerLazySingleton<PushNotificationToastStyle>(
         () => pushNotificationToastStyle);
 
@@ -133,7 +119,7 @@ initNEONChat({
             chatGetIt<FirebaseUserProfileRepository>()));
     chatGetIt.registerLazySingleton<PushNotificationService>(() =>
         PushNotificationService(
-            isAuthenticated: functionInitData.isAuthenticated,
+            isAuthenticated: isAuthenticated,
             remoteUploadsURL: remoteDataSource.remoteUploadsURL,
             toastStyle: pushNotificationToastStyle));
 
@@ -169,4 +155,35 @@ initNEONChat({
         error: e);
   }
 }
-// }
+
+initStyles({
+  required ConversationStyle conversationStyle,
+  required ConversationsStyle conversationsStyle,
+  required MessageBubbleStyle messageBubbleStyle,
+  required SearchAppBarStyle searchAppBarStyle,
+  required BottomBarStyle bottomBarStyle,
+}) {
+  if (!chatGetIt.isRegistered<ConversationStyle>()) {
+    chatGetIt.registerLazySingleton<ConversationStyle>(() => conversationStyle);
+  }
+  if (!chatGetIt.isRegistered<ConversationsStyle>()) {
+    chatGetIt
+        .registerLazySingleton<ConversationsStyle>(() => conversationsStyle);
+  }
+  if (!chatGetIt.isRegistered<MessageBubbleStyle>()) {
+    chatGetIt
+        .registerLazySingleton<MessageBubbleStyle>(() => messageBubbleStyle);
+  }
+  if (!chatGetIt.isRegistered<SearchAppBarStyle>()) {
+    chatGetIt.registerLazySingleton<SearchAppBarStyle>(() => searchAppBarStyle);
+  }
+  if (!chatGetIt.isRegistered<BottomBarStyle>()) {
+    chatGetIt.registerLazySingleton<BottomBarStyle>(() => bottomBarStyle);
+  }
+}
+
+initFunctions(FunctionInitData functionInit) {
+  if (!chatGetIt.isRegistered<FunctionInitData>()) {
+    chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInit);
+  }
+}

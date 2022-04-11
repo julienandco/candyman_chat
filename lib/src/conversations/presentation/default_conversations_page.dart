@@ -11,14 +11,11 @@ class DefaultConversationsPage extends StatefulWidget {
 
   final Widget Function(String?)? getUserAvatar;
 
-  final ConversationCreationData Function()? getConversationCreationData;
-
   const DefaultConversationsPage({
     Key? key,
     this.onOpenUserProfile,
     this.onShowGroupInfo,
     this.getUserAvatar,
-    this.getConversationCreationData,
   }) : super(key: key);
 
   @override
@@ -62,8 +59,9 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
             ? FloatingActionButton(
                 onPressed: style.fabAction ??
                     () async {
-                      final convoCreationData =
-                          widget.getConversationCreationData?.call();
+                      final convoCreationData = chatGetIt<FunctionInitData>()
+                          .getConversationCreationData
+                          ?.call();
 
                       if (convoCreationData != null) {
                         if (convoCreationData

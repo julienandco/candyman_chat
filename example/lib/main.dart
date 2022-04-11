@@ -33,13 +33,11 @@ void main() async {
   );
 
   NeonChat.initNeonChat(
-      firebaseAuth: getIt<FirebaseAuth>(),
-      firebaseFirestore: getIt<FirebaseFirestore>(),
-      remoteDataSource: getIt<NeonChatRemoteDataSource>(),
-      firebaseKeys: const FirebaseKeys(usePrefix: true),
-      conversationsStyle: const ConversationsStyle(
-          showAppBarAboveConversations: true,
-          noConversationsWidget: Text('oh man alter')));
+    firebaseAuth: getIt<FirebaseAuth>(),
+    firebaseFirestore: getIt<FirebaseFirestore>(),
+    remoteDataSource: getIt<NeonChatRemoteDataSource>(),
+    firebaseKeys: const FirebaseKeys(usePrefix: true),
+  );
 
   print(creds.user?.uid);
   // await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -107,7 +105,12 @@ class _MyApp extends StatelessWidget {
               onPressed: () => Navigator.of(context).push(
                 CupertinoPageRoute(
                   builder: (context) => const Scaffold(
-                    body: NeonChat(),
+                    body: NeonChat(
+                      conversationsStyle: ConversationsStyle(
+                        showAppBarAboveConversations: true,
+                        noConversationsWidget: Text('oh man alter'),
+                      ),
+                    ),
                   ),
                 ),
               ),

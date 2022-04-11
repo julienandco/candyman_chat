@@ -12,14 +12,11 @@ class DefaultConversationsLoader extends StatelessWidget {
 
   final Widget Function(String?)? getUserAvatar;
 
-  final ConversationCreationData Function()? getConversationCreationData;
-
   const DefaultConversationsLoader({
     Key? key,
     this.onOpenUserProfile,
     this.onAppbarTap,
     this.getUserAvatar,
-    this.getConversationCreationData,
   }) : super(key: key);
 
   @override
@@ -69,7 +66,6 @@ class DefaultConversationsLoader extends StatelessWidget {
                     onOpenUserProfile: onOpenUserProfile,
                     onShowGroupInfo: onAppbarTap,
                     getUserAvatar: getUserAvatar,
-                    getConversationCreationData: getConversationCreationData,
                   ),
                 ),
                 if (isWidthOverLimit(context))

@@ -12,7 +12,11 @@ import 'package:neon_chat/src/core/core.dart';
 /// Instance of the NEON-Chat, that works out-of-the-box. Where I come from, we
 /// call such things MDMAzing.
 ///
-class NeonChat extends StatelessWidget {
+class NeonChat extends StatefulWidget {
+  ///
+  /// Needs to be called before the first appearance of the NEON Chat Widget
+  /// inside of the widget tree.
+  ///
   static initNeonChat({
     ///
     /// The FirebaseAuth Instance of your app.
@@ -49,37 +53,18 @@ class NeonChat extends StatelessWidget {
     Map<String, String>? httpHeaders,
 
     ///
-    /// Returns the display string to be shown next to the emoji of a given
-    /// message type (for ex. an audio message preview would show up in the conversations
-    /// screen as: 🎤 + return value of this method).
+    /// The styling of the toasts that get triggered by every push notification.
     ///
-    String Function(ConversationMessageType)?
-        getConversationMessageTypeDisplayString,
-    ConversationStyle conversationStyle = const ConversationStyle(),
-    ConversationsStyle conversationsStyle = const ConversationsStyle(),
-    MessageBubbleStyle messageBubbleStyle = const MessageBubbleStyle(),
-    SearchAppBarStyle searchAppBarStyle = const SearchAppBarStyle(),
-    BottomBarStyle bottomBarStyle = const BottomBarStyle(),
     PushNotificationToastStyle pushNotificationToastStyle =
         const PushNotificationToastStyle(),
   }) {
-    final functionInit = FunctionInitData(
-        isAuthenticated: isAuthenticated ?? () => true,
-        getConversationMessageTypeDisplayString:
-            getConversationMessageTypeDisplayString ??
-                (type) => type.firebaseKey);
     initNEONChat(
       firebaseAuth: firebaseAuth,
       firebaseFirestore: firebaseFirestore,
       firebaseKeys: firebaseKeys,
       httpHeaders: httpHeaders ?? {},
       remoteDataSource: remoteDataSource,
-      functionInitData: functionInit,
-      bottomBarStyle: bottomBarStyle,
-      conversationsStyle: conversationsStyle,
-      conversationStyle: conversationStyle,
-      messageBubbleStyle: messageBubbleStyle,
-      searchAppBarStyle: searchAppBarStyle,
+      isAuthenticated: isAuthenticated ?? () => true,
       pushNotificationToastStyle: pushNotificationToastStyle,
     );
   }
@@ -131,6 +116,20 @@ class NeonChat extends StatelessWidget {
   ///
   final Widget Function(String?)? getUserAvatar;
 
+  ///
+  /// Returns the display string to be shown next to the emoji of a given
+  /// message type (for ex. an audio message preview would show up in the conversations
+  /// screen as: 🎤 + return value of this method).
+  ///
+  final String Function(ConversationMessageType)?
+      getConversationMessageTypeDisplayString;
+
+  final ConversationStyle conversationStyle;
+  final ConversationsStyle conversationsStyle;
+  final MessageBubbleStyle messageBubbleStyle;
+  final SearchAppBarStyle searchAppBarStyle;
+  final BottomBarStyle bottomBarStyle;
+
   const NeonChat({
     Key? key,
     this.onGroupConversationAppBarTap,
@@ -139,7 +138,40 @@ class NeonChat extends StatelessWidget {
     this.getConversationCreationData,
     this.onOpenUserProfile,
     this.getUserAvatar,
+    this.conversationStyle = const ConversationStyle(),
+    this.conversationsStyle = const ConversationsStyle(),
+    this.messageBubbleStyle = const MessageBubbleStyle(),
+    this.searchAppBarStyle = const SearchAppBarStyle(),
+    this.bottomBarStyle = const BottomBarStyle(),
+    this.getConversationMessageTypeDisplayString,
   }) : super(key: key);
+
+  @override
+  State<NeonChat> createState() => _NeonChatState();
+}
+
+class _NeonChatState extends State<NeonChat> {
+  @override
+  void initState() {
+    super.initState();
+
+    initStyles(
+      conversationStyle: widget.conversationStyle,
+      conversationsStyle: widget.conversationsStyle,
+      messageBubbleStyle: widget.messageBubbleStyle,
+      searchAppBarStyle: widget.searchAppBarStyle,
+      bottomBarStyle: widget.bottomBarStyle,
+    );
+
+    initFunctions(
+      FunctionInitData(
+        getConversationMessageTypeDisplayString:
+            widget.getConversationMessageTypeDisplayString ??
+                (type) => type.firebaseKey,
+        getConversationCreationData: widget.getConversationCreationData,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,8 +192,8 @@ class NeonChat extends StatelessWidget {
         ),
       ],
       child: DefaultConversationsLoader(
-        onAppbarTap: onGroupConversationAppBarTap ??
-            (disableGroupChatAbbBarTap
+        onAppbarTap: widget.onGroupConversationAppBarTap ??
+            (widget.disableGroupChatAbbBarTap
                 ? null
                 : (conversation) => defaultOnGroupConversationAppBarTap(
                       context,
@@ -171,11 +203,10 @@ class NeonChat extends StatelessWidget {
                             chatGetIt<ConversationsStyle>().appBarColor,
                       ),
                       conversation: conversation,
-                      onOpenUserProfile: onOpenUserProfile,
+                      onOpenUserProfile: widget.onOpenUserProfile,
                     )),
-        onOpenUserProfile: onDirectConversationAppBarTap,
-        getConversationCreationData: getConversationCreationData,
-        getUserAvatar: getUserAvatar,
+        onOpenUserProfile: widget.onDirectConversationAppBarTap,
+        getUserAvatar: widget.getUserAvatar,
       ),
     );
   }
