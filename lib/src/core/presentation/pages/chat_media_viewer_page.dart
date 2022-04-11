@@ -58,6 +58,8 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
               child: Image.network(s3Url),
             );
           }
+          print('S3URL');
+          print(s3Url);
           return PhotoView(
             imageProvider: CachedNetworkImageProvider(s3Url),
             minScale: PhotoViewComputedScale.contained,
