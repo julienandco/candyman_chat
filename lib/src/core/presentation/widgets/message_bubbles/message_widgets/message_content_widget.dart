@@ -197,6 +197,8 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
 }
 
 void _openMediaViewer(BuildContext context, ConversationMessage message) {
+  print('BLOC:');
+  print(context.read<ConversationBloc>());
   Navigator.push(
     context,
     MaterialPageRoute(
