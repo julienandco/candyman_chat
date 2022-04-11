@@ -204,8 +204,8 @@ void _openMediaViewer(BuildContext context, ConversationMessage message) {
         BlocProvider(
           create: (context) => chatGetIt<UploadUrlCubit>(),
         ),
-        BlocProvider(
-          create: (context) => chatGetIt<ConversationBloc>(),
+        BlocProvider.value(
+          value: context.read<ConversationBloc>(),
         ),
       ], child: ChatMediaViewerPage(currentMediaMessage: message)),
       // BlocProvider(
