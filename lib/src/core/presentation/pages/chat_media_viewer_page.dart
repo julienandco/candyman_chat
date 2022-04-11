@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ChatMediaViewerPage extends StatefulWidget {
@@ -44,7 +45,7 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
   }
 
   Widget _getImageWidget(String fileId) {
-    final url = context.read<NeonChatRemoteDataSource>().remoteUploadsURL;
+    final url = chatGetIt<NeonChatRemoteDataSource>().remoteUploadsURL;
     final imageUrl = '$url/$fileId';
 
     if (kIsWeb) {
