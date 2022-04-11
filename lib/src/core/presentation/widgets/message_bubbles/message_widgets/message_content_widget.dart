@@ -198,7 +198,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
 
 void _openMediaViewer(BuildContext context, ConversationMessage message) {
   print('BLOC:');
-  print(context.read<ConversationBloc>());
+  final conversationBloc = context.read<ConversationBloc>();
   Navigator.push(
     context,
     MaterialPageRoute(
@@ -207,7 +207,7 @@ void _openMediaViewer(BuildContext context, ConversationMessage message) {
           create: (context) => chatGetIt<UploadUrlCubit>(),
         ),
         BlocProvider.value(
-          value: context.read<ConversationBloc>(),
+          value: conversationBloc,
         ),
       ], child: ChatMediaViewerPage(currentMediaMessage: message)),
       // BlocProvider(
