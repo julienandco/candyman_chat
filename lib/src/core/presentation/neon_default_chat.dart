@@ -70,6 +70,14 @@ class NeonChat extends StatefulWidget {
   }
 
   ///
+  /// Flag whether the conversationsBloc should be provided inside of the
+  /// chat package. Be aware that if set to true, functionality such as the
+  /// push notification service will only work inside the chat screen!
+  /// Defaults to false.
+  ///
+  final bool provideConversationsBloc;
+
+  ///
   /// Gets called when a user wants to start a new 1-on-1 or group conversation.
   /// Possible implementation could be: a dialog shows up and lets the user
   /// selected all the wanted conversation partners and returns them as a
@@ -134,6 +142,7 @@ class NeonChat extends StatefulWidget {
     Key? key,
     this.onGroupConversationAppBarTap,
     this.disableGroupChatAbbBarTap = false,
+    this.provideConversationsBloc = false,
     this.onDirectConversationAppBarTap,
     this.getConversationCreationData,
     this.onOpenUserProfile,
@@ -187,9 +196,10 @@ class _NeonChatState extends State<NeonChat> {
         BlocProvider(
           create: (context) => chatGetIt<CurrentConversationCubit>(),
         ),
-        BlocProvider(
-          create: (context) => chatGetIt<ConversationsBloc>(),
-        ),
+        if (widget.provideConversationsBloc)
+          BlocProvider(
+            create: (context) => chatGetIt<ConversationsBloc>(),
+          ),
       ],
       child: DefaultConversationsLoader(
         onAppbarTap: widget.onGroupConversationAppBarTap ??
