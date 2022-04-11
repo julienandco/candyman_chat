@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,19 +14,6 @@ class ChatMediaViewerPage extends StatefulWidget {
   }) : super(key: key);
   final ConversationMessage currentMediaMessage;
 
-  // static CupertinoPageRoute route(
-  //   BuildContext context, {
-  //   required ChatMessageModel currentMediaMessage,
-  // }) =>
-  //     CupertinoPageRoute(
-  //       fullscreenDialog: true,
-  //       builder: (_) => BlocProvider.value(
-  //         value: context.read<ChatBloc>(),
-  //         child: ChatMediaViewerPage(
-  //           currentMediaMessage: currentMediaMessage,
-  //         ),
-  //       ),
-  //     );
   @override
   _ChatMediaViewerPageState createState() => _ChatMediaViewerPageState();
 }
@@ -50,7 +36,7 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
 
     if (kIsWeb) {
       return Container(
-        color: Colors.red, //TODO
+        color: chatGetIt<ConversationStyle>().backgroundColor,
         alignment: Alignment.center,
         child: Image.network(imageUrl),
       );
@@ -60,35 +46,6 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
       imageProvider: CachedNetworkImageProvider(imageUrl),
       minScale: PhotoViewComputedScale.contained,
     );
-    // return FutureBuilder(
-    //   future: context.read<UploadUrlCubit>().getUploadURL(fileId),
-    //   // getIt<GetUploadRedirectUrlForUrlUC>().call('$kRemoteUploadsUrl/$url'),
-    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //     if (snapshot.hasData) {
-    //       String s3Url = snapshot.data;
-    //       print('S3URL before');
-    //       print(s3Url);
-    //       s3Url = s3Url.replaceAll('https://', 'http://');
-    //       if (kIsWeb) {
-    //         return Container(
-    //           color: Colors.red, //TODO
-    //           alignment: Alignment.center,
-    //           child: Image.network(s3Url),
-    //         );
-    //       }
-    //       print('S3URL AFTER');
-    //       print(s3Url);
-    //       return PhotoView(
-    //         imageProvider: CachedNetworkImageProvider(s3Url),
-    //         minScale: PhotoViewComputedScale.contained,
-    //       );
-    //     } else {
-    //       return Container(
-    //         color: Colors.black, //TODO
-    //       );
-    //     }
-    //   },
-    // );
   }
 
   Widget _itemBody(int index) {
@@ -98,9 +55,11 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
 
       case ConversationMessageType.video:
         if (kIsWeb) {
-          // return ChatVideoPageWeb(
-          //   message: messages[index],
-          // );
+          return ChatVideoPageWeb(
+            message: messages[index],
+            getUploadURL: (id) =>
+                '${chatGetIt<NeonChatRemoteDataSource>().remoteUploadsURL}/$id',
+          );
         }
         return ChatVideoPage(
           message: messages[index],
@@ -114,39 +73,36 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue, //TODO
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: true,
-      //   backgroundColor: kColorPrimary,
-      //   systemOverlayStyle: SystemUiOverlayStyle.light,
-      //   centerTitle: true,
-      //   title: Column(
-      //     children: [
-      //       Text(
-      //         context.read<ChatBloc>().state.maybeMap(
-      //               loadSuccess: (state) => messages[_currentIndex].isMe
-      //                   ? 'You'.tr()
-      //                   : state.userProfile.name,
-      //               orElse: () => '',
-      //             ),
-      //         style: TextStyle(
-      //           fontFamily: kFontFamilySFPro,
-      //           color: kColorWhite,
-      //           fontSize: 17,
-      //         ),
-      //       ),
-      //       Text(
-      //         DateFormat('dd.MM.yy, HH:mm')
-      //             .format(messages[_currentIndex].timestamp ?? DateTime.now()),
-      //         style: TextStyle(
-      //           fontFamily: kFontFamilySFPro,
-      //           color: kColorWhite,
-      //           fontSize: 11,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        centerTitle: true,
+        title: Column(
+          children: [
+            Text(
+              context.read<ConversationBloc>().state.maybeMap(
+                    loadSuccess: (state) => messages[_currentIndex].isMe
+                        ? chatGetIt<ConversationStyle>().youString
+                        : state.conversation.conversationMembers
+                            .firstWhere(
+                              (member) =>
+                                  member.id == messages[_currentIndex].senderId,
+                              orElse: () => FirebaseUser(id: '', name: ''),
+                            )
+                            .name,
+                    orElse: () => '',
+                  ),
+              style: chatGetIt<MessageBubbleStyle>().ownMessageTextStyle,
+            ),
+            Text(
+              messages[_currentIndex].timestampFormatted,
+              style: chatGetIt<MessageBubbleStyle>().ownMessageTimestampStyle,
+            ),
+          ],
+        ),
+      ),
       body: PageView.builder(
         onPageChanged: (value) => setState(() => _currentIndex = value),
         controller: _pageController,

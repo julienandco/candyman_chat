@@ -34,12 +34,6 @@ class ChatImageBubble extends StatelessWidget {
                       '${chatGetIt<NeonChatRemoteDataSource>().remoteUploadsURL}/${message.upload!.fileId}',
                   placeholder: Container(),
                 ),
-          //TODO
-          // RedirectedCachedNetworkImage(
-
-          //     url: '$kRemoteUploadsUrl/${message.upload!.fileId}',
-          //     placeholder: Container(),
-          //   ),
         ),
       ),
     );

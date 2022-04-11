@@ -100,6 +100,7 @@ class ConversationStyle {
   final List<Color> ignorePointersColors;
   final EdgeInsetsGeometry messageListPadding;
   final EdgeInsetsGeometry searchPadding;
+  final String youString;
 
   const ConversationStyle({
     this.backgroundColor = Colors.white,
@@ -107,6 +108,7 @@ class ConversationStyle {
     this.messageListPadding =
         const EdgeInsets.only(top: 20, bottom: 100, left: 20, right: 20),
     this.searchPadding = const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+    this.youString = 'You',
   });
 }
 
