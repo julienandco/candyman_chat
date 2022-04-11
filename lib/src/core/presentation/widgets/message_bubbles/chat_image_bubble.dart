@@ -38,6 +38,7 @@ class ChatImageBubble extends StatelessWidget {
                 ),
           //TODO
           // RedirectedCachedNetworkImage(
+
           //     url: '$kRemoteUploadsUrl/${message.upload!.fileId}',
           //     placeholder: Container(),
           //   ),
@@ -46,6 +47,8 @@ class ChatImageBubble extends StatelessWidget {
     );
   }
 }
+
+//TODO
 
 class RedirectedCachedNetworkImage extends StatefulWidget {
   final String url;
@@ -88,9 +91,9 @@ class _RedirectedCachedNetworkImageState
 
   @override
   void initState() {
-    _redirectedUrl = widget.url.contains('?')
-        ? widget.url.replaceAll('?', '/redirect?')
-        : '${widget.url}/redirect';
+    // _redirectedUrl = widget.url.contains('?')
+    //     ? widget.url.replaceAll('?', '/redirect?')
+    //     : '${widget.url}/redirect';
     // jwt = context.read<AuthenticationBloc>().jwt;
     super.initState();
   }
