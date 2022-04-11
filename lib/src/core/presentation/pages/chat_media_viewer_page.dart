@@ -50,6 +50,8 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           String s3Url = snapshot.data;
+          print('S3URL before');
+          print(s3Url);
           s3Url = s3Url.replaceAll('https://', 'http://');
           if (kIsWeb) {
             return Container(
@@ -58,7 +60,7 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
               child: Image.network(s3Url),
             );
           }
-          print('S3URL');
+          print('S3URL AFTER');
           print(s3Url);
           return PhotoView(
             imageProvider: CachedNetworkImageProvider(s3Url),
