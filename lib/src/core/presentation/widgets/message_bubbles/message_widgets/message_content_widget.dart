@@ -200,11 +200,13 @@ void _openMediaViewer(BuildContext context, ConversationMessage message) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => ChatMediaViewerPage(currentMediaMessage: message)
-        // BlocProvider(
-        //   create: (context) => chatGetIt<UploadUrlCubit>(),
-        //   child: ChatVideoPage(message: message),
-        // ),
-        ),
+      builder: (context) => BlocProvider(
+          create: (context) => chatGetIt<UploadUrlCubit>(),
+          child: ChatMediaViewerPage(currentMediaMessage: message)),
+      // BlocProvider(
+      //   create: (context) => chatGetIt<UploadUrlCubit>(),
+      //   child: ChatVideoPage(message: message),
+      // ),
+    ),
   );
 }
