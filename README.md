@@ -72,9 +72,9 @@ Ab jetzt wird differenziert!
 Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1. 
 
 
-Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und kannst zahlreiche Styles selbst customizen und das alles der ```NeonChat.initNeonChat()```-Methode übergeben. Diese soll nur einmal! pro App-Life-Cycle aufgerufen werden (wie ```Firebase.initializeApp```, pack sie also am besten in die main von deinem Projekt). Weiter unten im Widget Tree kannst du dann den ```NeonChat``` instanzieeren und eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben!
+Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und alles der ```NeonChat.initNeonChat()```-Methode übergeben. Diese soll nur einmal! pro App-Life-Cycle aufgerufen werden (wie ```Firebase.initializeApp```, pack sie also am besten in die main von deinem Projekt). Weiter unten im Widget Tree kannst du dann den ```NeonChat``` instanziieren und eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben und zahlreiche Styles selbst customizen!
 
-FUNFACT: Solltest du in deinem Projekt [GetIt][get_it_link] verwenden, kannst du jetzt mithilfe von [mason][mason_link] das ```NEON-Chat-Injection-Brick``` generieren, um sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` zu verwalten. Was? Du weißt nicht, wie das geht? 
+FUNFACT: Solltest du in deinem Projekt [GetIt][get_it_link] verwenden, kannst du jetzt mithilfe von [mason][mason_link] das ```Firebase-Injections-Brick``` generieren, um sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` zu verwalten. Was? Du weißt nicht, wie das geht? 
 Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den [NEON-Bricks][neon_bricks_link] durch. Die [Doku von Mason][mason_link] und [dieses Tutorial][mason_tutorial_link] sind auch sehr hilfreich.
 
 TL;DR:
