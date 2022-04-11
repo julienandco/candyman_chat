@@ -44,35 +44,50 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
   }
 
   Widget _getImageWidget(String fileId) {
-    return FutureBuilder(
-      future: context.read<UploadUrlCubit>().getUploadURL(fileId),
-      // getIt<GetUploadRedirectUrlForUrlUC>().call('$kRemoteUploadsUrl/$url'),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          String s3Url = snapshot.data;
-          print('S3URL before');
-          print(s3Url);
-          s3Url = s3Url.replaceAll('https://', 'http://');
-          if (kIsWeb) {
-            return Container(
-              color: Colors.red, //TODO
-              alignment: Alignment.center,
-              child: Image.network(s3Url),
-            );
-          }
-          print('S3URL AFTER');
-          print(s3Url);
-          return PhotoView(
-            imageProvider: CachedNetworkImageProvider(s3Url),
-            minScale: PhotoViewComputedScale.contained,
-          );
-        } else {
-          return Container(
-            color: Colors.black, //TODO
-          );
-        }
-      },
+    final url = context.read<NeonChatRemoteDataSource>().remoteUploadsURL;
+    final imageUrl = '$url/$fileId';
+
+    if (kIsWeb) {
+      return Container(
+        color: Colors.red, //TODO
+        alignment: Alignment.center,
+        child: Image.network(imageUrl),
+      );
+    }
+
+    return PhotoView(
+      imageProvider: CachedNetworkImageProvider(imageUrl),
+      minScale: PhotoViewComputedScale.contained,
     );
+    // return FutureBuilder(
+    //   future: context.read<UploadUrlCubit>().getUploadURL(fileId),
+    //   // getIt<GetUploadRedirectUrlForUrlUC>().call('$kRemoteUploadsUrl/$url'),
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //     if (snapshot.hasData) {
+    //       String s3Url = snapshot.data;
+    //       print('S3URL before');
+    //       print(s3Url);
+    //       s3Url = s3Url.replaceAll('https://', 'http://');
+    //       if (kIsWeb) {
+    //         return Container(
+    //           color: Colors.red, //TODO
+    //           alignment: Alignment.center,
+    //           child: Image.network(s3Url),
+    //         );
+    //       }
+    //       print('S3URL AFTER');
+    //       print(s3Url);
+    //       return PhotoView(
+    //         imageProvider: CachedNetworkImageProvider(s3Url),
+    //         minScale: PhotoViewComputedScale.contained,
+    //       );
+    //     } else {
+    //       return Container(
+    //         color: Colors.black, //TODO
+    //       );
+    //     }
+    //   },
+    // );
   }
 
   Widget _itemBody(int index) {
