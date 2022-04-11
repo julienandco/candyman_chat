@@ -146,7 +146,8 @@ class _MessageBubbleState extends State<MessageBubble> {
           onVisibilityChanged: (value) {
             if (!widget.isGroupChat &&
                 value.visibleFraction > 0.5 &&
-                !widget.message.seen) {
+                !widget.message.seen &&
+                !widget.message.isMe) {
               context
                   .read<ConversationBloc>()
                   .add(ConversationEvent.markAsSeen(widget.message));
