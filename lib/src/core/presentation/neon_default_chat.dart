@@ -161,7 +161,7 @@ class NeonChat extends StatefulWidget {
 
 class _NeonChatState extends State<NeonChat> {
   @override
-  void initState() async {
+  void initState() {
     super.initState();
 
     initStyles(
@@ -172,7 +172,7 @@ class _NeonChatState extends State<NeonChat> {
       bottomBarStyle: widget.bottomBarStyle,
     );
 
-    await initFunctions(
+    initFunctions(
       FunctionInitData(
         getConversationMessageTypeDisplayString:
             widget.getConversationMessageTypeDisplayString ??

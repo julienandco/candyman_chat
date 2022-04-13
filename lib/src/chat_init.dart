@@ -196,7 +196,8 @@ initStyles({
   }
 }
 
-initFunctions(FunctionInitData functionInit) async {
-  await chatGetIt.unregister<FunctionInitData>();
-  chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInit);
+initFunctions(FunctionInitData functionInit) {
+  if (!chatGetIt.isRegistered<FunctionInitData>()) {
+    chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInit);
+  }
 }
