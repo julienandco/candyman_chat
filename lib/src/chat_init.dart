@@ -94,9 +94,11 @@ initNEONChat({
         uploadManagerRepository: chatGetIt<UploadManagerRepository>()));
     chatGetIt.registerLazySingleton<SendTextMessageUC>(
         () => SendTextMessageUC(chatGetIt<ConversationRepository>()));
-    chatGetIt.registerLazySingleton<InitializeConversationStreamUC>(() =>
-        InitializeConversationStreamUC(
-            conversationRepository: chatGetIt<ConversationRepository>()));
+    chatGetIt.registerLazySingleton<InitializeConversationStreamUC>(
+        () => InitializeConversationStreamUC(
+              conversationRepository: chatGetIt<ConversationRepository>(),
+              conversationsRepository: chatGetIt<ConversationsRepository>(),
+            ));
     chatGetIt.registerLazySingleton<InitializeConversationItemStreamUC>(() =>
         InitializeConversationItemStreamUC(
             conversationRepository: chatGetIt<ConversationRepository>(),

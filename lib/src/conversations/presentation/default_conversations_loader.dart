@@ -76,11 +76,8 @@ class DefaultConversationsLoader extends StatelessWidget {
                         return Flexible(
                           child: DefaultConversationLoader(
                             key: Key(state.conversationItem!.conversation.id),
-                            groupConversationLastSeenTimestamp: context
-                                .read<GroupConversationTimestampsBloc>()
-                                .getLastSeenTimestampForConversationItem(
-                                    state.conversationItem!),
-                            conversationItem: state.conversationItem!,
+                            conversationId:
+                                state.conversationItem!.conversation.id,
                             showCloseButton: false,
                             onAppbarTap: onAppbarTap,
                           ),

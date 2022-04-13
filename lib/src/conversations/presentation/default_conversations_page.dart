@@ -28,13 +28,9 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
   final _scrollController = ScrollController();
 
   void _openConversation(ConversationItem conversationItem) {
-    final timestamp = context
-        .read<GroupConversationTimestampsBloc>()
-        .getLastSeenTimestampForConversationItem(conversationItem);
     openConversation(
       context,
-      conversationItem: conversationItem,
-      groupConversationLastSeenTimestamp: timestamp,
+      conversationId: conversationItem.conversation.id,
       onAppbarTap: widget.onShowGroupInfo,
     );
   }
@@ -121,11 +117,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                             .conversation.thumbnail),
                                 onOpenConversation: () => openConversation(
                                   context,
-                                  groupConversationLastSeenTimestamp: context
-                                      .read<GroupConversationTimestampsBloc>()
-                                      .getLastSeenTimestampForConversationItem(
-                                          conversationItem),
-                                  conversationItem: conversationItem,
+                                  conversationId:
+                                      conversationItem.conversation.id,
                                   onAppbarTap: conversationItem
                                           .conversation.isGroupConversation
                                       ? widget.onShowGroupInfo

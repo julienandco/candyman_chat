@@ -139,18 +139,10 @@ class PushNotificationService {
                   name: '$runtimeType');
 
               if (convoItemList.length == 1) {
-                final timestampState =
-                    chatGetIt<GroupConversationTimestampsBloc>().state;
-                final groupChatLastSeenTimestamp = timestampState.maybeMap(
-                    loaded: (loadedTimestampState) =>
-                        loadedTimestampState.timestampMap[conversationId] ??
-                        DateTime.now(),
-                    orElse: () => DateTime.now());
-
-                openConversation(_cachedContext!,
-                    conversationItem: convoItemList.first,
-                    groupConversationLastSeenTimestamp:
-                        groupChatLastSeenTimestamp);
+                openConversation(
+                  _cachedContext!,
+                  conversationId: convoItemList.first.conversation.id,
+                );
               } else {
                 print('sory');
               }

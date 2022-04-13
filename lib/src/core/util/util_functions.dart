@@ -36,10 +36,10 @@ String formatLastActiveDateTime(DateTime? date) {
   }
 }
 
+//TODO: get the functions and the bool in some pre-registered data-structure as well
 void openConversation(
   BuildContext context, {
-  required ConversationItem conversationItem,
-  required DateTime groupConversationLastSeenTimestamp,
+  required String conversationId,
   Function(Conversation)? onAppbarTap,
   bool showCloseButton = true,
 }) {
@@ -47,8 +47,7 @@ void openConversation(
     context,
     CupertinoPageRoute(
       builder: (context) => DefaultConversationLoader(
-        groupConversationLastSeenTimestamp: groupConversationLastSeenTimestamp,
-        conversationItem: conversationItem,
+        conversationId: conversationId,
         onAppbarTap: onAppbarTap,
         showCloseButton: showCloseButton,
       ),

@@ -15,7 +15,7 @@ part 'conversation_event.dart';
 part 'conversation_bloc.freezed.dart';
 
 class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
-  ConversationItem conversationItem;
+  final String convoId;
 
   final FirebaseAuth firebaseAuth;
   late final StreamSubscription _conversationStream;
@@ -29,7 +29,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   final InitializeConversationStreamUC initStreamUC;
 
   ConversationBloc({
-    required this.conversationItem,
+    required this.convoId,
     required this.firebaseAuth,
     required this.hideMessageUC,
     required this.deleteMessageUC,
@@ -40,26 +40,17 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     required this.initStreamUC,
   }) : super(const _Initial()) {
     _conversationStream = initStreamUC(
-      conversationId: conversationItem.conversation.id,
+      conversationId: convoId,
       combiner: (
         List<ConversationMessage> messages,
+        Conversation conversation,
+        String displayName,
       ) =>
-          _OnData(
-        messages,
-        conversationItem.conversation,
-        conversationItem.conversation
-            .getDisplayName(firebaseAuth.currentUser!.uid),
-      ),
+          _OnData(messages, conversation, displayName),
       onData: (onDataEvent) => add(onDataEvent),
     );
     on<ConversationEvent>((event, emit) {
       event.when(
-        // init: (conversationItem) {
-        //   if (firebaseAuth.currentUser != null) {
-        //     // _conversationId = conversationItem.conversation.id;
-
-        //   }
-        // },
         onData: (messages, conversation, displayName) => emit(
           ConversationState.loadSuccess(
             messages: messages,
@@ -176,14 +167,10 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
           );
         },
         deleteMessage: (message) {
-          deleteMessageUC(
-              conversationId: conversationItem.conversation.id,
-              message: message);
+          deleteMessageUC(conversationId: convoId, message: message);
         },
         hideMessage: (message) {
-          hideMessageUC(
-              conversationId: conversationItem.conversation.id,
-              message: message);
+          hideMessageUC(conversationId: convoId, message: message);
         },
       );
     });

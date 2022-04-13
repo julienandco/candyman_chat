@@ -106,6 +106,7 @@ class _MyApp extends StatelessWidget {
                 CupertinoPageRoute(
                   builder: (context) => const Scaffold(
                     body: NeonChat(
+                      provideConversationsBloc: true,
                       conversationsStyle: ConversationsStyle(
                         showAppBarAboveConversations: true,
                         noConversationsWidget: Text('oh man alter'),

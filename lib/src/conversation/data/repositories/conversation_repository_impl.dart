@@ -174,10 +174,29 @@ class ConversationRepositoryImpl implements ConversationRepository {
         handleData: (DocumentSnapshot<Map<String, dynamic>> doc,
             EventSink<String> sink) async {
           final data = doc.data();
-          if (data != null &&
-              data.containsKey(firebaseKeys.conversationGroupNameKey)) {
-            final displayName = data[firebaseKeys.conversationGroupNameKey];
-
+          if (data != null) {
+            String displayName = '';
+            if (data.containsKey(
+                    firebaseKeys.conversationIsGroupConversationKey) &&
+                data[firebaseKeys.conversationIsGroupConversationKey]) {
+              // is group conversation
+              if (data.containsKey(firebaseKeys.conversationGroupNameKey) &&
+                  data[firebaseKeys.conversationGroupNameKey] != null) {
+                displayName = data[firebaseKeys.conversationGroupNameKey];
+              }
+            } else {
+              // is 1-on-1 conversation
+              final _myId = firebaseAuth.currentUser!.uid;
+              final conversationMembers =
+                  data[firebaseKeys.conversationMembersKey]
+                      as Map<String, dynamic>;
+              final conversationMemberIds = conversationMembers.keys;
+              final otherUserId =
+                  conversationMemberIds.firstWhere((id) => id != _myId);
+              //displayname is conversation partner's username
+              displayName = conversationMembers[otherUserId]
+                  [firebaseKeys.usersUserNameKey];
+            }
             sink.add(displayName);
           } else {
             sink.add('PROBLEM'); //TODO

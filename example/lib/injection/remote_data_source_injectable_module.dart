@@ -24,7 +24,7 @@ class _MyDataSource implements NeonChatRemoteDataSource {
 
   @override
   // TODO: implement remoteUploadsURL
-  String get remoteUploadsURL => throw UnimplementedError();
+  String get remoteUploadsURL => 'test';
 
   @override
   Future<Either<Failure, String>> uploadEndpoint(

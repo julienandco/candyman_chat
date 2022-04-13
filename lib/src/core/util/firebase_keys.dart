@@ -18,6 +18,7 @@ class FirebaseKeys {
   final String conversationDoneUploadKey = 'doneUpload';
   final String conversationGroupNameKey = 'groupName';
   final String conversationGroupPictureKey = 'groupPicture';
+  final String conversationIsGroupConversationKey = 'isGroupConversation';
 
   final String messagesInConversationKey;
 

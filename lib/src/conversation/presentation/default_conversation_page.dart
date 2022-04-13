@@ -10,7 +10,6 @@ import 'widgets/conversation_appbar_widget.dart';
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
 
-  final DateTime groupConversationLastSeenTimestamp;
   final Function(DateTime) updateTimestampForConversation;
   final Function(Conversation)? onAppbarTap;
 
@@ -18,7 +17,6 @@ class DefaultConversationPage extends StatefulWidget {
     Key? key,
     required this.showCloseButton,
     required this.updateTimestampForConversation,
-    required this.groupConversationLastSeenTimestamp,
     this.onAppbarTap,
   }) : super(key: key);
 
@@ -28,12 +26,8 @@ class DefaultConversationPage extends StatefulWidget {
 }
 
 class _DefaultConversationPageState extends State<DefaultConversationPage> {
+  late DateTime _lastSeenGroupConversationTimestamp;
   bool _isInit = true;
-  // setup push notifications
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -44,10 +38,15 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final id =
-          context.read<ConversationBloc>().conversationItem.conversation.id;
+      final id = context.read<ConversationBloc>().convoId;
       chatGetIt<PushNotificationService>()
           .disableChatNotificationsForConversationId(id);
+
+      final timestampState = chatGetIt<GroupConversationTimestampsBloc>().state;
+      _lastSeenGroupConversationTimestamp = timestampState.maybeMap(
+          loaded: (loadedTimestampState) =>
+              loadedTimestampState.timestampMap[id] ?? DateTime.now(),
+          orElse: () => DateTime.now());
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -64,7 +63,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                     ConversationSearchEvent.initialize(
                         messages: state.messages,
                         lastSeenMessageTimestamp:
-                            widget.groupConversationLastSeenTimestamp),
+                            _lastSeenGroupConversationTimestamp),
                   );
             }
           },
@@ -103,7 +102,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                                         widget.updateTimestampForConversation(
                                             timestamp),
                                 conversationLastSeenTimestamp:
-                                    widget.groupConversationLastSeenTimestamp,
+                                    _lastSeenGroupConversationTimestamp,
                                 messageBubbleStyle:
                                     chatGetIt<MessageBubbleStyle>(),
                                 getAuthorNameForSenderId: (senderId) {
