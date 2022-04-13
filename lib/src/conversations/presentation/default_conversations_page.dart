@@ -6,17 +6,7 @@ import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
-  final Function(Conversation)? onOpenUserProfile;
-  final Function(Conversation)? onShowGroupInfo;
-
-  final Widget Function(String?)? getUserAvatar;
-
-  const DefaultConversationsPage({
-    Key? key,
-    this.onOpenUserProfile,
-    this.onShowGroupInfo,
-    this.getUserAvatar,
-  }) : super(key: key);
+  const DefaultConversationsPage({Key? key}) : super(key: key);
 
   @override
   State<DefaultConversationsPage> createState() =>
@@ -31,7 +21,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     openConversation(
       context,
       conversationId: conversationItem.conversation.id,
-      onAppbarTap: widget.onShowGroupInfo,
     );
   }
 
@@ -105,32 +94,33 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 : chatConversations)
                             .map(
                               (conversationItem) => ConversationListItem(
-                                myId: _myId,
-                                conversationListItemStyle:
-                                    style.chatListItemStyle,
-                                conversationItem: conversationItem,
-                                conversationThumbnail: widget.getUserAvatar
-                                        ?.call(conversationItem
-                                            .conversation.thumbnail) ??
-                                    AvatarWidget(
-                                        imgUrl: conversationItem
-                                            .conversation.thumbnail),
-                                onOpenConversation: () => openConversation(
-                                  context,
-                                  conversationId:
-                                      conversationItem.conversation.id,
-                                  onAppbarTap: conversationItem
+                                  myId: _myId,
+                                  conversationListItemStyle:
+                                      style.chatListItemStyle,
+                                  conversationItem: conversationItem,
+                                  conversationThumbnail:
+                                      //TODO: should this function rather handle a user id?
+                                      chatGetIt<FunctionInitData>()
+                                              .getUserAvatar
+                                              ?.call(conversationItem
+                                                  .conversation.thumbnail) ??
+                                          AvatarWidget(
+                                              imgUrl: conversationItem
+                                                  .conversation.thumbnail),
+                                  onOpenConversation: () => openConversation(
+                                        context,
+                                        conversationId:
+                                            conversationItem.conversation.id,
+                                      ),
+                                  onOpenConversationInfo: conversationItem
                                           .conversation.isGroupConversation
-                                      ? widget.onShowGroupInfo
-                                      : widget.onOpenUserProfile,
-                                ),
-                                onOpenConversationInfo: conversationItem
-                                        .conversation.isGroupConversation
-                                    ? () => widget.onShowGroupInfo
-                                        ?.call(conversationItem.conversation)
-                                    : () => widget.onOpenUserProfile
-                                        ?.call(conversationItem.conversation),
-                              ),
+                                      ? () => chatGetIt<FunctionInitData>()
+                                          .onGroupConversationAppBarTap
+                                          ?.call(conversationItem.conversation)
+                                      : () => chatGetIt<FunctionInitData>()
+                                          .onDirectConversationAppBarTap
+                                          ?.call(
+                                              conversationItem.conversation)),
                             )
                             .toList();
                       },

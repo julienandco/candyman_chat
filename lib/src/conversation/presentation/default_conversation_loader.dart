@@ -4,20 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationLoader extends StatelessWidget {
   final String conversationId;
   final bool showCloseButton;
 
-  final Function(Conversation)? onAppbarTap;
-
   const DefaultConversationLoader({
     Key? key,
     required this.conversationId,
     this.showCloseButton = true,
-    this.onAppbarTap,
   }) : super(key: key);
 
   @override
@@ -48,7 +44,6 @@ class DefaultConversationLoader extends StatelessWidget {
                       conversationId: conversationId, timestamp: timestamp),
                 ),
         showCloseButton: showCloseButton,
-        onAppbarTap: onAppbarTap,
       ),
     );
   }

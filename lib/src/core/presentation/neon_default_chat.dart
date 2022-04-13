@@ -116,7 +116,7 @@ class NeonChat extends StatefulWidget {
   /// Set to true, if no [onGroupConversationAppBarTap] is provided and the default
   /// functionality should also not be triggered.
   ///
-  final bool disableGroupChatAbbBarTap;
+  final bool disableGroupConversationAppBarTap;
 
   ///
   /// Returns a Widget that is to be displayed as a user avatar, given a
@@ -141,7 +141,7 @@ class NeonChat extends StatefulWidget {
   const NeonChat({
     Key? key,
     this.onGroupConversationAppBarTap,
-    this.disableGroupChatAbbBarTap = false,
+    this.disableGroupConversationAppBarTap = false,
     this.provideConversationsBloc = false,
     this.onDirectConversationAppBarTap,
     this.getConversationCreationData,
@@ -161,7 +161,7 @@ class NeonChat extends StatefulWidget {
 
 class _NeonChatState extends State<NeonChat> {
   @override
-  void initState() {
+  void initState() async {
     super.initState();
 
     initStyles(
@@ -172,12 +172,28 @@ class _NeonChatState extends State<NeonChat> {
       bottomBarStyle: widget.bottomBarStyle,
     );
 
-    initFunctions(
+    await initFunctions(
       FunctionInitData(
         getConversationMessageTypeDisplayString:
             widget.getConversationMessageTypeDisplayString ??
                 (type) => type.firebaseKey,
         getConversationCreationData: widget.getConversationCreationData,
+        onGroupConversationAppBarTap: widget.onGroupConversationAppBarTap ??
+            (widget.disableGroupConversationAppBarTap
+                ? null
+                : (conversation) => defaultOnGroupConversationAppBarTap(
+                      context,
+                      myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
+                      style: GroupChatOverviewStyle(
+                        appBarColor:
+                            chatGetIt<ConversationsStyle>().appBarColor,
+                      ),
+                      conversation: conversation,
+                      onOpenUserProfile: widget.onOpenUserProfile,
+                    )),
+        onDirectConversationAppBarTap: widget.onDirectConversationAppBarTap,
+        getUserAvatar: widget.getUserAvatar,
+        onOpenUserProfile: widget.onOpenUserProfile,
       ),
     );
   }
@@ -201,23 +217,7 @@ class _NeonChatState extends State<NeonChat> {
             create: (context) => chatGetIt<ConversationsBloc>(),
           ),
       ],
-      child: DefaultConversationsLoader(
-        onAppbarTap: widget.onGroupConversationAppBarTap ??
-            (widget.disableGroupChatAbbBarTap
-                ? null
-                : (conversation) => defaultOnGroupConversationAppBarTap(
-                      context,
-                      myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
-                      style: GroupChatOverviewStyle(
-                        appBarColor:
-                            chatGetIt<ConversationsStyle>().appBarColor,
-                      ),
-                      conversation: conversation,
-                      onOpenUserProfile: widget.onOpenUserProfile,
-                    )),
-        onOpenUserProfile: widget.onDirectConversationAppBarTap,
-        getUserAvatar: widget.getUserAvatar,
-      ),
+      child: const DefaultConversationsLoader(),
     );
   }
 }

@@ -7,16 +7,8 @@ import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationsLoader extends StatelessWidget {
-  final Function(Conversation)? onOpenUserProfile;
-  final Function(Conversation)? onAppbarTap;
-
-  final Widget Function(String?)? getUserAvatar;
-
   const DefaultConversationsLoader({
     Key? key,
-    this.onOpenUserProfile,
-    this.onAppbarTap,
-    this.getUserAvatar,
   }) : super(key: key);
 
   @override
@@ -62,11 +54,7 @@ class DefaultConversationsLoader extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: DefaultConversationsPage(
-                    onOpenUserProfile: onOpenUserProfile,
-                    onShowGroupInfo: onAppbarTap,
-                    getUserAvatar: getUserAvatar,
-                  ),
+                  child: const DefaultConversationsPage(),
                 ),
                 if (isWidthOverLimit(context))
                   BlocBuilder<CurrentConversationCubit,
@@ -79,7 +67,6 @@ class DefaultConversationsLoader extends StatelessWidget {
                             conversationId:
                                 state.conversationItem!.conversation.id,
                             showCloseButton: false,
-                            onAppbarTap: onAppbarTap,
                           ),
                         );
                       } else {

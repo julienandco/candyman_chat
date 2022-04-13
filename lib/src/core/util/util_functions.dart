@@ -36,11 +36,9 @@ String formatLastActiveDateTime(DateTime? date) {
   }
 }
 
-//TODO: get the functions and the bool in some pre-registered data-structure as well
 void openConversation(
   BuildContext context, {
   required String conversationId,
-  Function(Conversation)? onAppbarTap,
   bool showCloseButton = true,
 }) {
   Navigator.push(
@@ -48,7 +46,6 @@ void openConversation(
     CupertinoPageRoute(
       builder: (context) => DefaultConversationLoader(
         conversationId: conversationId,
-        onAppbarTap: onAppbarTap,
         showCloseButton: showCloseButton,
       ),
     ),

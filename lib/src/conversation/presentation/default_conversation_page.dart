@@ -11,13 +11,11 @@ class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
 
   final Function(DateTime) updateTimestampForConversation;
-  final Function(Conversation)? onAppbarTap;
 
   const DefaultConversationPage({
     Key? key,
     required this.showCloseButton,
     required this.updateTimestampForConversation,
-    this.onAppbarTap,
   }) : super(key: key);
 
   @override
@@ -80,7 +78,12 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                     backgroundColor:
                         chatGetIt<ConversationStyle>().backgroundColor,
                     appBar: ConversationAppbar(
-                      onAvertaTap: widget.onAppbarTap,
+                      onAvertaTap: loadedConversationState
+                              .conversation.isGroupConversation
+                          ? chatGetIt<FunctionInitData>()
+                              .onGroupConversationAppBarTap
+                          : chatGetIt<FunctionInitData>()
+                              .onDirectConversationAppBarTap,
                       searchAppBarStyle: chatGetIt<SearchAppBarStyle>(),
                       showCloseButton: !widget.showCloseButton,
                     ),

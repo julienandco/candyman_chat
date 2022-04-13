@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
@@ -12,11 +13,22 @@ class FunctionInitData {
   final String Function(ConversationMessageType)
       getConversationMessageTypeDisplayString;
 
+  final Function(Conversation)? onDirectConversationAppBarTap;
+
+  final Function(Conversation)? onGroupConversationAppBarTap;
+
   final ConversationCreationData Function()? getConversationCreationData;
+
+  final Widget Function(String?)? getUserAvatar;
+  final Function(String)? onOpenUserProfile;
 
   FunctionInitData({
     required this.getConversationMessageTypeDisplayString,
+    this.onDirectConversationAppBarTap,
+    this.onGroupConversationAppBarTap,
     this.getConversationCreationData,
+    this.getUserAvatar,
+    this.onOpenUserProfile,
   });
 }
 
@@ -184,8 +196,7 @@ initStyles({
   }
 }
 
-initFunctions(FunctionInitData functionInit) {
-  if (!chatGetIt.isRegistered<FunctionInitData>()) {
-    chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInit);
-  }
+initFunctions(FunctionInitData functionInit) async {
+  await chatGetIt.unregister<FunctionInitData>();
+  chatGetIt.registerLazySingleton<FunctionInitData>(() => functionInit);
 }
