@@ -62,12 +62,10 @@ class PushNotificationService {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       log('received data message: ${message.data}', name: '$runtimeType');
-      log('cached context: $_cachedContext', name: '$runtimeType');
 
       _showPushAlert(
         message: message,
       );
-      // }
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -109,8 +107,10 @@ class PushNotificationService {
   void _handleCommand(RemoteMessage message) {
     try {
       final data = message.data;
+      log('message contains: $data', name: '$runtimeType');
       if (data.containsKey('command')) {
         final String command = data['command'];
+        log('command is: $command', name: '$runtimeType');
         if (command == 'openChat') {
           if (data.containsKey('contentId') && data.containsKey('senderId')) {
             final String conversationId = data['contentId'];
@@ -122,6 +122,9 @@ class PushNotificationService {
         if (_cachedContext != null) {
           final conversationsState = chatGetIt<ConversationsBloc>().state;
 
+          log('convos bloc state is ${conversationsState.runtimeType}',
+              name: '$runtimeType');
+
           conversationsState.maybeWhen(
             loadSuccess: (conversationItems) {
               final String conversationId = data['contentId'];
@@ -130,6 +133,10 @@ class PushNotificationService {
                   List<ConversationItem>.from(conversationItems.where(
                 (element) => element.conversation.id == conversationId,
               ));
+
+              log('convoItem List is $convoItemList', name: '$runtimeType');
+              log('convoItem list has length ${convoItemList.length}',
+                  name: '$runtimeType');
 
               if (convoItemList.length == 1) {
                 final timestampState =
@@ -149,7 +156,7 @@ class PushNotificationService {
               }
             },
             orElse: () {
-              print('sory');
+              print('sory orElse');
             },
           );
           // openConversation(_cachedContext!, data['contentId']);
@@ -170,11 +177,12 @@ class PushNotificationService {
   void _showPushAlert({
     required RemoteMessage message,
   }) {
-    //TODOPUSH: contentId abstract enough?
     if (message.data.containsKey('command') &&
         message.data.containsKey('contentId')) {
       if (message.data['command'] == 'openConversation' &&
           message.data['contentId'] == _openedConversationId) {
+        //TODOPUSH: contentId abstract enough?
+
         return;
       }
     }
