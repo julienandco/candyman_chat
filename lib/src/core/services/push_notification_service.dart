@@ -111,53 +111,24 @@ class PushNotificationService {
       if (data.containsKey('command')) {
         final String command = data['command'];
         log('command is: $command', name: '$runtimeType');
-        if (command == 'openChat') {
+        if (command == 'openConversation') {
           if (data.containsKey('contentId') && data.containsKey('senderId')) {
             final String conversationId = data['contentId'];
             if (_openedConversationId == conversationId) {
-              return;
-            }
-          }
-        }
-        if (_cachedContext != null) {
-          final conversationsState = chatGetIt<ConversationsBloc>().state;
-
-          log('convos bloc state is ${conversationsState.runtimeType}',
-              name: '$runtimeType');
-
-          conversationsState.maybeWhen(
-            loadSuccess: (conversationItems) {
-              final String conversationId = data['contentId'];
-
-              final convoItemList =
-                  List<ConversationItem>.from(conversationItems.where(
-                (element) => element.conversation.id == conversationId,
-              ));
-
-              log('convoItem List is $convoItemList', name: '$runtimeType');
-              log('convoItem list has length ${convoItemList.length}',
+              log('we are in this convo already, doing nothing...',
                   name: '$runtimeType');
-
-              if (convoItemList.length == 1) {
+              return;
+            } else {
+              if (_cachedContext != null) {
+                log('jumping to convo $conversationId...',
+                    name: '$runtimeType');
                 openConversation(
                   _cachedContext!,
-                  conversationId: convoItemList.first.conversation.id,
+                  conversationId: conversationId,
                 );
-              } else {
-                print('sory');
               }
-            },
-            orElse: () {
-              print('sory orElse');
-            },
-          );
-          // openConversation(_cachedContext!, data['contentId']);
-          // getIt<NavigatorService>().navigateTo(
-          //   _cachedContext!,
-          //   command,
-          //   contentId: data['contentId'],
-          //   senderId: data['senderId'],
-          // );
+            }
+          }
         }
       }
       dismissAllToast(showAnim: true);
