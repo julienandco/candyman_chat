@@ -79,14 +79,9 @@ class RedirectedCachedNetworkImage extends StatefulWidget {
 class _RedirectedCachedNetworkImageState
     extends State<RedirectedCachedNetworkImage> {
   String? _redirectedUrl;
-  // String? jwt;
 
   @override
   void initState() {
-    // _redirectedUrl = widget.url.contains('?')
-    //     ? widget.url.replaceAll('?', '/redirect?')
-    //     : '${widget.url}/redirect';
-    // jwt = context.read<AuthenticationBloc>().jwt;
     _redirectedUrl = widget.url;
     super.initState();
   }
@@ -97,18 +92,16 @@ class _RedirectedCachedNetworkImageState
       return CachedNetworkImage(
         imageUrl: _redirectedUrl!,
         fadeInDuration:
-            widget.withFadeIn ? Duration(milliseconds: 2) : Duration.zero,
+            widget.withFadeIn ? const Duration(milliseconds: 2) : Duration.zero,
         placeholderFadeInDuration:
-            widget.withFadeIn ? Duration(milliseconds: 2) : Duration.zero,
+            widget.withFadeIn ? const Duration(milliseconds: 2) : Duration.zero,
         maxHeightDiskCache: widget.maxHeightDiskCache,
         errorWidget: (context, url, error) => widget.placeholder,
         progressIndicatorBuilder:
             widget.withFadeIn ? widget.progressIndicatorBuilder : null,
-        httpHeaders: chatGetIt.get(
-            instanceName:
-                'httpHeaders'), //jwt != null ? {'Authorization': jwt!} : null,
+        httpHeaders: chatGetIt.get(instanceName: kHttpHeadersInstanceName),
         fadeOutDuration:
-            widget.withFadeIn ? Duration(milliseconds: 2) : Duration.zero,
+            widget.withFadeIn ? const Duration(milliseconds: 2) : Duration.zero,
         fit: widget.fit,
         width: widget.width,
         height: widget.height,

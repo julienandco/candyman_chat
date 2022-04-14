@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 bool get isWebOrMacOS =>
     kIsWeb || defaultTargetPlatform == TargetPlatform.macOS;
@@ -50,6 +52,21 @@ void openConversation(
       ),
     ),
   );
+}
+
+void openConversationFromPushNotification(
+  BuildContext context, {
+  required String conversationId,
+  bool showCloseButton = true,
+}) {
+  //open up the chat page so that all the necessary blocs get provided and
+  //the chat get it gets instantiated.
+  chatGetIt
+      .get<void Function(BuildContext)>(
+          instanceName: kOpenAppChatPageInstanceName)
+      .call(context);
+
+  openConversation(context, conversationId: conversationId);
 }
 
 void defaultOnGroupConversationAppBarTap(

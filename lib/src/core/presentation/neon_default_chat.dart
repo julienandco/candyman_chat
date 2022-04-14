@@ -48,6 +48,13 @@ class NeonChat extends StatefulWidget {
     bool Function()? isAuthenticated,
 
     ///
+    /// Pushes the Route to the Page where the [NeonChat] widget is built into
+    /// the widget tree on the Navigator stack. ESSENTIAL for the functionality
+    /// to open conversations by tapping on an incoming push notification.
+    ///
+    required void Function(BuildContext) openAppChatPage,
+
+    ///
     /// The http headers that are required for calls to your backend to succeed.
     ///
     Map<String, String>? httpHeaders,
@@ -66,6 +73,7 @@ class NeonChat extends StatefulWidget {
       remoteDataSource: remoteDataSource,
       isAuthenticated: isAuthenticated ?? () => true,
       pushNotificationToastStyle: pushNotificationToastStyle,
+      openAppChatPage: openAppChatPage,
     );
   }
 

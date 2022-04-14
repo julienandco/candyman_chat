@@ -4,7 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/chat_init.dart';
 
 class PushNotificationService {
   BuildContext? _cachedContext;
@@ -122,7 +121,7 @@ class PushNotificationService {
               if (_cachedContext != null) {
                 log('jumping to convo $conversationId...',
                     name: '$runtimeType');
-                openConversation(
+                openConversationFromPushNotification(
                   _cachedContext!,
                   conversationId: conversationId,
                 );

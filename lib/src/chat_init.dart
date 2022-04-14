@@ -8,6 +8,8 @@ import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 
 GetIt chatGetIt = GetIt.instance;
+const kHttpHeadersInstanceName = 'httpHeaders';
+const kOpenAppChatPageInstanceName = 'openAppChatPage';
 
 class FunctionInitData {
   final String Function(ConversationMessageType)
@@ -40,6 +42,7 @@ initNEONChat({
   required NeonChatRemoteDataSource remoteDataSource,
   required bool Function() isAuthenticated,
   required PushNotificationToastStyle pushNotificationToastStyle,
+  required void Function(BuildContext) openAppChatPage,
 }) {
   try {
     final _currentUserUID = firebaseAuth.currentUser?.uid;
@@ -57,11 +60,15 @@ initNEONChat({
     }
 
     chatGetIt.registerLazySingleton<Map<String, String>>(() => httpHeaders,
-        instanceName: 'httpHeaders');
+        instanceName: kHttpHeadersInstanceName);
 
-    //Push Notification Style
+    //Push Notifications
     chatGetIt.registerLazySingleton<PushNotificationToastStyle>(
         () => pushNotificationToastStyle);
+
+    chatGetIt.registerLazySingleton<void Function(BuildContext)>(
+        () => openAppChatPage,
+        instanceName: kOpenAppChatPageInstanceName);
 
     //Singletons (Repos, UCs, Services)
     chatGetIt.registerLazySingleton<ConversationRepository>(

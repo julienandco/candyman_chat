@@ -37,6 +37,19 @@ void main() async {
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
     firebaseKeys: const FirebaseKeys(usePrefix: true),
+    openAppChatPage: (context) => Navigator.of(context).push(
+      CupertinoPageRoute(
+        builder: (context) => const Scaffold(
+          body: NeonChat(
+            provideConversationsBloc: true,
+            conversationsStyle: ConversationsStyle(
+              showAppBarAboveConversations: true,
+              noConversationsWidget: Text('oh man alter'),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
   print(creds.user?.uid);
@@ -114,6 +127,16 @@ class _MyApp extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            TextButton(
+              child: const Text('Open Conversation'),
+              onPressed: () => openConversationFromPushNotification(
+                context,
+                conversationId: 'yNluhxKbPb3lDKX3KvCO',
               ),
             ),
           ],
