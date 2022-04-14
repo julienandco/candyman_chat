@@ -72,7 +72,7 @@ Ab jetzt wird differenziert!
 Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1. 
 
 
-Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und alles der ```NeonChat.initNeonChat()```-Methode übergeben. Diese soll nur einmal! pro App-Life-Cycle aufgerufen werden (wie ```Firebase.initializeApp```, pack sie also am besten in die main von deinem Projekt). Weiter unten im Widget Tree kannst du dann den ```NeonChat``` instanziieren und eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben und zahlreiche Styles selbst customizen! Achtung! Du musst ganz oben im Widget Tree (bevorzugt in ```app.dart``` o.Ä.) den ```ConversationsBloc``` providen! Ansonsten funktioniert der Push Notification Service nicht! Solltest du an einem Projekt ohne Push Notifications arbeiten, kannst du den Provider weglassen und dem ```NeonChat```-Widget das Flag ```provideConversationsBloc=true``` übergeben.
+Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und alles der ```NeonChat.initNeonChat()```-Methode übergeben. Diese soll nur einmal! pro App-Life-Cycle aufgerufen werden (wie ```Firebase.initializeApp```, pack sie also am besten in die main von deinem Projekt). Dabei musst du auch eine Funktion übergeben, die bei gegebenem ```BuildContext``` die Page auf den Navigator Stack pushed, in der du das ```NeonChat``` Widget instanziierst. Das ist nötig, damit sich die passende Konversation öfnnen kann, sobald du auf eine Push-Benachrichtigung klickst. Weiter unten im Widget Tree kannst du dann den ```NeonChat``` instanziieren und eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben und zahlreiche Styles selbst customizen! Achtung! Du musst ganz oben im Widget Tree (bevorzugt in ```app.dart``` o.Ä.) den ```ConversationsBloc``` providen! Ansonsten funktioniert der Push Notification Service nicht! Solltest du an einem Projekt ohne Push Notifications arbeiten, kannst du den Provider weglassen und dem ```NeonChat```-Widget das Flag ```provideConversationsBloc=true``` übergeben.
 
 FUNFACT: Solltest du in deinem Projekt [GetIt][get_it_link] verwenden, kannst du jetzt mithilfe von [mason][mason_link] das ```Firebase-Injections-Brick``` generieren, um sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` zu verwalten. Was? Du weißt nicht, wie das geht? 
 Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den [NEON-Bricks][neon_bricks_link] durch. Die [Doku von Mason][mason_link] und [dieses Tutorial][mason_tutorial_link] sind auch sehr hilfreich.
@@ -99,6 +99,13 @@ void main() {
     firebaseAuth: getIt<FirebaseAuth>(),
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
+    openAppChatPage: (context) => Navigator.of(context).push(
+      CupertinoPageRoute(
+        builder: (context) => const Scaffold(
+          body: NeonChat(),
+        ),
+      ),
+    ),
   );
 
   ...
@@ -108,6 +115,46 @@ void main() {
   Widget build(BuildContext context) {
     return const NeonChat();
   }
+```
+
+Damit der NeonChat in vollem Glanz erstrahlt, müssen natürlich Push-Notifications her. Dazu dient der ```PushNotificationService```, der auch erst konfiguriert werden muss. Rufe dazu ```configurePushNotifications``` auf einer Instanz des ```PushNotificationService``` auf. ACHTUNG: Das muss in einem Ort im Widget Tree geschehen, in dem 
+```dart 
+Overlay.of(context) != null
+```
+gilt, also z.B. das allererste Widget deiner ```MaterialApp``` oder ```CupertinoApp``` (das home-Widget)!
+
+Solltest du [GetIt][get_it_link] verwenden, könnte der Code so aussehen:
+
+```dart
+class MainAppLoader extends StatefulWidget {
+  const MainAppLoader({Key? key}) : super(key: key);
+
+  @override
+  State<MainAppLoader> createState() => _MainAppLoaderState();
+}
+
+class _MainAppLoaderState extends State<MainAppLoader> {
+  bool _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      getIt<PushNotificationService>().configurePushNotifications(
+        context,
+        onNewNotification: (message) {
+          //do stuff
+        },
+      );
+      Future.delayed(const Duration(seconds: 1), () {
+        getIt<PushNotificationService>().checkInitialMessage();
+      });
+    }
+    _isInit = false;
+
+    super.didChangeDependencies();
+  }
+  ...
+}
 ```
 
 Das klingt zu einfach? Stimmt! 🥴
