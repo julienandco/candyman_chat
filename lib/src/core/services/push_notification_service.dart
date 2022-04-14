@@ -139,8 +139,6 @@ class PushNotificationService {
         message.data.containsKey('contentId')) {
       if (message.data['command'] == 'openConversation' &&
           message.data['contentId'] == _openedConversationId) {
-        //TODOPUSH: contentId abstract enough?
-
         return;
       }
     }

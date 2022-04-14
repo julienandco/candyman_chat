@@ -71,7 +71,8 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           final chatStream = initializeConversationItemStreamUC(
             conversation: conversation,
             timestamp: Timestamp.fromDate(
-                _timestampMap![conversation.id] ?? DateTime.now()),
+              _timestampMap![conversation.id] ?? DateTime.now(),
+            ),
             onData: (event) => add(_OnConversationItemsData(event)),
             onError: (err) {
               log('fetchChatItems $err', name: '$runtimeType');

@@ -24,7 +24,7 @@ class DefaultConversationPage extends StatefulWidget {
 }
 
 class _DefaultConversationPageState extends State<DefaultConversationPage> {
-  late DateTime _lastSeenGroupConversationTimestamp;
+  DateTime? _lastSeenGroupConversationTimestamp;
   bool _isInit = true;
 
   @override
@@ -43,8 +43,8 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
       final timestampState = chatGetIt<GroupConversationTimestampsBloc>().state;
       _lastSeenGroupConversationTimestamp = timestampState.maybeMap(
           loaded: (loadedTimestampState) =>
-              loadedTimestampState.timestampMap[id] ?? DateTime.now(),
-          orElse: () => DateTime.now());
+              loadedTimestampState.timestampMap[id],
+          orElse: () => null);
     }
     _isInit = false;
     super.didChangeDependencies();

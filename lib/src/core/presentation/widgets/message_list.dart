@@ -8,7 +8,7 @@ class MessageList extends StatelessWidget {
   final String Function(String)? getAuthorNameForSenderId;
   final MessageBubbleStyle messageBubbleStyle;
 
-  final DateTime conversationLastSeenTimestamp;
+  final DateTime? conversationLastSeenTimestamp;
   final void Function(DateTime) updateLastSeenTimestampForConversation;
 
   const MessageList({
@@ -16,7 +16,7 @@ class MessageList extends StatelessWidget {
     required this.getAuthorNameForSenderId,
     required this.messageBubbleStyle,
     required this.updateLastSeenTimestampForConversation,
-    required this.conversationLastSeenTimestamp,
+    this.conversationLastSeenTimestamp,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

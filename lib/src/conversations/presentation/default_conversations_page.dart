@@ -107,11 +107,8 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                           AvatarWidget(
                                               imgUrl: conversationItem
                                                   .conversation.thumbnail),
-                                  onOpenConversation: () => openConversation(
-                                        context,
-                                        conversationId:
-                                            conversationItem.conversation.id,
-                                      ),
+                                  onOpenConversation: () =>
+                                      _openConversation(conversationItem),
                                   onOpenConversationInfo: conversationItem
                                           .conversation.isGroupConversation
                                       ? () => chatGetIt<FunctionInitData>()

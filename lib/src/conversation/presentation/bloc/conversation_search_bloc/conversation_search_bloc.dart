@@ -24,6 +24,7 @@ class ConversationSearchBloc
       event.when(
         initialize: (messages, timestamp) {
           searchUC.initialize(messages);
+
           _jumpToLastSeenMessage(
               messages: messages, lastSeenTimestamp: timestamp);
         },
@@ -67,10 +68,12 @@ class ConversationSearchBloc
 
   void _jumpToLastSeenMessage({
     required List<ConversationMessage> messages,
-    required DateTime lastSeenTimestamp,
+    required DateTime? lastSeenTimestamp,
   }) {
-    final index = messages.lastIndexWhere(
-        (message) => message.timestamp?.isAfter(lastSeenTimestamp) ?? false);
+    final index = lastSeenTimestamp == null
+        ? (messages.isEmpty ? -1 : 0)
+        : messages.lastIndexWhere((message) =>
+            message.timestamp?.isAfter(lastSeenTimestamp) ?? false);
     if (index >= 0) {
       messageListController.scrollToIndex(
         index,

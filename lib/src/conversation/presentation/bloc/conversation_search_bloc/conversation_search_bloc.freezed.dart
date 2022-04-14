@@ -302,7 +302,7 @@ class _$ConversationSearchEventTearOff {
 
   _Initialize initialize(
       {required List<ConversationMessage> messages,
-      required DateTime lastSeenMessageTimestamp}) {
+      required DateTime? lastSeenMessageTimestamp}) {
     return _Initialize(
       messages: messages,
       lastSeenMessageTimestamp: lastSeenMessageTimestamp,
@@ -336,7 +336,7 @@ mixin _$ConversationSearchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)
+            DateTime? lastSeenMessageTimestamp)
         initialize,
     required TResult Function() toggleSearch,
     required TResult Function(String term) query,
@@ -347,7 +347,7 @@ mixin _$ConversationSearchEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -358,7 +358,7 @@ mixin _$ConversationSearchEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -420,7 +420,7 @@ abstract class _$InitializeCopyWith<$Res> {
           _Initialize value, $Res Function(_Initialize) then) =
       __$InitializeCopyWithImpl<$Res>;
   $Res call(
-      {List<ConversationMessage> messages, DateTime lastSeenMessageTimestamp});
+      {List<ConversationMessage> messages, DateTime? lastSeenMessageTimestamp});
 }
 
 /// @nodoc
@@ -447,7 +447,7 @@ class __$InitializeCopyWithImpl<$Res>
       lastSeenMessageTimestamp: lastSeenMessageTimestamp == freezed
           ? _value.lastSeenMessageTimestamp
           : lastSeenMessageTimestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -461,7 +461,7 @@ class _$_Initialize implements _Initialize {
   @override
   final List<ConversationMessage> messages;
   @override
-  final DateTime lastSeenMessageTimestamp;
+  final DateTime? lastSeenMessageTimestamp;
 
   @override
   String toString() {
@@ -493,7 +493,7 @@ class _$_Initialize implements _Initialize {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)
+            DateTime? lastSeenMessageTimestamp)
         initialize,
     required TResult Function() toggleSearch,
     required TResult Function(String term) query,
@@ -507,7 +507,7 @@ class _$_Initialize implements _Initialize {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -521,7 +521,7 @@ class _$_Initialize implements _Initialize {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -579,10 +579,10 @@ class _$_Initialize implements _Initialize {
 abstract class _Initialize implements ConversationSearchEvent {
   const factory _Initialize(
       {required List<ConversationMessage> messages,
-      required DateTime lastSeenMessageTimestamp}) = _$_Initialize;
+      required DateTime? lastSeenMessageTimestamp}) = _$_Initialize;
 
   List<ConversationMessage> get messages;
-  DateTime get lastSeenMessageTimestamp;
+  DateTime? get lastSeenMessageTimestamp;
   @JsonKey(ignore: true)
   _$InitializeCopyWith<_Initialize> get copyWith =>
       throw _privateConstructorUsedError;
@@ -630,7 +630,7 @@ class _$_ToggleSearch implements _ToggleSearch {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)
+            DateTime? lastSeenMessageTimestamp)
         initialize,
     required TResult Function() toggleSearch,
     required TResult Function(String term) query,
@@ -644,7 +644,7 @@ class _$_ToggleSearch implements _ToggleSearch {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -658,7 +658,7 @@ class _$_ToggleSearch implements _ToggleSearch {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -781,7 +781,7 @@ class _$_Query implements _Query {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)
+            DateTime? lastSeenMessageTimestamp)
         initialize,
     required TResult Function() toggleSearch,
     required TResult Function(String term) query,
@@ -795,7 +795,7 @@ class _$_Query implements _Query {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -809,7 +809,7 @@ class _$_Query implements _Query {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -914,7 +914,7 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)
+            DateTime? lastSeenMessageTimestamp)
         initialize,
     required TResult Function() toggleSearch,
     required TResult Function(String term) query,
@@ -928,7 +928,7 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -942,7 +942,7 @@ class _$_OnGoResultUp implements _OnGoResultUp {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -1043,7 +1043,7 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)
+            DateTime? lastSeenMessageTimestamp)
         initialize,
     required TResult Function() toggleSearch,
     required TResult Function(String term) query,
@@ -1057,7 +1057,7 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,
@@ -1071,7 +1071,7 @@ class _$_OnGoResultDown implements _OnGoResultDown {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<ConversationMessage> messages,
-            DateTime lastSeenMessageTimestamp)?
+            DateTime? lastSeenMessageTimestamp)?
         initialize,
     TResult Function()? toggleSearch,
     TResult Function(String term)? query,

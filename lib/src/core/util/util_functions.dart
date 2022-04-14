@@ -43,13 +43,28 @@ void openConversation(
   required String conversationId,
   bool showCloseButton = true,
 }) {
+  final timestampsBlocIsProvidedAlready = context.findAncestorWidgetOfExactType<
+          BlocProvider<GroupConversationTimestampsBloc>>() !=
+      null;
+
+  final child = DefaultConversationLoader(
+    conversationId: conversationId,
+    showCloseButton: showCloseButton,
+  );
+
+  final provider = timestampsBlocIsProvidedAlready
+      ? BlocProvider.value(
+          value: context.read<GroupConversationTimestampsBloc>(),
+          child: child,
+        )
+      : BlocProvider(
+          create: (context) => chatGetIt<GroupConversationTimestampsBloc>(),
+          child: child,
+        );
   Navigator.push(
     context,
     CupertinoPageRoute(
-      builder: (context) => DefaultConversationLoader(
-        conversationId: conversationId,
-        showCloseButton: showCloseButton,
-      ),
+      builder: (context) => provider,
     ),
   );
 }
