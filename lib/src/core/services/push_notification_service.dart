@@ -106,21 +106,17 @@ class PushNotificationService {
   void _handleCommand(RemoteMessage message) {
     try {
       final data = message.data;
-      log('message contains: $data', name: '$runtimeType');
+
       if (data.containsKey('command')) {
         final String command = data['command'];
-        log('command is: $command', name: '$runtimeType');
+
         if (command == 'openConversation') {
           if (data.containsKey('contentId') && data.containsKey('senderId')) {
             final String conversationId = data['contentId'];
             if (_openedConversationId == conversationId) {
-              log('we are in this convo already, doing nothing...',
-                  name: '$runtimeType');
               return;
             } else {
               if (_cachedContext != null) {
-                log('jumping to convo $conversationId...',
-                    name: '$runtimeType');
                 openConversationFromPushNotification(
                   _cachedContext!,
                   conversationId: conversationId,
