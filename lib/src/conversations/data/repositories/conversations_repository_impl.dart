@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +26,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     required FirebaseUser me,
     required DirectConversationCreationData creationData,
   }) async {
+    log('create conversation check user');
     final conversationPartner = creationData.conversationPartner;
 
     // This query checks whether a 1-on-1 conversation between [_userId]
@@ -56,6 +58,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       if (conversation.hiddenFrom.contains(_currentUser.uid)) {
         _unhideConversations(conversation.id);
       }
+      log('create conversation: already a conversation between the two users');
       return list.first;
     } else {
       final doc = _collection.doc();
@@ -66,6 +69,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
         isGroupConversation: false,
       );
       await doc.set(conversation.toJson());
+      log('create conversation: new conversation');
       return conversation;
     }
   }
