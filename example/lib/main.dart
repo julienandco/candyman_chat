@@ -75,11 +75,11 @@ class MyApp extends StatelessWidget {
   DirectConversationCreationData get _getMockConvoCreationData =>
       DirectConversationCreationData(
           conversationPartner: FirebaseUser(
-              id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien7'));
+              id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', username: 'Julien7'));
   GroupConversationCreationData get _getMockGroupConvoCreationData =>
       GroupConversationCreationData(conversationMembers: [
-        FirebaseUser(id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien7'),
-        FirebaseUser(id: '94Kx3Rn957SYoiAvSiqaYGQ7auk1', name: 'Julien9'),
+        FirebaseUser(id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', username: 'Julien7'),
+        FirebaseUser(id: '94Kx3Rn957SYoiAvSiqaYGQ7auk1', username: 'Julien9'),
       ], groupName: 'gruppe-test-2');
 
   /// Uncomment the [MyCustomConversationsLoader] to see a custom implementation
