@@ -43,6 +43,21 @@ void openConversation(
   required String conversationId,
   bool showCloseButton = true,
 }) {
+  //open up the chat page so that all the necessary blocs get provided and
+  //the chat get it gets instantiated.
+  chatGetIt
+      .get<void Function(BuildContext)>(
+          instanceName: kOpenAppChatPageInstanceName)
+      .call(context);
+
+  openConversationInternally(context, conversationId: conversationId);
+}
+
+void openConversationInternally(
+  BuildContext context, {
+  required String conversationId,
+  bool showCloseButton = true,
+}) {
   final conversationsBlocProvidedTopLevel = context
           .findAncestorWidgetOfExactType<BlocProvider<ConversationsBloc>>() !=
       null;
@@ -72,13 +87,6 @@ void openConversationFromPushNotification(
   required String conversationId,
   bool showCloseButton = true,
 }) {
-  //open up the chat page so that all the necessary blocs get provided and
-  //the chat get it gets instantiated.
-  chatGetIt
-      .get<void Function(BuildContext)>(
-          instanceName: kOpenAppChatPageInstanceName)
-      .call(context);
-
   openConversation(context, conversationId: conversationId);
 }
 

@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
+import 'package:neon_chat/src/conversations/conversations.dart';
+import 'package:neon_chat/src/core/core.dart';
 
 class DefaultConversationsPage extends StatefulWidget {
   const DefaultConversationsPage({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
   final _scrollController = ScrollController();
 
   void _openConversation(ConversationItem conversationItem) {
-    openConversation(
+    openConversationInternally(
       context,
       conversationId: conversationItem.conversation.id,
     );

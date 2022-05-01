@@ -133,7 +133,17 @@ class _MyApp extends StatelessWidget {
               height: 50,
             ),
             TextButton(
-              child: const Text('Open Conversation'),
+              child: const Text('Open Conversation from outside'),
+              onPressed: () => openConversation(
+                context,
+                conversationId: 'yNluhxKbPb3lDKX3KvCO',
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            TextButton(
+              child: const Text('Open Conversation From Push'),
               onPressed: () => openConversationFromPushNotification(
                 context,
                 conversationId: 'yNluhxKbPb3lDKX3KvCO',

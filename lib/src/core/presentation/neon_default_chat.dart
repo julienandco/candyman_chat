@@ -213,10 +213,6 @@ class _NeonChatState extends State<NeonChat> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(
-        //     create: (context) => chatGetIt<GroupConversationTimestampsBloc>()
-        //       ..add(GroupConversationTimestampsEvent.initialize(
-        //           chatGetIt<FirebaseAuth>().currentUser!.uid))),
         BlocProvider(
           create: (context) => chatGetIt<ConversationsSearchBloc>(),
         ),
