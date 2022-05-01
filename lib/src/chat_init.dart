@@ -38,7 +38,6 @@ initNEONChat({
   required FirebaseAuth firebaseAuth,
   required FirebaseFirestore firebaseFirestore,
   required FirebaseKeys firebaseKeys,
-  required Map<String, String> httpHeaders,
   required NeonChatRemoteDataSource remoteDataSource,
   required bool Function() isAuthenticated,
   required PushNotificationToastStyle pushNotificationToastStyle,
@@ -58,9 +57,6 @@ initNEONChat({
     if (!chatGetIt.isRegistered<FirebaseKeys>()) {
       chatGetIt.registerLazySingleton<FirebaseKeys>(() => firebaseKeys);
     }
-
-    chatGetIt.registerLazySingleton<Map<String, String>>(() => httpHeaders,
-        instanceName: kHttpHeadersInstanceName);
 
     //Push Notifications
     chatGetIt.registerLazySingleton<PushNotificationToastStyle>(
@@ -144,6 +140,11 @@ initNEONChat({
             remoteUploadsURL: remoteDataSource.remoteUploadsURL,
             toastStyle: pushNotificationToastStyle));
 
+    // default headers are empty and will be overwritten if [initHttpHeaders]
+    // is called.
+    chatGetIt.registerLazySingleton<Map<String, String>>(() => {},
+        instanceName: kHttpHeadersInstanceName);
+
     //Factories (Blocs, Cubits)
     chatGetIt.registerFactory<UploadUrlCubit>(
         () => UploadUrlCubit(chatGetIt<GetUploadUrlUC>()));
@@ -173,6 +174,20 @@ initNEONChat({
     log('NEONChat successfully initialized!');
   } catch (e) {
     log('initNEONChat called multiple times. Only initialize the NEON Chat once!',
+        error: e);
+  }
+}
+
+initHttpHeaders(Map<String, String> httpHeaders) async {
+  try {
+    //unregister the default value
+    await chatGetIt.unregister<Map<String, String>>(
+        instanceName: kHttpHeadersInstanceName);
+
+    chatGetIt.registerLazySingleton<Map<String, String>>(() => httpHeaders,
+        instanceName: kHttpHeadersInstanceName);
+  } catch (e) {
+    log('initHttpHeaders called multiple times. Only initialize the headers once!',
         error: e);
   }
 }

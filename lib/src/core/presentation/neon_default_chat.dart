@@ -55,11 +55,6 @@ class NeonChat extends StatefulWidget {
     required void Function(BuildContext) openAppChatPage,
 
     ///
-    /// The http headers that are required for calls to your backend to succeed.
-    ///
-    Map<String, String>? httpHeaders,
-
-    ///
     /// The styling of the toasts that get triggered by every push notification.
     ///
     PushNotificationToastStyle pushNotificationToastStyle =
@@ -69,7 +64,6 @@ class NeonChat extends StatefulWidget {
       firebaseAuth: firebaseAuth,
       firebaseFirestore: firebaseFirestore,
       firebaseKeys: firebaseKeys,
-      httpHeaders: httpHeaders ?? {},
       remoteDataSource: remoteDataSource,
       isAuthenticated: isAuthenticated ?? () => true,
       pushNotificationToastStyle: pushNotificationToastStyle,
