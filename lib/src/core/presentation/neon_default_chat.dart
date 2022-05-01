@@ -72,6 +72,14 @@ class NeonChat extends StatefulWidget {
   }
 
   ///
+  /// Needs to be called if the calls to your backend that provides the user
+  /// profile image data needs http headers.
+  ///
+  static initNeonChatHttpHeaders(Map<String, String> httpHeaders) {
+    initHttpHeaders(httpHeaders);
+  }
+
+  ///
   /// Flag whether the conversationsBloc should be provided inside of the
   /// chat package. Be aware that if set to true, functionality such as the
   /// push notification service will only work inside the chat screen!
