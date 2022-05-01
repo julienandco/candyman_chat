@@ -151,6 +151,9 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   Future<void> _onCreateConversation(
       _CreateConversation event, Emitter emit) async {
     final currentState = state;
+
+    log('On Create: state = $currentState / $_isInit');
+
     if (_isInit && currentState is _LoadSuccess) {
       final me = await _me!.first;
       final conversation = await createConversationUC(
@@ -158,8 +161,12 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
         creationData: event.creationData,
       );
 
+      log('On Create: conversation = ${conversation.id}');
+
       final convoItem = _getConversationItemForConversation(
           currentItems: currentState.conversations, conversation: conversation);
+
+      log('On Create: convoItem = ${convoItem.conversation.createdAt}');
 
       event.onSuccessfullyCreatedConversation?.call(convoItem);
     }
