@@ -161,15 +161,12 @@ initNEONChat({
         getFirebaseUserUC: chatGetIt<GetFirebaseUserUC>(),
         createConversationUC: chatGetIt<CreateConversationUC>(),
         createGroupConversationUC: chatGetIt<CreateGroupConversationUC>(),
+        initTimestampStreamUC: chatGetIt<InitializeTimestampStreamUC>(),
+        syncTimestampsWithFirebaseUC: chatGetIt<SyncTimestampsWithFirebaseUC>(),
       ),
     );
     chatGetIt.registerFactory<ConversationsSearchBloc>(
         () => ConversationsSearchBloc(chatGetIt<SearchConversationsUC>()));
-    chatGetIt.registerFactory<GroupConversationTimestampsBloc>(() =>
-        GroupConversationTimestampsBloc(
-            initStreamUC: chatGetIt<InitializeTimestampStreamUC>(),
-            syncTimestampsWithFirebaseUC:
-                chatGetIt<SyncTimestampsWithFirebaseUC>()));
 
     log('NEONChat successfully initialized!');
   } catch (e) {

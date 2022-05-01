@@ -35,7 +35,7 @@ class FirebaseKeys {
   //Nur anfassen, wenn sich in [FirebaseUser] etwas ändert!!! Wegen JSONSerializable!!!
   final String usersIdKey = 'id';
   final String usersProfilePictureKey = 'profilePictureURL';
-  final String usersUserNameKey = 'name';
+  final String usersUserNameKey = 'username';
   final String usersGroupMessageSeenKey = 'groupMessageSeenTimestamps';
 
   // groupMessageLastSeenTimestamps

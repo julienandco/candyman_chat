@@ -43,8 +43,8 @@ void openConversation(
   required String conversationId,
   bool showCloseButton = true,
 }) {
-  final timestampsBlocIsProvidedAlready = context.findAncestorWidgetOfExactType<
-          BlocProvider<GroupConversationTimestampsBloc>>() !=
+  final conversationsBlocProvidedTopLevel = context
+          .findAncestorWidgetOfExactType<BlocProvider<ConversationsBloc>>() !=
       null;
 
   final child = DefaultConversationLoader(
@@ -52,20 +52,18 @@ void openConversation(
     showCloseButton: showCloseButton,
   );
 
-  final provider = timestampsBlocIsProvidedAlready
+  final provider = conversationsBlocProvidedTopLevel
       ? BlocProvider.value(
-          value: context.read<GroupConversationTimestampsBloc>(),
+          value: context.read<ConversationsBloc>(),
           child: child,
         )
       : BlocProvider(
-          create: (context) => chatGetIt<GroupConversationTimestampsBloc>(),
+          create: (context) => chatGetIt<ConversationsBloc>(),
           child: child,
         );
   Navigator.push(
     context,
-    CupertinoPageRoute(
-      builder: (context) => provider,
-    ),
+    CupertinoPageRoute(builder: (context) => provider),
   );
 }
 

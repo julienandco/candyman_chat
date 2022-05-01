@@ -89,9 +89,9 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
                             .firstWhere(
                               (member) =>
                                   member.id == messages[_currentIndex].senderId,
-                              orElse: () => FirebaseUser(id: '', name: ''),
+                              orElse: () => FirebaseUser(id: '', username: ''),
                             )
-                            .name,
+                            .username,
                     orElse: () => '',
                   ),
               style: chatGetIt<MessageBubbleStyle>().ownMessageTextStyle,

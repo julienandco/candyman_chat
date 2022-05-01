@@ -7,6 +7,7 @@ class ConversationsState with _$ConversationsState {
   const factory ConversationsState.loadInProgress() = _LoadInProgress;
   const factory ConversationsState.loadSuccess({
     required List<ConversationItem> conversations,
+    required Map<String, DateTime> timestampMap,
   }) = _LoadSuccess;
   const factory ConversationsState.loadFailure() = _LoadFailure;
 

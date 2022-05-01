@@ -48,7 +48,7 @@ class Conversation with _$Conversation {
     } else {
       final otherUser =
           conversationMembers.firstWhere((userID) => userID.id != myId);
-      return otherUser.name;
+      return otherUser.username;
     }
   }
 

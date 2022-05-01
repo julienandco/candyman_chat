@@ -26,7 +26,7 @@ class GroupConversationMemberListItem extends StatelessWidget {
             width: 15,
           ),
           AutoSizeText(
-            user.name,
+            user.username,
             style: style.userNameTextStyle,
           ),
         ],

@@ -213,10 +213,10 @@ class _NeonChatState extends State<NeonChat> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (context) => chatGetIt<GroupConversationTimestampsBloc>()
-              ..add(GroupConversationTimestampsEvent.initialize(
-                  chatGetIt<FirebaseAuth>().currentUser!.uid))),
+        // BlocProvider(
+        //     create: (context) => chatGetIt<GroupConversationTimestampsBloc>()
+        //       ..add(GroupConversationTimestampsEvent.initialize(
+        //           chatGetIt<FirebaseAuth>().currentUser!.uid))),
         BlocProvider(
           create: (context) => chatGetIt<ConversationsSearchBloc>(),
         ),
@@ -225,8 +225,12 @@ class _NeonChatState extends State<NeonChat> {
         ),
         if (widget.provideConversationsBloc)
           BlocProvider(
-            create: (context) => chatGetIt<ConversationsBloc>(),
-          ),
+              create: (context) => chatGetIt<ConversationsBloc>()
+                ..add(
+                  ConversationsEvent.initialize(
+                    myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
+                  ),
+                )),
       ],
       child: const DefaultConversationsLoader(),
     );

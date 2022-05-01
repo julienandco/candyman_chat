@@ -85,7 +85,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                       parent: AlwaysScrollableScrollPhysics(),
                     ),
                     children: conversationsState.maybeWhen(
-                      loadSuccess: (chatConversations) {
+                      loadSuccess: (chatConversations, _) {
                         if (loadedConversationsState.conversations.isEmpty) {
                           return [style.noConversationsWidget];
                         }

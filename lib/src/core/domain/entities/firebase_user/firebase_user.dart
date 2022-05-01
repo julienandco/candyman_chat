@@ -8,7 +8,7 @@ part 'firebase_user.g.dart';
 class FirebaseUser with _$FirebaseUser {
   factory FirebaseUser({
     required String id,
-    required String name,
+    required String username,
     String? profilePictureURL,
     @MyDateTimeConverter() DateTime? lastActivity,
     @Default([]) List<String> blockedUsers,

@@ -12,11 +12,11 @@ void main() {
         'name': testName,
       };
 
-      final user = FirebaseUser(id: testId, name: testName);
+      final user = FirebaseUser(id: testId, username: testName);
       expect(user.toJson(), expectedJson);
     });
     test('fromJson', () {
-      final expectedUser = FirebaseUser(id: testId, name: testName);
+      final expectedUser = FirebaseUser(id: testId, username: testName);
 
       final json = {
         'id': testId,

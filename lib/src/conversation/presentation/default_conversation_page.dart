@@ -40,11 +40,9 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
       chatGetIt<PushNotificationService>()
           .disableChatNotificationsForConversationId(id);
 
-      final timestampState = chatGetIt<GroupConversationTimestampsBloc>().state;
-      _lastSeenGroupConversationTimestamp = timestampState.maybeMap(
-          loaded: (loadedTimestampState) =>
-              loadedTimestampState.timestampMap[id],
-          orElse: () => null);
+      final conversationsState = chatGetIt<ConversationsBloc>().state;
+      _lastSeenGroupConversationTimestamp = conversationsState.maybeWhen(
+          loadSuccess: (_, timestamps) => timestamps[id], orElse: () => null);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -116,9 +114,10 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                                         .firstWhere(
                                       (member) => member.id == senderId,
                                       orElse: () => FirebaseUser(
-                                          id: 'dummy', name: 'unknown'), //TODO
+                                          id: 'dummy',
+                                          username: 'unknown'), //TODO
                                     );
-                                    return author.name;
+                                    return author.username;
                                   } else {
                                     return loadedConversationState.displayName;
                                   }

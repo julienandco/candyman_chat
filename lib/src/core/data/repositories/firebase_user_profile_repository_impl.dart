@@ -42,22 +42,14 @@ class FirebaseUserProfileRepositoryImpl
           final data = snap.data();
           Map<String, DateTime> timestamps = {};
 
-          log('data: $data');
-
           if (data != null) {
-            log('yay1');
             final timestampGeneralData =
                 snap.data()![firebaseKeys.usersGroupMessageSeenKey];
 
-            log('general data: $timestampGeneralData');
-
             if (timestampGeneralData != null) {
-              log('yay2');
               final timestampData =
                   timestampGeneralData[firebaseKeys.groupMessageTimestampsKey];
-              log('timestampdata: $timestampData');
               if (timestampData != null) {
-                log('yay3');
                 for (var key in timestampData.keys) {
                   final timestamp = timestampData[key] as Timestamp;
                   timestamps[key] = timestamp.toDate();

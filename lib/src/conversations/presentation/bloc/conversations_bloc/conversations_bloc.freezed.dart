@@ -26,9 +26,12 @@ class _$ConversationsStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess({required List<ConversationItem> conversations}) {
+  _LoadSuccess loadSuccess(
+      {required List<ConversationItem> conversations,
+      required Map<String, DateTime> timestampMap}) {
     return _LoadSuccess(
       conversations: conversations,
+      timestampMap: timestampMap,
     );
   }
 
@@ -46,7 +49,9 @@ mixin _$ConversationsState {
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationItem> conversations) loadSuccess,
+    required TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)
+        loadSuccess,
     required TResult Function() loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -54,7 +59,9 @@ mixin _$ConversationsState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +69,9 @@ mixin _$ConversationsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) =>
@@ -154,7 +163,9 @@ class _$_Uninitialized extends _Uninitialized {
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationItem> conversations) loadSuccess,
+    required TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)
+        loadSuccess,
     required TResult Function() loadFailure,
   }) {
     return uninitialized();
@@ -165,7 +176,9 @@ class _$_Uninitialized extends _Uninitialized {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
   }) {
     return uninitialized?.call();
@@ -176,7 +189,9 @@ class _$_Uninitialized extends _Uninitialized {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
@@ -272,7 +287,9 @@ class _$_LoadInProgress extends _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationItem> conversations) loadSuccess,
+    required TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)
+        loadSuccess,
     required TResult Function() loadFailure,
   }) {
     return loadInProgress();
@@ -283,7 +300,9 @@ class _$_LoadInProgress extends _LoadInProgress {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
   }) {
     return loadInProgress?.call();
@@ -294,7 +313,9 @@ class _$_LoadInProgress extends _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
@@ -352,7 +373,9 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<ConversationItem> conversations});
+  $Res call(
+      {List<ConversationItem> conversations,
+      Map<String, DateTime> timestampMap});
 }
 
 /// @nodoc
@@ -369,12 +392,17 @@ class __$LoadSuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? conversations = freezed,
+    Object? timestampMap = freezed,
   }) {
     return _then(_LoadSuccess(
       conversations: conversations == freezed
           ? _value.conversations
           : conversations // ignore: cast_nullable_to_non_nullable
               as List<ConversationItem>,
+      timestampMap: timestampMap == freezed
+          ? _value.timestampMap
+          : timestampMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
     ));
   }
 }
@@ -382,14 +410,18 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess({required this.conversations}) : super._();
+  const _$_LoadSuccess(
+      {required this.conversations, required this.timestampMap})
+      : super._();
 
   @override
   final List<ConversationItem> conversations;
+  @override
+  final Map<String, DateTime> timestampMap;
 
   @override
   String toString() {
-    return 'ConversationsState.loadSuccess(conversations: $conversations)';
+    return 'ConversationsState.loadSuccess(conversations: $conversations, timestampMap: $timestampMap)';
   }
 
   @override
@@ -398,12 +430,16 @@ class _$_LoadSuccess extends _LoadSuccess {
         (other.runtimeType == runtimeType &&
             other is _LoadSuccess &&
             const DeepCollectionEquality()
-                .equals(other.conversations, conversations));
+                .equals(other.conversations, conversations) &&
+            const DeepCollectionEquality()
+                .equals(other.timestampMap, timestampMap));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(conversations));
+      runtimeType,
+      const DeepCollectionEquality().hash(conversations),
+      const DeepCollectionEquality().hash(timestampMap));
 
   @JsonKey(ignore: true)
   @override
@@ -415,10 +451,12 @@ class _$_LoadSuccess extends _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationItem> conversations) loadSuccess,
+    required TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)
+        loadSuccess,
     required TResult Function() loadFailure,
   }) {
-    return loadSuccess(conversations);
+    return loadSuccess(conversations, timestampMap);
   }
 
   @override
@@ -426,10 +464,12 @@ class _$_LoadSuccess extends _LoadSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
   }) {
-    return loadSuccess?.call(conversations);
+    return loadSuccess?.call(conversations, timestampMap);
   }
 
   @override
@@ -437,12 +477,14 @@ class _$_LoadSuccess extends _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(conversations);
+      return loadSuccess(conversations, timestampMap);
     }
     return orElse();
   }
@@ -486,11 +528,13 @@ class _$_LoadSuccess extends _LoadSuccess {
 }
 
 abstract class _LoadSuccess extends ConversationsState {
-  const factory _LoadSuccess({required List<ConversationItem> conversations}) =
-      _$_LoadSuccess;
+  const factory _LoadSuccess(
+      {required List<ConversationItem> conversations,
+      required Map<String, DateTime> timestampMap}) = _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
   List<ConversationItem> get conversations;
+  Map<String, DateTime> get timestampMap;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -539,7 +583,9 @@ class _$_LoadFailure extends _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationItem> conversations) loadSuccess,
+    required TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)
+        loadSuccess,
     required TResult Function() loadFailure,
   }) {
     return loadFailure();
@@ -550,7 +596,9 @@ class _$_LoadFailure extends _LoadFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
   }) {
     return loadFailure?.call();
@@ -561,7 +609,9 @@ class _$_LoadFailure extends _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationItem> conversations)? loadSuccess,
+    TResult Function(List<ConversationItem> conversations,
+            Map<String, DateTime> timestampMap)?
+        loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
@@ -618,11 +668,9 @@ abstract class _LoadFailure extends ConversationsState {
 class _$ConversationsEventTearOff {
   const _$ConversationsEventTearOff();
 
-  _InitializeMyFirebaseUser initialize(
-      {required String myId, required Map<String, DateTime> timestamps}) {
+  _InitializeMyFirebaseUser initialize({required String myId}) {
     return _InitializeMyFirebaseUser(
       myId: myId,
-      timestamps: timestamps,
     );
   }
 
@@ -672,6 +720,21 @@ class _$ConversationsEventTearOff {
     );
   }
 
+  _SetNewTimestampForGroupConversation setNewTimestampForGroupConversation(
+      {required String conversationId, required DateTime timestamp}) {
+    return _SetNewTimestampForGroupConversation(
+      conversationId: conversationId,
+      timestamp: timestamp,
+    );
+  }
+
+  _OnGroupTimestampsData onGroupTimestampsData(
+      Map<String, DateTime> timestamps) {
+    return _OnGroupTimestampsData(
+      timestamps,
+    );
+  }
+
   _OnError onError() {
     return const _OnError();
   }
@@ -688,8 +751,7 @@ const $ConversationsEvent = _$ConversationsEventTearOff();
 mixin _$ConversationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -706,13 +768,17 @@ mixin _$ConversationsEvent {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -728,13 +794,16 @@ mixin _$ConversationsEvent {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -750,6 +819,9 @@ mixin _$ConversationsEvent {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -767,6 +839,10 @@ mixin _$ConversationsEvent {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) =>
@@ -780,6 +856,9 @@ mixin _$ConversationsEvent {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) =>
@@ -793,6 +872,9 @@ mixin _$ConversationsEvent {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -822,7 +904,7 @@ abstract class _$InitializeMyFirebaseUserCopyWith<$Res> {
   factory _$InitializeMyFirebaseUserCopyWith(_InitializeMyFirebaseUser value,
           $Res Function(_InitializeMyFirebaseUser) then) =
       __$InitializeMyFirebaseUserCopyWithImpl<$Res>;
-  $Res call({String myId, Map<String, DateTime> timestamps});
+  $Res call({String myId});
 }
 
 /// @nodoc
@@ -840,17 +922,12 @@ class __$InitializeMyFirebaseUserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? myId = freezed,
-    Object? timestamps = freezed,
   }) {
     return _then(_InitializeMyFirebaseUser(
       myId: myId == freezed
           ? _value.myId
           : myId // ignore: cast_nullable_to_non_nullable
               as String,
-      timestamps: timestamps == freezed
-          ? _value.timestamps
-          : timestamps // ignore: cast_nullable_to_non_nullable
-              as Map<String, DateTime>,
     ));
   }
 }
@@ -858,17 +935,14 @@ class __$InitializeMyFirebaseUserCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
-  const _$_InitializeMyFirebaseUser(
-      {required this.myId, required this.timestamps});
+  const _$_InitializeMyFirebaseUser({required this.myId});
 
   @override
   final String myId;
-  @override
-  final Map<String, DateTime> timestamps;
 
   @override
   String toString() {
-    return 'ConversationsEvent.initialize(myId: $myId, timestamps: $timestamps)';
+    return 'ConversationsEvent.initialize(myId: $myId)';
   }
 
   @override
@@ -876,16 +950,12 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _InitializeMyFirebaseUser &&
-            const DeepCollectionEquality().equals(other.myId, myId) &&
-            const DeepCollectionEquality()
-                .equals(other.timestamps, timestamps));
+            const DeepCollectionEquality().equals(other.myId, myId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(myId),
-      const DeepCollectionEquality().hash(timestamps));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(myId));
 
   @JsonKey(ignore: true)
   @override
@@ -896,8 +966,7 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -914,16 +983,20 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
-    return initialize(myId, timestamps);
+    return initialize(myId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -939,16 +1012,19 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
-    return initialize?.call(myId, timestamps);
+    return initialize?.call(myId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -964,12 +1040,15 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
   }) {
     if (initialize != null) {
-      return initialize(myId, timestamps);
+      return initialize(myId);
     }
     return orElse();
   }
@@ -987,6 +1066,10 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1003,6 +1086,9 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1019,6 +1105,9 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1031,12 +1120,10 @@ class _$_InitializeMyFirebaseUser implements _InitializeMyFirebaseUser {
 }
 
 abstract class _InitializeMyFirebaseUser implements ConversationsEvent {
-  const factory _InitializeMyFirebaseUser(
-      {required String myId,
-      required Map<String, DateTime> timestamps}) = _$_InitializeMyFirebaseUser;
+  const factory _InitializeMyFirebaseUser({required String myId}) =
+      _$_InitializeMyFirebaseUser;
 
   String get myId;
-  Map<String, DateTime> get timestamps;
   @JsonKey(ignore: true)
   _$InitializeMyFirebaseUserCopyWith<_InitializeMyFirebaseUser> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1109,8 +1196,7 @@ class _$_FetchConversationItems implements _FetchConversationItems {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -1127,6 +1213,10 @@ class _$_FetchConversationItems implements _FetchConversationItems {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1136,7 +1226,7 @@ class _$_FetchConversationItems implements _FetchConversationItems {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1152,6 +1242,9 @@ class _$_FetchConversationItems implements _FetchConversationItems {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1161,7 +1254,7 @@ class _$_FetchConversationItems implements _FetchConversationItems {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1177,6 +1270,9 @@ class _$_FetchConversationItems implements _FetchConversationItems {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1200,6 +1296,10 @@ class _$_FetchConversationItems implements _FetchConversationItems {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1216,6 +1316,9 @@ class _$_FetchConversationItems implements _FetchConversationItems {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1232,6 +1335,9 @@ class _$_FetchConversationItems implements _FetchConversationItems {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1330,8 +1436,7 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -1348,6 +1453,10 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1357,7 +1466,7 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1373,6 +1482,9 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1382,7 +1494,7 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1398,6 +1510,9 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1421,6 +1536,10 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1437,6 +1556,9 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1453,6 +1575,9 @@ class _$_OnConversationItemsData implements _OnConversationItemsData {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1537,8 +1662,7 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -1555,6 +1679,10 @@ class _$_OnData implements _OnData {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1564,7 +1692,7 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1580,6 +1708,9 @@ class _$_OnData implements _OnData {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1589,7 +1720,7 @@ class _$_OnData implements _OnData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1605,6 +1736,9 @@ class _$_OnData implements _OnData {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1628,6 +1762,10 @@ class _$_OnData implements _OnData {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1644,6 +1782,9 @@ class _$_OnData implements _OnData {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1660,6 +1801,9 @@ class _$_OnData implements _OnData {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1745,8 +1889,7 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -1763,6 +1906,10 @@ class _$_HideConversation implements _HideConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1772,7 +1919,7 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1788,6 +1935,9 @@ class _$_HideConversation implements _HideConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -1797,7 +1947,7 @@ class _$_HideConversation implements _HideConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -1813,6 +1963,9 @@ class _$_HideConversation implements _HideConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -1836,6 +1989,10 @@ class _$_HideConversation implements _HideConversation {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -1852,6 +2009,9 @@ class _$_HideConversation implements _HideConversation {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -1868,6 +2028,9 @@ class _$_HideConversation implements _HideConversation {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -1971,8 +2134,7 @@ class _$_CreateConversation implements _CreateConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -1989,6 +2151,10 @@ class _$_CreateConversation implements _CreateConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -1998,7 +2164,7 @@ class _$_CreateConversation implements _CreateConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2014,6 +2180,9 @@ class _$_CreateConversation implements _CreateConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -2024,7 +2193,7 @@ class _$_CreateConversation implements _CreateConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2040,6 +2209,9 @@ class _$_CreateConversation implements _CreateConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -2064,6 +2236,10 @@ class _$_CreateConversation implements _CreateConversation {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -2080,6 +2256,9 @@ class _$_CreateConversation implements _CreateConversation {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -2096,6 +2275,9 @@ class _$_CreateConversation implements _CreateConversation {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -2208,8 +2390,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -2226,6 +2407,10 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -2236,7 +2421,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2252,6 +2437,9 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -2262,7 +2450,7 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2278,6 +2466,9 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -2302,6 +2493,10 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -2318,6 +2513,9 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -2334,6 +2532,9 @@ class _$_CreateGroupConversation implements _CreateGroupConversation {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -2356,6 +2557,486 @@ abstract class _CreateGroupConversation implements ConversationsEvent {
       get onSuccessfullyCreatedGroupConversation;
   @JsonKey(ignore: true)
   _$CreateGroupConversationCopyWith<_CreateGroupConversation> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$SetNewTimestampForGroupConversationCopyWith<$Res> {
+  factory _$SetNewTimestampForGroupConversationCopyWith(
+          _SetNewTimestampForGroupConversation value,
+          $Res Function(_SetNewTimestampForGroupConversation) then) =
+      __$SetNewTimestampForGroupConversationCopyWithImpl<$Res>;
+  $Res call({String conversationId, DateTime timestamp});
+}
+
+/// @nodoc
+class __$SetNewTimestampForGroupConversationCopyWithImpl<$Res>
+    extends _$ConversationsEventCopyWithImpl<$Res>
+    implements _$SetNewTimestampForGroupConversationCopyWith<$Res> {
+  __$SetNewTimestampForGroupConversationCopyWithImpl(
+      _SetNewTimestampForGroupConversation _value,
+      $Res Function(_SetNewTimestampForGroupConversation) _then)
+      : super(_value, (v) => _then(v as _SetNewTimestampForGroupConversation));
+
+  @override
+  _SetNewTimestampForGroupConversation get _value =>
+      super._value as _SetNewTimestampForGroupConversation;
+
+  @override
+  $Res call({
+    Object? conversationId = freezed,
+    Object? timestamp = freezed,
+  }) {
+    return _then(_SetNewTimestampForGroupConversation(
+      conversationId: conversationId == freezed
+          ? _value.conversationId
+          : conversationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: timestamp == freezed
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SetNewTimestampForGroupConversation
+    implements _SetNewTimestampForGroupConversation {
+  const _$_SetNewTimestampForGroupConversation(
+      {required this.conversationId, required this.timestamp});
+
+  @override
+  final String conversationId;
+  @override
+  final DateTime timestamp;
+
+  @override
+  String toString() {
+    return 'ConversationsEvent.setNewTimestampForGroupConversation(conversationId: $conversationId, timestamp: $timestamp)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _SetNewTimestampForGroupConversation &&
+            const DeepCollectionEquality()
+                .equals(other.conversationId, conversationId) &&
+            const DeepCollectionEquality().equals(other.timestamp, timestamp));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(conversationId),
+      const DeepCollectionEquality().hash(timestamp));
+
+  @JsonKey(ignore: true)
+  @override
+  _$SetNewTimestampForGroupConversationCopyWith<
+          _SetNewTimestampForGroupConversation>
+      get copyWith => __$SetNewTimestampForGroupConversationCopyWithImpl<
+          _SetNewTimestampForGroupConversation>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String myId) initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
+    required TResult Function(ConversationItem conversationItem)
+        onConversationItemsData,
+    required TResult Function(List<ConversationItem> conversations) onData,
+    required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
+    required TResult Function() onError,
+    required TResult Function() dispose,
+  }) {
+    return setNewTimestampForGroupConversation(conversationId, timestamp);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String myId)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+  }) {
+    return setNewTimestampForGroupConversation?.call(conversationId, timestamp);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String myId)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+    required TResult orElse(),
+  }) {
+    if (setNewTimestampForGroupConversation != null) {
+      return setNewTimestampForGroupConversation(conversationId, timestamp);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
+    required TResult Function(_OnData value) onData,
+    required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
+    required TResult Function(_OnError value) onError,
+    required TResult Function(_Dispose value) dispose,
+  }) {
+    return setNewTimestampForGroupConversation(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+  }) {
+    return setNewTimestampForGroupConversation?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+    required TResult orElse(),
+  }) {
+    if (setNewTimestampForGroupConversation != null) {
+      return setNewTimestampForGroupConversation(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SetNewTimestampForGroupConversation
+    implements ConversationsEvent {
+  const factory _SetNewTimestampForGroupConversation(
+      {required String conversationId,
+      required DateTime timestamp}) = _$_SetNewTimestampForGroupConversation;
+
+  String get conversationId;
+  DateTime get timestamp;
+  @JsonKey(ignore: true)
+  _$SetNewTimestampForGroupConversationCopyWith<
+          _SetNewTimestampForGroupConversation>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$OnGroupTimestampsDataCopyWith<$Res> {
+  factory _$OnGroupTimestampsDataCopyWith(_OnGroupTimestampsData value,
+          $Res Function(_OnGroupTimestampsData) then) =
+      __$OnGroupTimestampsDataCopyWithImpl<$Res>;
+  $Res call({Map<String, DateTime> timestamps});
+}
+
+/// @nodoc
+class __$OnGroupTimestampsDataCopyWithImpl<$Res>
+    extends _$ConversationsEventCopyWithImpl<$Res>
+    implements _$OnGroupTimestampsDataCopyWith<$Res> {
+  __$OnGroupTimestampsDataCopyWithImpl(_OnGroupTimestampsData _value,
+      $Res Function(_OnGroupTimestampsData) _then)
+      : super(_value, (v) => _then(v as _OnGroupTimestampsData));
+
+  @override
+  _OnGroupTimestampsData get _value => super._value as _OnGroupTimestampsData;
+
+  @override
+  $Res call({
+    Object? timestamps = freezed,
+  }) {
+    return _then(_OnGroupTimestampsData(
+      timestamps == freezed
+          ? _value.timestamps
+          : timestamps // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_OnGroupTimestampsData implements _OnGroupTimestampsData {
+  const _$_OnGroupTimestampsData(this.timestamps);
+
+  @override
+  final Map<String, DateTime> timestamps;
+
+  @override
+  String toString() {
+    return 'ConversationsEvent.onGroupTimestampsData(timestamps: $timestamps)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _OnGroupTimestampsData &&
+            const DeepCollectionEquality()
+                .equals(other.timestamps, timestamps));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(timestamps));
+
+  @JsonKey(ignore: true)
+  @override
+  _$OnGroupTimestampsDataCopyWith<_OnGroupTimestampsData> get copyWith =>
+      __$OnGroupTimestampsDataCopyWithImpl<_OnGroupTimestampsData>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String myId) initialize,
+    required TResult Function(List<Conversation> conversations)
+        fetchConversationItems,
+    required TResult Function(ConversationItem conversationItem)
+        onConversationItemsData,
+    required TResult Function(List<ConversationItem> conversations) onData,
+    required TResult Function(String conversationId) hideConversation,
+    required TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)
+        createConversation,
+    required TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)
+        createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
+    required TResult Function() onError,
+    required TResult Function() dispose,
+  }) {
+    return onGroupTimestampsData(timestamps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String myId)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+  }) {
+    return onGroupTimestampsData?.call(timestamps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String myId)? initialize,
+    TResult Function(List<Conversation> conversations)? fetchConversationItems,
+    TResult Function(ConversationItem conversationItem)?
+        onConversationItemsData,
+    TResult Function(List<ConversationItem> conversations)? onData,
+    TResult Function(String conversationId)? hideConversation,
+    TResult Function(
+            DirectConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedConversation)?
+        createConversation,
+    TResult Function(
+            GroupConversationCreationData creationData,
+            dynamic Function(ConversationItem)?
+                onSuccessfullyCreatedGroupConversation)?
+        createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
+    TResult Function()? onError,
+    TResult Function()? dispose,
+    required TResult orElse(),
+  }) {
+    if (onGroupTimestampsData != null) {
+      return onGroupTimestampsData(timestamps);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitializeMyFirebaseUser value) initialize,
+    required TResult Function(_FetchConversationItems value)
+        fetchConversationItems,
+    required TResult Function(_OnConversationItemsData value)
+        onConversationItemsData,
+    required TResult Function(_OnData value) onData,
+    required TResult Function(_HideConversation value) hideConversation,
+    required TResult Function(_CreateConversation value) createConversation,
+    required TResult Function(_CreateGroupConversation value)
+        createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
+    required TResult Function(_OnError value) onError,
+    required TResult Function(_Dispose value) dispose,
+  }) {
+    return onGroupTimestampsData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+  }) {
+    return onGroupTimestampsData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitializeMyFirebaseUser value)? initialize,
+    TResult Function(_FetchConversationItems value)? fetchConversationItems,
+    TResult Function(_OnConversationItemsData value)? onConversationItemsData,
+    TResult Function(_OnData value)? onData,
+    TResult Function(_HideConversation value)? hideConversation,
+    TResult Function(_CreateConversation value)? createConversation,
+    TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
+    TResult Function(_OnError value)? onError,
+    TResult Function(_Dispose value)? dispose,
+    required TResult orElse(),
+  }) {
+    if (onGroupTimestampsData != null) {
+      return onGroupTimestampsData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnGroupTimestampsData implements ConversationsEvent {
+  const factory _OnGroupTimestampsData(Map<String, DateTime> timestamps) =
+      _$_OnGroupTimestampsData;
+
+  Map<String, DateTime> get timestamps;
+  @JsonKey(ignore: true)
+  _$OnGroupTimestampsDataCopyWith<_OnGroupTimestampsData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2398,8 +3079,7 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -2416,6 +3096,10 @@ class _$_OnError implements _OnError {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -2425,7 +3109,7 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2441,6 +3125,9 @@ class _$_OnError implements _OnError {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -2450,7 +3137,7 @@ class _$_OnError implements _OnError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2466,6 +3153,9 @@ class _$_OnError implements _OnError {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -2489,6 +3179,10 @@ class _$_OnError implements _OnError {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -2505,6 +3199,9 @@ class _$_OnError implements _OnError {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -2521,6 +3218,9 @@ class _$_OnError implements _OnError {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),
@@ -2575,8 +3275,7 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String myId, Map<String, DateTime> timestamps)
-        initialize,
+    required TResult Function(String myId) initialize,
     required TResult Function(List<Conversation> conversations)
         fetchConversationItems,
     required TResult Function(ConversationItem conversationItem)
@@ -2593,6 +3292,10 @@ class _$_Dispose implements _Dispose {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)
         createGroupConversation,
+    required TResult Function(String conversationId, DateTime timestamp)
+        setNewTimestampForGroupConversation,
+    required TResult Function(Map<String, DateTime> timestamps)
+        onGroupTimestampsData,
     required TResult Function() onError,
     required TResult Function() dispose,
   }) {
@@ -2602,7 +3305,7 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2618,6 +3321,9 @@ class _$_Dispose implements _Dispose {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
   }) {
@@ -2627,7 +3333,7 @@ class _$_Dispose implements _Dispose {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String myId, Map<String, DateTime> timestamps)? initialize,
+    TResult Function(String myId)? initialize,
     TResult Function(List<Conversation> conversations)? fetchConversationItems,
     TResult Function(ConversationItem conversationItem)?
         onConversationItemsData,
@@ -2643,6 +3349,9 @@ class _$_Dispose implements _Dispose {
             dynamic Function(ConversationItem)?
                 onSuccessfullyCreatedGroupConversation)?
         createGroupConversation,
+    TResult Function(String conversationId, DateTime timestamp)?
+        setNewTimestampForGroupConversation,
+    TResult Function(Map<String, DateTime> timestamps)? onGroupTimestampsData,
     TResult Function()? onError,
     TResult Function()? dispose,
     required TResult orElse(),
@@ -2666,6 +3375,10 @@ class _$_Dispose implements _Dispose {
     required TResult Function(_CreateConversation value) createConversation,
     required TResult Function(_CreateGroupConversation value)
         createGroupConversation,
+    required TResult Function(_SetNewTimestampForGroupConversation value)
+        setNewTimestampForGroupConversation,
+    required TResult Function(_OnGroupTimestampsData value)
+        onGroupTimestampsData,
     required TResult Function(_OnError value) onError,
     required TResult Function(_Dispose value) dispose,
   }) {
@@ -2682,6 +3395,9 @@ class _$_Dispose implements _Dispose {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
   }) {
@@ -2698,6 +3414,9 @@ class _$_Dispose implements _Dispose {
     TResult Function(_HideConversation value)? hideConversation,
     TResult Function(_CreateConversation value)? createConversation,
     TResult Function(_CreateGroupConversation value)? createGroupConversation,
+    TResult Function(_SetNewTimestampForGroupConversation value)?
+        setNewTimestampForGroupConversation,
+    TResult Function(_OnGroupTimestampsData value)? onGroupTimestampsData,
     TResult Function(_OnError value)? onError,
     TResult Function(_Dispose value)? dispose,
     required TResult orElse(),

@@ -26,7 +26,7 @@ class MyCustomConversationsPage extends StatelessWidget {
                     parent: AlwaysScrollableScrollPhysics(),
                   ),
                   children: conversationsState.maybeWhen(
-                    loadSuccess: (chatConversations) {
+                    loadSuccess: (chatConversations, _) {
                       if (loadedConversationsState.conversations.isEmpty) {
                         return [
                           const Center(child: Text('no conversations here'))

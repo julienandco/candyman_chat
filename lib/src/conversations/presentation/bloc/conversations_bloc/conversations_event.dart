@@ -4,7 +4,7 @@ part of 'conversations_bloc.dart';
 class ConversationsEvent with _$ConversationsEvent {
   const factory ConversationsEvent.initialize({
     required String myId,
-    required Map<String, DateTime> timestamps,
+    // required Map<String, DateTime> timestamps,
   }) = _InitializeMyFirebaseUser;
 
   const factory ConversationsEvent.fetchConversationItems(
@@ -31,6 +31,14 @@ class ConversationsEvent with _$ConversationsEvent {
     required GroupConversationCreationData creationData,
     Function(ConversationItem)? onSuccessfullyCreatedGroupConversation,
   }) = _CreateGroupConversation;
+
+  const factory ConversationsEvent.setNewTimestampForGroupConversation({
+    required String conversationId,
+    required DateTime timestamp,
+  }) = _SetNewTimestampForGroupConversation;
+
+  const factory ConversationsEvent.onGroupTimestampsData(
+      Map<String, DateTime> timestamps) = _OnGroupTimestampsData;
 
   const factory ConversationsEvent.onError() = _OnError;
 

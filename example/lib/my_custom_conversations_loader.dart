@@ -28,7 +28,7 @@ class MyCustomConversationsLoader extends StatelessWidget {
             BlocListener<ConversationsBloc, ConversationsState>(
               listener: (context, state) {
                 state.maybeWhen(
-                  loadSuccess: (conversations) {
+                  loadSuccess: (conversations, _) {
                     context.read<ConversationsSearchBloc>().add(
                         ConversationsSearchEvent.initialize(conversations));
                     final currentConversationCubit =

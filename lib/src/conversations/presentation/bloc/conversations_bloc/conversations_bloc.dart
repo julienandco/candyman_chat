@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'conversations_state.dart';
 part 'conversations_event.dart';
@@ -13,7 +15,7 @@ part 'conversations_bloc.freezed.dart';
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   StreamSubscription? _conversationsStream;
   Stream<FirebaseUser>? _me;
-  Map<String, DateTime>? _timestampMap;
+  String? _myId;
 
   late final List<StreamSubscription> _conversationItemStreams = [];
 
@@ -24,6 +26,22 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   final CreateConversationUC createConversationUC;
   final CreateGroupConversationUC createGroupConversationUC;
 
+  final InitializeTimestampStreamUC initTimestampStreamUC;
+  final SyncTimestampsWithFirebaseUC syncTimestampsWithFirebaseUC;
+
+  StreamSubscription<Map<String, DateTime>>? _timestampsStream;
+
+  final _firebaseSyncIntervalInSeconds = 60;
+
+  final _timestampUpdateDebounceInSeconds = 3;
+
+  DateTime? _lastSyncToFirebase;
+
+  //additional flag for update needs
+  bool _hadNewChangesSinceLastSync = false;
+
+  Timer? _timer;
+
   ConversationsBloc({
     required this.initializeConversationsStreamUC,
     required this.initializeConversationItemStreamUC,
@@ -31,6 +49,8 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     required this.getFirebaseUserUC,
     required this.createConversationUC,
     required this.createGroupConversationUC,
+    required this.initTimestampStreamUC,
+    required this.syncTimestampsWithFirebaseUC,
   }) : super(const _Uninitialized()) {
     on<_InitializeMyFirebaseUser>(_onInitialize);
     on<_FetchConversationItems>(_onFetchChatItems);
@@ -39,15 +59,33 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     on<_HideConversation>(_onHideConversation);
     on<_CreateConversation>(_onCreateConversation);
     on<_CreateGroupConversation>(_onCreateGroupConversation);
+    on<_SetNewTimestampForGroupConversation>(
+      _onSetNewTimestampForGroupConversation,
+      transformer: debounceRestartable(
+          Duration(seconds: _timestampUpdateDebounceInSeconds)),
+    );
+    on<_OnGroupTimestampsData>(_onTimestampsDataReceived);
     on<_OnError>(_onError);
     on<_Dispose>(_onDispose);
+
+    _timer = Timer.periodic(Duration(seconds: _firebaseSyncIntervalInSeconds),
+        (Timer t) {
+      final currentState = state;
+      if (currentState is _$_LoadSuccess && _needsToSync) {
+        log('periodically syncing local group timestamps to firebase...',
+            name: '$runtimeType');
+        _lastSyncToFirebase = DateTime.now();
+        _hadNewChangesSinceLastSync = false;
+        syncTimestampsWithFirebaseUC(
+            userId: _myId!, map: currentState.timestampMap);
+      }
+    });
   }
 
   Future<void> _onInitialize(
       _InitializeMyFirebaseUser event, Emitter emit) async {
     _me = getFirebaseUserUC(userId: event.myId);
-
-    _timestampMap = event.timestamps;
+    _myId = event.myId;
 
     _conversationsStream = initializeConversationsStreamUC(
       onData: (event) {
@@ -59,19 +97,28 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
       },
       onError: (err) => add(const _OnError()),
     );
-    emit(const ConversationsState.loadSuccess(conversations: []));
+
+    _timestampsStream = initTimestampStreamUC(
+        userID: _myId!,
+        onData: (timestampMap) => add(_OnGroupTimestampsData(timestampMap)));
+
+    emit(const ConversationsState.loadSuccess(
+        conversations: [], timestampMap: {}));
   }
 
   void _onFetchChatItems(_FetchConversationItems event, Emitter emit) {
     if (_isInit) {
       _conversationItemStreams.map((e) => e.cancel());
 
+      final timestamps =
+          state is _LoadSuccess ? (state as _LoadSuccess).timestampMap : {};
+
       for (var conversation in event.conversations) {
         if (conversation.createdAt != null) {
           final chatStream = initializeConversationItemStreamUC(
             conversation: conversation,
             timestamp: Timestamp.fromDate(
-              _timestampMap![conversation.id] ?? DateTime.now(),
+              timestamps[conversation.id] ?? DateTime.now(),
             ),
             onData: (event) => add(_OnConversationItemsData(event)),
             onError: (err) {
@@ -110,23 +157,31 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
                 }
               },
             );
-            return ConversationsState.loadSuccess(
+            return state.copyWith(
               conversations: conversations,
             );
           },
           orElse: () => ConversationsState.loadSuccess(
             conversations: [event.conversationItem],
+            timestampMap: {},
           ),
         ),
       );
     }
   }
 
-  void _onReceivedData(_OnData event, Emitter emit) => emit(
-        ConversationsState.loadSuccess(
+  void _onReceivedData(_OnData event, Emitter emit) {
+    emit(
+      state.maybeMap(
+        orElse: () => ConversationsState.loadSuccess(
           conversations: event.conversations,
+          timestampMap: {},
         ),
-      );
+        loadSuccess: (loadedState) =>
+            loadedState.copyWith(conversations: event.conversations),
+      ),
+    );
+  }
 
   void _onHideConversation(_HideConversation event, Emitter emit) {
     if (_isInit) {
@@ -137,7 +192,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
             conversations.removeWhere(
               (element) => element.conversation.id == event.conversationId,
             );
-            return ConversationsState.loadSuccess(
+            return state.copyWith(
               conversations: conversations,
             );
           },
@@ -189,6 +244,42 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     }
   }
 
+  void _onTimestampsDataReceived(_OnGroupTimestampsData event, Emitter emit) {
+    final currentState = state;
+    if (currentState is _LoadSuccess) {
+      emit(currentState.copyWith(timestampMap: event.timestamps));
+    } else {
+      emit(_LoadSuccess(conversations: [], timestampMap: event.timestamps));
+    }
+  }
+
+  void _onSetNewTimestampForGroupConversation(
+      _SetNewTimestampForGroupConversation event, Emitter emit) {
+    final currentState = state;
+    if (currentState is _LoadSuccess) {
+      final currentMap = currentState.timestampMap;
+      Map<String, DateTime> newTimestamps = currentMap;
+
+      //check whether there is a change
+      if (!currentMap.containsKey(event.conversationId) ||
+          (currentMap.containsKey(event.conversationId) &&
+              event.timestamp
+                      .difference(currentMap[event.conversationId]!)
+                      .inSeconds >=
+                  1)) {
+        _hadNewChangesSinceLastSync = true;
+        newTimestamps[event.conversationId] = event.timestamp;
+      }
+
+      if (_needsToSync) {
+        _lastSyncToFirebase = DateTime.now();
+        _hadNewChangesSinceLastSync = false;
+        syncTimestampsWithFirebaseUC(userId: _myId!, map: newTimestamps);
+      }
+      emit(currentState.copyWith(timestampMap: newTimestamps));
+    }
+  }
+
   void _onError(_OnError event, Emitter emit) =>
       emit(const ConversationsState.loadFailure());
 
@@ -200,7 +291,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     emit(const ConversationsState.uninitialized());
   }
 
-  bool get _isInit => _me != null && _timestampMap != null;
+  bool get _isInit => _me != null && _myId != null;
 
   ConversationItem _getConversationItemForConversation({
     required List<ConversationItem> currentItems,
@@ -221,11 +312,30 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     );
   }
 
+  bool get _needsToSync =>
+      _lastSyncToFirebase == null ||
+      (DateTime.now().difference(_lastSyncToFirebase!).inSeconds >=
+              _firebaseSyncIntervalInSeconds &&
+          _hadNewChangesSinceLastSync);
+
   @override
   Future<void> close() {
     _conversationsStream?.cancel();
     _conversationItemStreams.map((e) => e.cancel());
     _me = null;
+    _timestampsStream?.cancel();
+    _timer?.cancel();
+    _myId = null;
     return super.close();
+  }
+
+  EventTransformer<GroupConversationTimestampsEvent>
+      debounceRestartable<GroupConversationTimestampsEvent>(
+    Duration duration,
+  ) {
+    // This feeds the debounced event stream to restartable() and returns that
+    // as a transformer.
+    return (events, mapper) => restartable<GroupConversationTimestampsEvent>()
+        .call(events.debounceTime(duration), mapper);
   }
 }

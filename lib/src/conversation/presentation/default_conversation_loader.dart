@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
@@ -39,8 +40,8 @@ class DefaultConversationLoader extends StatelessWidget {
       ],
       child: DefaultConversationPage(
         updateTimestampForConversation: (timestamp) =>
-            context.read<GroupConversationTimestampsBloc>().add(
-                  GroupConversationTimestampsEvent.setNewTimestamp(
+            context.read<ConversationsBloc>().add(
+                  ConversationsEvent.setNewTimestampForGroupConversation(
                       conversationId: conversationId, timestamp: timestamp),
                 ),
         showCloseButton: showCloseButton,

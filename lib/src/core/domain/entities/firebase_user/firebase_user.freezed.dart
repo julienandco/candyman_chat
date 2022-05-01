@@ -24,7 +24,7 @@ class _$FirebaseUserTearOff {
 
   _FirebaseUser call(
       {required String id,
-      required String name,
+      required String username,
       String? profilePictureURL,
       @MyDateTimeConverter()
           DateTime? lastActivity,
@@ -34,7 +34,7 @@ class _$FirebaseUserTearOff {
           Map<String, DateTime> groupMessageSeenTimestamps = const {}}) {
     return _FirebaseUser(
       id: id,
-      name: name,
+      username: username,
       profilePictureURL: profilePictureURL,
       lastActivity: lastActivity,
       blockedUsers: blockedUsers,
@@ -54,7 +54,7 @@ const $FirebaseUser = _$FirebaseUserTearOff();
 /// @nodoc
 mixin _$FirebaseUser {
   String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   String? get profilePictureURL => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get lastActivity => throw _privateConstructorUsedError;
@@ -77,7 +77,7 @@ abstract class $FirebaseUserCopyWith<$Res> {
       _$FirebaseUserCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      String name,
+      String username,
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers,
@@ -96,7 +96,7 @@ class _$FirebaseUserCopyWithImpl<$Res> implements $FirebaseUserCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? username = freezed,
     Object? profilePictureURL = freezed,
     Object? lastActivity = freezed,
     Object? blockedUsers = freezed,
@@ -108,9 +108,9 @@ class _$FirebaseUserCopyWithImpl<$Res> implements $FirebaseUserCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       profilePictureURL: profilePictureURL == freezed
           ? _value.profilePictureURL
@@ -145,7 +145,7 @@ abstract class _$FirebaseUserCopyWith<$Res>
   @override
   $Res call(
       {String id,
-      String name,
+      String username,
       String? profilePictureURL,
       @MyDateTimeConverter() DateTime? lastActivity,
       List<String> blockedUsers,
@@ -166,7 +166,7 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? username = freezed,
     Object? profilePictureURL = freezed,
     Object? lastActivity = freezed,
     Object? blockedUsers = freezed,
@@ -178,9 +178,9 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       profilePictureURL: profilePictureURL == freezed
           ? _value.profilePictureURL
@@ -211,7 +211,7 @@ class __$FirebaseUserCopyWithImpl<$Res> extends _$FirebaseUserCopyWithImpl<$Res>
 class _$_FirebaseUser implements _FirebaseUser {
   _$_FirebaseUser(
       {required this.id,
-      required this.name,
+      required this.username,
       this.profilePictureURL,
       @MyDateTimeConverter() this.lastActivity,
       this.blockedUsers = const [],
@@ -224,7 +224,7 @@ class _$_FirebaseUser implements _FirebaseUser {
   @override
   final String id;
   @override
-  final String name;
+  final String username;
   @override
   final String? profilePictureURL;
   @override
@@ -242,7 +242,7 @@ class _$_FirebaseUser implements _FirebaseUser {
 
   @override
   String toString() {
-    return 'FirebaseUser(id: $id, name: $name, profilePictureURL: $profilePictureURL, lastActivity: $lastActivity, blockedUsers: $blockedUsers, blockedByUsers: $blockedByUsers, groupMessageSeenTimestamps: $groupMessageSeenTimestamps)';
+    return 'FirebaseUser(id: $id, username: $username, profilePictureURL: $profilePictureURL, lastActivity: $lastActivity, blockedUsers: $blockedUsers, blockedByUsers: $blockedByUsers, groupMessageSeenTimestamps: $groupMessageSeenTimestamps)';
   }
 
   @override
@@ -251,7 +251,7 @@ class _$_FirebaseUser implements _FirebaseUser {
         (other.runtimeType == runtimeType &&
             other is _FirebaseUser &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.username, username) &&
             const DeepCollectionEquality()
                 .equals(other.profilePictureURL, profilePictureURL) &&
             const DeepCollectionEquality()
@@ -268,7 +268,7 @@ class _$_FirebaseUser implements _FirebaseUser {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(username),
       const DeepCollectionEquality().hash(profilePictureURL),
       const DeepCollectionEquality().hash(lastActivity),
       const DeepCollectionEquality().hash(blockedUsers),
@@ -289,7 +289,7 @@ class _$_FirebaseUser implements _FirebaseUser {
 abstract class _FirebaseUser implements FirebaseUser {
   factory _FirebaseUser(
       {required String id,
-      required String name,
+      required String username,
       String? profilePictureURL,
       @MyDateTimeConverter()
           DateTime? lastActivity,
@@ -304,7 +304,7 @@ abstract class _FirebaseUser implements FirebaseUser {
   @override
   String get id;
   @override
-  String get name;
+  String get username;
   @override
   String? get profilePictureURL;
   @override
