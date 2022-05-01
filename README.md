@@ -157,6 +157,14 @@ class _MainAppLoaderState extends State<MainAppLoader> {
 }
 ```
 
+Noch ein kleiner Zusatz: Innerhalb der ```ChatImageBubble``` wird ein ```CachedNetworkImage``` verwendet, um verschickte Bilder anzuzeigen. Sollte das Backend, dass du in diesem Projekt nutzt, http Headers erwarten, kannst du auch diese initialiseren! Rufe dazu einfach die Funktion ```NeonChat.initHttpHeaders``` auf! Kleines Beispiel gefällig?
+
+```dart 
+...
+NeonChat.initHttpHeaders({'Authorization': 'myCustomJWT123'});
+...
+```
+
 Das klingt zu einfach? Stimmt! 🥴
 
 Solltest du dich wider Erwarten in Fall 2 befinden, dann willst du höchstwahrscheinlich die gesamten UI-Komponenten neu bauen, oder die Chat-Logik sogar erweitern 😱 (falls du denkst, dass das auch für andere Projekte Sinn macht, dann hauen wir das mit ins Package)!
