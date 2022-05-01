@@ -75,8 +75,9 @@ class NeonChat extends StatefulWidget {
   /// Needs to be called if the calls to your backend that provides the user
   /// profile image data needs http headers.
   ///
-  static initNeonChatHttpHeaders(Map<String, String> httpHeaders) {
-    initHttpHeaders(httpHeaders);
+  static Future<void> initNeonChatHttpHeaders(
+      Map<String, String> httpHeaders) async {
+    return await initHttpHeaders(httpHeaders);
   }
 
   ///
