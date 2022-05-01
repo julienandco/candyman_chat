@@ -67,12 +67,10 @@ packages:
   better_player:
     dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "20d401c3e9774e35d9ad3ceb0c35f0f3e57f8943"
-      url: "https://github.com/NEON-Software-Solutions/betterplayer.git"
-    source: git
-    version: "0.0.81"
+      name: better_player
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.82"
   bloc:
     dependency: transitive
     description:
@@ -1224,7 +1222,7 @@ packages:
       name: wakelock
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1+1"
+    version: "0.6.1+2"
   wakelock_macos:
     dependency: transitive
     description:
