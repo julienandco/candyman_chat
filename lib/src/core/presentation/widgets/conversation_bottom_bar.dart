@@ -284,9 +284,7 @@ class _ConversationBottomBarState extends State<ConversationBottomBar> {
                           decoration: BoxDecoration(
                               color: widget.bottomBarStyle.chatBarColor,
                               borderRadius: widget.bottomBarStyle.borderRadius,
-                              boxShadow: widget.bottomBarStyle.boxShadow != null
-                                  ? [widget.bottomBarStyle.boxShadow!]
-                                  : []),
+                              boxShadow: [widget.bottomBarStyle.boxShadow]),
                           child: Stack(
                             children: [
                               AnimatedOpacity(
@@ -372,7 +370,7 @@ class _ConversationBottomBarState extends State<ConversationBottomBar> {
                       const SizedBox(width: 15),
                       _showSentButton
                           ? ChatCircleButton(
-                              shadow: widget.bottomBarStyle.boxShadow!,
+                              shadow: widget.bottomBarStyle.boxShadow,
                               color: widget.bottomBarStyle.iconsColor,
                               child: widget.bottomBarStyle.sendIcon,
                               size: widget.bottomBarStyle.sendIconSize,

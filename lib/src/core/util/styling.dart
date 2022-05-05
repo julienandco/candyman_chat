@@ -255,7 +255,7 @@ class BottomBarStyle {
   final Widget cameraIcon;
   final Widget sendIcon;
   final double sendIconSize;
-  final BoxShadow? boxShadow;
+  final BoxShadow boxShadow;
 
   const BottomBarStyle({
     this.chatBarColor = Colors.white,
