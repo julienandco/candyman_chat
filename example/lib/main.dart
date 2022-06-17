@@ -117,12 +117,19 @@ class _MyApp extends StatelessWidget {
               child: const Text('Chat'),
               onPressed: () => Navigator.of(context).push(
                 CupertinoPageRoute(
-                  builder: (context) => const Scaffold(
+                  builder: (context) => Scaffold(
                     body: NeonChat(
                       provideConversationsBloc: true,
+                      getConversationCreationData: () =>
+                          DirectConversationCreationData(
+                              conversationPartner: FirebaseUser(
+                                  id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2',
+                                  username: 'Julien3')),
                       conversationsStyle: ConversationsStyle(
                         showAppBarAboveConversations: true,
                         noConversationsWidget: Text('oh man alter'),
+                        showFab: true,
+                        fabColor: Colors.red,
                       ),
                     ),
                   ),
