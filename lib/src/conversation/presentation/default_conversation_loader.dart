@@ -4,9 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
-import 'package:neon_chat/src/conversation/conversation.dart';
-import 'package:neon_chat/src/core/core.dart';
-
 class DefaultConversationLoader extends StatelessWidget {
   final String conversationId;
   final bool showCloseButton;

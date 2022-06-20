@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 
-class ConversationAppbar extends StatelessWidget
-    implements PreferredSizeWidget {
+class DefaultConversationAppbar extends ConversationAppbar {
   final SearchAppBarStyle searchAppBarStyle;
   final bool showCloseButton;
   final Function(Conversation)? onAvertaTap;
 
-  const ConversationAppbar({
+  const DefaultConversationAppbar({
     Key? key,
     required this.searchAppBarStyle,
     required this.showCloseButton,
+    String? conversationThumbnail,
     this.onAvertaTap,
-  }) : super(key: key);
+  }) : super(key: key, conversationThumbnail: conversationThumbnail);
 
   @override
   Widget build(BuildContext context) {

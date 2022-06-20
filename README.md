@@ -13,7 +13,7 @@ neon-chat:
 ```
 
 ## Setup
-1. App in Firebase registrieren, am besten mithilfe der [FlutterFireCLI][flutterfire_cli_link] und im Anschluss die automatisch generierten ```DefaultFirebaseOptions``` zum initialisieren nutzen (kein GoogleServiceInfo.plist bzw. .json Rumgebumse mehr!):
+1. App in Firebase registrieren, am besten mithilfe der [FlutterFireCLI][flutterfire_cli_link] und im Anschluss die automatisch generierten ```DefaultFirebaseOptions``` zum initialisieren nutzen (kein GoogleServiceInfo.plist bzw. .json Rumgenerve mehr!):
 
 ```dart
 ...
@@ -175,7 +175,7 @@ Nutze sie, doch nutze sie weise 🧙🏻‍♂️ !
 
 Selbstverständlich stehen dir auch alle Widgets aus dem Chat-Package zur Verfügung, tob dich aus!
 
-Als letzer Hinweis: die erste Nutzung wird höchstwahrscheinlich schiefgehen, weil du noch Suchindizies im Firestore aktivieren musst. Dazu kommt dann eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst.
+Als letzer Hinweis: die erste Nutzung wird höchstwahrscheinlich schiefgehen, weil du noch Suchindizies im Firestore aktivieren musst. Dazu kommt dann eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst. Außerdem kannst du dir das Leben sehr schnell sehr schwer machen, wenn komische Firebase Regeln definiert werden, aber das findest du schon selber raus :)
 
 Und jetzt: Abfahrt! 🏎
 

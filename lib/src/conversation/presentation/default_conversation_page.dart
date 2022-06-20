@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
-
-import 'widgets/conversation_appbar_widget.dart';
+import 'package:neon_chat/src/conversation/presentation/widgets/widgets.dart';
 
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
@@ -75,16 +74,21 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                   child: Scaffold(
                     backgroundColor:
                         chatGetIt<ConversationStyle>().backgroundColor,
-                    appBar: ConversationAppbar(
-                      onAvertaTap: loadedConversationState
-                              .conversation.isGroupConversation
-                          ? chatGetIt<FunctionInitData>()
-                              .onGroupConversationAppBarTap
-                          : chatGetIt<FunctionInitData>()
-                              .onDirectConversationAppBarTap,
-                      searchAppBarStyle: chatGetIt<SearchAppBarStyle>(),
-                      showCloseButton: !widget.showCloseButton,
-                    ),
+                    appBar: chatGetIt<ConversationStyle>()
+                            .buildCustomConversationAppBar
+                            ?.call(loadedConversationState.conversation) ??
+                        DefaultConversationAppbar(
+                          conversationThumbnail:
+                              loadedConversationState.conversation.thumbnail,
+                          onAvertaTap: loadedConversationState
+                                  .conversation.isGroupConversation
+                              ? chatGetIt<FunctionInitData>()
+                                  .onGroupConversationAppBarTap
+                              : chatGetIt<FunctionInitData>()
+                                  .onDirectConversationAppBarTap,
+                          searchAppBarStyle: chatGetIt<SearchAppBarStyle>(),
+                          showCloseButton: !widget.showCloseButton,
+                        ),
                     body: Stack(
                       children: [
                         CustomScrollView(
@@ -157,9 +161,14 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                                       builder: (context, state) {
                                         return state.maybeMap(
                                           loadSuccess: (state) {
-                                            return ConversationBottomBar(
-                                                bottomBarStyle: chatGetIt<
-                                                    BottomBarStyle>());
+                                            final bottomBarStyle =
+                                                chatGetIt<BottomBarStyle>();
+
+                                            return bottomBarStyle
+                                                    .customBottomBar ??
+                                                ConversationBottomBar(
+                                                    bottomBarStyle:
+                                                        bottomBarStyle);
                                           },
                                           orElse: () => const SizedBox.shrink(),
                                         );

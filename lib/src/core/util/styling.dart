@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:neon_chat/src/conversation/presentation/widgets/conversation_app_bar.dart';
+import 'package:neon_chat/src/conversation/presentation/widgets/default_conversation_appbar.dart';
 import 'package:neon_chat/src/core/util/util.dart';
+
+import '../../conversations/conversations.dart';
 
 /// Style data structure for the Conversations page
 class ConversationsStyle {
@@ -96,6 +100,10 @@ class GroupChatOverviewStyle {
 
 /// Style data structure for a Conversation page
 class ConversationStyle {
+  /// Your custom implementation of [ConversationAppbar] to be displayed.
+  final ConversationAppbar Function(Conversation)?
+      buildCustomConversationAppBar;
+
   final Color backgroundColor;
   final List<Color> ignorePointersColors;
   final EdgeInsetsGeometry messageListPadding;
@@ -103,6 +111,7 @@ class ConversationStyle {
   final String youString;
 
   const ConversationStyle({
+    this.buildCustomConversationAppBar,
     this.backgroundColor = Colors.white,
     this.ignorePointersColors = const [Colors.black26, Colors.transparent],
     this.messageListPadding =
@@ -230,6 +239,9 @@ class SearchAppBarStyle {
 
 /// Style data structure for the [BottomBar] widget
 class BottomBarStyle {
+  /// Your own bottom bar to be displayed.
+  final Widget? customBottomBar;
+
   final Color chatBarColor;
   final BorderRadius borderRadius;
   final Color assetPickerColor;
@@ -258,6 +270,7 @@ class BottomBarStyle {
   final BoxShadow boxShadow;
 
   const BottomBarStyle({
+    this.customBottomBar,
     this.chatBarColor = Colors.white,
     this.borderRadius = const BorderRadius.all(Radius.circular(25)),
     this.assetPickerColor = Colors.red,
