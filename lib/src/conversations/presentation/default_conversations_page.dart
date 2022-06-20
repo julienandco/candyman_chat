@@ -25,6 +25,9 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     );
   }
 
+  Widget _buildDefaultConversationImage(ConversationItem convoItem) =>
+      AvatarWidget(imgUrl: convoItem.conversation.thumbnail);
+
   @override
   Widget build(BuildContext context) {
     final _myId = chatGetIt<FirebaseAuth>().currentUser!.uid;
@@ -99,15 +102,16 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                   conversationListItemStyle:
                                       style.chatListItemStyle,
                                   conversationItem: conversationItem,
-                                  conversationThumbnail:
-                                      //TODO: should this function rather handle a user id?
-                                      chatGetIt<FunctionInitData>()
+                                  conversationThumbnail: conversationItem.conversation.isGroupConversation
+                                      ? _buildDefaultConversationImage(
+                                          conversationItem)
+                                      : chatGetIt<FunctionInitData>()
                                               .getUserAvatar
-                                              ?.call(conversationItem
-                                                  .conversation.thumbnail) ??
-                                          AvatarWidget(
-                                              imgUrl: conversationItem
-                                                  .conversation.thumbnail),
+                                              ?.call(conversationItem.conversation
+                                                  .getConversationPartner(_myId)
+                                                  ?.id) ??
+                                          _buildDefaultConversationImage(
+                                              conversationItem),
                                   onOpenConversation: () =>
                                       _openConversation(conversationItem),
                                   onOpenConversationInfo: conversationItem
@@ -117,8 +121,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                           ?.call(conversationItem.conversation)
                                       : () => chatGetIt<FunctionInitData>()
                                           .onDirectConversationAppBarTap
-                                          ?.call(
-                                              conversationItem.conversation)),
+                                          ?.call(conversationItem.conversation)),
                             )
                             .toList();
                       },
