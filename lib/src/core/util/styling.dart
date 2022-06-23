@@ -109,13 +109,13 @@ class ConversationStyle {
   final EdgeInsetsGeometry messageListPadding;
   final EdgeInsetsGeometry searchPadding;
   final String youString;
-  final Widget? appBarOnPopWidget;
+  final Widget? appBarOnPopIcon;
 
   const ConversationStyle({
     this.buildCustomConversationAppBar,
     this.backgroundColor = Colors.white,
     this.ignorePointersColors = const [Colors.black26, Colors.transparent],
-    this.appBarOnPopWidget,
+    this.appBarOnPopIcon,
     this.messageListPadding =
         const EdgeInsets.only(top: 20, bottom: 100, left: 20, right: 20),
     this.searchPadding = const EdgeInsets.only(bottom: 10, left: 10, right: 10),

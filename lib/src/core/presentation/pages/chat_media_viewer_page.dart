@@ -76,7 +76,12 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
       backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        leading: chatGetIt<ConversationStyle>().appBarOnPopWidget,
+        leading: chatGetIt<ConversationStyle>().appBarOnPopIcon != null
+            ? GestureDetector(
+                child: chatGetIt<ConversationStyle>().appBarOnPopIcon,
+                onTap: () => Navigator.of(context).pop(),
+              )
+            : null,
         backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
         systemOverlayStyle: SystemUiOverlayStyle.light,
         centerTitle: true,
