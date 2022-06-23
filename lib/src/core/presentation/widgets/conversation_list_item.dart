@@ -78,155 +78,149 @@ class _ConversationListItemState extends State<ConversationListItem> {
       }
     }
 
-    if (widget.conversationItem.lastMessage == ConversationMessage.empty()) {
-      return const SizedBox();
-    } else {
-      return FocusedMenuHolder(
-        duration: const Duration(milliseconds: 200),
-        key: Key(widget.conversationItem.conversation.id),
-        onPressed: () {},
-        menuItemExtent: 45,
-        menuOffset: 10.0,
-        blurSize: 0.0,
-        blurBackgroundColor:
-            widget.conversationListItemStyle.focusMenuBlurBackgroundColor,
-        menuWidth: MediaQuery.of(context).size.width * 0.6,
-        menuBoxDecoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(50)),
-        menuItems: [
-          FocusedMenuItem(
-              backgroundColor: widget.conversationListItemStyle.focusMenuColor,
-              title: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.5 - 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                        fit: FlexFit.loose,
-                        child: widget.conversationListItemStyle.focusMenuIcon),
-                    Flexible(
-                      fit: FlexFit.loose,
-                      child: AutoSizeText(
-                        widget.conversationListItemStyle.focusMenuText,
-                        style:
-                            widget.conversationListItemStyle.focusMenuTextStyle,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              trailingIcon: null,
-              onPressed: () => context.read<ConversationsBloc>().add(
-                  ConversationsEvent.hideConversation(
-                      widget.conversationItem.conversation.id))),
-        ],
-        child: GestureDetector(
-          onTap: () {
-            if (isWidthOverLimit(context)) {
-              context
-                  .read<CurrentConversationCubit>()
-                  .onCurrentConversationChanged(
-                    widget.conversationItem,
-                  );
-            } else {
-              widget.onOpenConversation?.call();
-            }
-          },
-          child: MouseRegion(
-            onEnter: (_) {
-              _onHover = true;
-              setState(() {});
-            },
-            onExit: (_) {
-              _onHover = false;
-              setState(() {});
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              padding: const EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                color: (context
-                                .watch<CurrentConversationCubit>()
-                                .state
-                                .conversationItem
-                                ?.conversation
-                                .id ==
-                            widget.conversationItem.conversation.id ||
-                        _onHover)
-                    ? widget.conversationListItemStyle.listTileHoverColor
-                    : widget.conversationListItemStyle.listTileColor,
-              ),
+    return FocusedMenuHolder(
+      duration: const Duration(milliseconds: 200),
+      key: Key(widget.conversationItem.conversation.id),
+      onPressed: () {},
+      menuItemExtent: 45,
+      menuOffset: 10.0,
+      blurSize: 0.0,
+      blurBackgroundColor:
+          widget.conversationListItemStyle.focusMenuBlurBackgroundColor,
+      menuWidth: MediaQuery.of(context).size.width * 0.6,
+      menuBoxDecoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
+      menuItems: [
+        FocusedMenuItem(
+            backgroundColor: widget.conversationListItemStyle.focusMenuColor,
+            title: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5 - 50,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: widget.onOpenConversationInfo,
-                    child: widget.conversationThumbnail,
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              widget.conversationItem.conversation
-                                  .getDisplayName(widget.myId),
-                              style: widget
-                                  .conversationListItemStyle.titleTextStyle,
-                            ),
-                            Text(
-                              widget.conversationItem.lastMessage !=
-                                      ConversationMessage.empty()
-                                  ? widget.conversationItem.lastMessage
-                                      .timestampFormatted
-                                  : '',
-                              style: widget
-                                  .conversationListItemStyle.subtitleTextStyle,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 26,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.65,
-                                  child: lastMessageBuilder()),
-                              if (widget.conversationItem.unreadMessagesCount !=
-                                  0)
-                                Badge(
-                                  badgeColor: widget
-                                      .conversationListItemStyle.badgeColor,
-                                  padding: const EdgeInsets.all(6.0),
-                                  elevation: 0.0,
-                                  badgeContent: Text(
-                                    widget.conversationItem.unreadMessagesCount
-                                        .toString(),
-                                    style: widget.conversationListItemStyle
-                                        .badgeTextStyle,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        )
-                      ],
+                  Flexible(
+                      fit: FlexFit.loose,
+                      child: widget.conversationListItemStyle.focusMenuIcon),
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: AutoSizeText(
+                      widget.conversationListItemStyle.focusMenuText,
+                      style:
+                          widget.conversationListItemStyle.focusMenuTextStyle,
                     ),
                   ),
                 ],
               ),
             ),
+            trailingIcon: null,
+            onPressed: () => context.read<ConversationsBloc>().add(
+                ConversationsEvent.hideConversation(
+                    widget.conversationItem.conversation.id))),
+      ],
+      child: GestureDetector(
+        onTap: () {
+          if (isWidthOverLimit(context)) {
+            context
+                .read<CurrentConversationCubit>()
+                .onCurrentConversationChanged(
+                  widget.conversationItem,
+                );
+          } else {
+            widget.onOpenConversation?.call();
+          }
+        },
+        child: MouseRegion(
+          onEnter: (_) {
+            _onHover = true;
+            setState(() {});
+          },
+          onExit: (_) {
+            _onHover = false;
+            setState(() {});
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            padding: const EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              color: (context
+                              .watch<CurrentConversationCubit>()
+                              .state
+                              .conversationItem
+                              ?.conversation
+                              .id ==
+                          widget.conversationItem.conversation.id ||
+                      _onHover)
+                  ? widget.conversationListItemStyle.listTileHoverColor
+                  : widget.conversationListItemStyle.listTileColor,
+            ),
+            child: Row(
+              children: [
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: widget.onOpenConversationInfo,
+                  child: widget.conversationThumbnail,
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.conversationItem.conversation
+                                .getDisplayName(widget.myId),
+                            style:
+                                widget.conversationListItemStyle.titleTextStyle,
+                          ),
+                          Text(
+                            widget.conversationItem.lastMessage !=
+                                    ConversationMessage.empty()
+                                ? widget.conversationItem.lastMessage
+                                    .timestampFormatted
+                                : '',
+                            style: widget
+                                .conversationListItemStyle.subtitleTextStyle,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 26,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.65,
+                                child: lastMessageBuilder()),
+                            if (widget.conversationItem.unreadMessagesCount !=
+                                0)
+                              Badge(
+                                badgeColor:
+                                    widget.conversationListItemStyle.badgeColor,
+                                padding: const EdgeInsets.all(6.0),
+                                elevation: 0.0,
+                                badgeContent: Text(
+                                  widget.conversationItem.unreadMessagesCount
+                                      .toString(),
+                                  style: widget
+                                      .conversationListItemStyle.badgeTextStyle,
+                                ),
+                              ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      );
-    }
+      ),
+    );
   }
 }
