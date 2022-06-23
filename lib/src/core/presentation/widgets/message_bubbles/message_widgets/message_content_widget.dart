@@ -129,6 +129,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
           padding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ChatFileBubble(
                 defaultFileBubbleStyle:

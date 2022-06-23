@@ -76,6 +76,7 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
       backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: true,
+        leading: chatGetIt<ConversationStyle>().appBarOnPopWidget,
         backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
         systemOverlayStyle: SystemUiOverlayStyle.light,
         centerTitle: true,
