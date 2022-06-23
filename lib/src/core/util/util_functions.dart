@@ -42,13 +42,19 @@ void openConversation(
   BuildContext context, {
   required String conversationId,
   bool showCloseButton = true,
+  // CAUTION! Only set this to true, if you MADE ABSOLUTELY SURE that the
+  // ChatPage is already in the widget tree! Otherwise, the chatGet it won't
+  // be instantiated and all the necessary blocs will not be provided!
+  bool explicitChatPageNavigation = false,
 }) {
-  //open up the chat page so that all the necessary blocs get provided and
-  //the chat get it gets instantiated.
-  chatGetIt
-      .get<void Function(BuildContext)>(
-          instanceName: kOpenAppChatPageInstanceName)
-      .call(context);
+  if (!explicitChatPageNavigation) {
+    //open up the chat page so that all the necessary blocs get provided and
+    //the chat get it gets instantiated.
+    chatGetIt
+        .get<void Function(BuildContext)>(
+            instanceName: kOpenAppChatPageInstanceName)
+        .call(context);
+  }
 
   openConversationInternally(context, conversationId: conversationId);
 }
