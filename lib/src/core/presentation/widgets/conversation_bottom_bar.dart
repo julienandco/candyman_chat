@@ -382,7 +382,7 @@ class _ConversationBottomBarState extends State<ConversationBottomBar> {
                             )
                           : AudioRecordButton(
                               timer: _recordTimer,
-                              onRecordStart: () {
+                              onRecordStartOverride: () {
                                 _recordTimer?.onExecute
                                     .add(StopWatchExecute.reset);
                                 _recordTimer?.onExecute
@@ -392,7 +392,7 @@ class _ConversationBottomBarState extends State<ConversationBottomBar> {
                                   _showAttachOptions = false;
                                 });
                               },
-                              onRecordEnd: (filePath) {
+                              onRecordEndOverride: (filePath) {
                                 _sendAudioMessage(
                                   filePath!,
                                   Duration(seconds: _recordingSec),

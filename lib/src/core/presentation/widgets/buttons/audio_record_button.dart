@@ -9,8 +9,10 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class AudioRecordButton extends StatefulWidget {
   final StopWatchTimer? timer;
-  final Function()? onRecordStart;
-  final Function(String?)? onRecordEnd;
+  final Function()? onRecordStartOverride;
+  final Function(String?)? onRecordEndOverride;
+  final Function()? onRecordStartAdditionalAction;
+  final Function(String?)? onRecordEndAdditionalAction;
   final void Function(int)? onTimerChange;
   final Color recordingOngoingColor;
   final Color recordingInactiveColor;
@@ -34,8 +36,10 @@ class AudioRecordButton extends StatefulWidget {
   const AudioRecordButton({
     Key? key,
     this.timer,
-    this.onRecordStart,
-    this.onRecordEnd,
+    this.onRecordStartOverride,
+    this.onRecordEndOverride,
+    this.onRecordStartAdditionalAction,
+    this.onRecordEndAdditionalAction,
     this.onTimerChange,
     this.recordingInactiveColor = Colors.white,
     this.recordingInactiveBorderColor = Colors.transparent,
@@ -106,6 +110,8 @@ class _AudioRecordButtonState extends State<AudioRecordButton>
     setState(() {
       _isRecording = true;
     });
+
+    widget.onRecordStartAdditionalAction?.call();
   }
 
   void _defaultOnRecordEnd(String? filePath) {
@@ -121,6 +127,8 @@ class _AudioRecordButtonState extends State<AudioRecordButton>
     setState(() {
       _isRecording = false;
     });
+
+    widget.onRecordEndAdditionalAction?.call(filePath);
   }
 
   Future<void> _start() async {
@@ -133,7 +141,7 @@ class _AudioRecordButtonState extends State<AudioRecordButton>
           _isRecording = isRecording;
         });
 
-        (widget.onRecordStart ?? _defaultOnRecordStart).call();
+        (widget.onRecordStartOverride ?? _defaultOnRecordStart).call();
         _animationController!.forward();
       }
     } catch (e) {
@@ -146,7 +154,7 @@ class _AudioRecordButtonState extends State<AudioRecordButton>
     final url = await _audioRecorder.stop();
     setState(() => _isRecording = false);
 
-    (widget.onRecordEnd ?? _defaultOnRecordEnd).call(url);
+    (widget.onRecordEndOverride ?? _defaultOnRecordEnd).call(url);
     _animationController!.reverse();
   }
 
