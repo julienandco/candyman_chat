@@ -142,6 +142,7 @@ class MessageBubbleStyle {
   final Color ownMessageColor;
   final Color otherUserMessageColor;
   final BoxDecoration? decoration;
+  final bool hideSeenReceivedIcon;
   final Widget? seenIcon;
   final Widget? receivedIcon;
   final String messageIsUploadingLabel;
@@ -189,6 +190,7 @@ class MessageBubbleStyle {
     this.ownMessageColor = const Color.fromARGB(255, 25, 5, 55),
     this.otherUserMessageColor = Colors.grey,
     this.decoration,
+    this.hideSeenReceivedIcon = false,
     this.seenIcon,
     this.receivedIcon,
     this.messageBubbleDeletedLabelStyle,

@@ -64,6 +64,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
             left: 15,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               ConversationAudioPlayer(
                 audioPlayerStyle: widget.messageBubbleStyle.audioPlayerStyle,
@@ -78,6 +79,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
           margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
           width: MediaQuery.of(context).size.width * 0.5,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               (!widget.message.doneUpload && kIsWeb)
                   ? Text(widget.messageBubbleStyle.messageIsUploadingLabel)
@@ -100,6 +102,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
           width: MediaQuery.of(context).size.width * 0.5,
           margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               if (!widget.message.doneUpload && kIsWeb)
                 Text(widget.messageBubbleStyle.messageIsUploadingLabel),
@@ -156,7 +159,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
             top: 5,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               if (isURL)
                 LinkPreview(

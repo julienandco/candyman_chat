@@ -96,7 +96,8 @@ class _MessageBubbleState extends State<MessageBubble> {
             ? widget.messageBubbleStyle.ownMessageTimestampStyle
             : widget.messageBubbleStyle.otherUserMessageTimestampStyle,
       ),
-      if (widget.message.isMe)
+      if (widget.message.isMe &&
+          !widget.messageBubbleStyle.hideSeenReceivedIcon)
         CheckMarkWidget(
           message: widget.message,
           seenIcon: widget.messageBubbleStyle.seenIcon,
