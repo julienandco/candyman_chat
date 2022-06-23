@@ -195,7 +195,7 @@ class _SearchBarState extends State<_SearchBar> {
           data: _sliderThemeData.copyWith(
             thumbShape: HiddenThumbComponentShape(),
             activeTrackColor: widget.activeTrackColor,
-            thumbColor: Colors.red,
+            thumbColor: widget.thumbColor,
             inactiveTrackColor: Colors.grey.shade300,
           ),
           child: ExcludeSemantics(
