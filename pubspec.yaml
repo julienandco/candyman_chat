@@ -31,6 +31,7 @@ dependencies:
   flutter_animator: ^3.2.1
   just_audio: ^0.9.20
   flutter_chat_types: ^3.3.1
+  url_launcher: ^6.1.4
 
   # Dependency Injection
   get_it: ^7.2.0

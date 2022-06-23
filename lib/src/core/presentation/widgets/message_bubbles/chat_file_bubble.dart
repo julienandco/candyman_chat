@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ChatFileBubble extends StatefulWidget {
   final ConversationMessage message;
@@ -38,7 +38,7 @@ class _ChatFileBubbleState extends State<ChatFileBubble>
         _isLoading = false;
         setState(() {});
 
-        launch(url);
+        launchUrlString(url);
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
