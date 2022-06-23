@@ -319,6 +319,7 @@ class AudioPlayerStyle {
   final Color sliderColor;
   final Color activeTrackColor;
   final Color thumbColor;
+  final Color playButtonColor;
 
   const AudioPlayerStyle({
     this.playIcon = const Icon(Icons.play_arrow, color: Colors.white, size: 18),
@@ -327,6 +328,7 @@ class AudioPlayerStyle {
     this.sliderColor = Colors.red,
     this.activeTrackColor = Colors.yellow,
     this.thumbColor = Colors.redAccent,
+    this.playButtonColor = Colors.red,
   });
 }
 

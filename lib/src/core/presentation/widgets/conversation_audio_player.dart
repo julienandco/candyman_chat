@@ -108,6 +108,7 @@ class _ConversationAudioPlayerState extends State<ConversationAudioPlayer> {
               child: data.isPlaying
                   ? widget.audioPlayerStyle.playingIcon
                   : widget.audioPlayerStyle.playIcon,
+              color: widget.audioPlayerStyle.playButtonColor,
               size: 30,
               onTap: onPlayPausePressed,
               padding: const EdgeInsets.all(5),
