@@ -175,9 +175,16 @@ Nutze sie, doch nutze sie weise 🧙🏻‍♂️ !
 
 Selbstverständlich stehen dir auch alle Widgets aus dem Chat-Package zur Verfügung, tob dich aus!
 
+## Doku
+
+Zu jeder guten Packagenutzung gehört natürlich das ausführliche Studieren der Doku. Ich habe so gut es geht, die Funktionen und Felder der Datenstrukturen, mit denen du den Chat customizen kannst, im Code dokumentiert, sodass du alles per Hover in VS Code sehen können müsstest. Es kann gut sein, dass ich an manchen Stellen zu sparsam mit meinen Worten war oder sogar gar nichts geschrieben habe. Sobald so etwas auffällt: direkt an mich (Julien) wenden, ich erklärs dir und schreibe ein bisschen Doku. 
+
+Wer den Chat nicht rallt und meine schweißtreibende Doku nicht liest: direkt Berlin-Brandenburg-Verbot ⛔️
+
 Als letzer Hinweis: die erste Nutzung wird höchstwahrscheinlich schiefgehen, weil du noch Suchindizies im Firestore aktivieren musst. Dazu kommt dann eine wunderschöne Konsolenausgabe mit Link, die dich genau dorthin führt, wo du hinwillst. Außerdem kannst du dir das Leben sehr schnell sehr schwer machen, wenn komische Firebase Regeln definiert werden, aber das findest du schon selber raus :)
 
 Und jetzt: Abfahrt! 🏎
+
 
 
 [flutterfire_cli_link]: https://firebase.flutter.dev/docs/overview/
