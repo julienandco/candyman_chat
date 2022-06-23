@@ -381,6 +381,7 @@ class _ConversationBottomBarState extends State<ConversationBottomBar> {
                               },
                             )
                           : AudioRecordButton(
+                              timer: _recordTimer,
                               onRecordStart: () {
                                 _recordTimer?.onExecute
                                     .add(StopWatchExecute.reset);
@@ -405,6 +406,7 @@ class _ConversationBottomBarState extends State<ConversationBottomBar> {
                                   _isRecordingAudio = false;
                                 });
                               },
+                              onTimerChange: _onTimerChange,
                             ),
                     ],
                   ),
