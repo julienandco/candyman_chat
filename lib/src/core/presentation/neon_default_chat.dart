@@ -136,6 +136,11 @@ class NeonChat extends StatefulWidget {
   final Widget Function(String?)? getUserAvatar;
 
   ///
+  /// Returns an instance of [FirebaseUser] given a userID.
+  ///
+  final FirebaseUser Function(String) getUserForID;
+
+  ///
   /// Returns the display string to be shown next to the emoji of a given
   /// message type (for ex. an audio message preview would show up in the conversations
   /// screen as: 🎤 + return value of this method).
@@ -151,6 +156,7 @@ class NeonChat extends StatefulWidget {
 
   const NeonChat({
     Key? key,
+    required this.getUserForID,
     this.onGroupConversationAppBarTap,
     this.disableGroupConversationAppBarTap = false,
     this.provideConversationsBloc = false,
@@ -185,6 +191,7 @@ class _NeonChatState extends State<NeonChat> {
 
     initFunctions(
       FunctionInitData(
+        getUserForID: widget.getUserForID,
         getConversationMessageTypeDisplayString:
             widget.getConversationMessageTypeDisplayString ??
                 (type) => type.firebaseKey,

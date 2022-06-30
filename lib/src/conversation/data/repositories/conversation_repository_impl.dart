@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseFirestore firestore;
@@ -187,15 +188,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
             } else {
               // is 1-on-1 conversation
               final _myId = firebaseAuth.currentUser!.uid;
-              final conversationMembers =
-                  data[firebaseKeys.conversationMembersKey]
-                      as Map<String, dynamic>;
-              final conversationMemberIds = conversationMembers.keys;
+              final conversationMemberIDs =
+                  data[firebaseKeys.conversationMembersKey] as List<dynamic>;
+
               final otherUserId =
-                  conversationMemberIds.firstWhere((id) => id != _myId);
+                  conversationMemberIDs.firstWhere((id) => id != _myId);
               //displayname is conversation partner's username
-              displayName = conversationMembers[otherUserId]
-                  [firebaseKeys.usersUserNameKey];
+              final otherUser =
+                  chatGetIt<FunctionInitData>().getUserForID(otherUserId);
+              displayName = otherUser.username;
             }
             sink.add(displayName);
           } else {

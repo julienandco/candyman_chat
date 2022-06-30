@@ -34,8 +34,9 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     // not duplicated.
     final query = await _collection
         .where(
-            '${firebaseKeys.conversationMembersKey}.${conversationPartner.id}',
-            isNull: false)
+          firebaseKeys.conversationMembersKey,
+          arrayContains: conversationPartner.id,
+        )
         .get();
 
     List<String> _members;
@@ -77,8 +78,10 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   @override
   Stream<List<Conversation>> getAllConversations() {
     return _collection
-        .where('${firebaseKeys.conversationMembersKey}.${_currentUser.uid}',
-            isNull: false)
+        .where(
+          firebaseKeys.conversationMembersKey,
+          arrayContains: _currentUser.uid,
+        )
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,

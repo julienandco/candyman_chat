@@ -37,19 +37,7 @@ void main() async {
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
     firebaseKeys: const FirebaseKeys(usePrefix: true),
-    openAppChatPage: (context) => Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (context) => const Scaffold(
-          body: NeonChat(
-            provideConversationsBloc: true,
-            conversationsStyle: ConversationsStyle(
-              showAppBarAboveConversations: true,
-              noConversationsWidget: Text('oh man alter'),
-            ),
-          ),
-        ),
-      ),
-    ),
+    openAppChatPage: (context) => Navigator.of(context).push(_chatRoute),
   );
 
   print(creds.user?.uid);
@@ -68,6 +56,25 @@ void main() async {
     blocObserver: _MyAppBlocObserver(),
   );
 }
+
+CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
+      builder: (context) => Scaffold(
+        body: NeonChat(
+          getUserForID: (id) =>
+              FirebaseUser(id: id, username: 'user ${id.substring(0, 4)}'),
+          provideConversationsBloc: true,
+          getConversationCreationData: () => DirectConversationCreationData(
+              conversationPartner: FirebaseUser(
+                  id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2', username: 'Julien3')),
+          conversationsStyle: const ConversationsStyle(
+            showAppBarAboveConversations: true,
+            noConversationsWidget: Text('oh man alter'),
+            showFab: true,
+            fabColor: Colors.red,
+          ),
+        ),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -115,26 +122,7 @@ class _MyApp extends StatelessWidget {
             const SizedBox(height: 12),
             TextButton(
               child: const Text('Chat'),
-              onPressed: () => Navigator.of(context).push(
-                CupertinoPageRoute(
-                  builder: (context) => Scaffold(
-                    body: NeonChat(
-                      provideConversationsBloc: true,
-                      getConversationCreationData: () =>
-                          DirectConversationCreationData(
-                              conversationPartner: FirebaseUser(
-                                  id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2',
-                                  username: 'Julien3')),
-                      conversationsStyle: ConversationsStyle(
-                        showAppBarAboveConversations: true,
-                        noConversationsWidget: Text('oh man alter'),
-                        showFab: true,
-                        fabColor: Colors.red,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              onPressed: () => Navigator.of(context).push(_chatRoute),
             ),
             const SizedBox(
               height: 50,

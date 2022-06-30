@@ -21,11 +21,14 @@ class FunctionInitData {
 
   final ConversationCreationData Function()? getConversationCreationData;
 
+  final FirebaseUser Function(String) getUserForID;
+
   final Widget Function(String?)? getUserAvatar;
   final Function(String)? onOpenUserProfile;
 
   FunctionInitData({
     required this.getConversationMessageTypeDisplayString,
+    required this.getUserForID,
     this.onDirectConversationAppBarTap,
     this.onGroupConversationAppBarTap,
     this.getConversationCreationData,
