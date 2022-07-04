@@ -57,6 +57,8 @@ class _ConversationAudioPlayerState extends State<ConversationAudioPlayer> {
   void initPlayer() async {
     try {
       if (widget.message.isMe && !kIsWeb && !widget.message.doneUpload) {
+        dev.log('Initializing Chat Audio Player with local path');
+
         await player.setAudioSource(
             AudioSource.uri(Uri.parse(widget.message.filePath!)));
       } else if (widget.message.doneUpload) {
@@ -64,6 +66,8 @@ class _ConversationAudioPlayerState extends State<ConversationAudioPlayer> {
                 .read<UploadUrlCubit>()
                 .getUploadURL(widget.message.upload!.fileId) ??
             '';
+        dev.log('Initializing Chat Audio Player with url: $url');
+
         await player.setUrl(url);
       }
     } catch (e) {
