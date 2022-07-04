@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 import 'package:rxdart/rxdart.dart';
 
@@ -66,9 +67,12 @@ class _ConversationAudioPlayerState extends State<ConversationAudioPlayer> {
                 .read<UploadUrlCubit>()
                 .getUploadURL(widget.message.upload!.fileId) ??
             '';
-        dev.log('Initializing Chat Audio Player with url: $url');
+        final headers = chatGetIt<Map<String, String>>(
+            instanceName: kHttpHeadersInstanceName);
+        dev.log(
+            'Initializing Chat Audio Player with url: $url and headers: $headers');
 
-        await player.setUrl(url);
+        await player.setUrl(url, headers: headers);
       }
     } catch (e) {
       dev.log('Error init chat audio player: $e', name: '$runtimeType');
