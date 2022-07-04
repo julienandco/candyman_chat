@@ -34,16 +34,22 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
     final url = chatGetIt<NeonChatRemoteDataSource>().remoteUploadsURL;
     final imageUrl = '$url/$fileId';
 
+    final headers =
+        chatGetIt<Map<String, String>>(instanceName: kHttpHeadersInstanceName);
+
     if (kIsWeb) {
       return Container(
         color: chatGetIt<ConversationStyle>().backgroundColor,
         alignment: Alignment.center,
-        child: Image.network(imageUrl),
+        child: Image.network(
+          imageUrl,
+          headers: headers,
+        ),
       );
     }
 
     return PhotoView(
-      imageProvider: CachedNetworkImageProvider(imageUrl),
+      imageProvider: CachedNetworkImageProvider(imageUrl, headers: headers),
       minScale: PhotoViewComputedScale.contained,
     );
   }

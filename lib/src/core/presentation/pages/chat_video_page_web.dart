@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:another_xlider/another_xlider.dart';
+import 'package:neon_chat/src/chat_init.dart';
 import 'package:video_player/video_player.dart';
 
 import 'package:neon_chat/src/conversation/conversation.dart';
@@ -47,9 +48,12 @@ class _ChatVideoPageState extends State<ChatVideoPageWeb> {
   void _initPlayer() async {
     if (widget.message.doneUpload) {
       final _url = widget.getUploadURL(widget.message.upload!.fileId);
+      final headers = chatGetIt<Map<String, String>>(
+          instanceName: kHttpHeadersInstanceName);
 
       if (_url == null) return;
-      videoPlayerController = VideoPlayerController.network(_url);
+      videoPlayerController =
+          VideoPlayerController.network(_url, httpHeaders: headers);
 
       await videoPlayerController?.initialize();
 

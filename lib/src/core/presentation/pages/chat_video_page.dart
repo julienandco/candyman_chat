@@ -7,6 +7,7 @@ import 'package:another_xlider/another_xlider.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 class ChatVideoPage extends StatefulWidget {
   static const videoHeroTag = 'chatVideoPageHero';
@@ -54,6 +55,9 @@ class _ChatVideoPageState extends State<ChatVideoPage> {
           .read<UploadUrlCubit>()
           .getUploadURL(widget.message.upload!.fileId);
 
+      final headers = chatGetIt<Map<String, String>>(
+          instanceName: kHttpHeadersInstanceName);
+
       // final _url = await getIt<GetUploadRedirectUrlForUrlUC>()
       //     .call('$kRemoteUploadsUrl/${widget.message.upload!.fileId}');
       if (_url == null) return;
@@ -62,6 +66,7 @@ class _ChatVideoPageState extends State<ChatVideoPage> {
         betterPlayerDataSource: BetterPlayerDataSource(
           BetterPlayerDataSourceType.network,
           _url,
+          headers: headers,
           placeholder: Center(
             child:
                 widget.progressIndicator ?? const CircularProgressIndicator(),
