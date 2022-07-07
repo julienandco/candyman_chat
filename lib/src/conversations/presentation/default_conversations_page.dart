@@ -25,9 +25,6 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
     );
   }
 
-  Widget _buildDefaultConversationImage(ConversationItem convoItem) =>
-      AvatarWidget(imgUrl: convoItem.conversation.thumbnail);
-
   @override
   Widget build(BuildContext context) {
     final _myId = chatGetIt<FirebaseAuth>().currentUser!.uid;
@@ -98,30 +95,9 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                                 : chatConversations)
                             .map(
                               (conversationItem) => ConversationListItem(
-                                  myId: _myId,
-                                  conversationListItemStyle:
-                                      style.chatListItemStyle,
-                                  conversationItem: conversationItem,
-                                  conversationThumbnail: conversationItem.conversation.isGroupConversation
-                                      ? _buildDefaultConversationImage(
-                                          conversationItem)
-                                      : chatGetIt<FunctionInitData>()
-                                              .getUserAvatar
-                                              ?.call(conversationItem.conversation
-                                                  .getConversationPartner(_myId)
-                                                  ?.id) ??
-                                          _buildDefaultConversationImage(
-                                              conversationItem),
-                                  onOpenConversation: () =>
-                                      _openConversation(conversationItem),
-                                  onOpenConversationInfo: conversationItem
-                                          .conversation.isGroupConversation
-                                      ? () => chatGetIt<FunctionInitData>()
-                                          .onGroupConversationAppBarTap
-                                          ?.call(conversationItem.conversation)
-                                      : () => chatGetIt<FunctionInitData>()
-                                          .onDirectConversationAppBarTap
-                                          ?.call(conversationItem.conversation)),
+                                myId: _myId,
+                                conversationItem: conversationItem,
+                              ),
                             )
                             .toList();
                       },

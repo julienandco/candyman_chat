@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/chat_init.dart';
 
 class ConversationRepositoryImpl implements ConversationRepository {
   final FirebaseFirestore firestore;
@@ -164,66 +163,6 @@ class ConversationRepositoryImpl implements ConversationRepository {
       {
         firebaseKeys.messageHiddenFromKey: FieldValue.arrayUnion([userId]),
       },
-    );
-  }
-
-  @override
-  Stream<String> getDisplayName(String conversationId) {
-    return _conversations.doc(conversationId).snapshots().transform(
-      StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
-          String>.fromHandlers(
-        handleData: (DocumentSnapshot<Map<String, dynamic>> doc,
-            EventSink<String> sink) async {
-          final data = doc.data();
-          if (data != null) {
-            String displayName = '';
-            if (data.containsKey(
-                    firebaseKeys.conversationIsGroupConversationKey) &&
-                data[firebaseKeys.conversationIsGroupConversationKey]) {
-              // is group conversation
-              if (data.containsKey(firebaseKeys.conversationGroupNameKey) &&
-                  data[firebaseKeys.conversationGroupNameKey] != null) {
-                displayName = data[firebaseKeys.conversationGroupNameKey];
-              }
-            } else {
-              // is 1-on-1 conversation
-              final _myId = firebaseAuth.currentUser!.uid;
-              final conversationMemberIDs =
-                  data[firebaseKeys.conversationMembersKey] as List<dynamic>;
-
-              final otherUserId =
-                  conversationMemberIDs.firstWhere((id) => id != _myId);
-              //displayname is conversation partner's username
-              final otherUser =
-                  chatGetIt<FunctionInitData>().getUserForID(otherUserId);
-              displayName = otherUser.username;
-            }
-            sink.add(displayName);
-          } else {
-            sink.add('PROBLEM'); //TODO
-          }
-        },
-      ),
-    );
-  }
-
-  @override
-  Stream<String?> getThumbnail(String conversationId) {
-    return _conversations.doc(conversationId).snapshots().transform(
-      StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
-          String?>.fromHandlers(
-        handleData: (DocumentSnapshot<Map<String, dynamic>> doc,
-            EventSink<String?> sink) async {
-          final data = doc.data();
-          if (data != null &&
-              data.containsKey(firebaseKeys.conversationGroupPictureKey)) {
-            final thumbnailString =
-                data[firebaseKeys.conversationGroupPictureKey];
-
-            sink.add(thumbnailString);
-          }
-        },
-      ),
     );
   }
 }

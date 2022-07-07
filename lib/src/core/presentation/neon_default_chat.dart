@@ -136,9 +136,9 @@ class NeonChat extends StatefulWidget {
   final Widget Function(String?)? getUserAvatar;
 
   ///
-  /// Returns an instance of [FirebaseUser] given a userID.
+  /// Returns a Future instance of [FirebaseUser] given a userID.
   ///
-  final FirebaseUser Function(String) getUserForID;
+  final Future<FirebaseUser> Function(String) getUserForID;
 
   ///
   /// Returns the display string to be shown next to the emoji of a given

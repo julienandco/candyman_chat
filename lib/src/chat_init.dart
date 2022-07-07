@@ -21,7 +21,7 @@ class FunctionInitData {
 
   final ConversationCreationData Function()? getConversationCreationData;
 
-  final FirebaseUser Function(String) getUserForID;
+  final Future<FirebaseUser> Function(String) getUserForID;
 
   final Widget Function(String?)? getUserAvatar;
   final Function(String)? onOpenUserProfile;
@@ -127,8 +127,8 @@ initNEONChat({
         () => HideConversationUC(chatGetIt<ConversationsRepository>()));
     chatGetIt.registerLazySingleton<GetFirebaseUserUC>(
         () => GetFirebaseUserUC(chatGetIt<FirebaseUserProfileRepository>()));
-    chatGetIt.registerLazySingleton<CreateConversationUC>(
-        () => CreateConversationUC(chatGetIt<ConversationsRepository>()));
+    chatGetIt.registerLazySingleton<CreateDirectConversationUC>(
+        () => CreateDirectConversationUC(chatGetIt<ConversationsRepository>()));
     chatGetIt.registerLazySingleton<CreateGroupConversationUC>(
         () => CreateGroupConversationUC(chatGetIt<ConversationsRepository>()));
     chatGetIt.registerLazySingleton<InitializeTimestampStreamUC>(() =>
@@ -162,7 +162,7 @@ initNEONChat({
             chatGetIt<InitializeConversationItemStreamUC>(),
         hideConversationUC: chatGetIt<HideConversationUC>(),
         getFirebaseUserUC: chatGetIt<GetFirebaseUserUC>(),
-        createConversationUC: chatGetIt<CreateConversationUC>(),
+        createConversationUC: chatGetIt<CreateDirectConversationUC>(),
         createGroupConversationUC: chatGetIt<CreateGroupConversationUC>(),
         initTimestampStreamUC: chatGetIt<InitializeTimestampStreamUC>(),
         syncTimestampsWithFirebaseUC: chatGetIt<SyncTimestampsWithFirebaseUC>(),

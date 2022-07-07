@@ -27,6 +27,7 @@ class _$ConversationInfoTearOff {
       required bool isGroupConversation,
       required List<String> conversationMembers,
       String? groupName,
+      String? groupPicture,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom = const []}) {
     return _ConversationInfo(
@@ -34,6 +35,7 @@ class _$ConversationInfoTearOff {
       isGroupConversation: isGroupConversation,
       conversationMembers: conversationMembers,
       groupName: groupName,
+      groupPicture: groupPicture,
       createdAt: createdAt,
       hiddenFrom: hiddenFrom,
     );
@@ -63,6 +65,12 @@ mixin _$ConversationInfo {
   /// conversation.
   ///
   String? get groupName => throw _privateConstructorUsedError;
+
+  ///
+  /// Is null for a 1-on-1 conversation and otherwise the upload id of the
+  /// group conversation thumbnail
+  ///
+  String? get groupPicture => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   List<String> get hiddenFrom => throw _privateConstructorUsedError;
@@ -83,6 +91,7 @@ abstract class $ConversationInfoCopyWith<$Res> {
       bool isGroupConversation,
       List<String> conversationMembers,
       String? groupName,
+      String? groupPicture,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
@@ -102,6 +111,7 @@ class _$ConversationInfoCopyWithImpl<$Res>
     Object? isGroupConversation = freezed,
     Object? conversationMembers = freezed,
     Object? groupName = freezed,
+    Object? groupPicture = freezed,
     Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
@@ -121,6 +131,10 @@ class _$ConversationInfoCopyWithImpl<$Res>
       groupName: groupName == freezed
           ? _value.groupName
           : groupName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupPicture: groupPicture == freezed
+          ? _value.groupPicture
+          : groupPicture // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: createdAt == freezed
           ? _value.createdAt
@@ -146,6 +160,7 @@ abstract class _$ConversationInfoCopyWith<$Res>
       bool isGroupConversation,
       List<String> conversationMembers,
       String? groupName,
+      String? groupPicture,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom});
 }
@@ -167,6 +182,7 @@ class __$ConversationInfoCopyWithImpl<$Res>
     Object? isGroupConversation = freezed,
     Object? conversationMembers = freezed,
     Object? groupName = freezed,
+    Object? groupPicture = freezed,
     Object? createdAt = freezed,
     Object? hiddenFrom = freezed,
   }) {
@@ -186,6 +202,10 @@ class __$ConversationInfoCopyWithImpl<$Res>
       groupName: groupName == freezed
           ? _value.groupName
           : groupName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupPicture: groupPicture == freezed
+          ? _value.groupPicture
+          : groupPicture // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: createdAt == freezed
           ? _value.createdAt
@@ -207,6 +227,7 @@ class _$_ConversationInfo implements _ConversationInfo {
       required this.isGroupConversation,
       required this.conversationMembers,
       this.groupName,
+      this.groupPicture,
       @MyDateTimeConverter() this.createdAt,
       this.hiddenFrom = const []});
 
@@ -232,6 +253,13 @@ class _$_ConversationInfo implements _ConversationInfo {
   ///
   final String? groupName;
   @override
+
+  ///
+  /// Is null for a 1-on-1 conversation and otherwise the upload id of the
+  /// group conversation thumbnail
+  ///
+  final String? groupPicture;
+  @override
   @MyDateTimeConverter()
   final DateTime? createdAt;
   @JsonKey()
@@ -240,7 +268,7 @@ class _$_ConversationInfo implements _ConversationInfo {
 
   @override
   String toString() {
-    return 'ConversationInfo(id: $id, isGroupConversation: $isGroupConversation, conversationMembers: $conversationMembers, groupName: $groupName, createdAt: $createdAt, hiddenFrom: $hiddenFrom)';
+    return 'ConversationInfo(id: $id, isGroupConversation: $isGroupConversation, conversationMembers: $conversationMembers, groupName: $groupName, groupPicture: $groupPicture, createdAt: $createdAt, hiddenFrom: $hiddenFrom)';
   }
 
   @override
@@ -254,6 +282,8 @@ class _$_ConversationInfo implements _ConversationInfo {
             const DeepCollectionEquality()
                 .equals(other.conversationMembers, conversationMembers) &&
             const DeepCollectionEquality().equals(other.groupName, groupName) &&
+            const DeepCollectionEquality()
+                .equals(other.groupPicture, groupPicture) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality()
                 .equals(other.hiddenFrom, hiddenFrom));
@@ -266,6 +296,7 @@ class _$_ConversationInfo implements _ConversationInfo {
       const DeepCollectionEquality().hash(isGroupConversation),
       const DeepCollectionEquality().hash(conversationMembers),
       const DeepCollectionEquality().hash(groupName),
+      const DeepCollectionEquality().hash(groupPicture),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(hiddenFrom));
 
@@ -286,6 +317,7 @@ abstract class _ConversationInfo implements ConversationInfo {
       required bool isGroupConversation,
       required List<String> conversationMembers,
       String? groupName,
+      String? groupPicture,
       @MyDateTimeConverter() DateTime? createdAt,
       List<String> hiddenFrom}) = _$_ConversationInfo;
 
@@ -310,6 +342,13 @@ abstract class _ConversationInfo implements ConversationInfo {
   /// conversation.
   ///
   String? get groupName;
+  @override
+
+  ///
+  /// Is null for a 1-on-1 conversation and otherwise the upload id of the
+  /// group conversation thumbnail
+  ///
+  String? get groupPicture;
   @override
   @MyDateTimeConverter()
   DateTime? get createdAt;

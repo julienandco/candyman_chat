@@ -39,23 +39,28 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     required this.sendTextMessageUC,
     required this.initStreamUC,
   }) : super(const _Initial()) {
-    _conversationStream = initStreamUC(
-      conversationId: convoId,
-      combiner: (
-        List<ConversationMessage> messages,
-        Conversation conversation,
-        String displayName,
-      ) =>
-          _OnData(messages, conversation, displayName),
-      onData: (onDataEvent) => add(onDataEvent),
-    );
+    if (firebaseAuth.currentUser != null) {
+      _conversationStream = initStreamUC(
+        conversationId: convoId,
+        combiner: (
+          List<ConversationMessage> messages,
+          Conversation conversation,
+        ) =>
+            _OnData(
+          messages,
+          conversation,
+        ),
+        onData: (onDataEvent) => add(onDataEvent),
+        myId: firebaseAuth.currentUser!.uid,
+      );
+    }
+
     on<ConversationEvent>((event, emit) {
       event.when(
-        onData: (messages, conversation, displayName) => emit(
+        onData: (messages, conversation) => emit(
           ConversationState.loadSuccess(
             messages: messages,
             conversation: conversation,
-            displayName: displayName,
           ),
         ),
         sendTextMessage: (message) {

@@ -7,10 +7,6 @@ import 'package:neon_chat/neon_chat.dart';
 class MyCustomConversationsPage extends StatelessWidget {
   const MyCustomConversationsPage({Key? key}) : super(key: key);
 
-  void onOpenUserProfile() {
-    print('i did not implement this :D');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,31 +34,7 @@ class MyCustomConversationsPage extends StatelessWidget {
                           .map(
                             (conversation) => ConversationListItem(
                               myId: FirebaseAuth.instance.currentUser!.uid,
-                              conversationListItemStyle:
-                                  ConversationListItemStyle(
-                                      listTileColor: Colors.grey[200]!),
                               conversationItem: conversation,
-                              conversationThumbnail: Container(
-                                height: 30,
-                                width: 30,
-                                color: Colors.green,
-                              ),
-                              onOpenConversation: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => Center(
-                                    child: Container(
-                                      color: Colors.red,
-                                      child: const Text(
-                                          'You can build the rest on your own!'),
-                                    ),
-                                  ),
-                                );
-
-                                Future.delayed(const Duration(seconds: 3),
-                                    () => Navigator.of(context).pop());
-                              },
-                              onOpenConversationInfo: onOpenUserProfile,
                             ),
                           )
                           .toList();

@@ -23,7 +23,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   final InitializeConversationItemStreamUC initializeConversationItemStreamUC;
   final HideConversationUC hideConversationUC;
   final GetFirebaseUserUC getFirebaseUserUC;
-  final CreateConversationUC createConversationUC;
+  final CreateDirectConversationUC createConversationUC;
   final CreateGroupConversationUC createGroupConversationUC;
 
   final InitializeTimestampStreamUC initTimestampStreamUC;
@@ -114,19 +114,17 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
           state is _LoadSuccess ? (state as _LoadSuccess).timestampMap : {};
 
       for (var conversation in event.conversations) {
-        if (conversation.createdAt != null) {
-          final chatStream = initializeConversationItemStreamUC(
-            conversation: conversation,
-            timestamp: Timestamp.fromDate(
-              timestamps[conversation.id] ?? DateTime.now(),
-            ),
-            onData: (event) => add(_OnConversationItemsData(event)),
-            onError: (err) {
-              log('fetchChatItems $err', name: '$runtimeType');
-            },
-          );
-          _conversationItemStreams.add(chatStream);
-        }
+        final chatStream = initializeConversationItemStreamUC(
+          conversation: conversation,
+          timestamp: Timestamp.fromDate(
+            timestamps[conversation.id] ?? DateTime.now(),
+          ),
+          onData: (event) => add(_OnConversationItemsData(event)),
+          onError: (err) {
+            log('fetchChatItems $err', name: '$runtimeType');
+          },
+        );
+        _conversationItemStreams.add(chatStream);
       }
     }
   }

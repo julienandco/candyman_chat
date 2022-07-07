@@ -22,7 +22,7 @@ class InitializeConversationItemStreamUC {
   }) {
     return CombineLatestStream.combine2(
       conversationRepository.getLastMessages(conversation.id),
-      conversation.isGroupConversation
+      conversation is GroupConversation
           ? conversationsRepository.getUnreadGroupMessagesCount(
               conversationId: conversation.id,
               lastSeenTimestamp: timestamp,

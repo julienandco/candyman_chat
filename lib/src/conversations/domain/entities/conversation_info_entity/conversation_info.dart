@@ -21,6 +21,12 @@ class ConversationInfo with _$ConversationInfo {
     /// conversation.
     ///
     String? groupName,
+
+    ///
+    /// Is null for a 1-on-1 conversation and otherwise the upload id of the
+    /// group conversation thumbnail
+    ///
+    String? groupPicture,
     @MyDateTimeConverter() DateTime? createdAt,
     @Default([]) List<String> hiddenFrom,
   }) = _ConversationInfo;

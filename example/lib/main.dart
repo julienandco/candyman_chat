@@ -60,8 +60,10 @@ void main() async {
 CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
       builder: (context) => Scaffold(
         body: NeonChat(
-          getUserForID: (id) =>
-              FirebaseUser(id: id, username: 'user ${id.substring(0, 4)}'),
+          getUserForID: (id) async => Future.delayed(
+            const Duration(milliseconds: 250),
+            () => FirebaseUser(id: id, username: 'user ${id.substring(0, 4)}'),
+          ),
           provideConversationsBloc: true,
           getConversationCreationData: () => DirectConversationCreationData(
               conversationPartner: FirebaseUser(

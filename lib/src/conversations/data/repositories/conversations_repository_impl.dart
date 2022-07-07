@@ -22,7 +22,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   User get _currentUser => firebaseAuth.currentUser!;
 
   @override
-  Future<Conversation> createConversation({
+  Future<DirectConversation> createDirectConversation({
     required FirebaseUser me,
     required DirectConversationCreationData creationData,
   }) async {
@@ -43,14 +43,12 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     _members = [conversationPartner.id];
     _members.add(_currentUser.uid);
 
-    final conversations = query.docs
-        .map((e) => Conversation.fromJson(e.data() as Map<String, dynamic>))
+    final conversationInfos = query.docs
+        .map((e) => ConversationInfo.fromJson(e.data() as Map<String, dynamic>))
         .toList();
 
-    final list = conversations.where((element) {
-      return listEquals(
-          List<String>.from(element.conversationMembers.map((user) => user.id)),
-          _members);
+    final list = conversationInfos.where((element) {
+      return listEquals(element.conversationMembers, _members);
     });
 
     if (list.isNotEmpty) {
@@ -60,23 +58,30 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
         _unhideConversations(conversation.id);
       }
       log('create conversation: already a conversation between the two users');
-      return list.first;
+      final existingConvo = DirectConversation.fromConversationInfo(
+        info: list.first,
+        otherUser: creationData.conversationPartner,
+      );
+      return existingConvo;
     } else {
       final doc = _collection.doc();
-      final conversation = Conversation(
+      final conversationInfo = ConversationInfo(
         id: doc.id,
-        conversationMembers: [me, conversationPartner],
+        conversationMembers: [me.id, conversationPartner.id],
         createdAt: DateTime.now(),
         isGroupConversation: false,
       );
-      await doc.set(conversation.toJson());
+      await doc.set(conversationInfo.toJson());
       log('create conversation: new conversation');
-      return conversation;
+      return DirectConversation.fromConversationInfo(
+        info: conversationInfo,
+        otherUser: creationData.conversationPartner,
+      );
     }
   }
 
   @override
-  Stream<List<Conversation>> getAllConversations() {
+  Stream<List<ConversationInfo>> getAllConversationInfos() {
     return _collection
         .where(
           firebaseKeys.conversationMembersKey,
@@ -85,20 +90,20 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
         .snapshots()
         .transform(
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-          List<Conversation>>.fromHandlers(
+          List<ConversationInfo>>.fromHandlers(
         handleData: (
           QuerySnapshot<Map<String, dynamic>> data,
-          EventSink<List<Conversation>> sink,
+          EventSink<List<ConversationInfo>> sink,
         ) async {
           final userId = firebaseAuth.currentUser?.uid;
 
           final snaps = data.docs.map((doc) => doc.data()).toList();
 
-          final conversations = snaps
-              .map((json) => Conversation.fromJson(json))
+          final conversationInfos = snaps
+              .map((json) => ConversationInfo.fromJson(json))
               .toList()
             ..removeWhere((element) => element.hiddenFrom.contains(userId));
-          sink.add(conversations);
+          sink.add(conversationInfos);
         },
       ),
     );
@@ -156,15 +161,16 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   @override
-  Stream<Conversation> getConversation(String conversationId) {
+  Stream<ConversationInfo> getConversationInfo(String conversationId) {
     return _collection.doc(conversationId).snapshots().transform(
       StreamTransformer<DocumentSnapshot<Map<String, dynamic>>,
-          Conversation>.fromHandlers(
+          ConversationInfo>.fromHandlers(
         handleData: (
           DocumentSnapshot<Map<String, dynamic>> snap,
-          EventSink<Conversation> sink,
+          EventSink<ConversationInfo> sink,
         ) async {
-          sink.add(Conversation.fromJson(snap.data() as Map<String, dynamic>));
+          sink.add(
+              ConversationInfo.fromJson(snap.data() as Map<String, dynamic>));
         },
       ),
     );
@@ -196,22 +202,28 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   @override
-  Future<Conversation> createGroupConversation({
+  Future<GroupConversation> createGroupConversation({
     required FirebaseUser me,
     required GroupConversationCreationData creationData,
   }) async {
     //TODO: thumbnail should be uploaded somewhere
 
     final doc = _collection.doc();
-    final conversation = Conversation(
+    final conversationInfo = ConversationInfo(
       id: doc.id,
-      conversationMembers: [...creationData.conversationMembers, me],
+      conversationMembers: [
+        ...List<String>.from(creationData.conversationMembers.map((e) => e.id)),
+        me.id,
+      ],
       createdAt: DateTime.now(),
       groupName: creationData.groupName,
       groupPicture: creationData.groupPhoto,
       isGroupConversation: true,
     );
-    await doc.set(conversation.toJson());
-    return conversation;
+    await doc.set(conversationInfo.toJson());
+    return GroupConversation.fromConversationInfo(
+      info: conversationInfo,
+      convoMembers: [...creationData.conversationMembers, me],
+    );
   }
 }

@@ -28,12 +28,10 @@ class _$ConversationStateTearOff {
 
   _LoadSuccess loadSuccess(
       {required List<ConversationMessage> messages,
-      required Conversation conversation,
-      required String displayName}) {
+      required Conversation conversation}) {
     return _LoadSuccess(
       messages: messages,
       conversation: conversation,
-      displayName: displayName,
     );
   }
 
@@ -51,8 +49,8 @@ mixin _$ConversationState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         loadSuccess,
     required TResult Function() loadFailure,
   }) =>
@@ -61,8 +59,8 @@ mixin _$ConversationState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) =>
@@ -71,8 +69,8 @@ mixin _$ConversationState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -168,8 +166,8 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         loadSuccess,
     required TResult Function() loadFailure,
   }) {
@@ -181,8 +179,8 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
@@ -194,8 +192,8 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -299,8 +297,8 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         loadSuccess,
     required TResult Function() loadFailure,
   }) {
@@ -312,8 +310,8 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
@@ -325,8 +323,8 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -385,10 +383,7 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call(
-      {List<ConversationMessage> messages,
-      Conversation conversation,
-      String displayName});
+  $Res call({List<ConversationMessage> messages, Conversation conversation});
 }
 
 /// @nodoc
@@ -406,7 +401,6 @@ class __$LoadSuccessCopyWithImpl<$Res>
   $Res call({
     Object? messages = freezed,
     Object? conversation = freezed,
-    Object? displayName = freezed,
   }) {
     return _then(_LoadSuccess(
       messages: messages == freezed
@@ -417,10 +411,6 @@ class __$LoadSuccessCopyWithImpl<$Res>
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
               as Conversation,
-      displayName: displayName == freezed
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -428,22 +418,17 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
-  const _$_LoadSuccess(
-      {required this.messages,
-      required this.conversation,
-      required this.displayName})
+  const _$_LoadSuccess({required this.messages, required this.conversation})
       : super._();
 
   @override
   final List<ConversationMessage> messages;
   @override
   final Conversation conversation;
-  @override
-  final String displayName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ConversationState.loadSuccess(messages: $messages, conversation: $conversation, displayName: $displayName)';
+    return 'ConversationState.loadSuccess(messages: $messages, conversation: $conversation)';
   }
 
   @override
@@ -452,8 +437,7 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'ConversationState.loadSuccess'))
       ..add(DiagnosticsProperty('messages', messages))
-      ..add(DiagnosticsProperty('conversation', conversation))
-      ..add(DiagnosticsProperty('displayName', displayName));
+      ..add(DiagnosticsProperty('conversation', conversation));
   }
 
   @override
@@ -463,17 +447,14 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
             other is _LoadSuccess &&
             const DeepCollectionEquality().equals(other.messages, messages) &&
             const DeepCollectionEquality()
-                .equals(other.conversation, conversation) &&
-            const DeepCollectionEquality()
-                .equals(other.displayName, displayName));
+                .equals(other.conversation, conversation));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(messages),
-      const DeepCollectionEquality().hash(conversation),
-      const DeepCollectionEquality().hash(displayName));
+      const DeepCollectionEquality().hash(conversation));
 
   @JsonKey(ignore: true)
   @override
@@ -485,12 +466,12 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         loadSuccess,
     required TResult Function() loadFailure,
   }) {
-    return loadSuccess(messages, conversation, displayName);
+    return loadSuccess(messages, conversation);
   }
 
   @override
@@ -498,12 +479,12 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
-    return loadSuccess?.call(messages, conversation, displayName);
+    return loadSuccess?.call(messages, conversation);
   }
 
   @override
@@ -511,14 +492,14 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(messages, conversation, displayName);
+      return loadSuccess(messages, conversation);
     }
     return orElse();
   }
@@ -564,13 +545,11 @@ class _$_LoadSuccess extends _LoadSuccess with DiagnosticableTreeMixin {
 abstract class _LoadSuccess extends ConversationState {
   const factory _LoadSuccess(
       {required List<ConversationMessage> messages,
-      required Conversation conversation,
-      required String displayName}) = _$_LoadSuccess;
+      required Conversation conversation}) = _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
   List<ConversationMessage> get messages;
   Conversation get conversation;
-  String get displayName;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -626,8 +605,8 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         loadSuccess,
     required TResult Function() loadFailure,
   }) {
@@ -639,8 +618,8 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
@@ -652,8 +631,8 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         loadSuccess,
     TResult Function()? loadFailure,
     required TResult orElse(),
@@ -711,12 +690,11 @@ abstract class _LoadFailure extends ConversationState {
 class _$ConversationEventTearOff {
   const _$ConversationEventTearOff();
 
-  _OnData onData(List<ConversationMessage> messages, Conversation conversation,
-      String displayName) {
+  _OnData onData(
+      List<ConversationMessage> messages, Conversation conversation) {
     return _OnData(
       messages,
       conversation,
-      displayName,
     );
   }
 
@@ -783,8 +761,8 @@ const $ConversationEvent = _$ConversationEventTearOff();
 mixin _$ConversationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -800,8 +778,8 @@ mixin _$ConversationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -816,8 +794,8 @@ mixin _$ConversationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -897,10 +875,7 @@ class _$ConversationEventCopyWithImpl<$Res>
 abstract class _$OnDataCopyWith<$Res> {
   factory _$OnDataCopyWith(_OnData value, $Res Function(_OnData) then) =
       __$OnDataCopyWithImpl<$Res>;
-  $Res call(
-      {List<ConversationMessage> messages,
-      Conversation conversation,
-      String displayName});
+  $Res call({List<ConversationMessage> messages, Conversation conversation});
 }
 
 /// @nodoc
@@ -916,7 +891,6 @@ class __$OnDataCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
   $Res call({
     Object? messages = freezed,
     Object? conversation = freezed,
-    Object? displayName = freezed,
   }) {
     return _then(_OnData(
       messages == freezed
@@ -927,10 +901,6 @@ class __$OnDataCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
               as Conversation,
-      displayName == freezed
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -938,18 +908,16 @@ class __$OnDataCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_OnData with DiagnosticableTreeMixin implements _OnData {
-  const _$_OnData(this.messages, this.conversation, this.displayName);
+  const _$_OnData(this.messages, this.conversation);
 
   @override
   final List<ConversationMessage> messages;
   @override
   final Conversation conversation;
-  @override
-  final String displayName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ConversationEvent.onData(messages: $messages, conversation: $conversation, displayName: $displayName)';
+    return 'ConversationEvent.onData(messages: $messages, conversation: $conversation)';
   }
 
   @override
@@ -958,8 +926,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
     properties
       ..add(DiagnosticsProperty('type', 'ConversationEvent.onData'))
       ..add(DiagnosticsProperty('messages', messages))
-      ..add(DiagnosticsProperty('conversation', conversation))
-      ..add(DiagnosticsProperty('displayName', displayName));
+      ..add(DiagnosticsProperty('conversation', conversation));
   }
 
   @override
@@ -969,17 +936,14 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
             other is _OnData &&
             const DeepCollectionEquality().equals(other.messages, messages) &&
             const DeepCollectionEquality()
-                .equals(other.conversation, conversation) &&
-            const DeepCollectionEquality()
-                .equals(other.displayName, displayName));
+                .equals(other.conversation, conversation));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(messages),
-      const DeepCollectionEquality().hash(conversation),
-      const DeepCollectionEquality().hash(displayName));
+      const DeepCollectionEquality().hash(conversation));
 
   @JsonKey(ignore: true)
   @override
@@ -989,8 +953,8 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -1003,14 +967,14 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
     required TResult Function(ConversationMessage message) deleteMessage,
     required TResult Function(ConversationMessage message) hideMessage,
   }) {
-    return onData(messages, conversation, displayName);
+    return onData(messages, conversation);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1022,14 +986,14 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
     TResult Function(ConversationMessage message)? deleteMessage,
     TResult Function(ConversationMessage message)? hideMessage,
   }) {
-    return onData?.call(messages, conversation, displayName);
+    return onData?.call(messages, conversation);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1043,7 +1007,7 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
     required TResult orElse(),
   }) {
     if (onData != null) {
-      return onData(messages, conversation, displayName);
+      return onData(messages, conversation);
     }
     return orElse();
   }
@@ -1105,12 +1069,12 @@ class _$_OnData with DiagnosticableTreeMixin implements _OnData {
 }
 
 abstract class _OnData implements ConversationEvent {
-  const factory _OnData(List<ConversationMessage> messages,
-      Conversation conversation, String displayName) = _$_OnData;
+  const factory _OnData(
+          List<ConversationMessage> messages, Conversation conversation) =
+      _$_OnData;
 
   List<ConversationMessage> get messages;
   Conversation get conversation;
-  String get displayName;
   @JsonKey(ignore: true)
   _$OnDataCopyWith<_OnData> get copyWith => throw _privateConstructorUsedError;
 }
@@ -1190,8 +1154,8 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -1210,8 +1174,8 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1229,8 +1193,8 @@ class _$_SendTextMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1389,8 +1353,8 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -1409,8 +1373,8 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1428,8 +1392,8 @@ class _$_SendImageMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1599,8 +1563,8 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -1619,8 +1583,8 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1638,8 +1602,8 @@ class _$_SendVoiceMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1800,8 +1764,8 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -1820,8 +1784,8 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1839,8 +1803,8 @@ class _$_SendVideoMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -1999,8 +1963,8 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -2019,8 +1983,8 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2038,8 +2002,8 @@ class _$_SendMultipleFiles
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2199,8 +2163,8 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -2219,8 +2183,8 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2238,8 +2202,8 @@ class _$_SendFileMessage
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2405,8 +2369,8 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -2425,8 +2389,8 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2444,8 +2408,8 @@ class _$_MarkAsSeen with DiagnosticableTreeMixin implements _MarkAsSeen {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2611,8 +2575,8 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -2631,8 +2595,8 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2650,8 +2614,8 @@ class _$_DeleteMessage with DiagnosticableTreeMixin implements _DeleteMessage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2817,8 +2781,8 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)
+    required TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)
         onData,
     required TResult Function(String message) sendTextMessage,
     required TResult Function(String message) sendImageMessage,
@@ -2837,8 +2801,8 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
@@ -2856,8 +2820,8 @@ class _$_HideMessage with DiagnosticableTreeMixin implements _HideMessage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ConversationMessage> messages,
-            Conversation conversation, String displayName)?
+    TResult Function(
+            List<ConversationMessage> messages, Conversation conversation)?
         onData,
     TResult Function(String message)? sendTextMessage,
     TResult Function(String message)? sendImageMessage,
