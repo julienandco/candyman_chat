@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:neon_chat/src/conversation/presentation/widgets/conversation_app_bar.dart';
-import 'package:neon_chat/src/conversation/presentation/widgets/default_conversation_appbar.dart';
 import 'package:neon_chat/src/core/util/util.dart';
 
 import '../../conversations/conversations.dart';
@@ -100,8 +98,8 @@ class GroupChatOverviewStyle {
 
 /// Style data structure for a Conversation page
 class ConversationStyle {
-  /// Your custom implementation of [ConversationAppbar] to be displayed.
-  final ConversationAppbar Function(Conversation)?
+  /// Your custom implementation of an conversation app bar to be displayed.
+  final PreferredSizeWidget Function(Conversation)?
       buildCustomConversationAppBar;
 
   final Color backgroundColor;

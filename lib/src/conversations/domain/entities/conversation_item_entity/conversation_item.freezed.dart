@@ -54,7 +54,6 @@ abstract class $ConversationItemCopyWith<$Res> {
       ConversationMessage lastMessage,
       int unreadMessagesCount});
 
-  $ConversationCopyWith<$Res> get conversation;
   $ConversationMessageCopyWith<$Res> get lastMessage;
 }
 
@@ -90,13 +89,6 @@ class _$ConversationItemCopyWithImpl<$Res>
   }
 
   @override
-  $ConversationCopyWith<$Res> get conversation {
-    return $ConversationCopyWith<$Res>(_value.conversation, (value) {
-      return _then(_value.copyWith(conversation: value));
-    });
-  }
-
-  @override
   $ConversationMessageCopyWith<$Res> get lastMessage {
     return $ConversationMessageCopyWith<$Res>(_value.lastMessage, (value) {
       return _then(_value.copyWith(lastMessage: value));
@@ -116,8 +108,6 @@ abstract class _$ConversationItemCopyWith<$Res>
       ConversationMessage lastMessage,
       int unreadMessagesCount});
 
-  @override
-  $ConversationCopyWith<$Res> get conversation;
   @override
   $ConversationMessageCopyWith<$Res> get lastMessage;
 }

@@ -15,9 +15,9 @@ class FunctionInitData {
   final String Function(ConversationMessageType)
       getConversationMessageTypeDisplayString;
 
-  final Function(Conversation)? onDirectConversationAppBarTap;
+  final Function(DirectConversation)? onDirectConversationAppBarTap;
 
-  final Function(Conversation)? onGroupConversationAppBarTap;
+  final Function(GroupConversation)? onGroupConversationAppBarTap;
 
   final ConversationCreationData Function()? getConversationCreationData;
 

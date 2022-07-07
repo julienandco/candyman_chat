@@ -35,7 +35,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
   @override
   Widget build(BuildContext context) {
     Widget lastMessageBuilder() {
-      if (widget.conversationItem.conversation.isBlocked) {
+      if (widget.conversationItem.conversation.isBlockedForMe) {
         return Text(
           widget.conversationListItemStyle.conversationBlockedLabel,
           style: widget.conversationListItemStyle.conversationBlockedLabelStyle,
@@ -172,8 +172,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.conversationItem.conversation
-                                .getDisplayName(widget.myId),
+                            widget.conversationItem.conversation.displayName,
                             style:
                                 widget.conversationListItemStyle.titleTextStyle,
                           ),

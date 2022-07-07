@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'conversation.dart';
+part of 'conversation_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
-    _$_Conversation(
+_$_ConversationInfo _$$_ConversationInfoFromJson(Map<String, dynamic> json) =>
+    _$_ConversationInfo(
       id: json['id'] as String,
-      groupName: json['groupName'] as String?,
-      groupPicture: json['groupPicture'] as String?,
-      conversationMembers: const MyFirebaseUserListConverter()
-          .fromJson(json['conversationMembers']),
       isGroupConversation: json['isGroupConversation'] as bool,
+      conversationMembers: (json['conversationMembers'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      groupName: json['groupName'] as String?,
       createdAt: const MyDateTimeConverter().fromJson(json['createdAt']),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -21,14 +21,12 @@ _$_Conversation _$$_ConversationFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$_ConversationToJson(_$_Conversation instance) =>
+Map<String, dynamic> _$$_ConversationInfoToJson(_$_ConversationInfo instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'groupName': instance.groupName,
-      'groupPicture': instance.groupPicture,
-      'conversationMembers': const MyFirebaseUserListConverter()
-          .toJson(instance.conversationMembers),
       'isGroupConversation': instance.isGroupConversation,
+      'conversationMembers': instance.conversationMembers,
+      'groupName': instance.groupName,
       'createdAt': const MyDateTimeConverter().toJson(instance.createdAt),
       'hiddenFrom': instance.hiddenFrom,
     };

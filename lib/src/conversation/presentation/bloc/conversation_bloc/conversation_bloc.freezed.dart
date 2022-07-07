@@ -151,7 +151,7 @@ class _$_Initial extends _Initial with DiagnosticableTreeMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ConversationState.initial'));
+    properties.add(DiagnosticsProperty('type', 'ConversationState.initial'));
   }
 
   @override
@@ -282,7 +282,7 @@ class _$_LoadInProgress extends _LoadInProgress with DiagnosticableTreeMixin {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ConversationState.loadInProgress'));
+        .add(DiagnosticsProperty('type', 'ConversationState.loadInProgress'));
   }
 
   @override
@@ -389,8 +389,6 @@ abstract class _$LoadSuccessCopyWith<$Res> {
       {List<ConversationMessage> messages,
       Conversation conversation,
       String displayName});
-
-  $ConversationCopyWith<$Res> get conversation;
 }
 
 /// @nodoc
@@ -424,13 +422,6 @@ class __$LoadSuccessCopyWithImpl<$Res>
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
-  }
-
-  @override
-  $ConversationCopyWith<$Res> get conversation {
-    return $ConversationCopyWith<$Res>(_value.conversation, (value) {
-      return _then(_value.copyWith(conversation: value));
-    });
   }
 }
 
@@ -618,7 +609,7 @@ class _$_LoadFailure extends _LoadFailure with DiagnosticableTreeMixin {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ConversationState.loadFailure'));
+        .add(DiagnosticsProperty('type', 'ConversationState.loadFailure'));
   }
 
   @override
@@ -910,8 +901,6 @@ abstract class _$OnDataCopyWith<$Res> {
       {List<ConversationMessage> messages,
       Conversation conversation,
       String displayName});
-
-  $ConversationCopyWith<$Res> get conversation;
 }
 
 /// @nodoc
@@ -943,13 +932,6 @@ class __$OnDataCopyWithImpl<$Res> extends _$ConversationEventCopyWithImpl<$Res>
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
-  }
-
-  @override
-  $ConversationCopyWith<$Res> get conversation {
-    return $ConversationCopyWith<$Res>(_value.conversation, (value) {
-      return _then(_value.copyWith(conversation: value));
-    });
   }
 }
 

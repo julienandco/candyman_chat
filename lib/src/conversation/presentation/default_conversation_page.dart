@@ -78,15 +78,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                             .buildCustomConversationAppBar
                             ?.call(loadedConversationState.conversation) ??
                         DefaultConversationAppbar(
-                          conversationThumbnail:
-                              loadedConversationState.conversation.thumbnail,
-                          onAvertaTap: loadedConversationState
-                                  .conversation.isGroupConversation
-                              ? chatGetIt<FunctionInitData>()
-                                  .onGroupConversationAppBarTap
-                              : chatGetIt<FunctionInitData>()
-                                  .onDirectConversationAppBarTap,
-                          searchAppBarStyle: chatGetIt<SearchAppBarStyle>(),
+                          conversation: loadedConversationState.conversation,
                           showCloseButton: !widget.showCloseButton,
                         ),
                     body: Stack(
@@ -106,26 +98,8 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                                     (timestamp) =>
                                         widget.updateTimestampForConversation(
                                             timestamp),
-                                conversationLastSeenTimestamp:
-                                    _lastSeenGroupConversationTimestamp,
-                                messageBubbleStyle:
-                                    chatGetIt<MessageBubbleStyle>(),
-                                getAuthorNameForSenderId: (senderId) {
-                                  if (loadedConversationState
-                                      .conversation.isGroupConversation) {
-                                    final author = loadedConversationState
-                                        .conversation.conversationMembers
-                                        .firstWhere(
-                                      (member) => member.id == senderId,
-                                      orElse: () => FirebaseUser(
-                                          id: 'dummy',
-                                          username: 'unknown'), //TODO
-                                    );
-                                    return author.username;
-                                  } else {
-                                    return loadedConversationState.displayName;
-                                  }
-                                },
+                                conversation:
+                                    loadedConversationState.conversation,
                               ),
                             ),
                           ],
