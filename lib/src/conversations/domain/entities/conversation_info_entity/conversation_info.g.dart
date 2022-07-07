@@ -15,7 +15,8 @@ _$_ConversationInfo _$$_ConversationInfoFromJson(Map<String, dynamic> json) =>
           .toList(),
       groupName: json['groupName'] as String?,
       groupPicture: json['groupPicture'] as String?,
-      createdAt: const MyDateTimeConverter().fromJson(json['createdAt']),
+      createdAt:
+          const MyNonNullableDateTimeConverter().fromJson(json['createdAt']),
       hiddenFrom: (json['hiddenFrom'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -29,6 +30,7 @@ Map<String, dynamic> _$$_ConversationInfoToJson(_$_ConversationInfo instance) =>
       'conversationMembers': instance.conversationMembers,
       'groupName': instance.groupName,
       'groupPicture': instance.groupPicture,
-      'createdAt': const MyDateTimeConverter().toJson(instance.createdAt),
+      'createdAt':
+          const MyNonNullableDateTimeConverter().toJson(instance.createdAt),
       'hiddenFrom': instance.hiddenFrom,
     };

@@ -4,14 +4,14 @@ class UnknownConversationType extends Error {}
 
 abstract class Conversation {
   final String id;
-  final String thumbnail;
+  final String? thumbnail;
   final String displayName;
   final bool isBlockedForMe;
   final DateTime createdAt;
 
   const Conversation({
     required this.id,
-    required this.thumbnail,
+    this.thumbnail,
     required this.displayName,
     required this.isBlockedForMe,
     required this.createdAt,
@@ -21,7 +21,7 @@ abstract class Conversation {
 class DirectConversation implements Conversation {
   final String _id;
   final String _displayName;
-  final String _thumbnail;
+  final String? _thumbnail;
   final bool _isBlockedForMe;
   final DateTime _createdAt;
 
@@ -31,7 +31,7 @@ class DirectConversation implements Conversation {
   DirectConversation(
       {required String id,
       required String displayName,
-      required String thumbnail,
+      String? thumbnail,
       required bool isBlockedForMe,
       required DateTime createdAt,
       required this.conversationPartner})
@@ -46,9 +46,9 @@ class DirectConversation implements Conversation {
       DirectConversation(
         id: info.id,
         displayName: otherUser.username,
-        thumbnail: otherUser.profilePictureURL!, //TODO
+        thumbnail: otherUser.profilePictureURL,
         isBlockedForMe: false, //TODO
-        createdAt: DateTime.now(), //TODO,
+        createdAt: info.createdAt,
         conversationPartner: otherUser,
       );
 
@@ -59,7 +59,7 @@ class DirectConversation implements Conversation {
   String get id => _id;
 
   @override
-  String get thumbnail => _thumbnail;
+  String? get thumbnail => _thumbnail;
 
   @override
   bool get isBlockedForMe => _isBlockedForMe;
@@ -71,7 +71,7 @@ class DirectConversation implements Conversation {
 class GroupConversation implements Conversation {
   final String _id;
   final String _displayName;
-  final String _thumbnail;
+  final String? _thumbnail;
   final bool _isBlockedForMe;
   final DateTime _createdAt;
 
@@ -84,7 +84,7 @@ class GroupConversation implements Conversation {
   GroupConversation({
     required String id,
     required String displayName,
-    required String thumbnail,
+    String? thumbnail,
     required bool isBlockedForMe,
     required DateTime createdAt,
     required this.conversationMembers,
@@ -101,9 +101,9 @@ class GroupConversation implements Conversation {
       GroupConversation(
         id: info.id,
         displayName: info.groupName!,
-        thumbnail: info.groupPicture!,
+        thumbnail: info.groupPicture,
         isBlockedForMe: false, //TODO
-        createdAt: DateTime.now(), //TODO: info.createdAt,
+        createdAt: info.createdAt,
         conversationMembers: convoMembers,
         lastSeen: DateTime.now(), //TODO
       );
@@ -115,7 +115,7 @@ class GroupConversation implements Conversation {
   String get id => _id;
 
   @override
-  String get thumbnail => _thumbnail;
+  String? get thumbnail => _thumbnail;
 
   @override
   bool get isBlockedForMe => _isBlockedForMe;

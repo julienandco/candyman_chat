@@ -28,7 +28,7 @@ class _$ConversationInfoTearOff {
       required List<String> conversationMembers,
       String? groupName,
       String? groupPicture,
-      @MyDateTimeConverter() DateTime? createdAt,
+      @MyNonNullableDateTimeConverter() required DateTime createdAt,
       List<String> hiddenFrom = const []}) {
     return _ConversationInfo(
       id: id,
@@ -71,8 +71,8 @@ mixin _$ConversationInfo {
   /// group conversation thumbnail
   ///
   String? get groupPicture => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @MyNonNullableDateTimeConverter()
+  DateTime get createdAt => throw _privateConstructorUsedError;
   List<String> get hiddenFrom => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -92,7 +92,7 @@ abstract class $ConversationInfoCopyWith<$Res> {
       List<String> conversationMembers,
       String? groupName,
       String? groupPicture,
-      @MyDateTimeConverter() DateTime? createdAt,
+      @MyNonNullableDateTimeConverter() DateTime createdAt,
       List<String> hiddenFrom});
 }
 
@@ -139,7 +139,7 @@ class _$ConversationInfoCopyWithImpl<$Res>
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       hiddenFrom: hiddenFrom == freezed
           ? _value.hiddenFrom
           : hiddenFrom // ignore: cast_nullable_to_non_nullable
@@ -161,7 +161,7 @@ abstract class _$ConversationInfoCopyWith<$Res>
       List<String> conversationMembers,
       String? groupName,
       String? groupPicture,
-      @MyDateTimeConverter() DateTime? createdAt,
+      @MyNonNullableDateTimeConverter() DateTime createdAt,
       List<String> hiddenFrom});
 }
 
@@ -210,7 +210,7 @@ class __$ConversationInfoCopyWithImpl<$Res>
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       hiddenFrom: hiddenFrom == freezed
           ? _value.hiddenFrom
           : hiddenFrom // ignore: cast_nullable_to_non_nullable
@@ -228,7 +228,7 @@ class _$_ConversationInfo implements _ConversationInfo {
       required this.conversationMembers,
       this.groupName,
       this.groupPicture,
-      @MyDateTimeConverter() this.createdAt,
+      @MyNonNullableDateTimeConverter() required this.createdAt,
       this.hiddenFrom = const []});
 
   factory _$_ConversationInfo.fromJson(Map<String, dynamic> json) =>
@@ -260,8 +260,8 @@ class _$_ConversationInfo implements _ConversationInfo {
   ///
   final String? groupPicture;
   @override
-  @MyDateTimeConverter()
-  final DateTime? createdAt;
+  @MyNonNullableDateTimeConverter()
+  final DateTime createdAt;
   @JsonKey()
   @override
   final List<String> hiddenFrom;
@@ -318,7 +318,7 @@ abstract class _ConversationInfo implements ConversationInfo {
       required List<String> conversationMembers,
       String? groupName,
       String? groupPicture,
-      @MyDateTimeConverter() DateTime? createdAt,
+      @MyNonNullableDateTimeConverter() required DateTime createdAt,
       List<String> hiddenFrom}) = _$_ConversationInfo;
 
   factory _ConversationInfo.fromJson(Map<String, dynamic> json) =
@@ -350,8 +350,8 @@ abstract class _ConversationInfo implements ConversationInfo {
   ///
   String? get groupPicture;
   @override
-  @MyDateTimeConverter()
-  DateTime? get createdAt;
+  @MyNonNullableDateTimeConverter()
+  DateTime get createdAt;
   @override
   List<String> get hiddenFrom;
   @override

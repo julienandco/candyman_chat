@@ -62,7 +62,11 @@ CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
         body: NeonChat(
           getUserForID: (id) async => Future.delayed(
             const Duration(milliseconds: 250),
-            () => FirebaseUser(id: id, username: 'user ${id.substring(0, 4)}'),
+            () => FirebaseUser(
+                id: id,
+                username: 'user ${id.substring(0, 4)}',
+                profilePictureURL:
+                    'https://cdn.getyourguide.com/img/tour/6242c553ab0ca.jpeg/146.jpg'),
           ),
           provideConversationsBloc: true,
           getConversationCreationData: () => DirectConversationCreationData(
