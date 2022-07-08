@@ -12,6 +12,7 @@ class MessageContentWidget extends StatefulWidget {
   final MessageBubbleStyle messageBubbleStyle;
 
   final ConversationMessage message;
+  final String titleForMediaPage;
   final Widget? header;
   final List<Widget> footer;
 
@@ -21,6 +22,7 @@ class MessageContentWidget extends StatefulWidget {
     required this.header,
     required this.footer,
     required this.messageBubbleStyle,
+    required this.titleForMediaPage,
   }) : super(key: key);
 
   @override
@@ -84,7 +86,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
               (!widget.message.doneUpload && kIsWeb)
                   ? Text(widget.messageBubbleStyle.messageIsUploadingLabel)
                   : ChatImageBubble(
-                      onTap: () => _openMediaViewer(context, widget.message),
+                      onTap: () => _openMediaViewer(widget.message),
                       message: widget.message,
                     ),
               Padding(
@@ -110,7 +112,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
                 ChatVideoBubble(
                   defaultVideoPlayerStyle:
                       widget.messageBubbleStyle.videoPlayerStyle,
-                  onTap: () => _openMediaViewer(context, widget.message),
+                  onTap: () => _openMediaViewer(widget.message),
                   message: widget.message,
                 ),
               Padding(
@@ -197,21 +199,24 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
         );
     }
   }
-}
 
-void _openMediaViewer(BuildContext context, ConversationMessage message) {
-  final conversationBloc = context.read<ConversationBloc>();
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => MultiBlocProvider(providers: [
-        BlocProvider(
-          create: (context) => chatGetIt<UploadUrlCubit>(),
-        ),
-        BlocProvider.value(
-          value: conversationBloc,
-        ),
-      ], child: ChatMediaViewerPage(currentMediaMessage: message)),
-    ),
-  );
+  void _openMediaViewer(ConversationMessage message) {
+    final conversationBloc = context.read<ConversationBloc>();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => chatGetIt<UploadUrlCubit>(),
+              ),
+              BlocProvider.value(
+                value: conversationBloc,
+              ),
+            ],
+            child: ChatMediaViewerPage(
+                title: widget.titleForMediaPage, currentMediaMessage: message)),
+      ),
+    );
+  }
 }

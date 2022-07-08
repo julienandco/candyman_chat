@@ -9,7 +9,6 @@ class ConversationState with _$ConversationState {
   const factory ConversationState.loadSuccess({
     required List<ConversationMessage> messages,
     required Conversation conversation,
-    required String displayName,
   }) = _LoadSuccess;
   const factory ConversationState.loadFailure() = _LoadFailure;
 

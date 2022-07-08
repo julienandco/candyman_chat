@@ -37,22 +37,10 @@ void main() async {
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
     firebaseKeys: const FirebaseKeys(usePrefix: true),
-    openAppChatPage: (context) => Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (context) => const Scaffold(
-          body: NeonChat(
-            provideConversationsBloc: true,
-            conversationsStyle: ConversationsStyle(
-              showAppBarAboveConversations: true,
-              noConversationsWidget: Text('oh man alter'),
-            ),
-          ),
-        ),
-      ),
-    ),
+    openAppChatPage: (context) => Navigator.of(context).push(_chatRoute),
   );
 
-  print(creds.user?.uid);
+  log(creds.user?.uid.toString() ?? 'NO CREDENTIALS!!11!!');
   // await FirebaseAuth.instance.signInWithEmailAndPassword(
   //   password: 'neon-chat-example1!',
   //   email: 'julien+1@neon.dev',
@@ -68,6 +56,35 @@ void main() async {
     blocObserver: _MyAppBlocObserver(),
   );
 }
+
+CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
+      builder: (context) => Scaffold(
+        body: NeonChat(
+          getUserForID: (id) async => Future.delayed(
+            const Duration(milliseconds: 250),
+            () => FirebaseUser(
+                id: id,
+                username: 'user ${id.substring(0, 4)}',
+                profilePictureURL:
+                    'https://cdn.getyourguide.com/img/tour/6242c553ab0ca.jpeg/146.jpg'),
+          ),
+          additionalDirectConversationDataConfig: _MyCustomAdditionalData(),
+          onDirectConversationAppBarTap: (conversation) =>
+              log(conversation.additionalData!['startDate']),
+          provideConversationsBloc: true,
+          getUserAvatar: (_) => const Icon(Icons.abc),
+          getConversationCreationData: () => DirectConversationCreationData(
+              conversationPartner: FirebaseUser(
+                  id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2', username: 'Julien3')),
+          conversationsStyle: const ConversationsStyle(
+            showAppBarAboveConversations: true,
+            noConversationsWidget: Text('oh man alter'),
+            showFab: true,
+            fabColor: Colors.red,
+          ),
+        ),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -115,26 +132,7 @@ class _MyApp extends StatelessWidget {
             const SizedBox(height: 12),
             TextButton(
               child: const Text('Chat'),
-              onPressed: () => Navigator.of(context).push(
-                CupertinoPageRoute(
-                  builder: (context) => Scaffold(
-                    body: NeonChat(
-                      provideConversationsBloc: true,
-                      getConversationCreationData: () =>
-                          DirectConversationCreationData(
-                              conversationPartner: FirebaseUser(
-                                  id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2',
-                                  username: 'Julien3')),
-                      conversationsStyle: ConversationsStyle(
-                        showAppBarAboveConversations: true,
-                        noConversationsWidget: Text('oh man alter'),
-                        showFab: true,
-                        fabColor: Colors.red,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              onPressed: () => Navigator.of(context).push(_chatRoute),
             ),
             const SizedBox(
               height: 50,
@@ -202,4 +200,33 @@ class _MyAppBlocObserver extends BlocObserver {
     super.onEvent(bloc, event);
     log('Event: ${event.runtimeType}', name: '${bloc.runtimeType}');
   }
+}
+
+class _MyCustomAdditionalData
+    implements AdditionalConversationDataConfig<DateTime, Timestamp> {
+  @override
+  Map<String, AdditionalConversationDataConverter<DateTime, Timestamp>>
+      get fieldNamesAndConverters => {
+            'startDate': _MyCustomAdditionalDataConverter(),
+          };
+}
+
+class _MyCustomAdditionalDataConverter
+    implements AdditionalConversationDataConverter<DateTime, Timestamp> {
+  @override
+  Type get backendType => Timestamp;
+
+  @override
+  Type get frontendType => DateTime;
+
+  @override
+  DateTime Function(dynamic json) get fromJson => (json) {
+        final tmp = json as dynamic;
+        return tmp.toDate();
+      };
+
+  @override
+  Timestamp Function(dynamic date) get toJson => (date) {
+        return Timestamp.fromDate(date);
+      };
 }

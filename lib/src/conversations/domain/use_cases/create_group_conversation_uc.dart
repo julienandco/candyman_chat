@@ -6,7 +6,7 @@ class CreateGroupConversationUC {
 
   CreateGroupConversationUC(this.conversationsRepository);
 
-  Future<Conversation> call({
+  Future<GroupConversation> call({
     required FirebaseUser me,
     required GroupConversationCreationData creationData,
   }) async {

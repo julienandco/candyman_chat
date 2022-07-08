@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'message_widgets/check_mark_widget.dart';
 import 'message_widgets/message_content_widget.dart';
@@ -15,7 +16,6 @@ class MessageBubble extends StatefulWidget {
   final ConversationMessage message;
   final Widget? otherUserAvatar;
   final String otherUserName;
-  final MessageBubbleStyle messageBubbleStyle;
   final void Function(DateTime) updateLastSeenTimestampForGroupConvo;
 
   const MessageBubble({
@@ -25,7 +25,6 @@ class MessageBubble extends StatefulWidget {
     this.otherUserAvatar,
     this.groupChatLastSeenTimestamp,
     required this.otherUserName,
-    required this.messageBubbleStyle,
     required this.updateLastSeenTimestampForGroupConvo,
   }) : super(key: key);
 
@@ -48,7 +47,7 @@ class _MessageBubbleState extends State<MessageBubble> {
   void showDeleteMessageDialog() {
     bool canDeleteMessage = !widget.message.isDeleted && widget.message.isMe;
     if (canDeleteMessage) {
-      widget.messageBubbleStyle.onShowDeletionDialog?.call(
+      _style.onShowDeletionDialog?.call(
         () {
           context
               .read<ConversationBloc>()
@@ -75,13 +74,13 @@ class _MessageBubbleState extends State<MessageBubble> {
     return isWidthOverLimit(context)
         ? const BoxConstraints(maxWidth: 250)
         : BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width *
-                widget.messageBubbleStyle.maxWidthPercentage);
+            maxWidth:
+                MediaQuery.of(context).size.width * _style.maxWidthPercentage);
   }
 
   void copyToClipboard() async {
     await Clipboard.setData(ClipboardData(text: widget.message.text));
-    widget.messageBubbleStyle.onCopyToClipboard?.call();
+    _style.onCopyToClipboard?.call();
   }
 
   @override
@@ -93,15 +92,14 @@ class _MessageBubbleState extends State<MessageBubble> {
       Text(
         widget.message.timestampFormatted,
         style: widget.message.isMe
-            ? widget.messageBubbleStyle.ownMessageTimestampStyle
-            : widget.messageBubbleStyle.otherUserMessageTimestampStyle,
+            ? _style.ownMessageTimestampStyle
+            : _style.otherUserMessageTimestampStyle,
       ),
-      if (widget.message.isMe &&
-          !widget.messageBubbleStyle.hideSeenReceivedIcon)
+      if (widget.message.isMe && !_style.hideSeenReceivedIcon)
         CheckMarkWidget(
           message: widget.message,
-          seenIcon: widget.messageBubbleStyle.seenIcon,
-          receivedIcon: widget.messageBubbleStyle.receivedIcon,
+          seenIcon: _style.seenIcon,
+          receivedIcon: _style.receivedIcon,
         )
     ];
 
@@ -118,7 +116,7 @@ class _MessageBubbleState extends State<MessageBubble> {
             child: AutoSizeText(
               widget.otherUserName,
               maxLines: 1,
-              style: widget.messageBubbleStyle.otherUserNameStyle,
+              style: _style.otherUserNameStyle,
             ),
           )
         : null;
@@ -182,8 +180,7 @@ class _MessageBubbleState extends State<MessageBubble> {
                   menuItems: [
                     for (var i in [1, 2])
                       FocusedMenuItem(
-                        backgroundColor: widget
-                            .messageBubbleStyle.focusedMenuItemBackgroundColor,
+                        backgroundColor: _style.focusedMenuItemBackgroundColor,
                         title: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.5 - 50,
                           child: Row(
@@ -193,12 +190,12 @@ class _MessageBubbleState extends State<MessageBubble> {
                               Flexible(
                                 fit: FlexFit.loose,
                                 child: i == 1
-                                    ? widget.messageBubbleStyle.copyIcon ??
+                                    ? _style.copyIcon ??
                                         const Icon(
                                           Icons.copy,
                                           color: Colors.black,
                                         )
-                                    : widget.messageBubbleStyle.deleteIcon ??
+                                    : _style.deleteIcon ??
                                         const Icon(Icons.delete,
                                             color: Colors.black),
                               ),
@@ -206,13 +203,9 @@ class _MessageBubbleState extends State<MessageBubble> {
                                 fit: FlexFit.loose,
                                 child: AutoSizeText(
                                   i == 1
-                                      ? (widget.messageBubbleStyle.copyLabel ??
-                                          'copy')
-                                      : (widget
-                                              .messageBubbleStyle.deleteLabel ??
-                                          'delete'),
-                                  style: widget
-                                      .messageBubbleStyle.actionLabelStyle,
+                                      ? (_style.copyLabel ?? 'copy')
+                                      : (_style.deleteLabel ?? 'delete'),
+                                  style: _style.actionLabelStyle,
                                 ),
                               ),
                             ],
@@ -225,39 +218,32 @@ class _MessageBubbleState extends State<MessageBubble> {
                   ],
                   child: Container(
                     constraints: _constraints,
-                    decoration: widget.messageBubbleStyle.decoration ??
+                    decoration: _style.decoration ??
                         BoxDecoration(
                           color: widget.message.isMe
-                              ? widget.messageBubbleStyle.ownMessageColor
-                              : widget.messageBubbleStyle.otherUserMessageColor,
+                              ? _style.ownMessageColor
+                              : _style.otherUserMessageColor,
                           borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(
-                                widget.messageBubbleStyle.bubbleRadius),
-                            bottomLeft: Radius.circular(widget.message.isMe
-                                ? widget.messageBubbleStyle.bubbleRadius
-                                : 0),
-                            topLeft: Radius.circular(
-                                widget.messageBubbleStyle.bubbleRadius),
-                            topRight: Radius.circular(widget.message.isMe
-                                ? 0
-                                : widget.messageBubbleStyle.bubbleRadius),
+                            bottomRight: Radius.circular(_style.bubbleRadius),
+                            bottomLeft: Radius.circular(
+                                widget.message.isMe ? _style.bubbleRadius : 0),
+                            topLeft: Radius.circular(_style.bubbleRadius),
+                            topRight: Radius.circular(
+                                widget.message.isMe ? 0 : _style.bubbleRadius),
                           ),
                         ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(
-                            widget.messageBubbleStyle.bubbleRadius),
-                        bottomLeft: Radius.circular(widget.message.isMe
-                            ? widget.messageBubbleStyle.bubbleRadius
-                            : 0),
-                        topLeft: Radius.circular(
-                            widget.messageBubbleStyle.bubbleRadius),
-                        topRight: Radius.circular(widget.message.isMe
-                            ? 0
-                            : widget.messageBubbleStyle.bubbleRadius),
+                        bottomRight: Radius.circular(_style.bubbleRadius),
+                        bottomLeft: Radius.circular(
+                            widget.message.isMe ? _style.bubbleRadius : 0),
+                        topLeft: Radius.circular(_style.bubbleRadius),
+                        topRight: Radius.circular(
+                            widget.message.isMe ? 0 : _style.bubbleRadius),
                       ),
                       child: MessageContentWidget(
-                        messageBubbleStyle: widget.messageBubbleStyle,
+                        messageBubbleStyle: _style,
+                        titleForMediaPage: widget.otherUserName,
                         message: widget.message,
                         footer: footer,
                         header: header,
@@ -272,4 +258,6 @@ class _MessageBubbleState extends State<MessageBubble> {
       ],
     );
   }
+
+  MessageBubbleStyle get _style => chatGetIt<MessageBubbleStyle>();
 }

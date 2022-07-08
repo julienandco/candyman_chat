@@ -15,22 +15,30 @@ class FunctionInitData {
   final String Function(ConversationMessageType)
       getConversationMessageTypeDisplayString;
 
-  final Function(Conversation)? onDirectConversationAppBarTap;
+  final Function(DirectConversation)? onDirectConversationAppBarTap;
 
-  final Function(Conversation)? onGroupConversationAppBarTap;
+  final Function(GroupConversation)? onGroupConversationAppBarTap;
 
   final ConversationCreationData Function()? getConversationCreationData;
+
+  final Future<FirebaseUser> Function(String) getUserForID;
 
   final Widget Function(String?)? getUserAvatar;
   final Function(String)? onOpenUserProfile;
 
+  final AdditionalConversationDataConfig? additionalDirectConversationData;
+  final AdditionalConversationDataConfig? additionalGroupConversationData;
+
   FunctionInitData({
     required this.getConversationMessageTypeDisplayString,
+    required this.getUserForID,
     this.onDirectConversationAppBarTap,
     this.onGroupConversationAppBarTap,
     this.getConversationCreationData,
     this.getUserAvatar,
     this.onOpenUserProfile,
+    this.additionalDirectConversationData,
+    this.additionalGroupConversationData,
   });
 }
 
@@ -124,8 +132,8 @@ initNEONChat({
         () => HideConversationUC(chatGetIt<ConversationsRepository>()));
     chatGetIt.registerLazySingleton<GetFirebaseUserUC>(
         () => GetFirebaseUserUC(chatGetIt<FirebaseUserProfileRepository>()));
-    chatGetIt.registerLazySingleton<CreateConversationUC>(
-        () => CreateConversationUC(chatGetIt<ConversationsRepository>()));
+    chatGetIt.registerLazySingleton<CreateDirectConversationUC>(
+        () => CreateDirectConversationUC(chatGetIt<ConversationsRepository>()));
     chatGetIt.registerLazySingleton<CreateGroupConversationUC>(
         () => CreateGroupConversationUC(chatGetIt<ConversationsRepository>()));
     chatGetIt.registerLazySingleton<InitializeTimestampStreamUC>(() =>
@@ -159,7 +167,7 @@ initNEONChat({
             chatGetIt<InitializeConversationItemStreamUC>(),
         hideConversationUC: chatGetIt<HideConversationUC>(),
         getFirebaseUserUC: chatGetIt<GetFirebaseUserUC>(),
-        createConversationUC: chatGetIt<CreateConversationUC>(),
+        createConversationUC: chatGetIt<CreateDirectConversationUC>(),
         createGroupConversationUC: chatGetIt<CreateGroupConversationUC>(),
         initTimestampStreamUC: chatGetIt<InitializeTimestampStreamUC>(),
         syncTimestampsWithFirebaseUC: chatGetIt<SyncTimestampsWithFirebaseUC>(),

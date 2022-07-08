@@ -8,7 +8,6 @@ class ConversationEvent with _$ConversationEvent {
   const factory ConversationEvent.onData(
     List<ConversationMessage> messages,
     Conversation conversation,
-    String displayName,
   ) = _OnData;
   const factory ConversationEvent.sendTextMessage(String message) =
       _SendTextMessage;

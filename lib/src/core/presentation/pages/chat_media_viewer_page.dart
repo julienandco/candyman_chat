@@ -11,8 +11,10 @@ class ChatMediaViewerPage extends StatefulWidget {
   const ChatMediaViewerPage({
     Key? key,
     required this.currentMediaMessage,
+    required this.title,
   }) : super(key: key);
   final ConversationMessage currentMediaMessage;
+  final String title;
 
   @override
   _ChatMediaViewerPageState createState() => _ChatMediaViewerPageState();
@@ -94,18 +96,7 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
         title: Column(
           children: [
             Text(
-              context.read<ConversationBloc>().state.maybeMap(
-                    loadSuccess: (state) => messages[_currentIndex].isMe
-                        ? chatGetIt<ConversationStyle>().youString
-                        : state.conversation.conversationMembers
-                            .firstWhere(
-                              (member) =>
-                                  member.id == messages[_currentIndex].senderId,
-                              orElse: () => FirebaseUser(id: '', username: ''),
-                            )
-                            .username,
-                    orElse: () => '',
-                  ),
+              widget.title,
               style: chatGetIt<MessageBubbleStyle>().ownMessageTextStyle,
             ),
             Text(

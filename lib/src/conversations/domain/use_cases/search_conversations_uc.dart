@@ -19,7 +19,7 @@ class SearchConversationsUC {
     }
     final results = <ConversationItem>{};
     for (int i = 0; i < _conversationItems.length; i++) {
-      String data = _conversationItems[i].conversation.getDisplayName(_myId);
+      String data = _conversationItems[i].conversation.displayName;
       if (data.toLowerCase().contains(query.toLowerCase())) {
         results.add(conversations[i]);
       }

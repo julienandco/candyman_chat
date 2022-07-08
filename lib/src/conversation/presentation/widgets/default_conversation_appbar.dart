@@ -1,65 +1,48 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
-class DefaultConversationAppbar extends ConversationAppbar {
-  final SearchAppBarStyle searchAppBarStyle;
+class DefaultConversationAppbar extends StatelessWidget
+    implements PreferredSizeWidget {
+  final Conversation conversation;
   final bool showCloseButton;
-  final Function(Conversation)? onAvertaTap;
 
   const DefaultConversationAppbar({
     Key? key,
-    required this.searchAppBarStyle,
+    required this.conversation,
     required this.showCloseButton,
-    String? conversationThumbnail,
-    this.onAvertaTap,
-  }) : super(key: key, conversationThumbnail: conversationThumbnail);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final me = FirebaseAuth.instance.currentUser;
     return Builder(
       builder: (context) {
-        final conversationBloc = context.watch<ConversationBloc>();
         final conversationSearchBloc = context.watch<ConversationSearchBloc>();
 
         if (!conversationSearchBloc.state.isSearchActive) {
-          final state = conversationBloc.state;
-          final lastActiveAt = state.mapOrNull(
-            loadSuccess: (state) {
-              final timestamp = state.conversation.isGroupConversation
-                  ? null
-                  : state.conversation
-                      .getConversationPartner(me?.uid)
-                      ?.lastActivity;
+          String? lastActiveAt;
+          if (conversation is DirectConversation) {
+            final timestamp = (conversation as DirectConversation)
+                .conversationPartner
+                .lastActivity;
 
-              return timestamp != null
-                  ? formatLastActiveDateTime(timestamp)
-                  : null;
-            },
-          );
+            lastActiveAt =
+                timestamp != null ? formatLastActiveDateTime(timestamp) : null;
+          }
+
           return SubHeader(
-            decoration: searchAppBarStyle.searchBarDecoration,
+            decoration: _style.searchBarDecoration,
             leading: showCloseButton
                 ? const Padding(padding: EdgeInsets.symmetric(horizontal: 20))
                 : null,
             title: GestureDetector(
               key: const Key('Conversation_Page_Header'),
               behavior: HitTestBehavior.opaque,
-              onTap: () {
-                state.maybeMap(
-                  orElse: () {},
-                  loadSuccess: (state) => onAvertaTap?.call(state.conversation),
-                );
-              },
+              onTap: _onTap,
               child: Row(
                 children: [
-                  state.maybeMap(
-                    loadSuccess: (state) =>
-                        AvatarWidget(imgUrl: state.conversation.thumbnail),
-                    orElse: () => const SizedBox.shrink(),
-                  ),
+                  AvatarWidget(imgUrl: conversation.thumbnail),
                   const SizedBox(
                     width: 10,
                   ),
@@ -70,10 +53,7 @@ class DefaultConversationAppbar extends ConversationAppbar {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          state.maybeMap(
-                            loadSuccess: (state) => state.displayName,
-                            orElse: () => '',
-                          ),
+                          conversation.displayName,
                           style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -81,7 +61,7 @@ class DefaultConversationAppbar extends ConversationAppbar {
                         ),
                         if (lastActiveAt != null)
                           Text(
-                            searchAppBarStyle.lastActivityPrefix + lastActiveAt,
+                            _style.lastActivityPrefix + lastActiveAt,
                             style: const TextStyle(color: Colors.white54),
                           )
                       ],
@@ -102,12 +82,25 @@ class DefaultConversationAppbar extends ConversationAppbar {
           );
         } else {
           return ConversationSearchAppBar(
-            searchAppBarStyle: searchAppBarStyle,
+            searchAppBarStyle: _style,
           );
         }
       },
     );
   }
+
+  void _onTap() {
+    final convo = conversation;
+    if (convo is DirectConversation) {
+      chatGetIt<FunctionInitData>().onDirectConversationAppBarTap?.call(convo);
+    } else if (convo is GroupConversation) {
+      chatGetIt<FunctionInitData>().onGroupConversationAppBarTap?.call(convo);
+    } else {
+      throw UnknownConversationType();
+    }
+  }
+
+  SearchAppBarStyle get _style => chatGetIt<SearchAppBarStyle>();
 
   @override
   Size get preferredSize => const Size.fromHeight(86);

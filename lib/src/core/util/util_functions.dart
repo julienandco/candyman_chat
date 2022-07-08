@@ -99,7 +99,7 @@ void openConversationFromPushNotification(
 void defaultOnGroupConversationAppBarTap(
   BuildContext context, {
   required GroupChatOverviewStyle style,
-  required Conversation conversation,
+  required GroupConversation conversation,
   required String myId,
   Function(String)? onOpenUserProfile,
 }) {
@@ -112,7 +112,7 @@ void defaultOnGroupConversationAppBarTap(
         child: Scaffold(
           appBar: AppBar(
             centerTitle: style.centerAppbarTitle,
-            title: Text(conversation.getDisplayName(myId)),
+            title: Text(conversation.displayName),
             backgroundColor: style.appBarColor,
           ),
           body: Column(

@@ -5,18 +5,14 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class MessageList extends StatelessWidget {
-  final String Function(String)? getAuthorNameForSenderId;
-  final MessageBubbleStyle messageBubbleStyle;
+  final Conversation conversation;
 
-  final DateTime? conversationLastSeenTimestamp;
   final void Function(DateTime) updateLastSeenTimestampForConversation;
 
   const MessageList({
     Key? key,
-    required this.getAuthorNameForSenderId,
-    required this.messageBubbleStyle,
+    required this.conversation,
     required this.updateLastSeenTimestampForConversation,
-    this.conversationLastSeenTimestamp,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -36,13 +32,12 @@ class MessageList extends StatelessWidget {
                 child: MessageBubble(
                   updateLastSeenTimestampForGroupConvo:
                       updateLastSeenTimestampForConversation,
-                  groupChatLastSeenTimestamp: conversationLastSeenTimestamp,
-                  isGroupChat: state.conversation.isGroupConversation,
-                  messageBubbleStyle: messageBubbleStyle,
+                  groupChatLastSeenTimestamp: conversation is GroupConversation
+                      ? (conversation as GroupConversation).lastSeen
+                      : null,
+                  isGroupChat: state.conversation is GroupConversation,
                   message: message,
-                  otherUserName:
-                      getAuthorNameForSenderId?.call(message.senderId) ??
-                          'undefined',
+                  otherUserName: _getOtherUsernameForUserID(message.senderId),
                 ),
               ),
             ),
@@ -51,6 +46,19 @@ class MessageList extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _getOtherUsernameForUserID(String userID) {
+    final convo = conversation;
+    if (convo is GroupConversation) {
+      final user = convo.conversationMembers
+          .firstWhere((element) => element.id == userID);
+      return user.username;
+    } else if (convo is DirectConversation) {
+      return convo.conversationPartner.username;
+    } else {
+      throw UnknownConversationType();
+    }
   }
 }
 

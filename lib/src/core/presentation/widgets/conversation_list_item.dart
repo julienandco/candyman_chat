@@ -6,23 +6,17 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
+import 'package:neon_chat/src/core/util/util.dart';
 
 class ConversationListItem extends StatefulWidget {
   final ConversationItem conversationItem;
-  final Function()? onOpenConversation;
-  final Function()? onOpenConversationInfo;
-  final Widget conversationThumbnail;
-  final ConversationListItemStyle conversationListItemStyle;
   final String myId;
 
   const ConversationListItem({
     Key? key,
     required this.conversationItem,
     required this.myId,
-    this.onOpenConversation,
-    this.onOpenConversationInfo,
-    required this.conversationThumbnail,
-    required this.conversationListItemStyle,
   }) : super(key: key);
 
   @override
@@ -35,10 +29,10 @@ class _ConversationListItemState extends State<ConversationListItem> {
   @override
   Widget build(BuildContext context) {
     Widget lastMessageBuilder() {
-      if (widget.conversationItem.conversation.isBlocked) {
+      if (widget.conversationItem.conversation.isBlockedForMe) {
         return Text(
-          widget.conversationListItemStyle.conversationBlockedLabel,
-          style: widget.conversationListItemStyle.conversationBlockedLabelStyle,
+          _style.conversationBlockedLabel,
+          style: _style.conversationBlockedLabelStyle,
         );
       } else if (widget.conversationItem.lastMessage !=
           ConversationMessage.empty()) {
@@ -50,7 +44,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
               widget.conversationItem.lastMessage.text!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: widget.conversationListItemStyle.subtitleTextStyle,
+              style: _style.subtitleTextStyle,
             );
           case ConversationMessageType.image:
             text += '📷  ';
@@ -71,7 +65,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
         }
         return Text(
           text + type.displayString,
-          style: widget.conversationListItemStyle.subtitleTextStyle,
+          style: _style.subtitleTextStyle,
         );
       } else {
         return const SizedBox.shrink();
@@ -85,28 +79,24 @@ class _ConversationListItemState extends State<ConversationListItem> {
       menuItemExtent: 45,
       menuOffset: 10.0,
       blurSize: 0.0,
-      blurBackgroundColor:
-          widget.conversationListItemStyle.focusMenuBlurBackgroundColor,
+      blurBackgroundColor: _style.focusMenuBlurBackgroundColor,
       menuWidth: MediaQuery.of(context).size.width * 0.6,
       menuBoxDecoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
       menuItems: [
         FocusedMenuItem(
-            backgroundColor: widget.conversationListItemStyle.focusMenuColor,
+            backgroundColor: _style.focusMenuColor,
             title: SizedBox(
               width: MediaQuery.of(context).size.width * 0.5 - 50,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Flexible(
-                      fit: FlexFit.loose,
-                      child: widget.conversationListItemStyle.focusMenuIcon),
+                  Flexible(fit: FlexFit.loose, child: _style.focusMenuIcon),
                   Flexible(
                     fit: FlexFit.loose,
                     child: AutoSizeText(
-                      widget.conversationListItemStyle.focusMenuText,
-                      style:
-                          widget.conversationListItemStyle.focusMenuTextStyle,
+                      _style.focusMenuText,
+                      style: _style.focusMenuTextStyle,
                     ),
                   ),
                 ],
@@ -126,7 +116,10 @@ class _ConversationListItemState extends State<ConversationListItem> {
                   widget.conversationItem,
                 );
           } else {
-            widget.onOpenConversation?.call();
+            openConversationInternally(
+              context,
+              conversationId: widget.conversationItem.conversation.id,
+            );
           }
         },
         child: MouseRegion(
@@ -150,15 +143,15 @@ class _ConversationListItemState extends State<ConversationListItem> {
                               .id ==
                           widget.conversationItem.conversation.id ||
                       _onHover)
-                  ? widget.conversationListItemStyle.listTileHoverColor
-                  : widget.conversationListItemStyle.listTileColor,
+                  ? _style.listTileHoverColor
+                  : _style.listTileColor,
             ),
             child: Row(
               children: [
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: widget.onOpenConversationInfo,
-                  child: widget.conversationThumbnail,
+                  onTap: _onTap,
+                  child: _conversationThumbnail,
                 ),
                 const SizedBox(
                   width: 15,
@@ -172,10 +165,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.conversationItem.conversation
-                                .getDisplayName(widget.myId),
-                            style:
-                                widget.conversationListItemStyle.titleTextStyle,
+                            widget.conversationItem.conversation.displayName,
+                            style: _style.titleTextStyle,
                           ),
                           Text(
                             widget.conversationItem.lastMessage !=
@@ -183,8 +174,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
                                 ? widget.conversationItem.lastMessage
                                     .timestampFormatted
                                 : '',
-                            style: widget
-                                .conversationListItemStyle.subtitleTextStyle,
+                            style: _style.subtitleTextStyle,
                           ),
                         ],
                       ),
@@ -199,15 +189,13 @@ class _ConversationListItemState extends State<ConversationListItem> {
                             if (widget.conversationItem.unreadMessagesCount !=
                                 0)
                               Badge(
-                                badgeColor:
-                                    widget.conversationListItemStyle.badgeColor,
+                                badgeColor: _style.badgeColor,
                                 padding: const EdgeInsets.all(6.0),
                                 elevation: 0.0,
                                 badgeContent: Text(
                                   widget.conversationItem.unreadMessagesCount
                                       .toString(),
-                                  style: widget
-                                      .conversationListItemStyle.badgeTextStyle,
+                                  style: _style.badgeTextStyle,
                                 ),
                               ),
                           ],
@@ -223,4 +211,35 @@ class _ConversationListItemState extends State<ConversationListItem> {
       ),
     );
   }
+
+  ConversationListItemStyle get _style =>
+      chatGetIt<ConversationsStyle>().chatListItemStyle;
+
+  void _onTap() {
+    final convo = widget.conversationItem.conversation;
+    if (convo is DirectConversation) {
+      chatGetIt<FunctionInitData>().onDirectConversationAppBarTap?.call(convo);
+    } else if (convo is GroupConversation) {
+      chatGetIt<FunctionInitData>().onGroupConversationAppBarTap?.call(convo);
+    } else {
+      throw UnknownConversationType();
+    }
+  }
+
+  Widget get _conversationThumbnail {
+    final convo = widget.conversationItem.conversation;
+    if (convo is DirectConversation) {
+      return chatGetIt<FunctionInitData>()
+              .getUserAvatar
+              ?.call(convo.conversationPartner.id) ??
+          _defaultConversationImage;
+    } else if (convo is GroupConversation) {
+      return _defaultConversationImage;
+    } else {
+      throw UnknownConversationType();
+    }
+  }
+
+  Widget get _defaultConversationImage =>
+      AvatarWidget(imgUrl: widget.conversationItem.conversation.thumbnail);
 }
