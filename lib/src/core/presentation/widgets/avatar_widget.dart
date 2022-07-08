@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 class AvatarWidget extends StatelessWidget {
   final double size;
@@ -49,6 +50,7 @@ class AvatarWidget extends StatelessWidget {
       return CachedNetworkImage(
         imageUrl: imgUrl!,
         color: Colors.grey,
+        httpHeaders: chatGetIt.get(instanceName: kHttpHeadersInstanceName),
       );
     }
     {
