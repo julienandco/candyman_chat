@@ -109,24 +109,18 @@ class GroupConversation implements Conversation {
         _additionalData = additionalData;
 
   factory GroupConversation.fromConversationInfo(
-      {required ConversationInfo info,
-      required List<FirebaseUser> convoMembers}) {
-    final thumbnail = chatGetIt<FunctionInitData>()
-            .buildGroupConversationPictureURL
-            ?.call(info.groupPicture) ??
-        info.groupPicture;
-
-    return GroupConversation(
-      id: info.id,
-      displayName: info.groupName!,
-      thumbnail: thumbnail,
-      isBlockedForMe: false, //TODO
-      createdAt: info.createdAt,
-      conversationMembers: convoMembers,
-      lastSeen: DateTime.now(), //TODO
-      additionalData: info.additionalData,
-    );
-  }
+          {required ConversationInfo info,
+          required List<FirebaseUser> convoMembers}) =>
+      GroupConversation(
+        id: info.id,
+        displayName: info.groupName!,
+        thumbnail: info.groupPicture,
+        isBlockedForMe: false, //TODO
+        createdAt: info.createdAt,
+        conversationMembers: convoMembers,
+        lastSeen: DateTime.now(), //TODO
+        additionalData: info.additionalData,
+      );
 
   @override
   String get displayName => _displayName;

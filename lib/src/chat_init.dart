@@ -24,12 +24,11 @@ class FunctionInitData {
   final Future<FirebaseUser> Function(String) getUserForID;
 
   final Widget Function(String?)? getUserAvatar;
+  final Widget Function(String?)? getGroupAvatar;
   final Function(String)? onOpenUserProfile;
 
   final AdditionalConversationDataConfig? additionalDirectConversationData;
   final AdditionalConversationDataConfig? additionalGroupConversationData;
-
-  final String Function(String?)? buildGroupConversationPictureURL;
 
   FunctionInitData({
     required this.getConversationMessageTypeDisplayString,
@@ -38,10 +37,10 @@ class FunctionInitData {
     this.onGroupConversationAppBarTap,
     this.getConversationCreationData,
     this.getUserAvatar,
+    this.getGroupAvatar,
     this.onOpenUserProfile,
     this.additionalDirectConversationData,
     this.additionalGroupConversationData,
-    this.buildGroupConversationPictureURL,
   });
 }
 

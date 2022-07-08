@@ -234,7 +234,10 @@ class _ConversationListItemState extends State<ConversationListItem> {
               ?.call(convo.conversationPartner.id) ??
           _defaultConversationImage;
     } else if (convo is GroupConversation) {
-      return _defaultConversationImage;
+      return chatGetIt<FunctionInitData>()
+              .getGroupAvatar
+              ?.call(convo.thumbnail) ??
+          _defaultConversationImage;
     } else {
       throw UnknownConversationType();
     }
