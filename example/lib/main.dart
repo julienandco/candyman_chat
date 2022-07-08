@@ -40,7 +40,7 @@ void main() async {
     openAppChatPage: (context) => Navigator.of(context).push(_chatRoute),
   );
 
-  print(creds.user?.uid);
+  log(creds.user?.uid.toString() ?? 'NO CREDENTIALS!!11!!');
   // await FirebaseAuth.instance.signInWithEmailAndPassword(
   //   password: 'neon-chat-example1!',
   //   email: 'julien+1@neon.dev',
@@ -68,6 +68,9 @@ CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
                 profilePictureURL:
                     'https://cdn.getyourguide.com/img/tour/6242c553ab0ca.jpeg/146.jpg'),
           ),
+          additionalDirectConversationDataConfig: _MyCustomAdditionalData(),
+          onDirectConversationAppBarTap: (conversation) =>
+              log(conversation.additionalData!['startDate']),
           provideConversationsBloc: true,
           getConversationCreationData: () => DirectConversationCreationData(
               conversationPartner: FirebaseUser(
@@ -196,4 +199,33 @@ class _MyAppBlocObserver extends BlocObserver {
     super.onEvent(bloc, event);
     log('Event: ${event.runtimeType}', name: '${bloc.runtimeType}');
   }
+}
+
+class _MyCustomAdditionalData
+    implements AdditionalConversationDataConfig<DateTime, Timestamp> {
+  @override
+  Map<String, AdditionalConversationDataConverter<DateTime, Timestamp>>
+      get fieldNamesAndConverters => {
+            'startDate': _MyCustomAdditionalDataConverter(),
+          };
+}
+
+class _MyCustomAdditionalDataConverter
+    implements AdditionalConversationDataConverter<DateTime, Timestamp> {
+  @override
+  Type get backendType => Timestamp;
+
+  @override
+  Type get frontendType => DateTime;
+
+  @override
+  DateTime Function(dynamic json) get fromJson => (json) {
+        final tmp = json as dynamic;
+        return tmp.toDate();
+      };
+
+  @override
+  Timestamp Function(dynamic date) get toJson => (date) {
+        return Timestamp.fromDate(date);
+      };
 }

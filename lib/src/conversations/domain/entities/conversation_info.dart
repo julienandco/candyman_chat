@@ -67,7 +67,6 @@ class ConversationInfo extends Equatable {
   ///   Type get frontendType => DateTime;
   /// }
   ///
-
   final Map<String, dynamic>? additionalData;
 
   const ConversationInfo({

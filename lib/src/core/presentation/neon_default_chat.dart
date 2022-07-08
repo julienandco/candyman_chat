@@ -106,7 +106,7 @@ class NeonChat extends StatefulWidget {
   /// Default Functionality is nothing, as the app-internal user profile
   /// informations are not dealt with inside the NEON-Chat-Package.
   ///
-  final Function(Conversation)? onDirectConversationAppBarTap;
+  final Function(DirectConversation)? onDirectConversationAppBarTap;
 
   ///
   /// Gets called when a user taps on another user within the group conversation
@@ -121,7 +121,7 @@ class NeonChat extends StatefulWidget {
   /// Default functionality is to open an overview screen that shows the
   /// group's thumbnail, name and all the group members.
   ///
-  final Function(Conversation)? onGroupConversationAppBarTap;
+  final Function(GroupConversation)? onGroupConversationAppBarTap;
 
   ///
   /// Set to true, if no [onGroupConversationAppBarTap] is provided and the default
@@ -140,6 +140,19 @@ class NeonChat extends StatefulWidget {
   ///
   final Future<FirebaseUser> Function(String) getUserForID;
 
+  /// Your implementation of [AdditionalConversationDataConfig] in case you
+  /// want your [DirectConversation] objects to store further information
+  /// that are not defined within the Chat Package.
+  ///
+  final AdditionalConversationDataConfig?
+      additionalDirectConversationDataConfig;
+
+  /// Your implementation of [AdditionalConversationDataConfig] in case you
+  /// want your [GroupConversation] objects to store further information
+  /// that are not defined within the Chat Package.
+  ///
+  final AdditionalConversationDataConfig? additionalGroupConversationDataConfig;
+
   ///
   /// Returns the display string to be shown next to the emoji of a given
   /// message type (for ex. an audio message preview would show up in the conversations
@@ -157,6 +170,8 @@ class NeonChat extends StatefulWidget {
   const NeonChat({
     Key? key,
     required this.getUserForID,
+    this.additionalDirectConversationDataConfig,
+    this.additionalGroupConversationDataConfig,
     this.onGroupConversationAppBarTap,
     this.disableGroupConversationAppBarTap = false,
     this.provideConversationsBloc = false,
@@ -212,6 +227,10 @@ class _NeonChatState extends State<NeonChat> {
         onDirectConversationAppBarTap: widget.onDirectConversationAppBarTap,
         getUserAvatar: widget.getUserAvatar,
         onOpenUserProfile: widget.onOpenUserProfile,
+        additionalDirectConversationData:
+            widget.additionalDirectConversationDataConfig,
+        additionalGroupConversationData:
+            widget.additionalGroupConversationDataConfig,
       ),
     );
   }

@@ -8,6 +8,7 @@ abstract class Conversation {
   final String displayName;
   final bool isBlockedForMe;
   final DateTime createdAt;
+  final Map<String, dynamic>? additionalData;
 
   const Conversation({
     required this.id,
@@ -15,6 +16,7 @@ abstract class Conversation {
     required this.displayName,
     required this.isBlockedForMe,
     required this.createdAt,
+    this.additionalData,
   });
 }
 
@@ -24,22 +26,25 @@ class DirectConversation implements Conversation {
   final String? _thumbnail;
   final bool _isBlockedForMe;
   final DateTime _createdAt;
+  final Map<String, dynamic>? _additionalData;
 
   /// Only the other user
   final FirebaseUser conversationPartner;
 
-  DirectConversation(
-      {required String id,
-      required String displayName,
-      String? thumbnail,
-      required bool isBlockedForMe,
-      required DateTime createdAt,
-      required this.conversationPartner})
-      : _id = id,
+  DirectConversation({
+    required String id,
+    required String displayName,
+    String? thumbnail,
+    required bool isBlockedForMe,
+    required DateTime createdAt,
+    required this.conversationPartner,
+    Map<String, dynamic>? additionalData,
+  })  : _id = id,
         _isBlockedForMe = isBlockedForMe,
         _displayName = displayName,
         _thumbnail = thumbnail,
-        _createdAt = createdAt;
+        _createdAt = createdAt,
+        _additionalData = additionalData;
 
   factory DirectConversation.fromConversationInfo(
           {required ConversationInfo info, required FirebaseUser otherUser}) =>
@@ -50,6 +55,7 @@ class DirectConversation implements Conversation {
         isBlockedForMe: false, //TODO
         createdAt: info.createdAt,
         conversationPartner: otherUser,
+        additionalData: info.additionalData,
       );
 
   @override
@@ -66,6 +72,9 @@ class DirectConversation implements Conversation {
 
   @override
   DateTime get createdAt => _createdAt;
+
+  @override
+  Map<String, dynamic>? get additionalData => _additionalData;
 }
 
 class GroupConversation implements Conversation {
@@ -74,6 +83,7 @@ class GroupConversation implements Conversation {
   final String? _thumbnail;
   final bool _isBlockedForMe;
   final DateTime _createdAt;
+  final Map<String, dynamic>? _additionalData;
 
   /// Also includes the current user.
   final List<FirebaseUser> conversationMembers;
@@ -89,11 +99,13 @@ class GroupConversation implements Conversation {
     required DateTime createdAt,
     required this.conversationMembers,
     required this.lastSeen,
+    Map<String, dynamic>? additionalData,
   })  : _id = id,
         _isBlockedForMe = isBlockedForMe,
         _displayName = displayName,
         _thumbnail = thumbnail,
-        _createdAt = createdAt;
+        _createdAt = createdAt,
+        _additionalData = additionalData;
 
   factory GroupConversation.fromConversationInfo(
           {required ConversationInfo info,
@@ -106,6 +118,7 @@ class GroupConversation implements Conversation {
         createdAt: info.createdAt,
         conversationMembers: convoMembers,
         lastSeen: DateTime.now(), //TODO
+        additionalData: info.additionalData,
       );
 
   @override
@@ -122,4 +135,7 @@ class GroupConversation implements Conversation {
 
   @override
   DateTime get createdAt => _createdAt;
+
+  @override
+  Map<String, dynamic>? get additionalData => _additionalData;
 }
