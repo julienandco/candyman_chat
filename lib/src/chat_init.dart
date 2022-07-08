@@ -29,6 +29,8 @@ class FunctionInitData {
   final AdditionalConversationDataConfig? additionalDirectConversationData;
   final AdditionalConversationDataConfig? additionalGroupConversationData;
 
+  final String Function(String?)? buildGroupConversationPictureURL;
+
   FunctionInitData({
     required this.getConversationMessageTypeDisplayString,
     required this.getUserForID,
@@ -39,6 +41,7 @@ class FunctionInitData {
     this.onOpenUserProfile,
     this.additionalDirectConversationData,
     this.additionalGroupConversationData,
+    this.buildGroupConversationPictureURL,
   });
 }
 

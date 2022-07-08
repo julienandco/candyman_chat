@@ -161,6 +161,24 @@ class NeonChat extends StatefulWidget {
   final String Function(ConversationMessageType)?
       getConversationMessageTypeDisplayString;
 
+  ///
+  /// Processes the fetched groupPicture value from Firebase before fetching the
+  /// image via a network call. If not provided, just uses the value found in
+  /// Firebase.
+  ///
+  /// Example: The Firebase instance of your current project only stores the
+  /// upload IDs of the images (like in the OAmN project). But to get the
+  /// actual image you want an URL such as:
+  ///
+  /// https://www.oamn.getMyPicture/id
+  ///
+  /// In this case, you would define [buildGroupConversationPictureURL] as:
+  ///
+  /// String buildGroupConversationPictureURL(String? id)
+  ///        => id != null ? 'https://www.oamn.getMyPicture/$id' : '';
+  ///
+  final String Function(String?)? buildGroupConversationPictureURL;
+
   final ConversationStyle conversationStyle;
   final ConversationsStyle conversationsStyle;
   final MessageBubbleStyle messageBubbleStyle;
@@ -185,6 +203,7 @@ class NeonChat extends StatefulWidget {
     this.searchAppBarStyle = const SearchAppBarStyle(),
     this.bottomBarStyle = const BottomBarStyle(),
     this.getConversationMessageTypeDisplayString,
+    this.buildGroupConversationPictureURL,
   }) : super(key: key);
 
   @override
@@ -231,6 +250,8 @@ class _NeonChatState extends State<NeonChat> {
             widget.additionalDirectConversationDataConfig,
         additionalGroupConversationData:
             widget.additionalGroupConversationDataConfig,
+        buildGroupConversationPictureURL:
+            widget.buildGroupConversationPictureURL,
       ),
     );
   }
