@@ -151,8 +151,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: _onTap,
-                  child: AvatarWidget(
-                      imgUrl: widget.conversationItem.conversation.thumbnail),
+                  child: _conversationThumbnail,
                 ),
                 const SizedBox(
                   width: 15,
@@ -226,4 +225,21 @@ class _ConversationListItemState extends State<ConversationListItem> {
       throw UnknownConversationType();
     }
   }
+
+  Widget get _conversationThumbnail {
+    final convo = widget.conversationItem.conversation;
+    if (convo is DirectConversation) {
+      return chatGetIt<FunctionInitData>()
+              .getUserAvatar
+              ?.call(convo.conversationPartner.id) ??
+          _defaultConversationImage;
+    } else if (convo is GroupConversation) {
+      return _defaultConversationImage;
+    } else {
+      throw UnknownConversationType();
+    }
+  }
+
+  Widget get _defaultConversationImage =>
+      AvatarWidget(imgUrl: widget.conversationItem.conversation.thumbnail);
 }

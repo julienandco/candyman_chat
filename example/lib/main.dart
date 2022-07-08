@@ -72,6 +72,7 @@ CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
           onDirectConversationAppBarTap: (conversation) =>
               log(conversation.additionalData!['startDate']),
           provideConversationsBloc: true,
+          getUserAvatar: (_) => const Icon(Icons.abc),
           getConversationCreationData: () => DirectConversationCreationData(
               conversationPartner: FirebaseUser(
                   id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2', username: 'Julien3')),
