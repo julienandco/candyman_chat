@@ -26,6 +26,9 @@ class FunctionInitData {
   final Widget Function(String?)? getUserAvatar;
   final Function(String)? onOpenUserProfile;
 
+  final AdditionalConversationDataConfig? additionalDirectConversationData;
+  final AdditionalConversationDataConfig? additionalGroupConversationData;
+
   FunctionInitData({
     required this.getConversationMessageTypeDisplayString,
     required this.getUserForID,
@@ -34,6 +37,8 @@ class FunctionInitData {
     this.getConversationCreationData,
     this.getUserAvatar,
     this.onOpenUserProfile,
+    this.additionalDirectConversationData,
+    this.additionalGroupConversationData,
   });
 }
 
