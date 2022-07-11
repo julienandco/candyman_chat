@@ -10,35 +10,18 @@ import 'package:neon_chat/src/conversations/domain/domain.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 
-final myConverter = _StartDateConverter();
+final myNonNullableConverter =
+    AdditionalConversationDataInfo<DateTime, Timestamp>(
+  firebaseKey: 'startDate',
+  fromJson: (json) => json.toDate(),
+  toJson: (date) => Timestamp.fromDate(date),
+);
 
 class _StartDateAdditionalConversationData
-    implements AdditionalConversationDataConfig<DateTime, Timestamp> {
+    implements AdditionalConversationDataConfig {
   @override
-  Map<String, AdditionalConversationDataConverter<DateTime, Timestamp>>
-      get fieldNamesAndConverters => {
-            'startDate': myConverter,
-          };
-}
-
-class _StartDateConverter
-    implements AdditionalConversationDataConverter<DateTime, Timestamp> {
-  @override
-  DateTime Function(dynamic json) get fromJson => (json) {
-        final tmp = json as dynamic;
-        return tmp.toDate();
-      };
-
-  @override
-  Timestamp Function(dynamic date) get toJson => (date) {
-        return Timestamp.fromDate(date);
-      };
-
-  @override
-  Type get backendType => Timestamp;
-
-  @override
-  Type get frontendType => DateTime;
+  List<AdditionalConversationDataInfo> get additionalDataInfos =>
+      [myNonNullableConverter];
 }
 
 void main() {

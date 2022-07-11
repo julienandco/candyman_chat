@@ -202,31 +202,17 @@ class _MyAppBlocObserver extends BlocObserver {
   }
 }
 
-class _MyCustomAdditionalData
-    implements AdditionalConversationDataConfig<DateTime, Timestamp> {
+class _MyCustomAdditionalData implements AdditionalConversationDataConfig {
   @override
-  Map<String, AdditionalConversationDataConverter<DateTime, Timestamp>>
-      get fieldNamesAndConverters => {
-            'startDate': _MyCustomAdditionalDataConverter(),
-          };
-}
-
-class _MyCustomAdditionalDataConverter
-    implements AdditionalConversationDataConverter<DateTime, Timestamp> {
-  @override
-  Type get backendType => Timestamp;
-
-  @override
-  Type get frontendType => DateTime;
-
-  @override
-  DateTime Function(dynamic json) get fromJson => (json) {
-        final tmp = json as dynamic;
-        return tmp.toDate();
-      };
-
-  @override
-  Timestamp Function(dynamic date) get toJson => (date) {
-        return Timestamp.fromDate(date);
-      };
+  List<AdditionalConversationDataInfo> get additionalDataInfos => [
+        AdditionalConversationDataInfo<DateTime?, Timestamp?>(
+            firebaseKey: 'eventId',
+            fromJson: (json) {
+              final tmp = json as dynamic;
+              return tmp.toDate();
+            },
+            toJson: (date) {
+              return Timestamp.fromDate(date);
+            })
+      ];
 }

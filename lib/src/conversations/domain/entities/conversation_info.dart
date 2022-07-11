@@ -32,41 +32,27 @@ class ConversationInfo extends Equatable {
 
   ///
   /// If you want a conversation entity to have additional fields, pass your
-  /// implementation of [AdditionalConversationDataConfig] into the chat, so that
-  /// you can access it here. So for instance, if you wanted each of your
-  /// [ConversationInfo] to also retrieve the field startDate from
-  /// Firebase, which would be a Timestamp in Firebase and a DateTime in
-  /// your Flutter app, your [AdditionalConversationDataConfig] would look like this:
+  /// implementation of [AdditionalConversationDataConfig] into the chat, which
+  /// holds a list of [AdditionalConversationDataInfo] instances. E.g., if you
+  /// wanted each of your [ConversationInfo] to also retrieve the field
+  /// startDate from Firebase, which would be a [Timestamp] in Firebase and a
+  /// [DateTime] in your Flutter app, your [AdditionalConversationDataConfig]
+  /// would look like this:
   ///
-  /// class StartDateAdditionalConversationData
-  ///     implements AdditionalConversationData<DateTime, Timestamp> {
+  /// final myNonNullableConverter =
+  ///     AdditionalConversationDataInfo<DateTime, Timestamp>(
+  ///   firebaseKey: 'startDate',
+  ///   fromJson: (json) => json.toDate(),
+  ///   toJson: (date) => Timestamp.fromDate(date),
+  /// );
+  ///
+  /// class _StartDateAdditionalConversationData
+  ///     implements AdditionalConversationDataConfig {
   ///   @override
-  ///   Map<String, AdditionalConversationDataConverter<DateTime, Timestamp>>
-  ///       get fieldNamesAndConverters => {
-  ///             'startDate': StartDateConverter(),
-  ///           };
+  ///   List<AdditionalConversationDataInfo> get additionalDataInfos =>
+  ///       [myNonNullableConverter];
   /// }
-  ///
-  /// class StartDateConverter
-  ///     implements AdditionalConversationDataConverter<DateTime, Timestamp> {
-  ///   @override
-  ///   DateTime Function(dynamic json) get fromJson => (json) {
-  ///         final tmp = json as Timestamp;
-  ///         return tmp.toDate();
-  ///       };
-  ///
-  ///   @override
-  ///   Timestamp Function(dynamic date) get toJson => (date) {
-  ///         return FieldValue.serverTimestamp();
-  ///       };
-  ///
-  ///   @override
-  ///   Type get backendType => Timestamp;
-  ///
-  ///   @override
-  ///   Type get frontendType => DateTime;
-  /// }
-  ///
+
   final Map<String, dynamic>? additionalData;
 
   const ConversationInfo({
@@ -87,29 +73,26 @@ class ConversationInfo extends Equatable {
         : chatGetIt<FunctionInitData>().additionalDirectConversationData;
 
     Map<String, dynamic>? additionalData = {};
-    if (additionalConvoDataConfig != null) {
-      for (var fieldName
-          in additionalConvoDataConfig.fieldNamesAndConverters.keys) {
+    if (additionalConvoDataConfig != null &&
+        additionalConvoDataConfig.additionalDataInfos.isNotEmpty) {
+      for (var additionalDataInfo
+          in additionalConvoDataConfig.additionalDataInfos) {
+        final fieldName = additionalDataInfo.firebaseKey;
         if (!json.containsKey(fieldName)) {
           throw MissingAdditionalDataInJson();
         }
 
         final valueInJson = json[fieldName];
+        final jsonValueHasCorrectType =
+            additionalDataInfo.checkBackendTypeOfJsonInput(valueInJson);
 
-        final converter =
-            additionalConvoDataConfig.fieldNamesAndConverters[fieldName];
-
-        if (converter == null) {
-          throw MissingConverter();
-        }
-
-        if (valueInJson.runtimeType != converter.backendType) {
+        if (!jsonValueHasCorrectType) {
           throw WrongAdditionalDataInJson(
               gotType: valueInJson.runtimeType,
-              expectedType: converter.backendType);
+              expectedType: additionalDataInfo.backendType);
         }
 
-        final valueToJson = converter.fromJson(valueInJson);
+        final valueToJson = additionalDataInfo.fromJson(valueInJson);
         additionalData[fieldName] = valueToJson;
       }
     }
@@ -140,29 +123,26 @@ class ConversationInfo extends Equatable {
     final additionalConvoDataConfig = convoData;
 
     Map<String, dynamic>? additionalData = {};
-    if (additionalConvoDataConfig != null) {
-      for (var fieldName
-          in additionalConvoDataConfig.fieldNamesAndConverters.keys) {
+    if (additionalConvoDataConfig != null &&
+        additionalConvoDataConfig.additionalDataInfos.isNotEmpty) {
+      for (var additionalDataInfo
+          in additionalConvoDataConfig.additionalDataInfos) {
+        final fieldName = additionalDataInfo.firebaseKey;
         if (!json.containsKey(fieldName)) {
           throw MissingAdditionalDataInJson();
         }
 
         final valueInJson = json[fieldName];
+        final jsonValueHasCorrectType =
+            additionalDataInfo.checkBackendTypeOfJsonInput(valueInJson);
 
-        final converter =
-            additionalConvoDataConfig.fieldNamesAndConverters[fieldName];
-
-        if (converter == null) {
-          throw MissingConverter();
-        }
-
-        if (valueInJson.runtimeType != converter.backendType) {
+        if (!jsonValueHasCorrectType) {
           throw WrongAdditionalDataInJson(
               gotType: valueInJson.runtimeType,
-              expectedType: converter.backendType);
+              expectedType: additionalDataInfo.backendType);
         }
 
-        final valueToJson = converter.fromJson(valueInJson);
+        final valueToJson = additionalDataInfo.fromJson(valueInJson);
         additionalData[fieldName] = valueToJson;
       }
     }
@@ -204,16 +184,12 @@ class ConversationInfo extends Equatable {
         throw MissingAdditionalDataConfig();
       }
 
-      for (var fieldName in _additionalConvoData.fieldNamesAndConverters.keys) {
+      for (var additionaDataInfo in _additionalConvoData.additionalDataInfos) {
+        final fieldName = additionaDataInfo.firebaseKey;
         final fieldValue = additionalData![fieldName];
 
-        final converter =
-            _additionalConvoData.fieldNamesAndConverters[fieldName];
-        if (converter == null) {
-          throw MissingConverter();
-        }
         try {
-          final result = converter.toJson(fieldValue);
+          final result = additionaDataInfo.toJson(fieldValue);
           jsonMap[fieldName] = result;
         } catch (e) {
           log(e.toString());
@@ -226,6 +202,8 @@ class ConversationInfo extends Equatable {
   @visibleForTesting
   Map<String, dynamic> toJsonTest(
       [AdditionalConversationDataConfig? convoData]) {
+    final _additionalConvoData = convoData;
+
     Map<String, dynamic> jsonMap = {
       'id': id,
       'isGroupConversation': isGroupConversation,
@@ -236,23 +214,17 @@ class ConversationInfo extends Equatable {
       'hiddenFrom': hiddenFrom,
     };
 
-    if (convoData != null) {
-      final _additionalConvoData = convoData;
-
+    if (_additionalConvoData != null) {
       if (additionalData == null) {
         throw MissingAdditionalDataConfig();
       }
 
-      for (var fieldName in _additionalConvoData.fieldNamesAndConverters.keys) {
+      for (var additionaDataInfo in _additionalConvoData.additionalDataInfos) {
+        final fieldName = additionaDataInfo.firebaseKey;
         final fieldValue = additionalData![fieldName];
 
-        final converter =
-            _additionalConvoData.fieldNamesAndConverters[fieldName];
-        if (converter == null) {
-          throw MissingConverter();
-        }
         try {
-          final result = converter.toJson(fieldValue);
+          final result = additionaDataInfo.toJson(fieldValue);
           jsonMap[fieldName] = result;
         } catch (e) {
           log(e.toString());
@@ -277,8 +249,6 @@ class ConversationInfo extends Equatable {
 
 class MissingAdditionalDataConfig extends Error {}
 
-class MissingConverter extends Error {}
-
 class MissingAdditionalDataInJson extends Error {}
 
 class WrongAdditionalDataInJson extends Error {
@@ -292,25 +262,29 @@ class WrongAdditionalDataInJson extends Error {
       'Wrong types in JSON! Expected an instance of $expectedType, got $gotType instead.';
 }
 
-abstract class AdditionalConversationDataConfig<T, K> {
-  final Map<String, AdditionalConversationDataConverter<T, K>>
-      fieldNamesAndConverters;
+abstract class AdditionalConversationDataConfig {
+  final List<AdditionalConversationDataInfo> additionalDataInfos;
 
   const AdditionalConversationDataConfig({
-    required this.fieldNamesAndConverters,
+    required this.additionalDataInfos,
   });
 }
 
-abstract class AdditionalConversationDataConverter<T, K> {
+class AdditionalConversationDataInfo<T, K> {
+  final String firebaseKey;
+  final bool isNullable;
   final T Function(dynamic) fromJson;
   final K Function(dynamic) toJson;
 
-  final Type frontendType;
-  final Type backendType;
+  Type get frontendType => T;
+  Type get backendType => K;
 
-  const AdditionalConversationDataConverter({
+  bool checkBackendTypeOfJsonInput(dynamic jsonInput) => jsonInput is K;
+
+  const AdditionalConversationDataInfo({
+    required this.firebaseKey,
     required this.fromJson,
     required this.toJson,
-  })  : frontendType = T,
-        backendType = K;
+    this.isNullable = false,
+  });
 }
