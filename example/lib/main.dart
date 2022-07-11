@@ -70,7 +70,7 @@ CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
           ),
           additionalDirectConversationDataConfig: _MyCustomAdditionalData(),
           onDirectConversationAppBarTap: (conversation) =>
-              log(conversation.additionalData!['startDate']),
+              log(conversation.additionalData!['startDate'].toString()),
           provideConversationsBloc: true,
           getUserAvatar: (_) => const Icon(Icons.person),
           getGroupAvatar: (_) => const Icon(Icons.group),
@@ -203,31 +203,18 @@ class _MyAppBlocObserver extends BlocObserver {
   }
 }
 
-class _MyCustomAdditionalData
-    implements AdditionalConversationDataConfig<DateTime, Timestamp> {
+class _MyCustomAdditionalData implements AdditionalConversationDataConfig {
   @override
-  Map<String, AdditionalConversationDataConverter<DateTime, Timestamp>>
-      get fieldNamesAndConverters => {
-            'startDate': _MyCustomAdditionalDataConverter(),
-          };
-}
-
-class _MyCustomAdditionalDataConverter
-    implements AdditionalConversationDataConverter<DateTime, Timestamp> {
-  @override
-  Type get backendType => Timestamp;
-
-  @override
-  Type get frontendType => DateTime;
-
-  @override
-  DateTime Function(dynamic json) get fromJson => (json) {
-        final tmp = json as dynamic;
-        return tmp.toDate();
-      };
-
-  @override
-  Timestamp Function(dynamic date) get toJson => (date) {
-        return Timestamp.fromDate(date);
-      };
+  List<AdditionalConversationDataInfo> get additionalDataInfos => [
+        AdditionalConversationDataInfo<DateTime?, Timestamp?>(
+            firebaseKey: 'startDate',
+            fromJson: (json) {
+              if (json == null) return null;
+              return json.toDate();
+            },
+            toJson: (date) {
+              if (date == null) return null;
+              return Timestamp.fromDate(date);
+            })
+      ];
 }
