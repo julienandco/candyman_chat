@@ -263,12 +263,10 @@ void main() {
         expect(res, _jsonWith);
       });
 
-      test(
-          'Throws MissingAdditionalData when additional data config is given, but no additional data stored',
+      test('Does not set field in JSON if nullable additional data is null.',
           () {
-        expect(
-            () => _convoInfoWithout.toJsonTest(_oneWayNullableAdditionalData),
-            throwsA(const TypeMatcher<MissingAdditionalDataConfig>()));
+        final res = _convoInfoWithout.toJsonTest(_oneWayNullableAdditionalData);
+        expect(res, _jsonWithout);
       });
     });
 
@@ -413,13 +411,12 @@ void main() {
       });
 
       test(
-          'Throws MissingAdditionalData when additional data config is given, but no additional data stored',
+          'Does not set field in JSON when nullable additional data config is given, but nothing stored as additional data',
           () {
-        expect(
-            () => _convoInfoWithout.toJsonTest(_twoWayNullableAdditionalData),
-            throwsA(const TypeMatcher<MissingAdditionalDataConfig>()));
+        final json =
+            _convoInfoWithout.toJsonTest(_twoWayNullableAdditionalData);
+        expect(json, _jsonWithout);
       });
-
       test(
           'Does not set field in JSON when nullable additional data config is given, but only null stored as additional data',
           () {

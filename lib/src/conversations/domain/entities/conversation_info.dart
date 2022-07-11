@@ -182,20 +182,27 @@ class ConversationInfo extends Equatable {
     };
 
     if (_additionalConvoData != null) {
-      if (additionalData == null) {
-        throw MissingAdditionalDataConfig();
-      }
-
       for (var additionaDataInfo in _additionalConvoData.additionalDataInfos) {
         final fieldName = additionaDataInfo.firebaseKey;
-        final fieldValue = additionalData![fieldName];
 
-        if (fieldValue != null || !additionaDataInfo.isNullableInBackend) {
-          try {
-            final result = additionaDataInfo.toJson(fieldValue);
-            jsonMap[fieldName] = result;
-          } catch (e) {
-            log(e.toString());
+        if ((additionalData == null ||
+                !additionalData!.containsKey(fieldName)) &&
+            !additionaDataInfo.isNullableInBackend) {
+          throw MissingAdditionalDataConfig();
+        } else if (additionalData != null) {
+          final fieldValue = additionalData![fieldName];
+
+          if (fieldValue != null) {
+            //only write to json if value is non-null
+            try {
+              final result = additionaDataInfo.toJson(fieldValue);
+              jsonMap[fieldName] = result;
+            } catch (e) {
+              log(e.toString());
+              throw WrongAdditionalDataInDataStructure(
+                  gotType: fieldValue.runtimeType,
+                  expectedType: additionaDataInfo.frontendType);
+            }
           }
         }
       }
@@ -219,20 +226,27 @@ class ConversationInfo extends Equatable {
     };
 
     if (_additionalConvoData != null) {
-      if (additionalData == null) {
-        throw MissingAdditionalDataConfig();
-      }
-
       for (var additionaDataInfo in _additionalConvoData.additionalDataInfos) {
         final fieldName = additionaDataInfo.firebaseKey;
-        final fieldValue = additionalData![fieldName];
 
-        if (fieldValue != null || !additionaDataInfo.isNullableInBackend) {
-          try {
-            final result = additionaDataInfo.toJson(fieldValue);
-            jsonMap[fieldName] = result;
-          } catch (e) {
-            log(e.toString());
+        if ((additionalData == null ||
+                !additionalData!.containsKey(fieldName)) &&
+            !additionaDataInfo.isNullableInBackend) {
+          throw MissingAdditionalDataConfig();
+        } else if (additionalData != null) {
+          final fieldValue = additionalData![fieldName];
+
+          if (fieldValue != null) {
+            //only write to json if value is non-null
+            try {
+              final result = additionaDataInfo.toJson(fieldValue);
+              jsonMap[fieldName] = result;
+            } catch (e) {
+              log(e.toString());
+              throw WrongAdditionalDataInDataStructure(
+                  gotType: fieldValue.runtimeType,
+                  expectedType: additionaDataInfo.frontendType);
+            }
           }
         }
       }
@@ -266,6 +280,17 @@ class WrongAdditionalDataInJson extends Error {
 
   String get message =>
       'Wrong types in JSON! Expected an instance of $expectedType, got $gotType instead.';
+}
+
+class WrongAdditionalDataInDataStructure extends Error {
+  final Type gotType;
+  final Type expectedType;
+
+  WrongAdditionalDataInDataStructure(
+      {required this.gotType, required this.expectedType});
+
+  String get message =>
+      'Wrong types in Data structure! Expected an instance of $expectedType, got $gotType instead.';
 }
 
 abstract class AdditionalConversationDataConfig {
