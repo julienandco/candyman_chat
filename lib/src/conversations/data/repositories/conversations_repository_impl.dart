@@ -70,6 +70,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
         conversationMembers: [me.id, conversationPartner.id],
         createdAt: DateTime.now(),
         isGroupConversation: false,
+        additionalData: creationData.additionalData,
       );
       await doc.set(conversationInfo.toJson());
       log('create conversation: new conversation');
@@ -219,6 +220,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       groupName: creationData.groupName,
       groupPicture: creationData.groupPhoto,
       isGroupConversation: true,
+      additionalData: creationData.additionalData,
     );
     await doc.set(conversationInfo.toJson());
     return GroupConversation.fromConversationInfo(

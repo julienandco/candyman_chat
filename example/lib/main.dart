@@ -74,8 +74,9 @@ CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
           provideConversationsBloc: true,
           getUserAvatar: (_) => const Icon(Icons.abc),
           getConversationCreationData: () => DirectConversationCreationData(
-              conversationPartner: FirebaseUser(
-                  id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2', username: 'Julien3')),
+            conversationPartner: FirebaseUser(
+                id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2', username: 'Julien3'),
+          ),
           conversationsStyle: const ConversationsStyle(
             showAppBarAboveConversations: true,
             noConversationsWidget: Text('oh man alter'),
