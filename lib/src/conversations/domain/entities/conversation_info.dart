@@ -78,7 +78,8 @@ class ConversationInfo extends Equatable {
       for (var additionalDataInfo
           in additionalConvoDataConfig.additionalDataInfos) {
         final fieldName = additionalDataInfo.firebaseKey;
-        if (!json.containsKey(fieldName)) {
+        if (!json.containsKey(fieldName) &&
+            !additionalDataInfo.isNullableInBackend) {
           throw MissingAdditionalDataInJson();
         }
 
@@ -92,8 +93,8 @@ class ConversationInfo extends Equatable {
               expectedType: additionalDataInfo.backendType);
         }
 
-        final valueToJson = additionalDataInfo.fromJson(valueInJson);
-        additionalData[fieldName] = valueToJson;
+        final valueFromJson = additionalDataInfo.fromJson(valueInJson);
+        additionalData[fieldName] = valueFromJson;
       }
     }
 
@@ -128,7 +129,8 @@ class ConversationInfo extends Equatable {
       for (var additionalDataInfo
           in additionalConvoDataConfig.additionalDataInfos) {
         final fieldName = additionalDataInfo.firebaseKey;
-        if (!json.containsKey(fieldName)) {
+        if (!json.containsKey(fieldName) &&
+            !additionalDataInfo.isNullableInBackend) {
           throw MissingAdditionalDataInJson();
         }
 
@@ -142,8 +144,8 @@ class ConversationInfo extends Equatable {
               expectedType: additionalDataInfo.backendType);
         }
 
-        final valueToJson = additionalDataInfo.fromJson(valueInJson);
-        additionalData[fieldName] = valueToJson;
+        final valueFromJson = additionalDataInfo.fromJson(valueInJson);
+        additionalData[fieldName] = valueFromJson;
       }
     }
 
@@ -188,11 +190,13 @@ class ConversationInfo extends Equatable {
         final fieldName = additionaDataInfo.firebaseKey;
         final fieldValue = additionalData![fieldName];
 
-        try {
-          final result = additionaDataInfo.toJson(fieldValue);
-          jsonMap[fieldName] = result;
-        } catch (e) {
-          log(e.toString());
+        if (fieldValue != null || !additionaDataInfo.isNullableInBackend) {
+          try {
+            final result = additionaDataInfo.toJson(fieldValue);
+            jsonMap[fieldName] = result;
+          } catch (e) {
+            log(e.toString());
+          }
         }
       }
     }
@@ -223,11 +227,13 @@ class ConversationInfo extends Equatable {
         final fieldName = additionaDataInfo.firebaseKey;
         final fieldValue = additionalData![fieldName];
 
-        try {
-          final result = additionaDataInfo.toJson(fieldValue);
-          jsonMap[fieldName] = result;
-        } catch (e) {
-          log(e.toString());
+        if (fieldValue != null || !additionaDataInfo.isNullableInBackend) {
+          try {
+            final result = additionaDataInfo.toJson(fieldValue);
+            jsonMap[fieldName] = result;
+          } catch (e) {
+            log(e.toString());
+          }
         }
       }
     }
@@ -272,9 +278,14 @@ abstract class AdditionalConversationDataConfig {
 
 class AdditionalConversationDataInfo<T, K> {
   final String firebaseKey;
-  final bool isNullable;
+
   final T Function(dynamic) fromJson;
   final K Function(dynamic) toJson;
+
+  /// If the passed (backend) type [K] is nullable, e.g. [String?] instead of
+  /// [String], this will return [true].
+  ///
+  bool get isNullableInBackend => null is K;
 
   Type get frontendType => T;
   Type get backendType => K;
@@ -285,6 +296,5 @@ class AdditionalConversationDataInfo<T, K> {
     required this.firebaseKey,
     required this.fromJson,
     required this.toJson,
-    this.isNullable = false,
   });
 }

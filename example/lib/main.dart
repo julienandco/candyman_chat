@@ -70,7 +70,7 @@ CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
           ),
           additionalDirectConversationDataConfig: _MyCustomAdditionalData(),
           onDirectConversationAppBarTap: (conversation) =>
-              log(conversation.additionalData!['startDate']),
+              log(conversation.additionalData!['startDate'].toString()),
           provideConversationsBloc: true,
           getUserAvatar: (_) => const Icon(Icons.abc),
           getConversationCreationData: () => DirectConversationCreationData(
@@ -206,12 +206,13 @@ class _MyCustomAdditionalData implements AdditionalConversationDataConfig {
   @override
   List<AdditionalConversationDataInfo> get additionalDataInfos => [
         AdditionalConversationDataInfo<DateTime?, Timestamp?>(
-            firebaseKey: 'eventId',
+            firebaseKey: 'startDate',
             fromJson: (json) {
-              final tmp = json as dynamic;
-              return tmp.toDate();
+              if (json == null) return null;
+              return json.toDate();
             },
             toJson: (date) {
+              if (date == null) return null;
               return Timestamp.fromDate(date);
             })
       ];
