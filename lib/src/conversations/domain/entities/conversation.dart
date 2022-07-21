@@ -1,5 +1,4 @@
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/chat_init.dart';
 
 class UnknownConversationType extends Error {}
 

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
-import 'package:neon_chat/src/conversation/presentation/widgets/widgets.dart';
 
 class DefaultConversationPage extends StatefulWidget {
   final bool showCloseButton;
