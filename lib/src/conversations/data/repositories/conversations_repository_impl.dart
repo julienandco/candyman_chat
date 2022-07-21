@@ -207,7 +207,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     required FirebaseUser me,
     required GroupConversationCreationData creationData,
   }) async {
-    //TODO: thumbnail should be uploaded somewhere
+    //TODO: thumbnail should be uploaded somewhere -> implement that in upload_manager_impl
 
     final doc = _collection.doc();
     final conversationInfo = ConversationInfo(
