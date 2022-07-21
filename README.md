@@ -1,8 +1,8 @@
-# NEON Chat
+# 💬 NEON Chat
 
 Unser absolut performanter, universell einsetzbarer Chat. WhatsApp ist lit, aber wir sind litter! (🏴󠁧󠁢󠁥󠁮󠁧󠁿-pun intended)
 
-## Installation
+## 👨🏻‍🔧 Installation
 In das ```pubspec.yaml``` des Projekts einfügen:
 
 ```yaml
@@ -11,7 +11,7 @@ neon-chat:
         url: https://github.com/NEON-Software-Solutions/NEON_chat
 ```
 
-## Setup
+## 🧪 Setup
 1. App in Firebase registrieren, am besten mithilfe der [FlutterFireCLI][flutterfire_cli_link] und im Anschluss die automatisch generierten ```DefaultFirebaseOptions``` zum initialisieren nutzen (kein GoogleServiceInfo.plist bzw. .json Rumgenerve mehr!):
 
 ```dart
@@ -57,7 +57,7 @@ Anmelden verwenden: ```FirebaseAuth.signInWithCustomToken(myToken)```.
 
 6. Einige dich mit dem Backend auf Naming Conventions(!!!) bei den Daten in FireStore, die sowohl Front- als auch Backend schreiben. Nutze dazu die ```FirebaseKeys``` Datenstruktur. Im Idealfall nutzt ihr die Default-Werte, dann muss dem Chat beim Initialisieren gar nichts übergeben werden.
 
-## Nutzung
+## ⚙️ Nutzung
 
 Der Chat hat zwei Use-Cases: 
 
@@ -182,12 +182,13 @@ Als letzer Hinweis: die erste Nutzung wird höchstwahrscheinlich schiefgehen, we
 Und jetzt: Abfahrt! 🏎
 
 
-## Doku
+## 📜 Doku
 
-Vorab: Im gesamten Package wirst du auf die Begriffe Conversation und Conversations stoßen. Da Chat der Name für das Package/Feature ist, mussten für die Entities und Models andere Bezeichnungen her. So ist also das, was man umgangssprachlich ein Chat beschreiben würde (eine Unterhaltung zw. zwei Personen, bzw. eine Gruppenunterhaltung) im Code als Conversation (DirectConversation oder GroupConversation) dargestellt. Daher wirst du unter ```ConversationPage``` den "Chat"-Verlauf und die für einen Chat typische Message-Bubble finden und unter ```ConversationsPage``` die "Homepage" des Chats, sprich alle deine offenen "Chats" (Conversations).
+Vorab: Im gesamten Package wirst du auf die Begriffe Conversation und Conversations stoßen. Da "Chat" der Name für das Package/Feature ist, mussten für die Entities und Models andere Bezeichnungen her. So ist also das, was man umgangssprachlich als einen Chat beschreiben würde (eine Unterhaltung zw. zwei Personen, bzw. eine Gruppenunterhaltung), im Code als Conversation (DirectConversation oder GroupConversation) dargestellt. Daher wirst du unter ```ConversationPage``` den "Chat"-Verlauf und die für einen Chat typische Message-Bubble finden und unter ```ConversationsPage``` die "Homepage" des Chats, sprich alle deine offenen "Chats" (Conversations).
 
-Zu jeder guten Packagenutzung gehört natürlich das ausführliche Studieren der Doku. Ich habe so gut es geht, die Funktionen und Felder der Datenstrukturen, mit denen du den Chat customizen kannst, im Code dokumentiert, sodass du alles per Hover in VS Code sehen können müsstest. Es kann gut sein, dass ich an manchen Stellen zu sparsam mit meinen Worten war oder sogar gar nichts geschrieben habe. Sobald so etwas auffällt: direkt an mich (Julien) wenden, ich erklärs dir und schreibe ein bisschen Doku. 
-Hier also eine nach bestem Wissen und gewissen vollständige Doku aller Flags, die du dem ```NeonChat```-Widget übergeben kannst (Stand: 21.07.2022): 
+Zu jeder guten Packagenutzung gehört natürlich das ausführliche Studieren der Doku. Ich habe so gut es geht, die Funktionen und Felder der Datenstrukturen, mit denen du den Chat customizen kannst, im Code dokumentiert, sodass du alles per Hover in VS Code sehen können müsstest. Es kann gut sein, dass ich an manchen Stellen zu sparsam mit meinen Worten war oder sogar gar nichts geschrieben habe. Sobald so etwas auffällt: direkt an mich (Julien) wenden, ich erklärs dir und schreibe ein bisschen Doku. Weil ich aber einfach ein geiler Typ bin, habe ich mir im Voraus schon mal ein bisschen die Mühe gemacht und versucht, meine kreativen Ergüsse, die in diesem Package zuhauf auftreten, in Wort zu fassen.
+
+Hier also eine nach bestem Wissen und gewissen vollständige (🥴) Doku aller Flags, die du dem ```NeonChat```-Widget übergeben kannst (Stand: 21.07.2022): 
 
 ### Styling
 - ```conversationStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling einer Conversation betreffen (sprich, die ```ConversationPage```, in der effektiv mit der anderen Person / mit der Gruppe geschrieben wird). Unter anderem kannst du dort unter ```buildCustomConversationAppBar``` eine Funktion hinterlegen, die ein Widget zurückgibt und zwar deine custom implementierte AppBar. Genauere Erklärungen findest du im Code.
@@ -201,7 +202,7 @@ Hier also eine nach bestem Wissen und gewissen vollständige Doku aller Flags, d
 - ```getGroupAvatar```: Analog zu ```getUserAvatar``` mit gegebener ConversationID (String).
 
 ### Data
-- ```getUserForID```: Funktion, die für eine gegebene UserID (String) ein ```dart Future<FirebaseUser>``` zurückgibt. Wrappe dafür das Ergebnis deines app-spezifischen "getUser"-Calls in die im NEONChat definierte ```FirebaseUser```-Datenstruktur.
+- ```getUserForID```: Funktion, die für eine gegebene UserID (String) ein ```Future<FirebaseUser>``` zurückgibt. Wrappe dafür das Ergebnis deines app-spezifischen "getUser"-Calls in die im NEONChat definierte ```FirebaseUser```-Datenstruktur.
 - ```additionalDirectConversationDataConfig```: Datenstruktur, die zusätzliche Felder für eine 1-on-1-Konversation definiert. Am besten an einem Beispiel erklärt: 
 
 Die Datenstruktur ```DirectConversation``` ist im Package so definiert: 
@@ -219,8 +220,9 @@ class DirectConversation implements Conversation {
 	...
 }
 ```
-Das heißt, jede ```DirectConversation``` soll diese Flags besitzen. Jetzt möchtest du aber in deinem aktuellen Projekt noch weitere Informationen abspeichern, zum Beispiel eine eventID (String), weil es in deiner neuen App z.B. nötig ist, für jedes ```DirectConversation``` Objekt in Firebase auch eine eventID zu speichern, weil du damit etwas machen möchtest (z.B. onTap die passende Seite dazu öffnen). 
-Dann solltest du die Klasse ```AdditionalConversationDataConfig``` implementieren und alle deine gewünschten zusätzlichen Daten (in diesem Fall ein Feld mit dem Namen "eventID" und dem Typ String) in dieser Implementierung realisieren. So könnte das aussehen:
+Das heißt, jede ```DirectConversation``` soll diese Flags besitzen. Jetzt möchtest du aber in deinem aktuellen Projekt noch weitere Informationen abspeichern, zum Beispiel eine eventID (String), weil es in deiner neuen App z.B. nötig ist, für jedes ```DirectConversation``` Objekt in Firebase auch eine eventID zu speichern, weil du damit etwas machen möchtest (z.B. onTap die passende Seite dazu öffnen). Normalerweise würdest du jetzt eine neue Klasse ```MyDirectConversation extends DirectConversation``` schreiben, da das eben beschriebene DIE Definition von Vererbung ist. Da wir hier aber mit einem Package arbeiten, das im Idealfall als "Black Box" genutzt werden soll (wenn du jedes Mal die komplette BLoC-Logik neu schreibst, hätte ich mir die Nummer hier auch sparen können), müssen wir dem Package diese Information anderes zukommen lassen.
+
+Auftritt ```AdditionalConversationDataConfig```! Implementiere deine eigene Version von dieser Klasse und packe alle deine gewünschten zusätzlichen Daten (in diesem Fall ein Feld mit dem Namen "eventID" und dem Typ String) in dort hinein. So könnte das aussehen:
 
 ```dart
 class ConversationEventData implements AdditionalConversationDataConfig {
@@ -243,21 +245,21 @@ Die Implementierung von ```AdditionalConversationDataConfig``` macht nichts ande
 Natürlich hört das Ganze nicht bei einem zusätzlichen Flag auf, denn ```AdditionalConversationDataConfig``` gibt ja eine LISTE an ```AdditionalConversationDataInfo``` zurück! Du musst also für JEDES zusätzliche Feld, dass du in deiner ```DirectConversation```-Datenstruktur gerne hättest, eine Kindklasse von ```AdditionalConversationDataInfo```schreiben und der Hase läuft 🐇!
 
 - ```additionalGroupConversationDataConfig```: Genau analog zu ```additionalDirectConversationDataConfig```, nur für ```GroupConversation```.
-- ```getConversationCreationData```: Funktion, die eine Instanz von ```ConversationCreationData``` zurückgibt, sprich die zur Erstellung einer neuen Konversation (Direkt oder Gruppe) nötigen Daten. 🚨 Achtung: diese Funktion wird nur verwendet, wenn in der übergebenen ```ConversationsStyle```-Instanz ```showFab==true``` UND ```fabAction==null``` gilt! Das wird aber meistens nicht der Fall sein, da du app-spezifisch die Erstellung eines Chats anders triggern möchtest und nicht einfach nur per FloatingActionButton (FAB) im ChatScreen.
+- ```getConversationCreationData```: Funktion, die eine Instanz von ```ConversationCreationData``` zurückgibt, sprich die zur Erstellung einer neuen Konversation (Direkt oder Gruppe) nötigen Daten. 🚨 Achtung: diese Funktion wird nur verwendet, wenn in der übergebenen ```ConversationsStyle```-Instanz ```showFab==true``` UND ```fabAction==null``` gilt! Das wird aber meistens nicht der Fall sein, da du app-spezifisch die Erstellung eines Chats anders triggern möchtest und nicht einfach nur per FloatingActionButton (FAB) im ChatScreen. Dieses Flag kannst du also in 95% der Fälle ignorieren!
 
 ### Funktionalität
 - ```onDirectConversationAppBarTap```: Funktion, die aufgerufen wird, sobald auf die ConversationAppBar einer ```DirectConversation``` oder in der ```ConversationsPage``` auf das Profilbild des Konversationspartners getippt wird. 🚨 Achtung: Solltest du eine ```CustomConversationAppBar``` implementiert haben, musst du das onTap-Verhalten natürlich dort spezifieren und diese Methode wird nur beim Profilbild-Tap auf der ```ConversationsPage``` aufgerufen.
 - ```onGroupConversationAppBarTap```: Analog zu ```onDirectConversationAppBarTap```, nur für ```GroupConversation```.  
 - ```disableGroupConversationAppBarTap```: Solltest du KEINE ```CustomConversationAppBar``` implementiert haben, so wird beim Tippen auf die AppBar in einer Gruppenkonversation nichts ausgeführt, eine eventuell über ```onGroupConversationAppBarTap``` übergebene Funktion wird ignoriert. 
-- ```provideConversationsBloc```: Boolean Flag, das bestimmt, ob das ```NeonChat```-Widget eine ```ConversationsBloc```-Instanzu providet. Das Flag ist by default auf ```false``` gestellt, da wir in den meisten Apps den ```ConversationsBloc``` top-level injecten, um jederzeit auf Firebase Data Messages listenen zu können.
+- ```provideConversationsBloc```: Boolean Flag, das bestimmt, ob das ```NeonChat```-Widget eine ```ConversationsBloc```-Instanz providet. Das Flag ist by default auf ```false``` gestellt, da wir in den meisten Apps den ```ConversationsBloc``` top-level injecten, um jederzeit auf Firebase Data Messages listenen zu können.
 - ```onOpenUserProfile```: Wenn die Default Funktionalität bei einem Gruppenkonversations-AppBar-Tap ausgeführt wird (```onGroupConversationAppBarTap == null```), dann wird eine Liste an Usern (Mitglieder der Gruppe) angezeigt. Die Funktion ```onOpenUserProfile``` wird ausgeführt, wenn auf einen dieser User getippt wird. 🚨 Achtung: Solltest du eine eigene Implementierung von ```onGroupConversationAppBarTap``` an den Chat übergeben haben, so hat diese Funktion keinerlei Auswirkung und kann weggelassen werden.
 
 
 ## 👷🏻‍♂️ TODOs im Development
-- [ ] Push Notification Service raus aus dem Chat Package. Push Notifications sollten von App zu App jeweils Top-Level gehandled werden, das hat bei [OAmN][oamn_project] zu große Probleme gemacht, dass es im Chat-Package drinnen ist. Eine Idee wäre es, eine vorgeschriebene Datei hier zu hinterlegen (z.B. als mason Brick 😉), die die Pushes für den Chat schon korrekt konfiguriert hat und die nur noch in den App Top-Level Push Notfication Service eingefügt werden muss.
+- [ ] Push Notification Service raus aus dem Chat Package. Push Notifications sollten von App zu App jeweils Top-Level gehandled werden, das hat bei [OAmN][oamn_project] große Probleme gemacht, dass es im Chat-Package drinnen ist. Eine Idee wäre es, eine vorgeschriebene Datei hier zu hinterlegen (z.B. als mason Brick 😉), die die Pushes für den Chat schon korrekt konfiguriert hat und die nur noch in den App Top-Level Push Notfication Service eingefügt werden muss.
 - [ ] Die zweistufige Initialisierung mit den Methoden ```initNEONChat``` und dem Übergeben der Parameter an das ```NeonChat```-Widget macht nur Probleme. So sind bspw. ```FunctionInitData``` noch nicht initialisiert, wenn man in einen Bereich der App navigiert, der auf den NEON-Chat zugreift, man davor aber noch nicht die Route zu der ChatPage getriggert hat (damit auch alle Funktionen, die dem ```NeonChat``` Widget übergeben werden initialisiert werden). Lieber alles in der ```initNeonChat```-Methode machen. Wird halt dann etwas dicker, aber so what.
 - [ ] Routing im Chat-Package an unsere Best Practices anpassen. Sollten wir dabei bleiben, in jeder App [AutoRoute][auto_route_package] zu nutzen, dann sollten wir das auch in das Chat-Package einbauen, damit keine Probleme mehr wegen der gleichzeitigen Verwendung von ```Navigator.of(context)``` und ```context.router``` entstehen.
-- [ ] Die NeonChatRemoteDataSource sollte unbeding überarbeitet werden, sie ist im Moment viel zu unübersichtlich. Ein Beispiel einer funktionierenden NeonChatRemoteDataSource findest du [hier][oamn_chat_datasource]. Unbedingt so gut es geht unnötige Methoden entfernen, bzw. zu einfachen Gettern resetten.
+- [ ] Die ```NeonChatRemoteDataSource``` sollte unbedingt überarbeitet werden, sie ist im Moment viel zu unübersichtlich. Ein Beispiel einer funktionierenden ```NeonChatRemoteDataSource``` findest du [hier][oamn_chat_datasource]. Unbedingt so gut es geht unnötige Methoden entfernen, bzw. zu einfachen Gettern resetten.
 
 [flutterfire_cli_link]: https://firebase.flutter.dev/docs/overview/
 [get_it_link]: https://pub.dev/packages/get_it
