@@ -2,8 +2,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:focused_menu/focused_menu.dart';
-import 'package:focused_menu/modals.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
@@ -72,41 +71,21 @@ class _ConversationListItemState extends State<ConversationListItem> {
       }
     }
 
-    return FocusedMenuHolder(
-      duration: const Duration(milliseconds: 200),
-      key: Key(widget.conversationItem.conversation.id),
-      onPressed: () {},
-      menuItemExtent: 45,
-      menuOffset: 10.0,
-      blurSize: 0.0,
-      blurBackgroundColor: _style.focusMenuBlurBackgroundColor,
-      menuWidth: MediaQuery.of(context).size.width * 0.6,
-      menuBoxDecoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
-      menuItems: [
-        FocusedMenuItem(
-            backgroundColor: _style.focusMenuColor,
-            title: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5 - 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(fit: FlexFit.loose, child: _style.focusMenuIcon),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: AutoSizeText(
-                      _style.focusMenuText,
-                      style: _style.focusMenuTextStyle,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            trailingIcon: null,
-            onPressed: () => context.read<ConversationsBloc>().add(
+    return Slidable(
+      endActionPane: ActionPane(
+        extentRatio: 0.2,
+        motion: const DrawerMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) => context.read<ConversationsBloc>().add(
                 ConversationsEvent.hideConversation(
-                    widget.conversationItem.conversation.id))),
-      ],
+                    widget.conversationItem.conversation.id)),
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+          )
+        ],
+      ),
       child: GestureDetector(
         onTap: () {
           if (isWidthOverLimit(context)) {
