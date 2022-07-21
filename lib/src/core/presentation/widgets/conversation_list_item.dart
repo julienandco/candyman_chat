@@ -163,10 +163,14 @@ class _ConversationListItemState extends State<ConversationListItem> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            widget.conversationItem.conversation.displayName,
-                            style: _style.titleTextStyle,
+                          Expanded(
+                            child: AutoSizeText(
+                              widget.conversationItem.conversation.displayName,
+                              maxLines: 2,
+                              style: _style.titleTextStyle,
+                            ),
                           ),
                           Text(
                             widget.conversationItem.lastMessage !=
