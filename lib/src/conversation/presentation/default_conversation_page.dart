@@ -65,100 +65,97 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
         );
       },
       builder: (context, conversationState) => conversationState.maybeMap(
-          loadSuccess: (loadedConversationState) =>
-              AnnotatedRegion<SystemUiOverlayStyle>(
-                value: const SystemUiOverlayStyle(
-                    statusBarBrightness: Brightness.dark),
-                child: KeyboardDismisser(
-                  child: Scaffold(
-                    backgroundColor:
-                        chatGetIt<ConversationStyle>().backgroundColor,
-                    appBar: chatGetIt<ConversationStyle>()
-                            .buildCustomConversationAppBar
-                            ?.call(loadedConversationState.conversation) ??
-                        DefaultConversationAppbar(
+        loadSuccess: (loadedConversationState) =>
+            AnnotatedRegion<SystemUiOverlayStyle>(
+          value:
+              const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+          child: KeyboardDismisser(
+            child: Scaffold(
+              backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
+              appBar: chatGetIt<ConversationStyle>()
+                      .buildCustomConversationAppBar
+                      ?.call(loadedConversationState.conversation) ??
+                  DefaultConversationAppbar(
+                    conversation: loadedConversationState.conversation,
+                    showCloseButton: !widget.showCloseButton,
+                  ),
+              body: Stack(
+                children: [
+                  CustomScrollView(
+                    reverse: true,
+                    controller: context
+                        .read<ConversationSearchBloc>()
+                        .messageListController,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverPadding(
+                        padding:
+                            chatGetIt<ConversationStyle>().messageListPadding,
+                        sliver: MessageList(
+                          updateLastSeenTimestampForConversation: (timestamp) =>
+                              widget.updateTimestampForConversation(timestamp),
                           conversation: loadedConversationState.conversation,
-                          showCloseButton: !widget.showCloseButton,
                         ),
-                    body: Stack(
-                      children: [
-                        CustomScrollView(
-                          reverse: true,
-                          controller: context
-                              .read<ConversationSearchBloc>()
-                              .messageListController,
-                          physics: const BouncingScrollPhysics(),
-                          slivers: [
-                            SliverPadding(
-                              padding: chatGetIt<ConversationStyle>()
-                                  .messageListPadding,
-                              sliver: MessageList(
-                                updateLastSeenTimestampForConversation:
-                                    (timestamp) =>
-                                        widget.updateTimestampForConversation(
-                                            timestamp),
-                                conversation:
-                                    loadedConversationState.conversation,
-                              ),
-                            ),
-                          ],
-                        ),
-                        IgnorePointer(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
-                                    colors: chatGetIt<ConversationStyle>()
-                                        .ignorePointersColors,
-                                    stops: const [0, 0.15])),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          left: 10,
-                          right: 10,
-                          child: SafeArea(
-                            child: BlocBuilder<ConversationSearchBloc,
-                                ConversationSearchState>(
-                              builder: (context, state) {
-                                if (state.isSearchActive) {
-                                  return const SizedBox.shrink();
-                                } else {
-                                  return Padding(
-                                    padding: isWidthOverLimit(context)
-                                        ? const EdgeInsets.only(bottom: 100)
-                                        : EdgeInsets.zero,
-                                    child: BlocBuilder<ConversationBloc,
-                                        ConversationState>(
-                                      builder: (context, state) {
-                                        return state.maybeMap(
-                                          loadSuccess: (state) {
-                                            final bottomBarStyle =
-                                                chatGetIt<BottomBarStyle>();
-
-                                            return bottomBarStyle
-                                                    .customBottomBar ??
-                                                ConversationBottomBar(
-                                                    bottomBarStyle:
-                                                        bottomBarStyle);
-                                          },
-                                          orElse: () => const SizedBox.shrink(),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  IgnorePointer(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: chatGetIt<ConversationStyle>()
+                                  .ignorePointersColors,
+                              stops: const [0, 0.15])),
                     ),
                   ),
-                ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    right: 10,
+                    child: SafeArea(
+                      child: BlocBuilder<ConversationSearchBloc,
+                          ConversationSearchState>(
+                        builder: (context, state) {
+                          if (state.isSearchActive) {
+                            return const SizedBox.shrink();
+                          } else {
+                            return Padding(
+                              padding: isWidthOverLimit(context)
+                                  ? const EdgeInsets.only(bottom: 100)
+                                  : EdgeInsets.zero,
+                              child: BlocBuilder<ConversationBloc,
+                                  ConversationState>(
+                                builder: (context, state) {
+                                  return state.maybeMap(
+                                    loadSuccess: (state) {
+                                      final bottomBarStyle =
+                                          chatGetIt<BottomBarStyle>();
+
+                                      return bottomBarStyle.customBottomBar ??
+                                          ConversationBottomBar(
+                                              bottomBarStyle: bottomBarStyle);
+                                    },
+                                    orElse: () => const SizedBox.shrink(),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-          orElse: () => chatGetIt<ConversationsStyle>().loadingWidget),
+            ),
+          ),
+        ),
+        orElse: () => Scaffold(
+            backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
+            body: chatGetIt<ConversationsStyle>().loadingWidget),
+      ),
     );
   }
 }
