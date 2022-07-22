@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neon_chat/neon_chat.dart';
 
 class ConversationsRepositoryImpl implements ConversationsRepository {
@@ -11,11 +12,13 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   final FirebaseAuth firebaseAuth;
   final CollectionReference _collection;
   final FirebaseKeys firebaseKeys;
+  final NeonChatRemoteDataSource dataSource;
 
   ConversationsRepositoryImpl({
     required this.firestore,
     required this.firebaseAuth,
     required this.firebaseKeys,
+    required this.dataSource,
   }) : _collection =
             firestore.collection(firebaseKeys.conversationsCollectionKey);
 
@@ -206,9 +209,8 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   Future<GroupConversation> createGroupConversation({
     required FirebaseUser me,
     required GroupConversationCreationData creationData,
+    Function(int, int)? onUploadProgress,
   }) async {
-    //TODO: thumbnail should be uploaded somewhere -> implement that in upload_manager_impl
-
     final doc = _collection.doc();
     final conversationInfo = ConversationInfo(
       id: doc.id,
@@ -223,6 +225,24 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
       additionalData: creationData.additionalData,
     );
     await doc.set(conversationInfo.toJson());
+
+    if (creationData.groupPhoto != null) {
+      //TODO: work with success and failures here, every creation always works???
+
+      final res = await dataSource.uploadGroupConversationThumbnail(
+        thumbnail: GroupConversationThumbnailUploadFile(
+          groupConversationID: conversationInfo.id,
+          filePath: creationData.groupPhoto!,
+        ),
+        onUploadProgress: onUploadProgress,
+      );
+
+      res.fold(
+        (l) => showToast('War wohl nix'), //TODO
+        (r) => null,
+      );
+    }
+
     return GroupConversation.fromConversationInfo(
       info: conversationInfo,
       convoMembers: [...creationData.conversationMembers, me],

@@ -15,7 +15,7 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
   @override
   Future<Either<Failure, Success>> deleteFileWithId(String fileId) async {
     try {
-      final response = await remoteDataSource.deleteEndpoint(fileId);
+      final response = await remoteDataSource.deleteFile(fileId);
 
       return response.fold((l) => left(l), (r) => right(const Success()));
     } catch (e) {
@@ -30,22 +30,26 @@ class FileUploadRepositoryImpl implements FileUploadRepository {
     Function(int, int)? onUploadProgress,
   }) async {
     try {
-      final response = await remoteDataSource.uploadEndpoint(
+      final response = await remoteDataSource.uploadFileToConversation(
         fileToUpload: file,
         typeToUpload: typeOfFile,
         onUploadProgress: onUploadProgress,
       );
 
-      if (response.isRight()) {
-        log("========UPLOAD FILE TO MESSAGE=========", name: '$runtimeType');
-        log('$response', name: '$runtimeType');
-        log("============================", name: '$runtimeType');
-      } else {
-        log("========ERROR WHILE TRYING TO UPLOAD FILE TO MESSAGE=========",
-            name: '$runtimeType');
-        log('$response', name: '$runtimeType');
-        log("============================", name: '$runtimeType');
-      }
+      response.fold(
+        (l) {
+          log("========ERROR WHILE TRYING TO UPLOAD FILE TO MESSAGE=========",
+              name: '$runtimeType');
+          log('$response', name: '$runtimeType');
+          log("============================", name: '$runtimeType');
+        },
+        (r) {
+          log("========UPLOADED FILE TO MESSAGE=========",
+              name: '$runtimeType');
+          log('$response', name: '$runtimeType');
+          log("============================", name: '$runtimeType');
+        },
+      );
     } catch (e) {
       log('ERROR: uploadFileToMessage - $e', name: '$runtimeType');
     }

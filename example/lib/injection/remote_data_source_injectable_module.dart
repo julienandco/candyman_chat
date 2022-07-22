@@ -10,28 +10,30 @@ abstract class RemoteDataBaseInjectableModule {
 
 class _MyDataSource implements NeonChatRemoteDataSource {
   @override
-  Future<Either<Failure, String>> deleteEndpoint(String fileId) async {
-    // TODO: implement deleteEndpoint
-
+  Future<Either<Failure, String>> deleteFile(String fileId) async {
     return right('TODO');
   }
 
   @override
   Future<Either<Failure, String>> getEndpoint(String fileId) async {
-    // TODO: implement getEndpoint
     return right('TODO');
   }
 
   @override
-  // TODO: implement remoteUploadsURL
-  String get remoteUploadsURL => 'test';
+  String get remoteUploadsURL => 'TODO';
 
   @override
-  Future<Either<Failure, String>> uploadEndpoint(
+  Future<Either<Failure, String>> uploadFileToConversation(
       {required ConversationUploadFile fileToUpload,
       ConversationMessageType? typeToUpload,
-      void Function(int p1, int p2)? onUploadProgress}) {
-    // TODO: implement uploadEndpoint
-    throw UnimplementedError();
+      void Function(int p1, int p2)? onUploadProgress}) async {
+    return right('TODO');
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadGroupConversationThumbnail(
+      {required GroupConversationThumbnailUploadFile thumbnail,
+      void Function(int p1, int p2)? onUploadProgress}) async {
+    return right('TODO');
   }
 }

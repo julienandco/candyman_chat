@@ -420,6 +420,7 @@ _registerSingletons({
             firestore: firebaseFirestore,
             firebaseAuth: firebaseAuth,
             firebaseKeys: firebaseKeys,
+            dataSource: remoteDataSource,
           ));
   chatGetIt.registerLazySingleton<FileUploadRepository>(
       () => FileUploadRepositoryImpl(remoteDataSource: remoteDataSource));
