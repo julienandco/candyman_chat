@@ -11,6 +11,8 @@ neon-chat:
         url: https://github.com/NEON-Software-Solutions/NEON_chat
 ```
 
+🚨 Achtung! Dieses Package funktioniert nur in Kombination mit [AutoRoute][auto_route_package]! Hast du das Routing in deiner App anders gelöst?? Red Flag 🚩
+
 ## 🧪 Setup
 1. App in Firebase registrieren, am besten mithilfe der [FlutterFireCLI][flutterfire_cli_link] und im Anschluss die automatisch generierten ```DefaultFirebaseOptions``` zum initialisieren nutzen (kein GoogleServiceInfo.plist bzw. .json Rumgenerve mehr!):
 
@@ -65,6 +67,27 @@ Der Chat hat zwei Use-Cases:
   2. Irgendein Special Snowflake ❄ hat die Chat-Welt revolutioniert und das Default-Design reicht nicht aus. Also nur die Logik des NEON-Chats nutzen.
 
 Unabhängig davon, welcher Fall auf dich zutrifft, musst du die ```RemoteDataSource``` implementieren, da sie die File-Uploads (Fotos, Videos, Dateien, Audionachrichten) ermöglicht. Das alles wird nämlich nicht in Firebase (dort liegt nur ein Link), sondern in einem anderen, projektspezifischen Backend gespeichert.
+
+Falls du dich in Fall 1 befindest oder auch wenn du alles selber baust, aber das ```MessageContentWidget``` bzw. die ```openConversation```-Methode aus ```util_functions.dart``` nutzt, musst du das Routing noch aufsetzen. Erweitere dazu dein app-spezifisches ```router.dart```-File:
+
+```dart
+part 'router.gr.dart';
+
+@MaterialAutoRouter(
+  replaceInRouteName: 'Loader|Page,Route',
+  routes: <AutoRoute>[
+    ...
+
+    //NUR diese zwei Routen einfügen!
+
+    //NEON-Chat-Package specific
+    AutoRoute(page: DefaultConversationLoader),
+    AutoRoute(page: ChatMediaViewerLoader),
+  ],
+)
+
+class AppRouter extends _$AppRouter {}
+```
 
 Ab jetzt wird differenziert!
 
@@ -258,7 +281,7 @@ Natürlich hört das Ganze nicht bei einem zusätzlichen Flag auf, denn ```Addit
 ## 👷🏻‍♂️ TODOs im Development
 - [ ] Push Notification Service raus aus dem Chat Package. Push Notifications sollten von App zu App jeweils Top-Level gehandled werden, das hat bei [OAmN][oamn_project] große Probleme gemacht, dass es im Chat-Package drinnen ist. Eine Idee wäre es, eine vorgeschriebene Datei hier zu hinterlegen (z.B. als mason Brick 😉), die die Pushes für den Chat schon korrekt konfiguriert hat und die nur noch in den App Top-Level Push Notfication Service eingefügt werden muss.
 - [ ] Die zweistufige Initialisierung mit den Methoden ```initNEONChat``` und dem Übergeben der Parameter an das ```NeonChat```-Widget macht nur Probleme. So sind bspw. ```FunctionInitData``` noch nicht initialisiert, wenn man in einen Bereich der App navigiert, der auf den NEON-Chat zugreift, man davor aber noch nicht die Route zu der ChatPage getriggert hat (damit auch alle Funktionen, die dem ```NeonChat``` Widget übergeben werden initialisiert werden). Lieber alles in der ```initNeonChat```-Methode machen. Wird halt dann etwas dicker, aber so what.
-- [ ] Routing im Chat-Package an unsere Best Practices anpassen. Sollten wir dabei bleiben, in jeder App [AutoRoute][auto_route_package] zu nutzen, dann sollten wir das auch in das Chat-Package einbauen, damit keine Probleme mehr wegen der gleichzeitigen Verwendung von ```Navigator.of(context)``` und ```context.router``` entstehen.
+- [X] Routing im Chat-Package an unsere Best Practices anpassen. Sollten wir dabei bleiben, in jeder App [AutoRoute][auto_route_package] zu nutzen, dann sollten wir das auch in das Chat-Package einbauen, damit keine Probleme mehr wegen der gleichzeitigen Verwendung von ```Navigator.of(context)``` und ```context.router``` entstehen.
 - [ ] Die ```NeonChatRemoteDataSource``` sollte unbedingt überarbeitet werden, sie ist im Moment viel zu unübersichtlich. Ein Beispiel einer funktionierenden ```NeonChatRemoteDataSource``` findest du [hier][oamn_chat_datasource]. Unbedingt so gut es geht unnötige Methoden entfernen, bzw. zu einfachen Gettern resetten.
 
 [flutterfire_cli_link]: https://firebase.flutter.dev/docs/overview/
