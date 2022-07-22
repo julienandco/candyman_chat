@@ -4,7 +4,8 @@ part of 'conversations_bloc.dart';
 class ConversationsState with _$ConversationsState {
   const ConversationsState._();
   const factory ConversationsState.uninitialized() = _Uninitialized;
-  const factory ConversationsState.loadInProgress() = _LoadInProgress;
+  const factory ConversationsState.loadInProgress(
+      {Map<String, DateTime>? timestampMap}) = _LoadInProgress;
   const factory ConversationsState.loadSuccess({
     required List<ConversationItem> conversations,
     required Map<String, DateTime> timestampMap,

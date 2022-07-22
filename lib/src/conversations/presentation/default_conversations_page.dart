@@ -104,7 +104,7 @@ class _DefaultConversationsPageState extends State<DefaultConversationsPage>
                       orElse: () => [style.loadingWidget],
                     ),
                   ),
-                  loadInProgress: (l) => style.loadingWidget,
+                  loadInProgress: (_) => style.loadingWidget,
                   orElse: () => style.noConversationsWidget,
                 ),
               );

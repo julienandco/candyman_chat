@@ -40,6 +40,8 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   //additional flag for update needs
   bool _hadNewChangesSinceLastSync = false;
 
+  bool _initialMessageFetchDone = false;
+
   Timer? _timer;
 
   ConversationsBloc({
@@ -89,6 +91,9 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
 
     _conversationsStream = initializeConversationsStreamUC(
       onData: (event) {
+        if (!_initialMessageFetchDone) {
+          _initialMessageFetchDone = true;
+        }
         if (event.isNotEmpty) {
           add(_FetchConversationItems(event));
         } else {
@@ -102,8 +107,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
         userID: _myId!,
         onData: (timestampMap) => add(_OnGroupTimestampsData(timestampMap)));
 
-    emit(const ConversationsState.loadSuccess(
-        conversations: [], timestampMap: {}));
+    emit(const ConversationsState.loadInProgress());
   }
 
   void _onFetchChatItems(_FetchConversationItems event, Emitter emit) {
@@ -159,6 +163,10 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
               conversations: conversations,
             );
           },
+          loadInProgress: (loadingState) => ConversationsState.loadSuccess(
+            conversations: [event.conversationItem],
+            timestampMap: loadingState.timestampMap ?? {},
+          ),
           orElse: () => ConversationsState.loadSuccess(
             conversations: [event.conversationItem],
             timestampMap: {},
@@ -174,6 +182,11 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
         orElse: () => ConversationsState.loadSuccess(
           conversations: event.conversations,
           timestampMap: {},
+        ),
+        loadInProgress: (loadingState) => ConversationsState.loadSuccess(
+          conversations: event.conversations,
+          timestampMap: loadingState.timestampMap ??
+              {}, // if the timestamps where fetched before the conversations, this might be already populated
         ),
         loadSuccess: (loadedState) =>
             loadedState.copyWith(conversations: event.conversations),
@@ -247,7 +260,11 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     if (currentState is _LoadSuccess) {
       emit(currentState.copyWith(timestampMap: event.timestamps));
     } else {
-      emit(_LoadSuccess(conversations: [], timestampMap: event.timestamps));
+      if (!_initialMessageFetchDone) {
+        emit(_LoadInProgress(timestampMap: event.timestamps));
+      } else {
+        emit(_LoadSuccess(conversations: [], timestampMap: event.timestamps));
+      }
     }
   }
 

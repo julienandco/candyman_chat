@@ -22,8 +22,10 @@ class _$ConversationsStateTearOff {
     return const _Uninitialized();
   }
 
-  _LoadInProgress loadInProgress() {
-    return const _LoadInProgress();
+  _LoadInProgress loadInProgress({Map<String, DateTime>? timestampMap}) {
+    return _LoadInProgress(
+      timestampMap: timestampMap,
+    );
   }
 
   _LoadSuccess loadSuccess(
@@ -48,7 +50,8 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() loadInProgress,
+    required TResult Function(Map<String, DateTime>? timestampMap)
+        loadInProgress,
     required TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)
         loadSuccess,
@@ -58,7 +61,7 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -68,7 +71,7 @@ mixin _$ConversationsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -162,7 +165,8 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() loadInProgress,
+    required TResult Function(Map<String, DateTime>? timestampMap)
+        loadInProgress,
     required TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)
         loadSuccess,
@@ -175,7 +179,7 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -188,7 +192,7 @@ class _$_Uninitialized extends _Uninitialized {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -249,6 +253,7 @@ abstract class _$LoadInProgressCopyWith<$Res> {
   factory _$LoadInProgressCopyWith(
           _LoadInProgress value, $Res Function(_LoadInProgress) then) =
       __$LoadInProgressCopyWithImpl<$Res>;
+  $Res call({Map<String, DateTime>? timestampMap});
 }
 
 /// @nodoc
@@ -261,58 +266,83 @@ class __$LoadInProgressCopyWithImpl<$Res>
 
   @override
   _LoadInProgress get _value => super._value as _LoadInProgress;
+
+  @override
+  $Res call({
+    Object? timestampMap = freezed,
+  }) {
+    return _then(_LoadInProgress(
+      timestampMap: timestampMap == freezed
+          ? _value.timestampMap
+          : timestampMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_LoadInProgress extends _LoadInProgress {
-  const _$_LoadInProgress() : super._();
+  const _$_LoadInProgress({this.timestampMap}) : super._();
+
+  @override
+  final Map<String, DateTime>? timestampMap;
 
   @override
   String toString() {
-    return 'ConversationsState.loadInProgress()';
+    return 'ConversationsState.loadInProgress(timestampMap: $timestampMap)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadInProgress);
+        (other.runtimeType == runtimeType &&
+            other is _LoadInProgress &&
+            const DeepCollectionEquality()
+                .equals(other.timestampMap, timestampMap));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(timestampMap));
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadInProgressCopyWith<_LoadInProgress> get copyWith =>
+      __$LoadInProgressCopyWithImpl<_LoadInProgress>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() loadInProgress,
+    required TResult Function(Map<String, DateTime>? timestampMap)
+        loadInProgress,
     required TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)
         loadSuccess,
     required TResult Function() loadFailure,
   }) {
-    return loadInProgress();
+    return loadInProgress(timestampMap);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
     TResult Function()? loadFailure,
   }) {
-    return loadInProgress?.call();
+    return loadInProgress?.call(timestampMap);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -320,7 +350,7 @@ class _$_LoadInProgress extends _LoadInProgress {
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
-      return loadInProgress();
+      return loadInProgress(timestampMap);
     }
     return orElse();
   }
@@ -364,8 +394,14 @@ class _$_LoadInProgress extends _LoadInProgress {
 }
 
 abstract class _LoadInProgress extends ConversationsState {
-  const factory _LoadInProgress() = _$_LoadInProgress;
+  const factory _LoadInProgress({Map<String, DateTime>? timestampMap}) =
+      _$_LoadInProgress;
   const _LoadInProgress._() : super._();
+
+  Map<String, DateTime>? get timestampMap;
+  @JsonKey(ignore: true)
+  _$LoadInProgressCopyWith<_LoadInProgress> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -450,7 +486,8 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() loadInProgress,
+    required TResult Function(Map<String, DateTime>? timestampMap)
+        loadInProgress,
     required TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)
         loadSuccess,
@@ -463,7 +500,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -476,7 +513,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -582,7 +619,8 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uninitialized,
-    required TResult Function() loadInProgress,
+    required TResult Function(Map<String, DateTime>? timestampMap)
+        loadInProgress,
     required TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)
         loadSuccess,
@@ -595,7 +633,7 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,
@@ -608,7 +646,7 @@ class _$_LoadFailure extends _LoadFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uninitialized,
-    TResult Function()? loadInProgress,
+    TResult Function(Map<String, DateTime>? timestampMap)? loadInProgress,
     TResult Function(List<ConversationItem> conversations,
             Map<String, DateTime> timestampMap)?
         loadSuccess,

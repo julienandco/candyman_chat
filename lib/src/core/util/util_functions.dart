@@ -67,7 +67,9 @@ void openConversationInternally(
       null;
 
   print('FOUND ONE: $conversationsBlocProvidedTopLevel');
-  print('FOUND: ${context.read<ConversationsBloc>()}');
+  if (conversationsBlocProvidedTopLevel) {
+    print('FOUND: ${context.read<ConversationsBloc>()}');
+  }
 
   context.router.push(
     chatGetIt<RoutingInitData>().conversationRoute(
