@@ -225,7 +225,25 @@ class WidgetInitData {
   ///
   final Widget Function(String?)? getGroupAvatar;
 
-  const WidgetInitData({this.getUserAvatar, this.getGroupAvatar});
+  ///
+  /// Returns a Widget that is used to separate message bubbles of different
+  /// days in the [DefaultConversationPage]. It is given the timestamp of
+  /// the next message block in form of a [DateTime]. So if message X was sent
+  /// yesterday and message Y was sent today, the UI would look like this:
+  ///
+  /// Bubble of Message X
+  ///
+  /// The Widget returned by this function
+  ///
+  /// Bubble of Message Y
+  ///
+  final Widget Function(DateTime)? conversationDateSeparatorBuilder;
+
+  const WidgetInitData({
+    this.getUserAvatar,
+    this.getGroupAvatar,
+    this.conversationDateSeparatorBuilder,
+  });
 }
 
 ///
