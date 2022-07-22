@@ -222,19 +222,24 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
 
     if (_isInit && currentState is _LoadSuccess) {
       final me = await _me!.first;
-      final conversation = await createConversationUC(
+      final res = await createConversationUC(
         me: me,
         creationData: event.creationData,
       );
 
-      log('On Create: conversation = ${conversation.id}');
+      res.fold(
+        (l) => null,
+        (r) {
+          log('On Create: conversation = ${r.id}');
 
-      final convoItem = _getConversationItemForConversation(
-          currentItems: currentState.conversations, conversation: conversation);
+          final convoItem = _getConversationItemForConversation(
+              currentItems: currentState.conversations, conversation: r);
 
-      log('On Create: convoItem = ${convoItem.conversation.createdAt}');
+          log('On Create: convoItem = ${convoItem.conversation.createdAt}');
 
-      event.onSuccessfullyCreatedConversation?.call(convoItem);
+          event.onSuccessfullyCreatedConversation?.call(convoItem);
+        },
+      );
     }
   }
 
@@ -243,15 +248,17 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     final currentState = state;
     if (_isInit && currentState is _LoadSuccess) {
       final me = await _me!.first;
-      final conversation = await createGroupConversationUC(
+      final conversationRes = await createGroupConversationUC(
         me: me,
         creationData: event.creationData,
       );
 
-      final convoItem = _getConversationItemForConversation(
-          currentItems: currentState.conversations, conversation: conversation);
+      conversationRes.fold((l) => null, (r) {
+        final convoItem = _getConversationItemForConversation(
+            currentItems: currentState.conversations, conversation: r);
 
-      event.onSuccessfullyCreatedGroupConversation?.call(convoItem);
+        event.onSuccessfullyCreatedGroupConversation?.call(convoItem);
+      });
     }
   }
 

@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neon_chat/neon_chat.dart';
+import 'package:neon_chat/src/chat_init.dart';
 
 class ConversationsRepositoryImpl implements ConversationsRepository {
   final FirebaseFirestore firestore;
@@ -25,62 +27,68 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   User get _currentUser => firebaseAuth.currentUser!;
 
   @override
-  Future<DirectConversation> createDirectConversation({
+  Future<Either<Failure, DirectConversation>> createDirectConversation({
     required FirebaseUser me,
     required DirectConversationCreationData creationData,
   }) async {
-    log('create conversation check user');
-    final conversationPartner = creationData.conversationPartner;
+    try {
+      log('create conversation check user');
+      final conversationPartner = creationData.conversationPartner;
 
-    // This query checks whether a 1-on-1 conversation between [_userId]
-    // and [conversationPartnerID] already exists to make sure chat rooms are
-    // not duplicated.
-    final query = await _collection
-        .where(
-          firebaseKeys.conversationMembersKey,
-          arrayContains: conversationPartner.id,
-        )
-        .get();
+      // This query checks whether a 1-on-1 conversation between [_userId]
+      // and [conversationPartnerID] already exists to make sure chat rooms are
+      // not duplicated.
+      final query = await _collection
+          .where(
+            firebaseKeys.conversationMembersKey,
+            arrayContains: conversationPartner.id,
+          )
+          .get();
 
-    List<String> _members;
-    _members = [conversationPartner.id];
-    _members.add(_currentUser.uid);
+      List<String> _members;
+      _members = [conversationPartner.id];
+      _members.add(_currentUser.uid);
 
-    final conversationInfos = query.docs
-        .map((e) => ConversationInfo.fromJson(e.data() as Map<String, dynamic>))
-        .toList();
+      final conversationInfos = query.docs
+          .map((e) =>
+              ConversationInfo.fromJson(e.data() as Map<String, dynamic>))
+          .toList();
 
-    final list = conversationInfos.where((element) {
-      return listEquals(element.conversationMembers, _members);
-    });
+      final list = conversationInfos.where((element) {
+        return listEquals(element.conversationMembers, _members);
+      });
 
-    if (list.isNotEmpty) {
-      // There is already a conversation between the two users.
-      final conversation = list.first;
-      if (conversation.hiddenFrom.contains(_currentUser.uid)) {
-        _unhideConversations(conversation.id);
+      if (list.isNotEmpty) {
+        // There is already a conversation between the two users.
+        final conversation = list.first;
+        if (conversation.hiddenFrom.contains(_currentUser.uid)) {
+          _unhideConversations(conversation.id);
+        }
+        log('create conversation: already a conversation between the two users');
+        final existingConvo = DirectConversation.fromConversationInfo(
+          info: list.first,
+          otherUser: creationData.conversationPartner,
+        );
+        return right(existingConvo);
+      } else {
+        final doc = _collection.doc();
+        final conversationInfo = ConversationInfo(
+          id: doc.id,
+          conversationMembers: [me.id, conversationPartner.id],
+          createdAt: DateTime.now(),
+          isGroupConversation: false,
+          additionalData: creationData.additionalData,
+        );
+        await doc.set(conversationInfo.toJson());
+        log('create conversation: new conversation');
+        return right(DirectConversation.fromConversationInfo(
+          info: conversationInfo,
+          otherUser: creationData.conversationPartner,
+        ));
       }
-      log('create conversation: already a conversation between the two users');
-      final existingConvo = DirectConversation.fromConversationInfo(
-        info: list.first,
-        otherUser: creationData.conversationPartner,
-      );
-      return existingConvo;
-    } else {
-      final doc = _collection.doc();
-      final conversationInfo = ConversationInfo(
-        id: doc.id,
-        conversationMembers: [me.id, conversationPartner.id],
-        createdAt: DateTime.now(),
-        isGroupConversation: false,
-        additionalData: creationData.additionalData,
-      );
-      await doc.set(conversationInfo.toJson());
-      log('create conversation: new conversation');
-      return DirectConversation.fromConversationInfo(
-        info: conversationInfo,
-        otherUser: creationData.conversationPartner,
-      );
+    } catch (e) {
+      log(e.toString());
+      return const Left(Failure());
     }
   }
 
@@ -206,46 +214,68 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   @override
-  Future<GroupConversation> createGroupConversation({
+  Future<Either<Failure, GroupConversation>> createGroupConversation({
     required FirebaseUser me,
     required GroupConversationCreationData creationData,
     Function(int, int)? onUploadProgress,
   }) async {
-    final doc = _collection.doc();
-    final conversationInfo = ConversationInfo(
-      id: doc.id,
-      conversationMembers: [
-        ...List<String>.from(creationData.conversationMembers.map((e) => e.id)),
-        me.id,
-      ],
-      createdAt: DateTime.now(),
-      groupName: creationData.groupName,
-      groupPicture: creationData.groupPhoto,
-      isGroupConversation: true,
-      additionalData: creationData.additionalData,
-    );
-    await doc.set(conversationInfo.toJson());
+    if (chatGetIt<FunctionInitData>().createGroupConversation != null) {
+      final _res = await chatGetIt<FunctionInitData>()
+          .createGroupConversation!
+          .call(creationData);
 
-    if (creationData.groupPhoto != null) {
-      //TODO: work with success and failures here, every creation always works???
-
-      final res = await dataSource.uploadGroupConversationThumbnail(
-        thumbnail: GroupConversationThumbnailUploadFile(
-          groupConversationID: conversationInfo.id,
-          filePath: creationData.groupPhoto!,
+      return _res.fold(
+        (l) => left(_handleCreationError()),
+        (r) => right(
+          GroupConversation.fromConversationInfo(
+            info: r,
+            convoMembers: [...creationData.conversationMembers, me],
+          ),
         ),
-        onUploadProgress: onUploadProgress,
+      );
+    } else {
+      final doc = _collection.doc();
+      final conversationInfo = ConversationInfo(
+        id: doc.id,
+        conversationMembers: [
+          ...List<String>.from(
+              creationData.conversationMembers.map((e) => e.id)),
+          me.id,
+        ],
+        createdAt: DateTime.now(),
+        groupName: creationData.groupName,
+        groupPicture: creationData.groupPhoto,
+        isGroupConversation: true,
+        additionalData: creationData.additionalData,
+      );
+      await doc.set(conversationInfo.toJson());
+
+      final convo = GroupConversation.fromConversationInfo(
+        info: conversationInfo,
+        convoMembers: [...creationData.conversationMembers, me],
       );
 
-      res.fold(
-        (l) => showToast('War wohl nix'), //TODO
-        (r) => null,
-      );
+      if (creationData.groupPhoto != null) {
+        final res = await dataSource.uploadGroupConversationThumbnail(
+          thumbnail: GroupConversationThumbnailUploadFile(
+            groupConversationID: conversationInfo.id,
+            filePath: creationData.groupPhoto!,
+          ),
+          onUploadProgress: onUploadProgress,
+        );
+
+        return res.fold(
+          (l) => left(_handleCreationError()),
+          (r) => right(convo),
+        );
+      }
+
+      return right(convo);
     }
+  }
 
-    return GroupConversation.fromConversationInfo(
-      info: conversationInfo,
-      convoMembers: [...creationData.conversationMembers, me],
-    );
+  Failure _handleCreationError() {
+    showToast('War wohl nix'); //TODO
+    return const Failure();
   }
 }

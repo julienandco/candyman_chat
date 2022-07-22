@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:neon_chat/src/conversations/conversations.dart';
 import 'package:neon_chat/src/core/core.dart';
 
@@ -6,7 +7,7 @@ class CreateGroupConversationUC {
 
   CreateGroupConversationUC(this.conversationsRepository);
 
-  Future<GroupConversation> call({
+  Future<Either<Failure, GroupConversation>> call({
     required FirebaseUser me,
     required GroupConversationCreationData creationData,
   }) async {
