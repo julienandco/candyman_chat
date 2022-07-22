@@ -219,10 +219,8 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
     required GroupConversationCreationData creationData,
     Function(int, int)? onUploadProgress,
   }) async {
-    if (chatGetIt<FunctionInitData>().createGroupConversation != null) {
-      final _res = await chatGetIt<FunctionInitData>()
-          .createGroupConversation!
-          .call(creationData);
+    if (dataSource.createGroupConversation != null) {
+      final _res = await dataSource.createGroupConversation!.call(creationData);
 
       return _res.fold(
         (l) => left(_handleCreationError()),

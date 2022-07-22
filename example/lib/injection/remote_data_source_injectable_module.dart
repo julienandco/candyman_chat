@@ -36,4 +36,8 @@ class _MyDataSource implements NeonChatRemoteDataSource {
       void Function(int p1, int p2)? onUploadProgress}) async {
     return right('TODO');
   }
+
+  @override
+  Future<Either<Failure, ConversationInfo>> Function(
+      GroupConversationCreationData p1)? createGroupConversation;
 }

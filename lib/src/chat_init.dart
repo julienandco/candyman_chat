@@ -171,15 +171,6 @@ class FunctionInitData {
   ///
   final Function(String)? onOpenUserProfile;
 
-  ///
-  /// A custom implementation of the group conversation creation. If this is
-  /// non-null, then nothing will be added to firebase nor uploaded via the
-  /// [NeonChatRemoteDataSource] by the package, everything you want to be
-  /// done during group conversation creation has to be done by you.
-  ///
-  final Future<Either<Failure, ConversationInfo>> Function(
-      GroupConversationCreationData)? createGroupConversation;
-
   FunctionInitData({
     required this.getUserForID,
 
@@ -209,7 +200,6 @@ class FunctionInitData {
     this.getConversationCreationData,
     this.onOpenUserProfile,
     this.disableGroupConversationAppBarTap = false,
-    this.createGroupConversation,
   })  : _onGroupConversationAppBarTap = onGroupConversationAppBarTap,
         _isAuthenticated = isAuthenticated,
         _getConversationMessageTypeDisplayString =
