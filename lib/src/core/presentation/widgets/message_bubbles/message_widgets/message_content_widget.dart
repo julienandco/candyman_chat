@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -202,21 +203,26 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
 
   void _openMediaViewer(ConversationMessage message) {
     final conversationBloc = context.read<ConversationBloc>();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => chatGetIt<UploadUrlCubit>(),
-              ),
-              BlocProvider.value(
-                value: conversationBloc,
-              ),
-            ],
-            child: ChatMediaViewerPage(
-                title: widget.titleForMediaPage, currentMediaMessage: message)),
-      ),
-    );
+    context.router.push(ChatMediaViewerRoute(
+        title: widget.titleForMediaPage,
+        message: message,
+        convoBloc: conversationBloc));
+    //TODO
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => MultiBlocProvider(
+    //         providers: [
+    //           BlocProvider(
+    //             create: (context) => chatGetIt<UploadUrlCubit>(),
+    //           ),
+    //           BlocProvider.value(
+    //             value: conversationBloc,
+    //           ),
+    //         ],
+    //         child: _ChatMediaViewerPage(
+    //             title: widget.titleForMediaPage, currentMediaMessage: message)),
+    //   ),
+    // );
   }
 }

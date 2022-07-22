@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,13 +53,13 @@ class _MessageBubbleState extends State<MessageBubble> {
           context
               .read<ConversationBloc>()
               .add(ConversationEvent.hideMessage(widget.message));
-          Navigator.pop(context);
+          context.router.pop();
         },
         () {
           context
               .read<ConversationBloc>()
               .add(ConversationEvent.deleteMessage(widget.message));
-          Navigator.pop(context);
+          context.router.pop();
         },
       );
     }

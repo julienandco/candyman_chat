@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -47,9 +48,7 @@ class SubHeader extends StatelessWidget {
                 leading ??
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
+                      onTap: () => context.router.pop(),
                       child: Container(
                         padding: const EdgeInsets.only(
                             left: 20.0, top: 8, bottom: 8),

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:example/router/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,18 +39,10 @@ void main() async {
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
     firebaseKeys: const FirebaseKeys(usePrefix: true),
-    openAppChatPage: (context) => Navigator.of(context).push(_chatRoute),
+    openAppChatPage: (context) => context.router.push(const ChatRoute()),
   );
 
   log(creds.user?.uid.toString() ?? 'NO CREDENTIALS!!11!!');
-  // await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //   password: 'neon-chat-example1!',
-  //   email: 'julien+1@neon.dev',
-  // );
-  // await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //   password: 'neon-chat-example2!',
-  //   email: 'julien+2@neon.dev',
-  // );
 
   BlocOverrides.runZoned(
     () => runApp(const MyApp()),
@@ -57,109 +51,42 @@ void main() async {
   );
 }
 
-CupertinoPageRoute get _chatRoute => CupertinoPageRoute(
-      builder: (context) => Scaffold(
-        body: NeonChat(
-          getUserForID: (id) async => Future.delayed(
-            const Duration(milliseconds: 250),
-            () => FirebaseUser(
-                id: id,
-                username: 'user ${id.substring(0, 4)}',
-                profilePictureURL:
-                    'https://cdn.getyourguide.com/img/tour/6242c553ab0ca.jpeg/146.jpg'),
-          ),
-          additionalDirectConversationDataConfig: _MyCustomAdditionalData(),
-          onDirectConversationAppBarTap: (conversation) =>
-              log(conversation.additionalData!['startDate'].toString()),
-          provideConversationsBloc: true,
-          getUserAvatar: (_) => const Icon(Icons.person),
-          getGroupAvatar: (_) => const Icon(Icons.group),
-          getConversationCreationData: () => DirectConversationCreationData(
-            conversationPartner: FirebaseUser(
-                id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2', username: 'Julien3'),
-          ),
-          conversationsStyle: const ConversationsStyle(
-            showAppBarAboveConversations: true,
-            noConversationsWidget: Text('oh man alter'),
-            showFab: true,
-            fabColor: Colors.red,
-          ),
-        ),
-      ),
-    );
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  DirectConversationCreationData get _getMockConvoCreationData =>
-      DirectConversationCreationData(
-          conversationPartner: FirebaseUser(
-              id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', username: 'Julien7'));
-  GroupConversationCreationData get _getMockGroupConvoCreationData =>
-      GroupConversationCreationData(conversationMembers: [
-        FirebaseUser(id: '74Kx3Rn957SYoiAvSiqaYGQ7auk1', username: 'Julien7'),
-        FirebaseUser(id: '94Kx3Rn957SYoiAvSiqaYGQ7auk1', username: 'Julien9'),
-      ], groupName: 'gruppe-test-2');
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-  /// Uncomment the [MyCustomConversationsLoader] to see a custom implementation
-  /// that only uses the chat's logic.
-  ///
-  /// Uncomment the [NeonChat] to see the default look and usage of the NEON Chat.
+class _MyAppState extends State<MyApp> {
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp.router(
       title: 'NEON Chat Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+      debugShowCheckedModeBanner: false,
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser:
+          _appRouter.defaultRouteParser(includePrefixMatches: true),
+      routeInformationProvider: _appRouter.routeInfoProvider(),
+      localizationsDelegates: const [DefaultMaterialLocalizations.delegate],
+      theme: const CupertinoThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.black87,
+        primaryContrastingColor: Colors.deepPurple,
+        scaffoldBackgroundColor: Colors.white,
       ),
-      home: _MyApp(),
     );
   }
 }
 
-class _MyApp extends StatelessWidget {
+class AppLoader extends StatelessWidget {
+  const AppLoader({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'HOME!',
-            ),
-            const SizedBox(height: 12),
-            TextButton(
-              child: const Text('Chat'),
-              onPressed: () => Navigator.of(context).push(_chatRoute),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            TextButton(
-              child: const Text('Open Conversation from outside'),
-              onPressed: () => openConversation(
-                context,
-                conversationId: 'yNluhxKbPb3lDKX3KvCO',
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            TextButton(
-              child: const Text('Open Conversation From Push'),
-              onPressed: () => openConversationFromPushNotification(
-                context,
-                conversationId: 'yNluhxKbPb3lDKX3KvCO',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return AutoRouter.declarative(routes: (_) => const [HomeRoute()]);
   }
 }
 
@@ -202,20 +129,4 @@ class _MyAppBlocObserver extends BlocObserver {
     super.onEvent(bloc, event);
     log('Event: ${event.runtimeType}', name: '${bloc.runtimeType}');
   }
-}
-
-class _MyCustomAdditionalData implements AdditionalConversationDataConfig {
-  @override
-  List<AdditionalConversationDataInfo> get additionalDataInfos => [
-        AdditionalConversationDataInfo<DateTime?, Timestamp?>(
-            firebaseKey: 'startDate',
-            fromJson: (json) {
-              if (json == null) return null;
-              return json.toDate();
-            },
-            toJson: (date) {
-              if (date == null) return null;
-              return Timestamp.fromDate(date);
-            })
-      ];
 }

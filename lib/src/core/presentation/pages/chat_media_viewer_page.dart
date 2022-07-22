@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -7,8 +8,37 @@ import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 import 'package:photo_view/photo_view.dart';
 
-class ChatMediaViewerPage extends StatefulWidget {
-  const ChatMediaViewerPage({
+class ChatMediaViewerLoader extends StatelessWidget {
+  final String title;
+  final ConversationMessage message;
+  final ConversationBloc convoBloc;
+  const ChatMediaViewerLoader({
+    Key? key,
+    required this.title,
+    required this.message,
+    required this.convoBloc,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => chatGetIt<UploadUrlCubit>(),
+          ),
+          BlocProvider.value(
+            value: convoBloc,
+          ),
+        ],
+        child: _ChatMediaViewerPage(
+          title: title,
+          currentMediaMessage: message,
+        ));
+  }
+}
+
+class _ChatMediaViewerPage extends StatefulWidget {
+  const _ChatMediaViewerPage({
     Key? key,
     required this.currentMediaMessage,
     required this.title,
@@ -20,7 +50,7 @@ class ChatMediaViewerPage extends StatefulWidget {
   _ChatMediaViewerPageState createState() => _ChatMediaViewerPageState();
 }
 
-class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
+class _ChatMediaViewerPageState extends State<_ChatMediaViewerPage> {
   int _currentIndex = 0;
   late PageController _pageController;
   List<ConversationMessage> messages = [];
@@ -87,7 +117,7 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
         leading: chatGetIt<ConversationStyle>().appBarOnPopIcon != null
             ? GestureDetector(
                 child: chatGetIt<ConversationStyle>().appBarOnPopIcon,
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => context.router.pop(),
               )
             : null,
         backgroundColor: chatGetIt<ConversationStyle>().backgroundColor,
@@ -117,5 +147,42 @@ class _ChatMediaViewerPageState extends State<ChatMediaViewerPage> {
         },
       ),
     );
+  }
+}
+
+class ChatMediaViewerRoute extends PageRouteInfo<ChatMediaViewerRouteArgs> {
+  ChatMediaViewerRoute(
+      {Key? key,
+      required String title,
+      required ConversationMessage message,
+      required ConversationBloc convoBloc})
+      : super(ChatMediaViewerRoute.name,
+            path: '/chat-media-viewer-page',
+            args: ChatMediaViewerRouteArgs(
+              title: title,
+              message: message,
+              convoBloc: convoBloc,
+            ));
+
+  static const String name = 'ChatMediaViewerRoute';
+}
+
+class ChatMediaViewerRouteArgs {
+  const ChatMediaViewerRouteArgs({
+    this.key,
+    required this.title,
+    required this.message,
+    required this.convoBloc,
+  });
+
+  final Key? key;
+
+  final String title;
+  final ConversationMessage message;
+  final ConversationBloc convoBloc;
+
+  @override
+  String toString() {
+    return 'ChatMediaViewerRouteArgs{key: $key, title: $title, message: $message, convoBloc: $convoBloc}';
   }
 }

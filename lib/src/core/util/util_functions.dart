@@ -45,9 +45,9 @@ void openConversation(
   // CAUTION! Only set this to true, if you MADE ABSOLUTELY SURE that the
   // ChatPage is already in the widget tree! Otherwise, the chatGet it won't
   // be instantiated and all the necessary blocs will not be provided!
-  bool explicitChatPageNavigation = false,
+  bool chatPageAlreadyOnNavStack = false,
 }) {
-  if (!explicitChatPageNavigation) {
+  if (!chatPageAlreadyOnNavStack) {
     //open up the chat page so that all the necessary blocs get provided and
     //the chat get it gets instantiated.
     chatGetIt
@@ -82,6 +82,13 @@ void openConversationInternally(
           create: (context) => chatGetIt<ConversationsBloc>(),
           child: child,
         );
+
+  // context.router.push(DefaultConversationLoader(
+  //   conversationId: conversationId,
+  //   showCloseButton: showCloseButton,
+  //   conversationsBloc: conversationsBlocProvidedTopLevel ? context.read<ConversationsBloc>() : null,
+  // ));
+
   Navigator.push(
     context,
     CupertinoPageRoute(builder: (context) => provider),
