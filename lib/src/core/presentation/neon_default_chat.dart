@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +12,17 @@ import 'package:neon_chat/src/core/core.dart';
 /// Instance of the NEON-Chat, that works out-of-the-box. Where I come from, we
 /// call such things MDMAzing.
 ///
-class NeonChat extends StatefulWidget {
+class NeonChat extends StatelessWidget {
   ///
   /// Needs to be called before the first appearance of the NEON Chat Widget
   /// inside of the widget tree.
   ///
   static initNeonChat({
+    ///
+    /// The current locale of your app.
+    ///
+    required String locale,
+
     ///
     /// The FirebaseAuth Instance of your app.
     ///
@@ -30,37 +34,56 @@ class NeonChat extends StatefulWidget {
     required FirebaseFirestore firebaseFirestore,
 
     ///
-    /// The [NeonChatRemoteDataSource] you custom-implemented.
-    ///
-    required NeonChatRemoteDataSource remoteDataSource,
-
-    ///
-    /// Do NOT fuck around with this, there is a reason this is optional.
+    /// Do NOT mess around with this, there is a reason this is optional.
     /// If you still feel a massive urge, be VERY aware of what you're doing.
     ///
     FirebaseKeys firebaseKeys = const FirebaseKeys(),
 
     ///
-    /// Returns whether the current user is authenticated or not. This information
-    /// is used to determine whether the commands received via Data Messages
-    /// should be handled (user is authenticated) or not (user not authenticated).
-    /// Defaults to always be true.
+    /// The [NeonChatRemoteDataSource] you custom-implemented.
     ///
-    bool Function()? isAuthenticated,
+    required NeonChatRemoteDataSource remoteDataSource,
 
     ///
-    /// The styling of the toasts that get triggered by every push notification.
+    /// All the information about the needed and optional functions
+    /// you want to feed into the NEON Chat package.
     ///
-    PushNotificationToastStyle pushNotificationToastStyle =
-        const PushNotificationToastStyle(),
+    required FunctionInitData functionInit,
+
+    ///
+    /// All the routes you need to feed the NEON Chat package, so that
+    /// the internal navigation works out of the box.
+    ///
+    required RoutingInitData routingInit,
+
+    ///
+    /// All the information about the custom widgets you want to feed into the
+    /// NEON Chat package.
+    ///
+    WidgetInitData widgetInit = const WidgetInitData(),
+
+    ///
+    /// All the information about the additional data you want your
+    /// [DirectConversation] and [GroupConversation] entities to hold.
+    ///
+    AdditionalDataInitData additionalDataInit = const AdditionalDataInitData(),
+
+    ///
+    /// All the styling information on how you want the NEON Chat to look like.
+    ///
+    StyleInitData styleInit = const StyleInitData(),
   }) {
-    initNEONChat(
+    initNEONChatInternally(
+      locale: locale,
       firebaseAuth: firebaseAuth,
       firebaseFirestore: firebaseFirestore,
       firebaseKeys: firebaseKeys,
       remoteDataSource: remoteDataSource,
-      isAuthenticated: isAuthenticated ?? () => true,
-      pushNotificationToastStyle: pushNotificationToastStyle,
+      functionInit: functionInit,
+      routingInit: routingInit,
+      widgetInit: widgetInit,
+      additionalDataInit: additionalDataInit,
+      styleInit: styleInit,
     );
   }
 
@@ -81,182 +104,10 @@ class NeonChat extends StatefulWidget {
   ///
   final bool provideConversationsBloc;
 
-  ///
-  /// Gets called when a user wants to start a new 1-on-1 or group conversation.
-  /// Possible implementation could be: a dialog shows up and lets the user
-  /// selected all the wanted conversation partners and returns them as a
-  /// [ConversationCreationData] instance.
-  ///
-  final ConversationCreationData Function()? getConversationCreationData;
-
-  //TODO: function onChatSuccessfully created, default function: opens conversation
-
-  ///
-  /// Gets called when a user taps on the AppBar within a 1-on-1 conversation.
-  /// Useful functionality would be to open the conversation partner's user
-  /// profile.
-  ///
-  /// Default Functionality is nothing, as the app-internal user profile
-  /// informations are not dealt with inside the NEON-Chat-Package.
-  ///
-  final Function(DirectConversation)? onDirectConversationAppBarTap;
-
-  ///
-  /// Gets called when a user taps on another user within the group conversation
-  /// overview page.
-  ///
-  /// Default Functionality is nothing.
-  ///
-  final Function(String)? onOpenUserProfile;
-
-  ///
-  /// Gets called when a user taps on the AppBar within a group conversation.
-  /// Default functionality is to open an overview screen that shows the
-  /// group's thumbnail, name and all the group members.
-  ///
-  final Function(GroupConversation)? onGroupConversationAppBarTap;
-
-  ///
-  /// Set to true, if no [onGroupConversationAppBarTap] is provided and the default
-  /// functionality should also not be triggered.
-  ///
-  final bool disableGroupConversationAppBarTap;
-
-  ///
-  /// Returns a Widget that is to be displayed as a user avatar, given a
-  /// nullable user id String. Default is to show an empty [AvatarWidget].
-  ///
-  final Widget Function(String?)? getUserAvatar;
-
-  ///
-  /// Returns a Widget that is to be displayed as a group avatar, given a
-  /// nullable groupPicture String. Default is to show an empty [AvatarWidget].
-  ///
-  final Widget Function(String?)? getGroupAvatar;
-
-  ///
-  /// Returns a Future instance of [FirebaseUser] given a userID.
-  ///
-  final Future<FirebaseUser> Function(String) getUserForID;
-
-  /// Your implementation of [AdditionalConversationDataConfig] in case you
-  /// want your [DirectConversation] objects to store further information
-  /// that are not defined within the Chat Package.
-  ///
-  final AdditionalConversationDataConfig?
-      additionalDirectConversationDataConfig;
-
-  /// Your implementation of [AdditionalConversationDataConfig] in case you
-  /// want your [GroupConversation] objects to store further information
-  /// that are not defined within the Chat Package.
-  ///
-  final AdditionalConversationDataConfig? additionalGroupConversationDataConfig;
-
-  ///
-  /// Returns the display string to be shown next to the emoji of a given
-  /// message type (for ex. an audio message preview would show up in the conversations
-  /// screen as: 🎤 + return value of this method).
-  ///
-  final String Function(ConversationMessageType)?
-      getConversationMessageTypeDisplayString;
-
-  final ConversationStyle conversationStyle;
-  final ConversationsStyle conversationsStyle;
-  final MessageBubbleStyle messageBubbleStyle;
-  final SearchAppBarStyle searchAppBarStyle;
-  final BottomBarStyle bottomBarStyle;
-
-  ///
-  /// The Route to the Page where the [NeonChat] widget is built into
-  /// the widget tree on the Navigator stack.
-  ///
-  final PageRouteInfo<dynamic> chatPageRoute;
-  final PageRouteInfo<dynamic> Function(
-    String,
-    bool,
-    ConversationsBloc?,
-  ) conversationRoute;
-  final PageRouteInfo<dynamic> Function(
-    String,
-    ConversationMessage,
-    ConversationBloc,
-  ) chatMediaViewerRoute;
-
   const NeonChat({
     Key? key,
-    required this.getUserForID,
-    required this.conversationRoute,
-    required this.chatMediaViewerRoute,
-    required this.chatPageRoute,
-    this.additionalDirectConversationDataConfig,
-    this.additionalGroupConversationDataConfig,
-    this.onGroupConversationAppBarTap,
-    this.disableGroupConversationAppBarTap = false,
     this.provideConversationsBloc = false,
-    this.onDirectConversationAppBarTap,
-    this.getConversationCreationData,
-    this.onOpenUserProfile,
-    this.getUserAvatar,
-    this.getGroupAvatar,
-    this.conversationStyle = const ConversationStyle(),
-    this.conversationsStyle = const ConversationsStyle(),
-    this.messageBubbleStyle = const MessageBubbleStyle(),
-    this.searchAppBarStyle = const SearchAppBarStyle(),
-    this.bottomBarStyle = const BottomBarStyle(),
-    this.getConversationMessageTypeDisplayString,
   }) : super(key: key);
-
-  @override
-  State<NeonChat> createState() => _NeonChatState();
-}
-
-class _NeonChatState extends State<NeonChat> {
-  @override
-  void initState() {
-    super.initState();
-
-    initStyles(
-      conversationStyle: widget.conversationStyle,
-      conversationsStyle: widget.conversationsStyle,
-      messageBubbleStyle: widget.messageBubbleStyle,
-      searchAppBarStyle: widget.searchAppBarStyle,
-      bottomBarStyle: widget.bottomBarStyle,
-    );
-
-    initFunctions(
-      FunctionInitData(
-        getUserForID: widget.getUserForID,
-        conversationRoute: widget.conversationRoute,
-        chatMediaViewerRoute: widget.chatMediaViewerRoute,
-        chatPageRoute: widget.chatPageRoute,
-        getConversationMessageTypeDisplayString:
-            widget.getConversationMessageTypeDisplayString ??
-                (type) => type.firebaseKey,
-        getConversationCreationData: widget.getConversationCreationData,
-        onGroupConversationAppBarTap: widget.onGroupConversationAppBarTap ??
-            (widget.disableGroupConversationAppBarTap
-                ? null
-                : (conversation) => defaultOnGroupConversationAppBarTap(
-                      context,
-                      myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
-                      style: GroupChatOverviewStyle(
-                        appBarColor:
-                            chatGetIt<ConversationsStyle>().appBarColor,
-                      ),
-                      conversation: conversation,
-                      onOpenUserProfile: widget.onOpenUserProfile,
-                    )),
-        onDirectConversationAppBarTap: widget.onDirectConversationAppBarTap,
-        getUserAvatar: widget.getUserAvatar,
-        onOpenUserProfile: widget.onOpenUserProfile,
-        additionalDirectConversationData:
-            widget.additionalDirectConversationDataConfig,
-        additionalGroupConversationData:
-            widget.additionalGroupConversationDataConfig,
-        getGroupAvatar: widget.getGroupAvatar,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -268,14 +119,15 @@ class _NeonChatState extends State<NeonChat> {
         BlocProvider(
           create: (context) => chatGetIt<CurrentConversationCubit>(),
         ),
-        if (widget.provideConversationsBloc)
+        if (provideConversationsBloc)
           BlocProvider(
-              create: (context) => chatGetIt<ConversationsBloc>()
-                ..add(
-                  ConversationsEvent.initialize(
-                    myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
-                  ),
-                )),
+            create: (context) => chatGetIt<ConversationsBloc>()
+              ..add(
+                ConversationsEvent.initialize(
+                  myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
+                ),
+              ),
+          ),
       ],
       child: const DefaultConversationsLoader(),
     );

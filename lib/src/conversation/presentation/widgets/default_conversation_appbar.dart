@@ -131,7 +131,7 @@ class DefaultConversationAppbar extends StatelessWidget
     if (convo is DirectConversation) {
       chatGetIt<FunctionInitData>().onDirectConversationAppBarTap?.call(convo);
     } else if (convo is GroupConversation) {
-      chatGetIt<FunctionInitData>().onGroupConversationAppBarTap?.call(convo);
+      chatGetIt<FunctionInitData>().onGroupConversationAppBarTap.call(convo);
     } else {
       throw UnknownConversationType();
     }

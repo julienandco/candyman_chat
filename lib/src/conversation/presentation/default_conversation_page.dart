@@ -38,9 +38,12 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
       chatGetIt<PushNotificationService>()
           .disableChatNotificationsForConversationId(id);
 
-      final conversationsState = chatGetIt<ConversationsBloc>().state;
-      _lastSeenGroupConversationTimestamp = conversationsState.maybeWhen(
-          loadSuccess: (_, timestamps) => timestamps[id], orElse: () => null);
+      _lastSeenGroupConversationTimestamp = context
+          .read<ConversationsBloc>()
+          .state
+          .maybeWhen(
+              loadSuccess: (_, timestamps) => timestamps[id],
+              orElse: () => null);
     }
     _isInit = false;
     super.didChangeDependencies();

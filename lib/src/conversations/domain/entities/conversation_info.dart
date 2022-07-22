@@ -69,8 +69,8 @@ class ConversationInfo extends Equatable {
   factory ConversationInfo.fromJson(Map<String, dynamic> json) {
     final bool isGroupConversation = json['isGroupConversation'] as bool;
     final additionalConvoDataConfig = isGroupConversation
-        ? chatGetIt<FunctionInitData>().additionalGroupConversationData
-        : chatGetIt<FunctionInitData>().additionalDirectConversationData;
+        ? chatGetIt<AdditionalDataInitData>().additionalGroupConversationData
+        : chatGetIt<AdditionalDataInitData>().additionalDirectConversationData;
 
     Map<String, dynamic>? additionalData = {};
     if (additionalConvoDataConfig != null &&
@@ -169,8 +169,8 @@ class ConversationInfo extends Equatable {
 
   Map<String, dynamic> toJson() {
     final _additionalConvoData = isGroupConversation
-        ? chatGetIt<FunctionInitData>().additionalGroupConversationData
-        : chatGetIt<FunctionInitData>().additionalDirectConversationData;
+        ? chatGetIt<AdditionalDataInitData>().additionalGroupConversationData
+        : chatGetIt<AdditionalDataInitData>().additionalDirectConversationData;
     Map<String, dynamic> jsonMap = {
       'id': id,
       'isGroupConversation': isGroupConversation,

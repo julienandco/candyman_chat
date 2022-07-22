@@ -203,7 +203,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
     if (convo is DirectConversation) {
       chatGetIt<FunctionInitData>().onDirectConversationAppBarTap?.call(convo);
     } else if (convo is GroupConversation) {
-      chatGetIt<FunctionInitData>().onGroupConversationAppBarTap?.call(convo);
+      chatGetIt<FunctionInitData>().onGroupConversationAppBarTap.call(convo);
     } else {
       throw UnknownConversationType();
     }
@@ -212,12 +212,12 @@ class _ConversationListItemState extends State<ConversationListItem> {
   Widget get _conversationThumbnail {
     final convo = widget.conversationItem.conversation;
     if (convo is DirectConversation) {
-      return chatGetIt<FunctionInitData>()
+      return chatGetIt<WidgetInitData>()
               .getUserAvatar
               ?.call(convo.conversationPartner.id) ??
           _defaultConversationImage;
     } else if (convo is GroupConversation) {
-      return chatGetIt<FunctionInitData>()
+      return chatGetIt<WidgetInitData>()
               .getGroupAvatar
               ?.call(convo.thumbnail) ??
           _defaultConversationImage;

@@ -35,10 +35,54 @@ void main() async {
   );
 
   NeonChat.initNeonChat(
+    locale: 'de_DE',
     firebaseAuth: getIt<FirebaseAuth>(),
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
     firebaseKeys: const FirebaseKeys(usePrefix: true),
+    functionInit: FunctionInitData(
+      getUserForID: (id) async => Future.delayed(
+        const Duration(milliseconds: 250),
+        () => FirebaseUser(
+            id: id,
+            username: 'user ${id.substring(0, 4)}',
+            profilePictureURL:
+                'https://cdn.getyourguide.com/img/tour/6242c553ab0ca.jpeg/146.jpg'),
+      ),
+      onDirectConversationAppBarTap: (conversation) =>
+          log(conversation.additionalData!['startDate'].toString()),
+      getConversationCreationData: () => DirectConversationCreationData(
+        conversationPartner: FirebaseUser(
+            id: 'ZeA12jhPSvXoO0ODxdkpXktn6QW2', username: 'Julien3'),
+      ),
+    ),
+    routingInit: RoutingInitData(
+      chatPageRoute: const ChatRoute(),
+      conversationRoute: (convoID, showCloseButton, convosBloc) =>
+          DefaultConversationRoute(
+        conversationId: convoID,
+        showCloseButton: showCloseButton,
+        conversationsBloc: convosBloc,
+      ),
+      chatMediaViewerRoute: (title, message, conversationBloc) =>
+          ChatMediaViewerRoute(
+              title: title, message: message, convoBloc: conversationBloc),
+    ),
+    additionalDataInit: AdditionalDataInitData(
+      additionalDirectConversationData: _MyCustomAdditionalData(),
+    ),
+    widgetInit: WidgetInitData(
+      getUserAvatar: (_) => const Icon(Icons.person),
+      getGroupAvatar: (_) => const Icon(Icons.group),
+    ),
+    styleInit: const StyleInitData(
+      conversationsStyle: ConversationsStyle(
+        showAppBarAboveConversations: true,
+        noConversationsWidget: Text('oh man alter'),
+        showFab: true,
+        fabColor: Colors.red,
+      ),
+    ),
   );
 
   log(creds.user?.uid.toString() ?? 'NO CREDENTIALS!!11!!');
@@ -87,6 +131,22 @@ class AppLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoRouter.declarative(routes: (_) => const [HomeRoute()]);
   }
+}
+
+class _MyCustomAdditionalData implements AdditionalConversationDataConfig {
+  @override
+  List<AdditionalConversationDataInfo> get additionalDataInfos => [
+        AdditionalConversationDataInfo<DateTime?, Timestamp?>(
+            firebaseKey: 'startDate',
+            fromJson: (json) {
+              if (json == null) return null;
+              return json.toDate();
+            },
+            toJson: (date) {
+              if (date == null) return null;
+              return Timestamp.fromDate(date);
+            })
+      ];
 }
 
 class _MyAppBlocObserver extends BlocObserver {

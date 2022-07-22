@@ -20,6 +20,7 @@ class DefaultConversationLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (conversationsBloc != null) print('providing value');
     return MultiBlocProvider(
       providers: [
         if (conversationsBloc != null)
@@ -28,7 +29,12 @@ class DefaultConversationLoader extends StatelessWidget {
           )
         else
           BlocProvider(
-            create: (context) => chatGetIt<ConversationsBloc>(),
+            create: (context) => chatGetIt<ConversationsBloc>()
+              ..add(
+                ConversationsEvent.initialize(
+                  myId: chatGetIt<FirebaseAuth>().currentUser!.uid,
+                ),
+              ),
           ),
         BlocProvider<ConversationBloc>(
           create: (context) => ConversationBloc(

@@ -17,9 +17,9 @@ const kMaxWidth = 800.0;
 bool isWidthOverLimit(BuildContext context) =>
     MediaQuery.of(context).size.width > kMaxWidth;
 
-// TODO: get correct locale, not hardcoded de, maybe insert into chatDatastructure?
 String formatDatetime(DateTime? date) =>
-    DateFormat('HH:mm').format(date ?? DateTime.now());
+    DateFormat('HH:mm', chatGetIt<String>(instanceName: kLocaleInstanceName))
+        .format(date ?? DateTime.now());
 
 String formatLastActiveDateTime(DateTime? date) {
   if (date == null) {
@@ -33,9 +33,9 @@ String formatLastActiveDateTime(DateTime? date) {
   } else {
     // show dMy, so 15. Okt. 2020 f.ex.
 
-    // TODO: get correct locale, not hardcoded de, maybe insert into chatDatastructure?
-
-    return DateFormat('d. MMM. y').format(date);
+    return DateFormat(
+            'd. MMM. y', chatGetIt<String>(instanceName: kLocaleInstanceName))
+        .format(date);
   }
 }
 
@@ -51,7 +51,7 @@ void openConversation(
   if (!chatPageAlreadyOnNavStack) {
     //open up the chat page so that all the necessary blocs get provided and
     //the chat get it gets instantiated.
-    context.router.push(chatGetIt.get<FunctionInitData>().chatPageRoute);
+    context.router.push(chatGetIt.get<RoutingInitData>().chatPageRoute);
   }
 
   openConversationInternally(context, conversationId: conversationId);
@@ -66,13 +66,18 @@ void openConversationInternally(
           .findAncestorWidgetOfExactType<BlocProvider<ConversationsBloc>>() !=
       null;
 
-  context.router.push(chatGetIt<FunctionInitData>().conversationRoute(
-    conversationId,
-    showCloseButton,
-    conversationsBlocProvidedTopLevel
-        ? context.read<ConversationsBloc>()
-        : null,
-  ));
+  print('FOUND ONE: $conversationsBlocProvidedTopLevel');
+  print('FOUND: ${context.read<ConversationsBloc>()}');
+
+  context.router.push(
+    chatGetIt<RoutingInitData>().conversationRoute(
+      conversationId,
+      showCloseButton,
+      conversationsBlocProvidedTopLevel
+          ? context.read<ConversationsBloc>()
+          : null,
+    ),
+  );
 }
 
 void openConversationFromPushNotification(

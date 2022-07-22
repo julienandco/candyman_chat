@@ -202,7 +202,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
 
   void _openMediaViewer(ConversationMessage message) {
     final conversationBloc = context.read<ConversationBloc>();
-    context.router.push(chatGetIt<FunctionInitData>().chatMediaViewerRoute(
+    context.router.push(chatGetIt<RoutingInitData>().chatMediaViewerRoute(
         widget.titleForMediaPage, message, conversationBloc));
   }
 }
