@@ -93,7 +93,7 @@ Ab jetzt wird differenziert!
 
 Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1. 
 
-TL;DR: Rufe ```NeonChat.initNeonChat``` in der ```main``` deiner App auf und falls du für das Fetchen von Bildern, Videos, Dateien etc. im Chat http-Headers benötigst, so rufe ```NeonChat.initHttpHeaders``` auf, sobald dir alle nötigen Informationen dazu bekannt sind (z.B. sobald JWT vom Backend geholt wurde).
+TL;DR: Rufe ```NeonChat.initNeonChat``` in der ```main``` deiner App auf und falls du für das Fetchen von Bildern, Videos, Dateien etc. im Chat http-Headers benötigst, so rufe ```NeonChat.initHttpHeaders``` auf, sobald dir alle nötigen Informationen dazu bekannt sind (z.B. sobald JWT vom Backend geholt wurde). Falls dir korrektes Timestamp-Formatting wichtig ist, rufe auch ```NeonChat.initNeonChatLocale``` auf und übergib die Locale deiner App!
 
 
 Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore```, ```RemoteDataSource``` und ein paar wenige weitere Instanzen bereitstellen (der Rest ist optional) und alles der ```NeonChat.initNeonChat()```-Methode übergeben. Hier passiert das KOMPLETTE Customizen des NEON-Chats! Auch eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils und zahlreiche Styles können hier übergeben werden. Näheres zu allen Flags, die du bei der Initialisierung übergeben kannst, findest du unten im Abschnitt **Doku** und natürlich im Code.
@@ -233,9 +233,6 @@ Hier also eine nach bestem Wissen und gewissen vollständige (🥴) Doku aller F
 
 ### Backend
 - ```remoteDataSource (NeonChatRemoteDataSource)```: Deine Implementierung der NeonChatRemoteDataSource. Sie wird für das Hochladen und löschen von Files benötigt.
-
-### Locales
-- ```locale (String)```: Die Locale deiner App. Sie wird für das Formatieren der Timestamps benötigt.
 
 ### Funktionen
 Du musst eine Instanz der Datenstruktur ```FunctionInitData``` übergeben. Diese Datenstruktur hat folgende Felder:

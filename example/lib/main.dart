@@ -35,7 +35,6 @@ void main() async {
   );
 
   NeonChat.initNeonChat(
-    locale: 'de_DE',
     firebaseAuth: getIt<FirebaseAuth>(),
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
@@ -103,6 +102,16 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _appRouter = AppRouter();
+
+  @override
+  void initState() {
+    _initLocale();
+    super.initState();
+  }
+
+  Future<void> _initLocale() async {
+    await NeonChat.initNeonChatLocale('en_US');
+  }
 
   @override
   Widget build(BuildContext context) {

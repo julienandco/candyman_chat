@@ -19,11 +19,6 @@ class NeonChat extends StatelessWidget {
   ///
   static initNeonChat({
     ///
-    /// The current locale of your app.
-    ///
-    required String locale,
-
-    ///
     /// The FirebaseAuth Instance of your app.
     ///
     required FirebaseAuth firebaseAuth,
@@ -74,7 +69,6 @@ class NeonChat extends StatelessWidget {
     StyleInitData styleInit = const StyleInitData(),
   }) {
     initNEONChatInternally(
-      locale: locale,
       firebaseAuth: firebaseAuth,
       firebaseFirestore: firebaseFirestore,
       firebaseKeys: firebaseKeys,
@@ -94,6 +88,14 @@ class NeonChat extends StatelessWidget {
   static Future<void> initNeonChatHttpHeaders(
       Map<String, String> httpHeaders) async {
     return await initHttpHeaders(httpHeaders);
+  }
+
+  ///
+  /// Adjusts the locale, so that the timestamps are correctly formatted.
+  /// Uses en_US by default.
+  ///
+  static Future<void> initNeonChatLocale(String locale) async {
+    return await initLocale(locale);
   }
 
   ///

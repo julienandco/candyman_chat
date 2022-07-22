@@ -5,8 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/date_symbol_data_local.dart';
-// import 'package:intl/date_symbol_data_http_request.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.dart';
 
@@ -15,7 +13,6 @@ const kHttpHeadersInstanceName = 'httpHeaders';
 const kLocaleInstanceName = 'locale';
 
 initNEONChatInternally({
-  required String locale,
   required FirebaseAuth firebaseAuth,
   required FirebaseFirestore firebaseFirestore,
   required FirebaseKeys firebaseKeys,
@@ -27,9 +24,9 @@ initNEONChatInternally({
   required StyleInitData styleInit,
 }) {
   try {
-    //Formatting
-    initializeDateFormatting(locale);
-    _registerLocale(locale);
+    //Locale
+    chatGetIt.registerLazySingleton<String>(() => 'en_US',
+        instanceName: kLocaleInstanceName);
 
     //Firebase
     _registerFirebase(
@@ -83,6 +80,18 @@ initHttpHeaders(Map<String, String> httpHeaders) async {
         instanceName: kHttpHeadersInstanceName);
   } catch (e) {
     log('initHttpHeaders called multiple times. Only initialize the headers once!',
+        error: e);
+  }
+}
+
+Future<void> initLocale(String locale) async {
+  try {
+    //unregister the default value
+    await chatGetIt.unregister<String>(instanceName: kLocaleInstanceName);
+    chatGetIt.registerLazySingleton<String>(() => locale,
+        instanceName: kLocaleInstanceName);
+  } catch (e) {
+    log('initLocale called multiple times. Only initialize the locale once!',
         error: e);
   }
 }
@@ -327,11 +336,6 @@ class StyleInitData {
     this.bottomBarStyle = const BottomBarStyle(),
     this.pushNotificationToastStyle = const PushNotificationToastStyle(),
   });
-}
-
-_registerLocale(String locale) {
-  chatGetIt.registerLazySingleton<String>(() => locale,
-      instanceName: kLocaleInstanceName);
 }
 
 _registerFirebase({
