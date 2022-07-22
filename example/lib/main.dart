@@ -39,7 +39,6 @@ void main() async {
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
     firebaseKeys: const FirebaseKeys(usePrefix: true),
-    openAppChatPage: (context) => context.router.push(const ChatRoute()),
   );
 
   log(creds.user?.uid.toString() ?? 'NO CREDENTIALS!!11!!');

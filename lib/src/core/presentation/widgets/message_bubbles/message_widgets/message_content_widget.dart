@@ -7,7 +7,6 @@ import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
-import 'package:neon_chat/src/core/presentation/pages/chat_media_viewer_page.dart';
 
 class MessageContentWidget extends StatefulWidget {
   final MessageBubbleStyle messageBubbleStyle;
@@ -203,26 +202,7 @@ class _MessageContentWidgetState extends State<MessageContentWidget> {
 
   void _openMediaViewer(ConversationMessage message) {
     final conversationBloc = context.read<ConversationBloc>();
-    context.router.push(ChatMediaViewerRoute(
-        title: widget.titleForMediaPage,
-        message: message,
-        convoBloc: conversationBloc));
-    //TODO
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => MultiBlocProvider(
-    //         providers: [
-    //           BlocProvider(
-    //             create: (context) => chatGetIt<UploadUrlCubit>(),
-    //           ),
-    //           BlocProvider.value(
-    //             value: conversationBloc,
-    //           ),
-    //         ],
-    //         child: _ChatMediaViewerPage(
-    //             title: widget.titleForMediaPage, currentMediaMessage: message)),
-    //   ),
-    // );
+    context.router.push(chatGetIt<FunctionInitData>().chatMediaViewerRoute(
+        widget.titleForMediaPage, message, conversationBloc));
   }
 }

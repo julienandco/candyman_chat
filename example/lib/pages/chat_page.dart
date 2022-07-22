@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:example/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:neon_chat/neon_chat.dart';
 
@@ -19,6 +20,15 @@ class ChatPage extends StatelessWidget {
               profilePictureURL:
                   'https://cdn.getyourguide.com/img/tour/6242c553ab0ca.jpeg/146.jpg'),
         ),
+        conversationRoute: (convoID, showCloseButton, convosBloc) =>
+            DefaultConversationRoute(
+                conversationId: convoID,
+                showCloseButton: showCloseButton,
+                conversationsBloc: convosBloc),
+        chatMediaViewerRoute: (title, message, conversationBloc) =>
+            ChatMediaViewerRoute(
+                title: title, message: message, convoBloc: conversationBloc),
+        chatPageRoute: const ChatRoute(),
         additionalDirectConversationDataConfig: _MyCustomAdditionalData(),
         onDirectConversationAppBarTap: (conversation) =>
             log(conversation.additionalData!['startDate'].toString()),

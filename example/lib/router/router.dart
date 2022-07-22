@@ -3,6 +3,7 @@ import 'package:example/main.dart';
 import 'package:example/pages/chat_page.dart';
 import 'package:example/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:neon_chat/neon_chat.dart';
 
 part 'router.gr.dart';
 
@@ -17,6 +18,10 @@ part 'router.gr.dart';
       ],
     ),
     AutoRoute(page: ChatPage),
+
+    //NEON-Chat-Package specific
+    AutoRoute(page: DefaultConversationLoader),
+    AutoRoute(page: ChatMediaViewerLoader),
   ],
 )
 // extend the generated private router

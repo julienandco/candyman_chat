@@ -77,7 +77,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
                       ?.call(loadedConversationState.conversation) ??
                   DefaultConversationAppbar(
                     conversation: loadedConversationState.conversation,
-                    showCloseButton: !widget.showCloseButton,
+                    showCloseButton: widget.showCloseButton,
                   ),
               body: Stack(
                 children: [

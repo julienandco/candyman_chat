@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:neon_chat/src/conversation/domain/use_cases/get_upload_url_uc.da
 
 GetIt chatGetIt = GetIt.instance;
 const kHttpHeadersInstanceName = 'httpHeaders';
-const kOpenAppChatPageInstanceName = 'openAppChatPage';
 
 class FunctionInitData {
   final String Function(ConversationMessageType)
@@ -30,6 +30,18 @@ class FunctionInitData {
   final AdditionalConversationDataConfig? additionalDirectConversationData;
   final AdditionalConversationDataConfig? additionalGroupConversationData;
 
+  final PageRouteInfo<dynamic> chatPageRoute;
+  final PageRouteInfo<dynamic> Function(
+    String,
+    bool,
+    ConversationsBloc?,
+  ) conversationRoute;
+  final PageRouteInfo<dynamic> Function(
+    String,
+    ConversationMessage,
+    ConversationBloc,
+  ) chatMediaViewerRoute;
+
   FunctionInitData({
     required this.getConversationMessageTypeDisplayString,
     required this.getUserForID,
@@ -41,6 +53,9 @@ class FunctionInitData {
     this.onOpenUserProfile,
     this.additionalDirectConversationData,
     this.additionalGroupConversationData,
+    required this.conversationRoute,
+    required this.chatMediaViewerRoute,
+    required this.chatPageRoute,
   });
 }
 
@@ -51,7 +66,6 @@ initNEONChat({
   required NeonChatRemoteDataSource remoteDataSource,
   required bool Function() isAuthenticated,
   required PushNotificationToastStyle pushNotificationToastStyle,
-  required void Function(BuildContext) openAppChatPage,
 }) {
   try {
     final _currentUserUID = firebaseAuth.currentUser?.uid;
@@ -71,10 +85,6 @@ initNEONChat({
     //Push Notifications
     chatGetIt.registerLazySingleton<PushNotificationToastStyle>(
         () => pushNotificationToastStyle);
-
-    chatGetIt.registerLazySingleton<void Function(BuildContext)>(
-        () => openAppChatPage,
-        instanceName: kOpenAppChatPageInstanceName);
 
     //Singletons (Repos, UCs, Services)
     chatGetIt.registerLazySingleton<ConversationRepository>(

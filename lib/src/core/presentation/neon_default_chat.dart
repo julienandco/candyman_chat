@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,13 +49,6 @@ class NeonChat extends StatefulWidget {
     bool Function()? isAuthenticated,
 
     ///
-    /// Pushes the Route to the Page where the [NeonChat] widget is built into
-    /// the widget tree on the Navigator stack. ESSENTIAL for the functionality
-    /// to open conversations by tapping on an incoming push notification.
-    ///
-    required void Function(BuildContext) openAppChatPage,
-
-    ///
     /// The styling of the toasts that get triggered by every push notification.
     ///
     PushNotificationToastStyle pushNotificationToastStyle =
@@ -67,7 +61,6 @@ class NeonChat extends StatefulWidget {
       remoteDataSource: remoteDataSource,
       isAuthenticated: isAuthenticated ?? () => true,
       pushNotificationToastStyle: pushNotificationToastStyle,
-      openAppChatPage: openAppChatPage,
     );
   }
 
@@ -173,9 +166,28 @@ class NeonChat extends StatefulWidget {
   final SearchAppBarStyle searchAppBarStyle;
   final BottomBarStyle bottomBarStyle;
 
+  ///
+  /// The Route to the Page where the [NeonChat] widget is built into
+  /// the widget tree on the Navigator stack.
+  ///
+  final PageRouteInfo<dynamic> chatPageRoute;
+  final PageRouteInfo<dynamic> Function(
+    String,
+    bool,
+    ConversationsBloc?,
+  ) conversationRoute;
+  final PageRouteInfo<dynamic> Function(
+    String,
+    ConversationMessage,
+    ConversationBloc,
+  ) chatMediaViewerRoute;
+
   const NeonChat({
     Key? key,
     required this.getUserForID,
+    required this.conversationRoute,
+    required this.chatMediaViewerRoute,
+    required this.chatPageRoute,
     this.additionalDirectConversationDataConfig,
     this.additionalGroupConversationDataConfig,
     this.onGroupConversationAppBarTap,
@@ -214,6 +226,9 @@ class _NeonChatState extends State<NeonChat> {
     initFunctions(
       FunctionInitData(
         getUserForID: widget.getUserForID,
+        conversationRoute: widget.conversationRoute,
+        chatMediaViewerRoute: widget.chatMediaViewerRoute,
+        chatPageRoute: widget.chatPageRoute,
         getConversationMessageTypeDisplayString:
             widget.getConversationMessageTypeDisplayString ??
                 (type) => type.firebaseKey,

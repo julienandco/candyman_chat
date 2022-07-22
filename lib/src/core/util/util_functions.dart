@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform, kIsWeb;
@@ -50,10 +51,7 @@ void openConversation(
   if (!chatPageAlreadyOnNavStack) {
     //open up the chat page so that all the necessary blocs get provided and
     //the chat get it gets instantiated.
-    chatGetIt
-        .get<void Function(BuildContext)>(
-            instanceName: kOpenAppChatPageInstanceName)
-        .call(context);
+    context.router.push(chatGetIt.get<FunctionInitData>().chatPageRoute);
   }
 
   openConversationInternally(context, conversationId: conversationId);
@@ -68,31 +66,13 @@ void openConversationInternally(
           .findAncestorWidgetOfExactType<BlocProvider<ConversationsBloc>>() !=
       null;
 
-  final child = DefaultConversationLoader(
-    conversationId: conversationId,
-    showCloseButton: showCloseButton,
-  );
-
-  final provider = conversationsBlocProvidedTopLevel
-      ? BlocProvider.value(
-          value: context.read<ConversationsBloc>(),
-          child: child,
-        )
-      : BlocProvider(
-          create: (context) => chatGetIt<ConversationsBloc>(),
-          child: child,
-        );
-
-  // context.router.push(DefaultConversationLoader(
-  //   conversationId: conversationId,
-  //   showCloseButton: showCloseButton,
-  //   conversationsBloc: conversationsBlocProvidedTopLevel ? context.read<ConversationsBloc>() : null,
-  // ));
-
-  Navigator.push(
-    context,
-    CupertinoPageRoute(builder: (context) => provider),
-  );
+  context.router.push(chatGetIt<FunctionInitData>().conversationRoute(
+    conversationId,
+    showCloseButton,
+    conversationsBlocProvidedTopLevel
+        ? context.read<ConversationsBloc>()
+        : null,
+  ));
 }
 
 void openConversationFromPushNotification(

@@ -4,12 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neon_chat/neon_chat.dart';
 import 'package:neon_chat/src/chat_init.dart';
 
-// class DefaultConversationRoute extends PageRouteInfo {
-//   const DefaultConversationRoute() : super(name, path: '/conversation');
-
-//   static const String name = 'DefaultConversationRoute';
-// }
-
 class DefaultConversationLoader extends StatelessWidget {
   final String conversationId;
   final bool showCloseButton;

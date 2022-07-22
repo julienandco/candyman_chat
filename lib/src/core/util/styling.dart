@@ -108,6 +108,7 @@ class ConversationStyle {
   final EdgeInsetsGeometry searchPadding;
   final String youString;
   final Widget? appBarOnPopIcon;
+  final TextStyle convoNameStyle;
 
   const ConversationStyle({
     this.buildCustomConversationAppBar,
@@ -118,6 +119,8 @@ class ConversationStyle {
         const EdgeInsets.only(top: 20, bottom: 100, left: 20, right: 20),
     this.searchPadding = const EdgeInsets.only(bottom: 10, left: 10, right: 10),
     this.youString = 'You',
+    this.convoNameStyle = const TextStyle(
+        color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
   });
 }
 
