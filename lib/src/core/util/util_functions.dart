@@ -72,7 +72,7 @@ void openConversationInternally(
   }
 
   context.router.push(
-    chatGetIt<RoutingInitData>().conversationRoute(
+    chatGetIt<RoutingInitData>().buildConversationRoute(
       conversationId,
       showCloseButton,
       conversationsBlocProvidedTopLevel

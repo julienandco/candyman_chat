@@ -265,7 +265,7 @@ class RoutingInitData {
     String,
     bool,
     ConversationsBloc?,
-  ) conversationRoute;
+  ) buildConversationRoute;
 
   ///
   /// The Route to a [ChatMediaViewerLoader] instance, given a specific message
@@ -275,12 +275,12 @@ class RoutingInitData {
     String,
     ConversationMessage,
     ConversationBloc,
-  ) chatMediaViewerRoute;
+  ) buildChatMediaViewerRoute;
 
   RoutingInitData({
     required this.chatPageRoute,
-    required this.conversationRoute,
-    required this.chatMediaViewerRoute,
+    required this.buildConversationRoute,
+    required this.buildChatMediaViewerRoute,
   });
 }
 

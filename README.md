@@ -93,8 +93,14 @@ Ab jetzt wird differenziert!
 
 Ich kenne meine Pappenheimer, daher bewegen wir uns gerade wahrscheinlich im Fall 1. 
 
+TL;DR: Rufe ```NeonChat.initNeonChat``` in der ```main``` deiner App auf und falls du für das Fetchen von Bildern, Videos, Dateien etc. im Chat http-Headers benötigst, so rufe ```NeonChat.initHttpHeaders``` auf, sobald dir alle nötigen Informationen dazu bekannt sind (z.B. sobald JWT vom Backend geholt wurde).
 
-Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore``` und ```RemoteDataSource```-Instanzen bereitstellen und alles der ```NeonChat.initNeonChat()```-Methode übergeben. Diese soll nur einmal! pro App-Life-Cycle aufgerufen werden (wie ```Firebase.initializeApp```, pack sie also am besten in die main von deinem Projekt). Dabei musst du auch eine Funktion übergeben, die bei gegebenem ```BuildContext``` die Page auf den Navigator Stack pushed, in der du das ```NeonChat``` Widget instanziierst. Das ist nötig, damit sich die passende Konversation öfnnen kann, sobald du auf eine Push-Benachrichtigung klickst. Weiter unten im Widget Tree kannst du dann den ```NeonChat``` instanziieren und eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils übergeben und zahlreiche Styles selbst customizen! Achtung! Du musst ganz oben im Widget Tree (bevorzugt in ```app.dart``` o.Ä.) den ```ConversationsBloc``` providen! Ansonsten funktioniert der Push Notification Service nicht! Solltest du an einem Projekt ohne Push Notifications arbeiten, kannst du den Provider weglassen und dem ```NeonChat```-Widget das Flag ```provideConversationsBloc=true``` übergeben.
+
+Du kannst jetzt den Neon-Chat völlig hirnbefreit als Widget in deine App einbinden. Du musst dabei ```FirebaseAuth, FirebaseFirestore```, ```RemoteDataSource``` und ein paar wenige weitere Instanzen bereitstellen (der Rest ist optional) und alles der ```NeonChat.initNeonChat()```-Methode übergeben. Hier passiert das KOMPLETTE Customizen des NEON-Chats! Auch eigene Methoden für den Appbar-Tap oder das Öffnen eines Nutzerprofils und zahlreiche Styles können hier übergeben werden. Näheres zu allen Flags, die du bei der Initialisierung übergeben kannst, findest du unten im Abschnitt **Doku** und natürlich im Code.
+
+Diese Methode soll nur *einmal*! pro App-Life-Cycle aufgerufen werden (wie ```Firebase.initializeApp```, pack sie also am besten in die main von deinem Projekt). Dabei musst du (innerhalb der ```RoutingInitData```) auch eine Route zu der Page übergeben, auf der sich das ```NeonChat```-Widget befindet. Das ist nötig, damit die Routing-Funktion ```openConversation``` funktioniert (das ```NeonChat``` - Widget providet nämlich einige BLoCs über die ```DefaultConversationsPage```, sodass einfach nur das Pushen einer ```DefaultConversationPage``` zu ```ProviderNotFound```-Errors führen würde). 
+
+Weiter unten im Widget Tree kannst du dann den ```NeonChat``` instanziieren (s. unten oder im example-Projekt). 🚨 Achtung! Du musst ganz oben im Widget Tree (bevorzugt in ```app.dart``` o.Ä.) den ```ConversationsBloc``` providen! Ansonsten funktioniert der Push Notification Service nicht! Solltest du an einem Projekt ohne Push Notifications arbeiten, kannst du den Provider weglassen und dem ```NeonChat```-Widget das Flag ```provideConversationsBloc=true``` übergeben.
 
 FUNFACT: Solltest du in deinem Projekt [GetIt][get_it_link] verwenden, kannst du jetzt mithilfe von [mason][mason_link] das ```Firebase-Injections-Brick``` generieren, um sowohl ```FirebaseFirestore``` als auch ```FirebaseAuth``` über ```getIt``` zu verwalten. Was? Du weißt nicht, wie das geht? 
 Dann lies dir die Doku zu dem [Template Projekt][template_project_link] und den [NEON-Bricks][neon_bricks_link] durch. Die [Doku von Mason][mason_link] und [dieses Tutorial][mason_tutorial_link] sind auch sehr hilfreich.
@@ -118,16 +124,15 @@ void main() {
   ...
 
   NeonChat.initNeonChat(
+    locale: 'de_DE',
     firebaseAuth: getIt<FirebaseAuth>(),
     firebaseFirestore: getIt<FirebaseFirestore>(),
     remoteDataSource: getIt<NeonChatRemoteDataSource>(),
-    openAppChatPage: (context) => Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (context) => const Scaffold(
-          body: NeonChat(),
-        ),
-      ),
+    routingInit: RoutingInitData(
+      chatPageRoute: const ChatRoute(),
+      ...
     ),
+    ...  
   );
 
   ...
@@ -179,7 +184,11 @@ class _MainAppLoaderState extends State<MainAppLoader> {
 }
 ```
 
-Noch ein kleiner Zusatz: Innerhalb der ```ChatImageBubble``` wird ein ```CachedNetworkImage``` verwendet, um verschickte Bilder anzuzeigen. Sollte das Backend, dass du in diesem Projekt nutzt, http Headers erwarten, kannst du auch diese initialiseren! Rufe dazu einfach die Funktion ```NeonChat.initHttpHeaders``` auf! Kleines Beispiel gefällig?
+Noch ein kleiner Zusatz: Innerhalb der ```ChatImageBubble``` wird ein ```CachedNetworkImage``` verwendet, um verschickte Bilder anzuzeigen. Sollte das Backend, dass du in diesem Projekt nutzt, http Headers erwarten, kannst du auch diese initialiseren! Rufe dazu einfach die Funktion ```NeonChat.initHttpHeaders``` auf!
+
+🚨 Achtung: Die Headers werden als leere Map ```{}``` initialisiert. Solltest du also über den Chat auf Bilder im Backend zugreifen, für die eine Authorization nötig ist, bevor du die Headers über ```NeonChat.initHttpHeaders``` initialisiert hast, wirst du nichts bzw. nur den Placeholder sehen!
+
+Kleines Beispiel gefällig?
 
 ```dart 
 ...
@@ -211,21 +220,75 @@ Vorab: Im gesamten Package wirst du auf die Begriffe Conversation und Conversati
 
 Zu jeder guten Packagenutzung gehört natürlich das ausführliche Studieren der Doku. Ich habe so gut es geht, die Funktionen und Felder der Datenstrukturen, mit denen du den Chat customizen kannst, im Code dokumentiert, sodass du alles per Hover in VS Code sehen können müsstest. Es kann gut sein, dass ich an manchen Stellen zu sparsam mit meinen Worten war oder sogar gar nichts geschrieben habe. Sobald so etwas auffällt: direkt an mich (Julien) wenden, ich erklärs dir und schreibe ein bisschen Doku. Weil ich aber einfach ein geiler Typ bin, habe ich mir im Voraus schon mal ein bisschen die Mühe gemacht und versucht, meine kreativen Ergüsse, die in diesem Package zuhauf auftreten, in Wort zu fassen.
 
-Hier also eine nach bestem Wissen und gewissen vollständige (🥴) Doku aller Flags, die du dem ```NeonChat```-Widget übergeben kannst (Stand: 21.07.2022): 
+Hier also eine nach bestem Wissen und gewissen vollständige (🥴) Doku aller Flags, mit denen du den Chat einrichten kannst (Stand: 22.07.2022): 
 
-### Styling
-- ```conversationStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling einer Conversation betreffen (sprich, die ```ConversationPage```, in der effektiv mit der anderen Person / mit der Gruppe geschrieben wird). Unter anderem kannst du dort unter ```buildCustomConversationAppBar``` eine Funktion hinterlegen, die ein Widget zurückgibt und zwar deine custom implementierte AppBar. Genauere Erklärungen findest du im Code.
-- ```conversationsStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling der Conversations betreffen (sprich, die Übersicht aller deiner Unterhaltungen auf der ```ConversationsPage```). Genauere Erklärungen findest du im Code.
-- ```messageBubbleStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling einer MessageBubble betreffen. Genauere Erklärungen findest du im Code.
-- ```searchAppBarStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling der SearchBar betreffen, die auftaucht, sobald ein Chat durchsucht wird. 🚨 Achtung: Falls du dem ```conversationStyle``` eine ```buildCustomConversationAppBar```-Methode übergeben hast, die nicht-null ist, so wird dieses Flag ignoriert.
-- ```getConversationMessageTypeDisplayString```: Funktion, die für gegebenen ```ConversationMessageType``` einen String zurückgibt. Das ist die Vorschau, die du z.B. bei einer Audio by default in der ```ConversationsPage```sehen würdest: 🎤 voice. Sollte dir "voice" nicht gefallen und du möchtest stattdessen z.B. "Sprachnachricht" dort stehen haben, so implementiere diese Funktion und übergib sie dem Chat.
+## NeonChat (Widget)
+- ```provideConversationsBloc```: Boolean Flag, das bestimmt, ob das ```NeonChat```-Widget eine ```ConversationsBloc```-Instanz providet. Das Flag ist by default auf ```false``` gestellt, da wir in den meisten Apps den ```ConversationsBloc``` top-level injecten, um jederzeit auf Firebase Data Messages listenen zu können.
+
+## NeonChat.initNEONChat
+### Firebase
+- ```firebaseAuth (FirebaseAuth)```: Die FirebaseAuth-Instanz deiner App.
+- ```firebaseFirestore (FirebaseFirestore)```: Die FirebaseFirestore-Instanz deiner App.
+- ```firebaseKeys (FirebaseKeys, optional)```: Dieser Parameter ist aus gutem Grund optional: fass ihn nicht an! Dort sind die Keys definiert, die in Firebase genutzt werden. Sollte mal in einem Projekt (wider Erwarten, also überlegt es euch wirklich gut) andere Keys im Firebase-Backend genutzt werden, dann hinterlegt sie in dieser "Map"-Datenstruktur, sonst läuft gar nichts.
+
+### Backend
+- ```remoteDataSource (NeonChatRemoteDataSource)```: Deine Implementierung der NeonChatRemoteDataSource. Sie wird für das Hochladen und löschen von Files benötigt.
+
+### Locales
+- ```locale (String)```: Die Locale deiner App. Sie wird für das Formatieren der Timestamps benötigt.
+
+### Funktionen
+Du musst eine Instanz der Datenstruktur ```FunctionInitData``` übergeben. Diese Datenstruktur hat folgende Felder:
+
+- ```getUserForID```: Funktion, die für eine gegebene UserID (String) ein ```Future<FirebaseUser>``` zurückgibt. Wrappe dafür das Ergebnis deines app-spezifischen "getUser"-Calls in die im NEONChat definierte ```FirebaseUser```-Datenstruktur.
+- ```isAuthenticated```: Funktion, die zurückgibt, ob der aktuelle Nutzer authentifiziert ist. Da wir in den meisten unserer Apps aber sowieso Auth-Walls haben und der Chat sowieso nur funktioniert, wenn man in Firebase eingeloggt ist, kannst du diese Funktion so gut wie immer ignorieren. 
+- ```onDirectConversationAppBarTap```: Funktion, die aufgerufen wird, sobald auf die ConversationAppBar einer ```DirectConversation``` oder in der ```ConversationsPage``` auf das Profilbild des Konversationspartners getippt wird. 🚨 Achtung: Solltest du eine ```CustomConversationAppBar``` implementiert haben, musst du das onTap-Verhalten natürlich dort spezifieren und diese Methode wird nur beim Profilbild-Tap auf der ```ConversationsPage``` aufgerufen.
+- ```onGroupConversationAppBarTap```: Analog zu ```onDirectConversationAppBarTap```, nur für ```GroupConversation```.  
+- ```disableGroupConversationAppBarTap```: Solltest du KEINE ```CustomConversationAppBar``` implementiert haben, so wird beim Tippen auf die AppBar in einer Gruppenkonversation nichts ausgeführt, eine eventuell über ```onGroupConversationAppBarTap``` übergebene Funktion wird ignoriert. 
+- ```onOpenUserProfile```: Wenn die Default Funktionalität bei einem Gruppenkonversations-AppBar-Tap ausgeführt wird (```onGroupConversationAppBarTap == null```), dann wird eine Liste an Usern (Mitglieder der Gruppe) angezeigt. Die Funktion ```onOpenUserProfile``` wird ausgeführt, wenn auf einen dieser User getippt wird. 🚨 Achtung: Solltest du eine eigene Implementierung von ```onGroupConversationAppBarTap``` an den Chat übergeben haben, so hat diese Funktion keinerlei Auswirkung und kann weggelassen werden.
+- ```getConversationMessageTypeDisplayString```: Funktion, die für gegebenen ```ConversationMessageType``` einen String zurückgibt. Das ist die Vorschau, die du z.B. bei einer Audio by default in der ```ConversationsPage```sehen würdest: 🎤 voice. Sollte dir "voice" nicht gefallen und du möchtest stattdessen z.B. "Sprachnachricht" dort stehen haben, so implementiere diese Funktion.
+- ```getConversationCreationData```: Funktion, die eine Instanz von ```ConversationCreationData``` zurückgibt, sprich die zur Erstellung einer neuen Konversation (Direkt oder Gruppe) nötigen Daten. 🚨 Achtung: diese Funktion wird nur verwendet, wenn in der übergebenen ```ConversationsStyle```-Instanz ```showFab==true``` UND ```fabAction==null``` gilt! Das wird aber meistens nicht der Fall sein, da du app-spezifisch die Erstellung eines Chats anders triggern möchtest und nicht einfach nur per FloatingActionButton (FAB) im ChatScreen. Dieses Flag kannst du also in 95% der Fälle ignorieren!
+
+
+### Routing
+Du musst eine Instanz der Datenstruktur ```RoutingInitData``` übergeben. Diese Datenstruktur besteht zu 66% aus Boilerplate-Code, da nur die ```chatPageRoute``` wirklich app-spezifisch ist, die anderen zwei Routen musst du nur in deine ```router.dart``` einfügen (s.oben), damit sie im ```StackRouter``` deiner App registriert sind. Du willst also immer genau das hier übergeben:
+
+```dart
+NeonChat.initNEONChat(
+  ...,
+  routingInit: RoutingInitData(
+      chatPageRoute: const ChatRoute(), //TODO: das hier zu dem Namen deiner app-spezifischen Route, die zum Chat führt, ändern!
+      buildConversationRoute: (convoID, showCloseButton, convosBloc) =>
+          DefaultConversationRoute(
+        conversationId: convoID,
+        showCloseButton: showCloseButton,
+        conversationsBloc: convosBloc,
+      ),
+      buildChatMediaViewerRoute: (title, message, conversationBloc) =>
+          ChatMediaViewerRoute(
+              title: title, message: message, convoBloc: conversationBloc),
+  ),
+  ...
+)
+```
+
+Der Vollständigkeit halber noch eine Auflistung aller Flags dieser Datenstruktur:
+- ```chatPageRoute```: Die ```PageRouteInfo```, die zu der ChatPage deiner App führt. In anderen Worten: wenn das Chat-Package
+```dart
+context.router.push(chatPageRoute);
+```
+ausführt, soll man auf der ChatPage landen.
+- ```buildConversationRoute```: Funktion, die die ```PageRouteInfo``` zurückgibt, die eine ```DefaultConversationPage``` öffnet.
+- ```buildChatMediaViewerRoute```: Funktion, die die ```PageRouteInfo``` zurückgibt, die eine ```_ChatMediaViewerPage``` öffnet.
 
 ### Widgets
+Du kannst eine Instanz der Datenstruktur ```WidgetInitData``` übergeben. Diese Datenstruktur hat folgende Felder:
 - ```getUserAvatar```: Funktion, die für eine gegebene UserID (String) ein Widget zurückgibt, das in der ```ConversationsPage``` neben der letzten Nachricht angezeigt wird (wie bei den WhatsApp-Chats) und in der ```ConversationPage``` in der AppBar. Solltest du eine eigene ```ConversationAppBar``` implementiert haben (s. oben), dann wird diese Funktion nur für die ```ConversationsPage``` genutzt.
 - ```getGroupAvatar```: Analog zu ```getUserAvatar``` mit gegebener ConversationID (String).
+- ```conversationDateSeparatorBuilder```: Funktion, die gegeben einem timestamp (DateTime), ein Widget zurückgibt, das als Separator zwischen Nachrichten zweier verschiedener Tage dient.
 
-### Data
-- ```getUserForID```: Funktion, die für eine gegebene UserID (String) ein ```Future<FirebaseUser>``` zurückgibt. Wrappe dafür das Ergebnis deines app-spezifischen "getUser"-Calls in die im NEONChat definierte ```FirebaseUser```-Datenstruktur.
+### Datenstrukturerweiterungen
+Du kannst eine Instanz der Datenstruktur ```AdditionalDataInitData``` übergeben. Diese Datenstruktur hat folgende Felder:
 - ```additionalDirectConversationDataConfig```: Datenstruktur, die zusätzliche Felder für eine 1-on-1-Konversation definiert. Am besten an einem Beispiel erklärt: 
 
 Die Datenstruktur ```DirectConversation``` ist im Package so definiert: 
@@ -268,18 +331,20 @@ Die Implementierung von ```AdditionalConversationDataConfig``` macht nichts ande
 Natürlich hört das Ganze nicht bei einem zusätzlichen Flag auf, denn ```AdditionalConversationDataConfig``` gibt ja eine LISTE an ```AdditionalConversationDataInfo``` zurück! Du musst also für JEDES zusätzliche Feld, dass du in deiner ```DirectConversation```-Datenstruktur gerne hättest, eine Kindklasse von ```AdditionalConversationDataInfo```schreiben und der Hase läuft 🐇!
 
 - ```additionalGroupConversationDataConfig```: Genau analog zu ```additionalDirectConversationDataConfig```, nur für ```GroupConversation```.
-- ```getConversationCreationData```: Funktion, die eine Instanz von ```ConversationCreationData``` zurückgibt, sprich die zur Erstellung einer neuen Konversation (Direkt oder Gruppe) nötigen Daten. 🚨 Achtung: diese Funktion wird nur verwendet, wenn in der übergebenen ```ConversationsStyle```-Instanz ```showFab==true``` UND ```fabAction==null``` gilt! Das wird aber meistens nicht der Fall sein, da du app-spezifisch die Erstellung eines Chats anders triggern möchtest und nicht einfach nur per FloatingActionButton (FAB) im ChatScreen. Dieses Flag kannst du also in 95% der Fälle ignorieren!
 
-### Funktionalität
-- ```onDirectConversationAppBarTap```: Funktion, die aufgerufen wird, sobald auf die ConversationAppBar einer ```DirectConversation``` oder in der ```ConversationsPage``` auf das Profilbild des Konversationspartners getippt wird. 🚨 Achtung: Solltest du eine ```CustomConversationAppBar``` implementiert haben, musst du das onTap-Verhalten natürlich dort spezifieren und diese Methode wird nur beim Profilbild-Tap auf der ```ConversationsPage``` aufgerufen.
-- ```onGroupConversationAppBarTap```: Analog zu ```onDirectConversationAppBarTap```, nur für ```GroupConversation```.  
-- ```disableGroupConversationAppBarTap```: Solltest du KEINE ```CustomConversationAppBar``` implementiert haben, so wird beim Tippen auf die AppBar in einer Gruppenkonversation nichts ausgeführt, eine eventuell über ```onGroupConversationAppBarTap``` übergebene Funktion wird ignoriert. 
-- ```provideConversationsBloc```: Boolean Flag, das bestimmt, ob das ```NeonChat```-Widget eine ```ConversationsBloc```-Instanz providet. Das Flag ist by default auf ```false``` gestellt, da wir in den meisten Apps den ```ConversationsBloc``` top-level injecten, um jederzeit auf Firebase Data Messages listenen zu können.
-- ```onOpenUserProfile```: Wenn die Default Funktionalität bei einem Gruppenkonversations-AppBar-Tap ausgeführt wird (```onGroupConversationAppBarTap == null```), dann wird eine Liste an Usern (Mitglieder der Gruppe) angezeigt. Die Funktion ```onOpenUserProfile``` wird ausgeführt, wenn auf einen dieser User getippt wird. 🚨 Achtung: Solltest du eine eigene Implementierung von ```onGroupConversationAppBarTap``` an den Chat übergeben haben, so hat diese Funktion keinerlei Auswirkung und kann weggelassen werden.
+### Styling
+Du kannst eine Instanz der Datenstruktur ```StyleInitData``` übergeben. Diese Datenstruktur hat folgende Felder:
+- ```conversationStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling einer Conversation betreffen (sprich, die ```ConversationPage```, in der effektiv mit der anderen Person / mit der Gruppe geschrieben wird). Unter anderem kannst du dort unter ```buildCustomConversationAppBar``` eine Funktion hinterlegen, die ein Widget zurückgibt und zwar deine custom implementierte AppBar. Genauere Erklärungen findest du im Code.
+- ```conversationsStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling der Conversations betreffen (sprich, die Übersicht aller deiner Unterhaltungen auf der ```ConversationsPage```). Genauere Erklärungen findest du im Code.
+- ```messageBubbleStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling einer MessageBubble betreffen. Genauere Erklärungen findest du im Code.
+- ```searchAppBarStyle```: Datenstruktur, die verschiedene Farben, Strings etc. enthält, die das Styling der SearchBar betreffen, die auftaucht, sobald ein Chat durchsucht wird. 🚨 Achtung: Falls du dem ```conversationStyle``` eine ```buildCustomConversationAppBar```-Methode übergeben hast, die nicht-null ist, so wird dieses Flag ignoriert.
+- ```bottomBarStyle```: Datenstruktur, die verschiedene Farben, TextStyes etc. enthält, die das Styling der BottomBar in einer Konversation betreffen. 🚨 Achtung: Falls du in der ```BottomBarStyle``` - Instanz das Feld ```customBottomBar``` übergibst (sprich: deine eigene Implementierung der Bottom Bar, die ihr Styling *selbst*! managed), werden alle anderen Felder ignoriert!
+- ```pushNotificationToastStyle```: Datenstruktur, die das Aussehen der Toasts bestimmt, die auftauchen, sobald eine Push Notification empfangen wird.
 
-## 🪵 Changelog
 
-# [0.1.0] - BREAKING -  22.07.2022
+# 🪵 Changelog
+
+## [0.1.0] - BREAKING -  22.07.2022
 
 ### Added
 - Neue Datenstrukturen zum Initialisieren des Chats.
@@ -289,10 +354,10 @@ Natürlich hört das Ganze nicht bei einem zusätzlichen Flag auf, denn ```Addit
 - ```NeonChat``` (Widget) hat nur noch ein Argument.
 ### Fixed
 - GetIt Bug, falls eine Conversation geöffnet werden sollte, bevor in dem App Lifecycle die ChatPage geöffnet worden ist. 
-# [0.0.1]
+## [0.0.1]
 Erste Version des NEON-Chats, frei nach Papeo geklaut. Intensives Testen und Erstintegration in ein Projekt nötig.
 
-## 👷🏻‍♂️ Development TODOs
+# 👷🏻‍♂️ Development TODOs
 - [ ] Push Notification Service raus aus dem Chat Package. Push Notifications sollten von App zu App jeweils Top-Level gehandled werden, das hat bei [OAmN][oamn_project] große Probleme gemacht, dass es im Chat-Package drinnen ist. Eine Idee wäre es, eine vorgeschriebene Datei hier zu hinterlegen (z.B. als mason Brick 😉), die die Pushes für den Chat schon korrekt konfiguriert hat und die nur noch in den App Top-Level Push Notfication Service eingefügt werden muss.
 - [ ] Die ```NeonChatRemoteDataSource``` sollte unbedingt überarbeitet werden, sie ist im Moment viel zu unübersichtlich. Ein Beispiel einer funktionierenden ```NeonChatRemoteDataSource``` findest du [hier][oamn_chat_datasource]. Unbedingt so gut es geht unnötige Methoden entfernen, bzw. zu einfachen Gettern resetten.
 - [X] Die zweistufige Initialisierung mit den Methoden ```initNEONChat``` und dem Übergeben der Parameter an das ```NeonChat```-Widget macht nur Probleme. So sind bspw. ```FunctionInitData``` noch nicht initialisiert, wenn man in einen Bereich der App navigiert, der auf den NEON-Chat zugreift, man davor aber noch nicht die Route zu der ChatPage getriggert hat (damit auch alle Funktionen, die dem ```NeonChat``` Widget übergeben werden initialisiert werden). Lieber alles in der ```initNeonChat```-Methode machen. Wird halt dann etwas dicker, aber so what.

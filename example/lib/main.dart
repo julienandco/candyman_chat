@@ -58,13 +58,13 @@ void main() async {
     ),
     routingInit: RoutingInitData(
       chatPageRoute: const ChatRoute(),
-      conversationRoute: (convoID, showCloseButton, convosBloc) =>
+      buildConversationRoute: (convoID, showCloseButton, convosBloc) =>
           DefaultConversationRoute(
         conversationId: convoID,
         showCloseButton: showCloseButton,
         conversationsBloc: convosBloc,
       ),
-      chatMediaViewerRoute: (title, message, conversationBloc) =>
+      buildChatMediaViewerRoute: (title, message, conversationBloc) =>
           ChatMediaViewerRoute(
               title: title, message: message, convoBloc: conversationBloc),
     ),
