@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neon_chat/neon_chat.dart';
-import 'package:neon_chat/src/chat_init.dart';
 
 class ConversationsRepositoryImpl implements ConversationsRepository {
   final FirebaseFirestore firestore;
@@ -273,7 +272,7 @@ class ConversationsRepositoryImpl implements ConversationsRepository {
   }
 
   Failure _handleCreationError() {
-    showToast('War wohl nix'); //TODO
+    // showToast('War wohl nix'); //TODO
     return const Failure();
   }
 }
