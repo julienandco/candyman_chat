@@ -283,6 +283,7 @@ Natürlich hört das Ganze nicht bei einem zusätzlichen Flag auf, denn ```Addit
 
 ### Added
 - Neue Datenstrukturen zum Initialisieren des Chats.
+- Zusätzliche Methode ```uploadGroupConversationThumbnail``` in der ```NeonChatRemoteDataSource```, um das Thumbnail von neu erstellten Gruppenchats hochzuladen.
 ### Changed
 - ```initNEONChat``` nimmt neue Datenstrukturen als Argumente. Gesamte Initialiserung des Chats findet jetzt hier statt.
 - ```NeonChat``` (Widget) hat nur noch ein Argument.
