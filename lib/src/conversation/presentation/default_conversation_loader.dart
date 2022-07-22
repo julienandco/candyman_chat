@@ -20,7 +20,6 @@ class DefaultConversationLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (conversationsBloc != null) print('providing value');
     return MultiBlocProvider(
       providers: [
         if (conversationsBloc != null)
@@ -28,7 +27,7 @@ class DefaultConversationLoader extends StatelessWidget {
             value: conversationsBloc!,
           )
         else
-          BlocProvider(
+          BlocProvider<ConversationsBloc>(
             create: (context) => chatGetIt<ConversationsBloc>()
               ..add(
                 ConversationsEvent.initialize(

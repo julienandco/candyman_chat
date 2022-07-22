@@ -66,11 +66,6 @@ void openConversationInternally(
           .findAncestorWidgetOfExactType<BlocProvider<ConversationsBloc>>() !=
       null;
 
-  print('FOUND ONE: $conversationsBlocProvidedTopLevel');
-  if (conversationsBlocProvidedTopLevel) {
-    print('FOUND: ${context.read<ConversationsBloc>()}');
-  }
-
   context.router.push(
     chatGetIt<RoutingInitData>().buildConversationRoute(
       conversationId,

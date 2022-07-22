@@ -43,6 +43,7 @@ class _DefaultConversationPageState extends State<DefaultConversationPage> {
           .state
           .maybeWhen(
               loadSuccess: (_, timestamps) => timestamps[id],
+              loadInProgress: (timestamps) => timestamps?[id],
               orElse: () => null);
     }
     _isInit = false;
